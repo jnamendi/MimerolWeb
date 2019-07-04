@@ -1,0 +1,16 @@
+@import "~styles/variables.scss";
+.about {
+    color: $orange;
+    font-family: $font-family-base;
+    
+    @media #{$mq-sm} {
+        color: $blue;
+    }
+}
+
+.bg-demo{
+    display: block;
+    width: 100%;
+    height: 600px;
+    background-image: url("../../../../assets/images/bg.jpg");
+}

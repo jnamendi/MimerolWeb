@@ -1,0 +1,27 @@
+<form class="search_form">
+    <div class="search-wrapper wow fadeInDown" data-wow-delay="0.3s">
+        <!-- <div *ngIf="!!currentCountryCode" class="search-input">
+            <input class="search_input" name="search" placeholder="Key word" type="search" [(ngModel)]="restaurantSearch" autocomplete="off" #LocationCtrl="ngModel" [options]="{
+                types: ['address'],
+                componentRestrictions: { country: currentCountryCode }
+                }" (setAddress)="setAddress($event)" (street_number)='street_number=$event' (street)='street=$event' (city)='onGetCity($event)' (state)='state=$event' (district)='onGetDistrict($event)' (country)='country=$event' (postal_code)='postal_code=$event'
+                (lat)='lat=$event' (lng)='lng=$event' (adr_address)='onGetAddress($event)' (name)='name=$event' (place_id)='place_id=$event' (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event' (photos)='photos=$event'
+                (airport)='airport=$event' (CountryCodes)='CountryCodes=$event' id="autocomplete" ng2-google-place-autocomplete/>
+            <button class="btn btn--search" type="button"><img src="assets\images\icon\search.png"></button>
+        </div> -->
+        <!-- (focus)="isShowResults = !isShowResults" (focusout)="isShowResults = !isShowResults"  -->
+        <div class="search-input">
+            <input class="search_input" name="search" placeholder="Key word" type="search" [formControl]="cityControl" [(ngModel)]="cityName" autocomplete="off" (keydown.enter)="onFetchRegisteredRestaurantByCity(cityName)" />
+            <button class="btn btn--search" type="button"><img src="assets\images\icon\search.png"></button>
+            <div *ngIf="citySearchResults && citySearchResults.length > 0" class="search-results-wrapper">
+                <ul class="search-results">
+                    <li *ngFor="let city of citySearchResults; let i = index" id="city-{{city.name}}" [ngClass]="{active: city.active}" (click)="onSearchRestaurantByCity(city.name)" (keydown.enter)="onSearchRestaurantByCity(city.name)">
+                        <span class="pac-icon"></span>
+                        <span>{{city.name}}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</form>

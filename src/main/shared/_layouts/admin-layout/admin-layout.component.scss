@@ -1,0 +1,24 @@
+@import "~styles/variables.scss";
+.admin-page {
+    min-height: 104vh;
+}
+
+/*Main content*/
+
+.admin-main {
+    padding-top: 50px;
+    margin-left: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: all .3s ease-in-out;
+    background: #ecf0f5;
+    @media #{$mq-sm} {
+        margin-left: 230px;
+        min-height: 104vh;
+    }
+    &.collapse {
+        @media #{$mq-sm} {
+            margin-left: 50px;
+        }
+    }
+}

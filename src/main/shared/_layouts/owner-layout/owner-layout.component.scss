@@ -1,0 +1,27 @@
+@import "~styles/variables.scss";
+.owner-page {
+    min-height: 104vh;
+    .wrapper {
+        height: 100%;
+    }
+}
+
+/*Main content*/
+
+.owner-main {
+    min-height: 104vh;
+    padding-top: 50px;
+    margin-left: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: all .3s ease-in-out;
+    background: #ecf0f5;
+    @media #{$mq-sm} {
+        margin-left: 230px;
+    }
+    &.collapse {
+        @media #{$mq-sm} {
+            margin-left: 50px;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<div class="pagination-container" *ngIf="totalPages && totalPages > 1">
+    <ul class="pagination">
+        <li class="item navigate pre {{noPrevious() || disabled ? 'disabled' : ''}}">
+            <a href (click)="selectPage(page - 1, $event)">❮</a>
+        </li>
+        <li *ngIf="directionLinks && hasDirection()" class="item {{disabled ? 'disabled' : ''}}">
+            <a href (click)="selectPage(1, $event)">1</a>
+        </li>
+
+        <li *ngFor="let page of pages" [class.active]="page.active" class="item {{disabled ? 'disabled' : ''}}">
+            <a class="{{page.active?'active':'not-selected-page'}}" href (click)="selectPage(page.number, $event)" [innerHTML]="page.text"></a>
+        </li>
+
+        <li *ngIf="boundaryLinks && hasBoundary()" class="item {{disabled ? 'disabled' : ''}}">
+            <a href (click)="selectPage(totalPages, $event)">{{totalPages}}</a>
+        </li>
+        <li class="item navigate next {{noNext() || disabled ? 'disabled' : ''}}">
+            <a href (click)="selectPage(page + 1, $event)">❯</a>
+        </li>
+    </ul>
+</div>

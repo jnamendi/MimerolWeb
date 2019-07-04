@@ -1,0 +1,99 @@
+<!-- section searching-->
+<section class="section section-seaching">
+  <header class="header-cover" role="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="title_header">
+            <div class="col-xs-12 col-sm-6">
+              <h1 class="wow fadeInDown" [innerHTML]="'Components.Home.AreaSearch' | translate"></h1>
+              <div class="search wow fadeInDown" data-wow-delay="0.3s">
+                <google-place-input></google-place-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</section>
+
+<div class="bg_mobile">
+  <img src="assets/images/bg_sub_left.png">
+</div>
+
+<!-- section introduce-->
+<section id="section2" class="section section-introduce">
+  <div class="bg_how">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="title_main text-left-sub wow fadeInLeft">
+            <h1 class="wow fadeInDown" [innerHTML]="'Components.Home.HowItWorks' | translate"></h1>
+          </div>
+        </div>
+        <div class="col-sm-7 box_how">
+          <ul class="ul_howitwork">
+            <li class="wow fadeInDown">
+              <div class="row_1">
+                <h2>01</h2>
+                <span>{{'Components.Home.Location' | translate}}</span>
+                <p>{{'Components.Home.LocationIntro' | translate}}</p>
+              </div>
+            </li>
+            <li class="wow fadeInDown">
+              <div class="row_2">
+                <h2>02</h2>
+                <span>{{'Components.Home.Choose' | translate}} </span>
+                <p>{{'Components.Home.ChooseIntro' | translate}} </p>
+              </div>
+            </li>
+            <li class="wow fadeInDown">
+              <div class="row_3">
+                <h2>03</h2>
+                <span>{{'Components.Home.PayAndGet' | translate}}</span>
+                <p>{{'Components.Home.PayAndGetIntro' | translate}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bg_mobile">
+  <img src="assets/images/bg_sub_right.png">
+</div>
+
+<home-about></home-about>
+
+<!-- section apps-->
+<section id="section4" class="section section-apps">
+  <div class="bg_download">
+    <div class="col-sm-6 img_download wow fadeInLeft"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 content_download">
+          <div class="title_main wow fadeInDown" data-wow-delay="0.3s">
+            <h1 [innerHTML]="'Components.Home.DownloadApp' | translate"></h1>
+          </div>
+          <p class="text_download wow fadeInDown" data-wow-delay="0.4s">
+            {{'Components.Home.AppIntro' | translate}}</p>
+          <!-- <div class="button_download wow fadeInDown" data-wow-delay="0.5s">
+            <a href="#">
+              <img src="assets/images/icon/apple.png" alt="image">
+              <span>{{'Commons.Texts.AvailableOn' | translate}}</span>
+              <br> App Store </a>
+          </div> -->
+          <div class="button_download wow fadeInDown" data-wow-delay="0.6s">
+            <a href="#">
+              <img class="android" src="assets/images/icon/google-play.png" alt="image">
+              <span>{{'Commons.Texts.GetItNow' | translate}}</span>
+              <br> Google Play</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

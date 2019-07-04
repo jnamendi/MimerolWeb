@@ -1,0 +1,52 @@
+<div class="review" data-scroll-index='5'>
+    <div class="reviews">
+        <div class="col-sm-12 user_reviews">
+            <form (ngSubmit)="onSubmitComment(f)" #f="ngForm">
+                <div class="form-input comment">
+                    <textarea inputFocus name="comment" placeholder="Your comment" rows="5" [(ngModel)]="resCommentModel.description" required #comment="ngModel"></textarea>
+                    <!-- <label>{{'Commons.Texts.Comment' | translate}}</label> -->
+                    <div *ngIf="comment.invalid && f.submitted" class="error">
+                        <div *ngIf="comment.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                    </div>
+                </div>
+                <div class="rating">
+                    <p class="fl" [innerHTML]="'Commons.Texts.Review' | translate"></p>
+                    <div class="item-inline">
+                        <label [innerHTML]="'Commons.Texts.Delivery' | translate"></label>
+                        <p-rating name="starShip" [(ngModel)]="resCommentModel.starShip" stars="5" [cancel]="false" requied></p-rating>
+                    </div>
+                    <div class="item-inline">
+                        <label [innerHTML]="'Commons.Texts.Quality' | translate"></label>
+                        <p-rating name="starQuality" [(ngModel)]="resCommentModel.starQuality" stars="5" [cancel]="false"></p-rating>
+                    </div>
+                </div>
+                <div *ngIf="rateEmpty" class="rating error">
+                    <p class="fl" style="opacity: 0;" [innerHTML]="'Commons.Texts.Review' | translate"></p>
+                    <span class="item-inline" [innerHTML]="'Components.Order.SelectYourRating' | translate"></span>
+                </div>
+                <button type="submit" class="btn pull-right" [innerHTML]="'Commons.Texts.Submit' | translate"></button>
+            </form>
+            <ul *ngIf="restaurantComments && restaurantComments.length > 0">
+                <li *ngFor="let item of restaurantComments; let i = index">
+                    <div class="rating_user">
+                        <div class="item-inline">
+                            <label [innerHTML]="'Commons.Texts.Delivery' | translate"></label>
+                            <p-rating name="starShip{{i}}" [ngModel]="item.starShip" stars="5" [cancel]="false" readonly="true"></p-rating>
+                        </div>
+                        <div class="item-inline">
+                            <label [innerHTML]="'Commons.Texts.Quality' | translate"></label>
+                            <p-rating name="starQuality{{i}}" [ngModel]="item.starQuality" stars="5" [cancel]="false" readonly="true"></p-rating>
+                        </div>
+                    </div>
+                    <p>
+                        <b>{{item.fullName}}</b>
+                        <span class="time">{{item.createdDate | amTimeAgo}}</span>
+                    </p>
+                    <p>{{item.description}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<message-dialog *ngIf="saveCommentSuccess" [visible]="saveCommentSuccess" [header]="'Comment success'" [content]="'Your comment is awaiting approve.'" (confirm)="onClosePopup()"></message-dialog>

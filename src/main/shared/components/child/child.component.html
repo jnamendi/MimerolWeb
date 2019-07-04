@@ -1,0 +1,112 @@
+<div class="main-content">
+    <div id="container">
+        <section class="section_child">
+            <div class="bg_child">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <h1>
+                            <span *ngIf="searchArea" class="fonts-light">Order takeaway in</span> {{searchArea.city}}</h1>
+                        <ul>
+                            <li>
+                                <a class="disable" [routerLink]="['']">Home</a>
+                            </li>
+                            <li>
+                                <a>Search </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-child">
+            <div id="sticker" class="toolbar-products">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="sort">
+                                <p class="mobile_none">Sort by: </p>
+                                <dropdown [data]="sortDropdown" (onSelectedChange)="onSortChange($event)"></dropdown>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <a class="filter" (click)="onToggleFilter()">
+                                <span>
+                                    <div class="nav-icon filter-icon">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <span class="fl">Filter</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <child-filter [deliveryTypeAttributes]="deliveryTypeAttributes" [rankPrice]="rankPrice"
+                    [categoryFilters]="categoryFilters" [searchArea]="searchArea" [isToggleFilter]="isToggleFilter"
+                    (onFilter)="onFilterHandle($event)" (closeFilter)="onToggleFilter($event)" (categoryFilter)="onCategoryFilter($event)"
+                    (deliveryFilter)="onDeliveryFilter($event)" (priceFilter)="onPriceFilter($event)">
+                </child-filter>
+            </div>
+
+            <div *ngIf="restaurantModels && restaurantModels.length > 0" class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 product" *ngFor="let item of restaurantModels">
+                                <div class="promotion">
+                                    <span *ngIf="item.promotionLineItems && item.promotionLineItems[0]">-{{item.promotionLineItems[0].value}}%</span>
+                                </div>
+                                <div class="closed">
+                                    <span *ngIf="item && item.restaurantClosed">CLOSED</span>
+                                </div>
+                                <div class="product-item">
+                                    <div class="img_ads">
+                                        <div class="box_img">
+                                            <a class="active" (click)="onNavigateToMenu(item.restaurantId)">
+                                                <img src="{{!item.imageUrl ? 'assets/images/logo.png' : clientState.BaseUrl + item.imageUrl}}"
+                                                    alt="{{item.restaurantName}}" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <a (click)="onNavigateToMenu(item.restaurantId)" class="product-item-link">{{item.restaurantName}}</a>
+                                    <div class="product-item-description" *ngIf="item && item.categoryIds && item.categoryIds.length > 0">
+                                        <span *ngFor="let ct of item.categoryIds; let last = last">{{ct.categoryName}}
+                                            <span *ngIf="!last">,</span>
+                                        </span>
+                                    </div>
+                                    <div class="product-reviews-summary">
+                                        <div class="rating_user fl">
+                                            <p-rating name="rate" [ngModel]="item.rating" stars="5" [cancel]="false"
+                                                readonly="true"></p-rating>
+                                        </div>
+                                        <div class="reviews-actions"> {{item.numOfReview}} reviews </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <p>
+                                            <span>Delivery cost:</span> {{item.deliveryCost && item.deliveryCost > 0 ?
+                                            item.symbolLeft +' '+ item.deliveryCost : 'Free'}}</p>
+                                        <p>
+                                            <span>Delivery time:</span>{{item.estDeliveryTime}}</p>
+                                        <p>
+                                            <span>Price from:</span> {{item.symbolLeft +' '+ item.minPrice}}</p>
+                                        <p>
+                                            <span>Address:</span> {{item.address}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="restaurantModels && restaurantModels.length <= 0" class="container">
+                <div class="product">
+                    There is no item.
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

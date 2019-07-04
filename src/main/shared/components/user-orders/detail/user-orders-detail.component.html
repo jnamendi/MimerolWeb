@@ -1,0 +1,70 @@
+<div *ngIf="visible" class="dialog-container">
+    <div class="dialog-wrapper">
+        <div class="dialog-header">
+            <h4 class="title" [innerHTML]="'Commons.Texts.OrderDetails' | translate"></h4> ({{orderCode}})
+            <a class="btn-close" (click)="onClose(false)"></a>
+        </div>
+        <div class="order-box">
+            <div class="order-wrapper">
+                <div class="order-picture">
+                    <img class="logo"
+                        src="{{orderModel && orderModel.imageUrl && orderModel.imageUrl !== '' ? clientState.BaseUrl + orderModel.imageUrl : 'assets/images/logo.png'}}"
+                        alt="{{orderModel.restaurantName}}" />
+                </div>
+                <div class="order-detail">
+                    <h2 class="restaurant-name">
+                        {{orderModel.restaurantName}}
+                    </h2>
+                    <p>
+                        <i>#{{orderModel.orderCode}}</i>
+                    </p>
+                    <p>{{orderModel.totalPrice}} {{currencySymbol}}</p>
+                    <p>{{orderModel.orderDate | date: 'dd-MM-yyyy'}}
+                        <span [innerHTML]="'Components.Order.At' | translate"></span>
+                        {{orderModel.orderDate | date: 'HH:mm'}} -
+                        <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
+                        <span
+                            *ngIf="orderModel.orderInfos && orderModel.orderInfos[0]">{{orderModel.orderInfos[0].address}},
+                            {{orderModel.orderInfos[0].district}}, {{orderModel.orderInfos[0].city}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="order-details">
+            <h4>
+                <b>Your order</b>
+            </h4>
+            <div class="order-details-content">
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr *ngFor="let orderItem of orderModel.orderLineitems">
+                            <td>{{orderItem.quantity}}x</td>
+                            <td>{{orderItem.menuItemName}}</td>
+                            <td>{{orderItem.total}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="delivery-costs">Delivery:</td>
+                            <td>{{orderModel.deliveryCost}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="total-costs">
+                                <b>Total:</b>
+                            </td>
+                            <td>
+                                <b>{{orderModel.totalPrice}} {{currencySymbol}}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="payment-method">Payment method:</td>
+                            <td>{{paymentMethod[orderModel.paymentType]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="overlay is-open" (click)="onClose(false)"></div>
+</div>

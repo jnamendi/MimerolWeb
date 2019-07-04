@@ -1,0 +1,40 @@
+<header>
+    <div class="header-top">
+        <div class="container">
+            <a class="nav-trigger {{isToggleSearch ? 'is-clicked' : ''}}" (click)="onToggleSearch()"></a>
+            <div class="header-nav">
+                <a class="nav-toggle" (click)="onToggleNav()">
+                    <span class="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </a>
+            </div>
+            <div class="header-logo">
+                <a [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)"></a>
+            </div>
+            <div class="cd-primary-nav fadeInDown {{isToggleSearch ? 'is-visible' : ''}}">
+                <div class="block_links">
+                    <restaurant-searching (onToggleSearch)="onToggleSearch($event)"></restaurant-searching>
+                    <!-- <form accept-charset="UTF-8" method="get" action="/esearch" class="clearfix" (ngSubmit)="onSearchFoods()">
+                        <input class="form-text-2" name="search" [placeholder]="'Commons.Texts.KeyWord' | translate" type="text">
+                        <button class="btn--search--2" type="submit">
+                            <img src="assets\images\icon\search.png">
+                        </button>
+                    </form> -->
+                </div>
+            </div>
+        </div>
+        <div [hidden]="!clientState.isBusy" class="component-progressbar">
+            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+        </div>
+    </div>
+    <app-sidebar [isToggleNav]="isToggleNav" (onToggleAppNav)="onToggleNav($event)"></app-sidebar>
+</header>
+
+<main>
+    <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,35 @@
+<div class="shop_detail">
+    <div class="col-sm-12">
+        <h1 class="heading-style-2">
+            <img *ngIf="restaurantModel.imageUrl" src="{{clientState.BaseUrl + restaurantModel.imageUrl}}" alt="{{restaurantModel.name}}"
+            />{{restaurantModel.name}}</h1>
+        <p class="time">Open time: {{restaurantModel.openTime}} - {{restaurantModel.closeTime}}</p>
+        <p class="border-detail">
+            <img src="assets\images/border.png" alt="">
+        </p>
+        <p class="description_shop">{{restaurantModel.description}}</p>
+    </div>
+    <ul class="col-sm-12">
+        <li>
+            <a [ngClass]="isAuthen ? 'isActive' : ''">
+                <h2>{{restaurantModel.numOfFavouries || 0}}</h2>
+                <i (click)="onAddFavourite()" [ngClass]="favouriteModel1 && favouriteModel1.length > 0 && favouriteModel1[0].status == 1 ? 'fa fa-heart' : 'fa fa-heart-o'"
+                    aria-hidden="true"></i>
+            </a>
+        </li>
+        <li>
+            <a [ngClass]="isAuthen ? 'isActive' : ''">
+                <h2>{{restaurantModel.numOfReview || 0}}</h2>
+                <i class="fa fa-comment-o" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li>
+            <a [ngClass]="isAuthen ? 'isActive' : ''">
+                <h2>{{restaurantModel.rating || 0}}/5
+                    <span></span>
+                </h2>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>

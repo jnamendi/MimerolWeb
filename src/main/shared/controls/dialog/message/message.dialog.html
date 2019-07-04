@@ -1,0 +1,15 @@
+<div *ngIf="visible" class="dialog-container">
+    <div class="dialog-wrapper address">
+        <div class="dialog-header">
+            <h4 class="title">{{header}}</h4>
+            <a class="btn-close" (click)="onClose()"></a>
+        </div>
+        <div class="dialog-body">
+            {{content}}
+        </div>
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-default btn-primary" (click)="onClose()">Ok</button>
+        </div>
+    </div>
+    <div class="overlay is-open" (click)="onClose()"></div>
+</div>

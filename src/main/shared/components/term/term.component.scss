@@ -1,0 +1,25 @@
+@import "~styles/variables.scss";
+.main-content {
+    .content-listing {
+        margin-top: 20px;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 500;
+            margin: 0 0 10px;
+            background-color: transparent;
+        }
+        h2 {
+            padding: 20px 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+    }
+}

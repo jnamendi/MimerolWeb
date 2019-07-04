@@ -1,0 +1,21 @@
+<div *ngIf="visible" class="dialog-container">
+    <div class="dialog-wrapper order-checkout">
+        <!-- <div class="dialog-header">
+            <h4 class="title"></h4>
+            <a class="btn-close" (click)="onClose()"></a>
+        </div> -->
+        <div class="dialog-body">
+            <div class="confirm-message">
+                <p *ngIf="isEmpty" [innerHTML]="'Components.Order.OrderEmpty' | translate"> </p>
+                <p *ngIf="isResClose" [innerHTML]="'Components.Order.RestaurantClosed' | translate"></p>
+                <p *ngIf="!!existingEmail" [innerHTML]="'Components.Order.EmailExists' | translate"></p>
+            </div>
+
+        </div>
+        <div class="dialog-footer">
+            <button *ngIf="isEmpty || isResClose" type="button" class="btn btn-default btn-primary" (click)="onClosePopup()" [innerHTML]="'Commons.Texts.Ok' | translate"></button>
+            <button *ngIf="!!existingEmail" type="button" class="btn btn-default btn-primary" (click)="onNavigate()" [innerHTML]="'Commons.Texts.Ok' | translate"></button>
+        </div>
+    </div>
+    <div class="overlay is-open"></div>
+</div>

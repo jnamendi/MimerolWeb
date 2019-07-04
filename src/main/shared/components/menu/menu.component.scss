@@ -1,0 +1,136 @@
+.main-content {
+    background-color: #f2f2f2;
+}
+
+.mobile_block {
+    display: none;
+    #sticker3 {
+        z-index: 6 !important;
+    }
+}
+
+.mobile-menu {
+    z-index: 99;
+    transition: all .3s ease-in-out;
+}
+
+.icon_menufoods {
+    z-index: 3;
+    height: 60px;
+    width: 60px;
+    white-space: nowrap;
+    margin: auto;
+    top: 20px;
+    border-radius: 6px;
+    position: relative;
+    background: #ffffff;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+}
+
+.cart {
+    height: 72px;
+    width: 72px;
+    float: left;
+    a {
+        z-index: 3;
+        height: 72px;
+        width: 72px;
+        white-space: nowrap;
+        margin: auto;
+        top: 22px;
+        border-radius: 6px;
+        position: relative;
+        background: #ffffff;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    span {
+        i {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            height: 28px;
+            width: 28px;
+            background: #e94b35;
+            color: #ffffff;
+            font-size: 15px;
+            border-radius: 50%;
+            text-indent: 0;
+            text-align: center;
+            line-height: 28px;
+            font-family: sans-serif;
+        }
+    }
+}
+
+.menu-content {
+    display: inline-block;
+    width: 100%;
+    margin-top: 20px;
+    background: #ffffff;
+    .ui-tabview {
+        padding: 0;
+        .ui-tabview-nav {
+            padding: 0;
+        }
+        .ui-tabview-panels {
+            margin: 0;
+        }
+    }
+}
+
+.sticky {
+    left: inherit !important;
+}
+
+@media only screen and (max-width: 991px) {
+    .cart {
+        height: 60px;
+        width: 60px;
+        a {
+            height: 60px;
+            width: 60px;
+        }
+    }
+    .mobile_block {
+        display: block;
+    }
+    .icon_menufoods {
+        img {
+            position: relative;
+            top: 15px;
+            background-size: 100%;
+            width: 30px;
+        }
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .cart {
+        position: fixed;
+        bottom: 20px;
+        z-index: 6;
+        right: 5%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        a {
+            top: auto;
+        }
+    }
+    .mobile_block {
+        #sticker3 {
+            top: auto !important;
+            position: fixed;
+            bottom: 20px;
+        }
+    }
+    .icon_menufoods {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        top: 0;
+        position: static;
+        vertical-align: top;
+    }
+}

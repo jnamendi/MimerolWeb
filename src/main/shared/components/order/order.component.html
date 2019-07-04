@@ -1,0 +1,267 @@
+<div class="main-content">
+    <div id="container">
+        <section *ngIf="orderModel" class="section_child border_top_order">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <!-- <div class="total_mobile">
+                            <div *ngIf="child" class="panel-heading title_child">
+                                <h4 class="panel-title panel-title-main">
+                                    <a data-toggle="collapse" data-parent="#" href="#2" aria-expanded="false" class="collapsed">
+                                  Total <span class="font_large pull-right">{{onGetTotalItemPrice().toLocaleString()}}</span>
+                                  </a>
+                                </h4>
+                            </div>
+                            <div id="2" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <shopping-bags [isInOrder]="true" [restaurantId]="restaurantId" (itemInBags)="onGetItemsInBag($event)"></shopping-bags>
+                            </div>
+                        </div> -->
+                        <div class="order_box">
+                            <h2 [innerHTML]="'Components.Order.YourInfo' | translate"></h2>
+
+                            <form (ngSubmit)="onSubmitOrder(f.valid)" novalidate #f="ngForm">
+                                <div class="form-input">
+                                    <input type="text" noSpaces inputFocus name="name" [(ngModel)]="orderModel.name"
+                                        required #name="ngModel">
+                                    <label [innerHTML]="'Commons.Texts.NameRequired' | translate"></label>
+                                    <div *ngIf="name.invalid && (name.dirty || name.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="name.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-input">
+                                            <input name="email" noSpaces inputFocus type="email"
+                                                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                                                [(ngModel)]="orderModel.email" required #email="ngModel">
+                                            <label [innerHTML]="'Commons.Texts.EmailRequired' | translate"></label>
+                                            <div *ngIf="email.invalid && (email.dirty || email.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="email.errors?.required" class="error"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="email.errors?.pattern"
+                                                    [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <div class="form-input">
+                                            <input noSpaces inputFocus name="phone" type="tel"
+                                                [(ngModel)]="orderModel.number" required #phone="ngModel">
+                                            <label [innerHTML]="'Commons.Texts.NumberRequired' | translate"></label>
+                                            <div *ngIf="phone.invalid && (phone.dirty || phone.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="phone.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-input">
+                                    <input type="text" inputFocus name="companyName"
+                                        [(ngModel)]="orderModel.companyName">
+                                    <label [innerHTML]="'Commons.Texts.CompanyName' | translate"></label>
+                                </div>
+
+                                <h2 [innerHTML]="'Components.Order.AddressDelivery' | translate"></h2>
+                                <div *ngIf="orderModel.userId" class="form-input">
+                                    <select name="userAddress" inputFocus [(ngModel)]="orderModel.addressId"
+                                        #userAddress="ngModel" class="form-control">
+                                        <option [ngValue]="null">Fill in new address</option>
+                                        <option *ngFor="let item of userAddressModels" [value]="item.addressId">
+                                            {{item.address}}</option>
+                                    </select>
+                                    <label>From which address are you ordering?</label>
+                                    <div *ngIf="userAddress.invalid && (userAddress.dirty || userAddress.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="userAddress.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!orderModel.addressId && !!currentCountryCode" class="form-input">
+                                    <input type="text" inputFocus class="form-control" name="address"
+                                        autocomplete="off" [(ngModel)]="orderModel.address" #address="ngModel"
+                                        required [options]="{
+                                                        types: ['address'],
+                                                    componentRestrictions: { country: currentCountryCode}
+                                                    }" (setAddress)="setAddress($event)"
+                                        (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
+                                        id="autocomplete" ng2-google-place-autocomplete />
+                                    <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
+                                    <div *ngIf="address.invalid && (address.dirty || address.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="address.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!orderModel.addressId" class="form-input">
+                                    <textarea name="addressDesc" inputFocus [(ngModel)]="orderModel.addressDesc"
+                                        inputFocus rows="5" [required]="!orderModel.userId || !orderModel.addressId"
+                                        #addressDesc="ngModel"></textarea>
+                                    <label [innerHTML]="'Commons.Texts.AddressDescRequired' | translate"></label>
+                                    <div *ngIf="addressDesc.invalid && (addressDesc.dirty || addressDesc.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="addressDesc.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!orderModel.addressId" class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-input">
+                                            <select name="city" inputFocus [(ngModel)]="orderModel.cityId"
+                                                (change)="onGetDistrictByCity(orderModel.cityId)" #city="ngModel"
+                                                class="form-control"
+                                                [required]="!orderModel.userId || !orderModel.addressId">
+                                                <option [ngValue]="null" disabled>Select city</option>
+                                                <option *ngFor="let item of cityModels" [value]="item.cityId">
+                                                    {{item.name}}</option>
+                                            </select>
+                                            <label [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
+                                            <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="city.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-input">
+                                            <select name="district" inputFocus [(ngModel)]="orderModel.districtId"
+                                                #district="ngModel" class="form-control"
+                                                [required]="!orderModel.userId || !orderModel.addressId">
+                                                <option [ngValue]="null" disabled>Select district</option>
+                                                <option *ngFor="let item of districtModels" [value]="item.districtId">
+                                                    {{item.name}}</option>
+                                            </select>
+                                            <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
+                                            <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="district.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h2 [innerHTML]="'Components.Order.DeliveryTime' | translate"></h2>
+                                <div class="form-input">
+                                    <select name="time" inputFocus [(ngModel)]="orderModel.time" required
+                                        #time="ngModel">
+                                        <option [value]="'as soon as possible'">{{'Commons.Texts.AsSoonAs' |
+                                            translate}}
+                                        </option>
+                                        <option *ngFor="let item of deliveryTimes" [value]="item">{{item}}</option>
+                                    </select>
+                                    <label [innerHTML]="'Commons.Texts.TimeRequired' | translate"></label>
+                                    <div *ngIf="time.invalid && (time.dirty || time.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="time.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-input">
+                                    <textarea rows="3" inputFocus name="remarks" class="textarea_form"
+                                        [(ngModel)]="orderModel.remarks"></textarea>
+                                    <label [innerHTML]="'Commons.Texts.Remarks' | translate"></label>
+                                </div>
+
+                                <h2 [innerHTML]="'Components.Order.PaymentInfo' | translate"></h2>
+                                <div class="box_delivery">
+                                    <label class="radio">
+                                        <input type="radio" [value]="1" name="paymentType"
+                                            [(ngModel)]="orderModel.paymentType">
+                                        <span></span>
+                                        <span [innerHTML]="'Commons.Texts.CashPayment' | translate"></span>
+                                        <span class="title_note"
+                                            [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" [value]="2" name="paymentType"
+                                            [(ngModel)]="orderModel.paymentType">
+                                        <span></span>
+                                        <span>PayPal</span>
+                                        <span class="title_note"
+                                            [innerHTML]="'Components.Order.PayPalTitle' | translate"></span>
+                                        <p class="img_option_paypal">
+                                            <img src="assets\images\icon\paypal.png">
+                                        </p>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" [value]="3" name="paymentType"
+                                            [(ngModel)]="orderModel.paymentType">
+                                        <span></span>
+                                        <span [innerHTML]="'Commons.Texts.CreditCard' | translate"></span>
+                                        <span class="title_note"
+                                            [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
+                                        <p>
+                                            <img src="assets/images/icon/credit_cards_color.svg" alt="">
+                                        </p>
+                                    </label>
+                                    <div *ngIf="orderModel.paymentType == 1 && orderModel.paymentWith"
+                                        class="form-input" style="margin-top: 15px; margin-bottom: 0">
+                                        <select name="paymentType" inputFocus [(ngModel)]="orderModel.paymentWith"
+                                            [required]="orderModel.paymentType == 1" #paymentType="ngModel">
+                                            <option *ngFor="let item of paymentWiths" [value]="item">{{item}}</option>
+                                        </select>
+                                        <label [innerHTML]="'Commons.Texts.PayWith' | translate"></label>
+                                        <div *ngIf="paymentType.invalid && (paymentType.dirty || paymentType.touched || a.submitted)"
+                                            class="error">
+                                            <div *ngIf="paymentType.errors?.required"
+                                                [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div class="coupon">
+                                        <form (ngSubmit)="onApplyPromotion(a.valid)" novalidate #a="ngForm">
+                                            <h2 [innerHTML]="'Components.Order.Promotion' | translate"></h2>
+                                            <p [innerHTML]="'Components.Order.PromotionTitle' | translate"></p>
+                                            <div class="form-input">
+                                                <input noSpaces inputFocus name="promotion" type="text"
+                                                    [(ngModel)]="orderModel.promotionCode" required
+                                                    #promotion="ngModel">
+                                                <label [innerHTML]="'Commons.Texts.PromotionCode' | translate"></label>
+                                                <!-- <div *ngIf="promotion.invalid && (promotion.dirty || promotion.touched || a.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="promotion.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                </div> -->
+                                                <div class="{{isError ? 'error' : ''}}" *ngIf="isError">{{message}}
+                                                </div>
+                                            </div>
+                                            <button type="submit"
+                                                [innerHTML]="'Commons.Texts.Apply' | translate"></button>
+                                        </form>
+                                    </div>
+                                    <div class="btn_checkout">
+                                        <a class="button-secondary pull-left" (click)="onGoBack()"
+                                            [innerHTML]="'Commons.Texts.Back' | translate"></a>
+                                        <button type="submit" class="btn"
+                                            [innerHTML]="'Commons.Texts.Submit' | translate"></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 total_pc">
+                        <div id="sticker">
+                            <shopping-bags [isInOrder]="true" [restaurantId]="restaurantId"
+                                (itemInBags)="onGetItemsInBag($event)"></shopping-bags>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<order-confirm-dialog [visible]="isEmptyOder || isResClose || !!existingEmail" [isEmpty]="isEmptyOder"
+    [isResClose]="isResClose" [existingEmail]="existingEmail" (onClose)="onCloseConfirm($event)"
+    (onConfirmNavigate)="onNavigateToLogin($event)"></order-confirm-dialog>

@@ -1,0 +1,87 @@
+<div class="owner-main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h4 class="title" [innerHTML]="'Commons.Texts.OrderManagement' | translate"></h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title" [innerHTML]="'Owner.Orders.ManageYourOrders' | translate"></h3>
+                    </div>
+                    <div class="box-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th [innerHTML]="'Commons.Texts.OrderNumber' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Date' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Location' | translate"></th>
+                                    <th>Total</th>
+                                    <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of ownerOrderModels; let i = index;">
+                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td>
+                                        <a (click)="onUpdateOrder(item.orderId,item.orderCode)" routerLinkActive="active">
+                                            <span>{{item && item.orderCode}}</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item && item.orderInfos && item.orderInfos[0]">
+                                            {{item.orderInfos[0].city}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.totalPrice}} C$</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <p *ngIf="pagingModel && pagingModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
+                    </div>
+                    <div class="box-footer">
+                        <!-- <pagination *ngIf="pagingModel && pagingModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="pagingModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
+                            [currentPageIndex]="pagingModel.pageNumber">
+                        </pagination> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<owner-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isUpdation" [visible]="isUpdation" (onSuccess)="onSuccess($event)"
+    [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></owner-orders-detail>

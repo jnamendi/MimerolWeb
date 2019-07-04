@@ -1,0 +1,63 @@
+.bx-wrapper {
+    max-width: 100%;
+    .bx-viewport {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        height: 448px;
+        ul {
+            li {
+                display: block;
+                width: 100%;
+                position: relative;
+                list-style: none;
+                padding: 20px 0;
+                h3 {
+                    font-size: 12px;
+                    display: block;
+                    text-transform: uppercase;
+                    color: $grey6;
+                    font-weight: 600;
+                    position: relative;
+                    margin-top: 8px;
+                    border-left: 2px solid $orange-text;
+                    padding-left: 20px;
+                    margin-bottom: 12px;
+                    span {
+                        display: block;
+                        font-weight: 400;
+                        text-transform: none;
+                        margin-top: 10px;
+                        color: $grey;
+                    }
+                }
+            }
+        }
+    }
+    .bx-controls-direction a {
+        color: transparent;
+        width: 20px;
+        height: 20px;
+        z-index: 6;
+        display: block;
+        margin: 0 6px;
+    }
+    .bx-controls {
+        float: right;
+        margin-top: 2em;
+        .bx-controls-direction {
+            .bx-prev {
+                background: url(~assets/images/icon/arrow-right.png) no-repeat;
+                float: right;
+            }
+            .bx-next {
+                background: url(~assets/images/icon/arrow.png) no-repeat;
+                float: left;
+            }
+            a.disabled {
+                opacity: 0.5;
+                display: inline;
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+<div class="owner-main-content form-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h2 class="title" [innerHTML]="'Commons.Texts.MenuItemManagement' | translate"></h2>
+            </div>
+        </div>
+
+        <div class="row filter-pane">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group text-left">
+                    <a [routerLink]="['new']" routerLinkActive="active" class="btn btn-default btn-primary">
+                        <span [innerHTML]="'Commons.Texts.New' | translate"></span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    <!-- <button type="button" class="btn btn-default btn-danger" (click)="onDeleteItems()" [disabled]="!isSelectedItem() || clientState.isBusy">
+                        <span [innerHTML]="'Commons.Texts.Delete' | translate"></span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="menuItemOwnerModels && menuItemOwnerModels.length > 0 && !!message" class="form-message">
+            <h2 class="message {{isError ? 'error' : ''}}">
+                {{message}}
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title" [innerHTML]="'Commons.Texts.ManageYourMenu' | translate"></h3>
+                        <!-- <div class="box-tools">
+                            <button class="btn btn-default btn-secondary">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-default btn-secondary">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                            </button>
+                        </div> -->
+                    </div>
+                    <div class="box-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                                <tr>
+                                    <!-- <th>
+                                        <input type="checkbox" [checked]="isSelectdAllItems()" (change)="onChangeDeletedItems()">
+                                    </th> -->
+                                    <th class="text-center">No.</th>
+                                    <th [innerHTML]="'Commons.Texts.MenuItem' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.RestaurantName' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of menuItemOwnerModels; let i = index;">
+                                    <!-- <td>
+                                        <input type="checkbox" name="itemDelete{{i}}" [(ngModel)]="item.isDeleted">
+                                    </td> -->
+                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td>
+                                        <a routerLink="./{{item && item.menuItemId}}" routerLinkActive="active">
+                                            <span *ngFor="let item of onGetCurrentLanguageLst(item.languageLst).contentDef">
+                                                <span *ngIf="item.code == 'menu_item_name'">{{item.value}}</span>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.restaurantName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{i18nService.getTransEnum(extraItemStatus[item && item.status])}}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a title="Delete" class="btn btn-default btn-danger" (click)="onDeleteItem(item.menuItemId)">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <p *ngIf="paginModel && paginModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
+                    </div>
+                    <div class="box-footer">
+                        <!-- <pagination *ngIf="paginModel && paginModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="paginModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
+                            [currentPageIndex]="paginModel.pageIndex">
+                        </pagination> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

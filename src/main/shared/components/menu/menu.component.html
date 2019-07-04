@@ -1,0 +1,79 @@
+<div class="main-content">
+    <div id="container">
+        <section class="section_child">
+            <div class="bg_child" style="background-image:url(assets/images/bg-child.jpg);">
+                <div class="container">
+                    <menu-header [restaurantId]="restaurantId"></menu-header>
+                </div>
+            </div>
+        </section>
+        <aside class="mobile-menu js-offcanvas c-offcanvas c-offcanvas--left c-offcanvas--fixed c-offcanvas--overlay {{isShowMobileMenu ? 'is-open':'is-closed'}}" data-offcanvas-options="{&quot;modifiers&quot;:&quot;left,fixed,overlay&quot;}" id="left2" role="dialog"
+            tabindex="-1" aria-hidden="true">
+            <button class="js-offcanvas-close c-button c-button--m1 c-button--m2" data-button-options="{&quot;modifiers&quot;:&quot;m1,m2&quot;}" role="button" aria-controls="left2" (click)="onToggleMobileMenu(true)"><span class="c-button__text"></span></button>
+            <div class="menu_categories">
+                <div id="bs-collapse" class="item">
+                    <restaurant-menu *ngIf="restaurantId && restaurantMenu && restaurantMenu.mennu" [restaurantId]="restaurantId" [menu]="restaurantMenu.mennu" (selectedMenu)="onSelectMenu($event)"></restaurant-menu>
+                </div>
+            </div>
+        </aside>
+        <section class="main-child">
+            <div class="container">
+                <div class="row">
+                    <sticky [sticky-offset-top]="100">
+                        <div class="col-sm-12">
+                            <div class="mobile_block">
+                                <div id="sticker3-sticky-wrapper" class="sticky-wrapper is-sticky" style="height: 60px;">
+                                    <div id="sticker3">
+                                        <a class="js-offcanvas-trigger icon_menufoods" data-offcanvas-trigger="left2" (click)="onToggleMobileMenu()">
+                                            <img src="assets\images\icon\apps.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sticky>
+                    <!-- Blueprint header -->
+                    <div class="col-sm-3 mobile_none">
+                        <restaurant-menu *ngIf="restaurantId && restaurantMenu && restaurantMenu.mennu" [restaurantId]="restaurantId" [menu]="restaurantMenu.mennu" (selectedMenu)="onSelectMenu($event)"></restaurant-menu>
+                    </div>
+                    <div class="content col-sm-8">
+                        <menu-items *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems" [restaurantId]="restaurantId" [selectedMenuId]="selectedMenuId" [menuItems]="restaurantMenu.menuItems" [selectedMenuName]="selectedMenuName" (itemInBags)="onGetItemsInBag($event)"></menu-items>
+                        <restaurant-reviews *ngIf="restaurantId" [restaurantId]="restaurantId"></restaurant-reviews>
+
+                        <!-- <p-tabView class="menu-content">
+                            <p-tabPanel header="Menu">
+                                <menu-items *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems" [restaurantId]="restaurantId" [selectedMenuId]="selectedMenuId" [menuItems]="restaurantMenu.menuItems" [selectedMenuName]="selectedMenuName" (itemInBags)="onGetItemsInBag($event)"></menu-items>
+                                <restaurant-reviews *ngIf="restaurantId" [restaurantId]="restaurantId"></restaurant-reviews>
+                            </p-tabPanel>
+                            <p-tabPanel *ngIf="isEnableOrderReview" header="Info">
+                                <order-review></order-review>
+                            </p-tabPanel>
+
+                        </p-tabView> -->
+                    </div>
+
+                    <sticky [sticky-offset-top]="100">
+                        <div class="cart">
+                            <div id="sticker2-sticky-wrapper" class="sticky-wrapper" style="height: 60px;">
+                                <div id="sticker2">
+                                    <a data-offcanvas-trigger="right" (click)="onOpenShoppingBags(true)">
+                                        <span>
+                                            <img src="assets\images\icon\cart.png">
+                                            <i *ngIf="totalItemsInBag > 0">{{totalItemsInBag}}</i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </sticky>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="mobile-menu  sticker_fillter js-offcanvas c-offcanvas c-offcanvas--right c-offcanvas--overlay {{isVisibleBags ? 'is-open': 'is-closed'}}" aria-hidden="true">
+    <button class="filter-close" (click)="onOpenShoppingBags(false)"></button>
+    <shopping-bags *ngIf="isVisibleBags" [restaurantId]="restaurantId" [isInOrder]="false" (removedItem)="onRemoveMenuItem($event)" (itemInBags)="onGetItemsInBag($event)"></shopping-bags>
+</div>
+<div class="overlay {{isVisibleBags? 'is-open':''}}" (click)="onOpenShoppingBags(false)"></div>

@@ -1,0 +1,65 @@
+<div class="admin-main-content form-detail">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-header">
+                <h2 class="title">
+                    <span class="title-one" [innerHTML]="'Commons.Texts.Role' | translate"></span>
+                    <span>{{roleAdminModel.name}}</span>
+                </h2>
+            </div>
+            <div *ngIf="!!message" class="form-message">
+                <h2 class="message {{isError ? 'error' : ''}}">
+                    {{message}}
+                </h2>
+                <a [routerLink]="['..']" routerLinkActive="active" class="landing">
+                    <span class="btn btn-default btn-primary" [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
+                </a>
+            </div>
+            <div class="form-content">
+                <div class="box box-primary">
+                    <form (ngSubmit)="onUpdateRole(f.valid)" #f="ngForm">
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RoleNameRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="roleName" [(ngModel)]="roleAdminModel.name" #roleName="ngModel" required/>
+                                    <div *ngIf="roleName.invalid && (roleName.dirty || roleName.touched || f.submitted)" class="error">
+                                        <div *ngIf="roleName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RoleCodeRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="roleCode" [(ngModel)]="roleAdminModel.code" #roleCode="ngModel" required/>
+                                    <div *ngIf="roleCode.invalid && (roleCode.dirty || roleCode.touched || f.submitted)" class="error">
+                                        <div *ngIf="roleCode.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Status' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="status" class="form-control" [(ngModel)]="roleAdminModel.status" #status="ngModel">
+                                        <option value="1" [innerHTML]="'Commons.Texts.Publish' | translate"></option>
+                                        <option value="0" [innerHTML]="'Commons.Texts.UnPublish' | translate"></option>
+                                    </select>
+                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
+                                        <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="button" class="btn btn-default btn-danger" (click)="onDeleteRole()" [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

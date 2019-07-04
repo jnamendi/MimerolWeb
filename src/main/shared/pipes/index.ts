@@ -1,0 +1,1 @@
+export { RoundNumberPipe } from './round-number/round-number.pipe';

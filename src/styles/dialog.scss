@@ -1,0 +1,55 @@
+.dialog-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 60;
+    .dialog-wrapper {
+        width: 600px;
+        margin: 10% auto;
+        left: 0;
+        right: 0;
+        background-color: $body-bg;
+        z-index: 45;
+        border-bottom: 4px solid $orange;
+        position: relative;
+        .dialog-header,
+        .dialog-body,
+        .dialog-footer {
+            padding: 20px;
+        }
+        .dialog-header {
+            position: relative;
+            background-color: $orange;
+            width: 100%;
+            text-align: center;
+            color: $body-bg;
+            margin-bottom: 24px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+            display: inline-block;
+            .title {
+                font-size: 1.375rem;
+                display: inline-block;
+            }
+            .btn-close {
+                display: block;
+                float: right;
+                width: 16px;
+                height: 16px;
+                text-align: center;
+                background-size: 100%;
+                position: relative;
+                background-image: url(~assets/images/icon/delete.png);
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .dialog-container {
+        .dialog-wrapper {
+            width: auto;
+        }
+    }
+}

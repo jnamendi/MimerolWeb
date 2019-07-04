@@ -1,0 +1,501 @@
+<div class="owner-main-content">
+    <div class="container-fluid">
+        <p class="development-inprogress">
+            <i class="fa fa-spinner"></i> Development inprogress...</p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 header">
+                <h4 class="title">Current balance</h4>
+                <h5 class="subtitle">
+                    Outstanding amount at 27-04-2018: ₫ 520.000,00
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 header">
+                <h4 class="title">Online payments</h4>
+                <h5 class="subtitle">
+                    The following list displays which orders were paid electronically and when there were payouts to your bank account. By default
+                    payments will be displayed starting at 2018-04-01.
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8">
+                <form method="post" action="/orders/archive" name="orderArchive">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="padding-right:10px;">
+                                    <select name="month" class="form-control" style="width:150px;">
+                                        <option value="2018-04">April 2018</option>
+                                        <option value="2018-03">March 2018</option>
+                                        <option value="2018-02" selected="">February 2018</option>
+                                        <option value="2018-01">January 2018</option>
+                                        <option value="2017-12">December 2017</option>
+                                        <option value="2017-11">November 2017</option>
+                                        <option value="2017-10">October 2017</option>
+                                        <option value="2017-09">September 2017</option>
+                                        <option value="2017-08">August 2017</option>
+                                        <option value="2017-07">July 2017</option>
+                                        <option value="2017-06">June 2017</option>
+                                        <option value="2017-05">May 2017</option>
+                                        <option value="2017-04">April 2017</option>
+                                        <option value="2017-03">March 2017</option>
+                                        <option value="2017-02">February 2017</option>
+                                        <option value="2017-01">January 2017</option>
+                                        <option value="2016-12">December 2016</option>
+                                        <option value="2016-11">November 2016</option>
+                                        <option value="2016-10">October 2016</option>
+                                        <option value="2016-09">September 2016</option>
+                                        <option value="2016-08">August 2016</option>
+                                        <option value="2016-07">July 2016</option>
+                                        <option value="2016-06">June 2016</option>
+                                        <option value="2016-05">May 2016</option>
+                                        <option value="2016-04">April 2016</option>
+                                        <option value="2016-03">March 2016</option>
+                                        <option value="2016-02">February 2016</option>
+                                        <option value="2016-01">January 2016</option>
+                                        <option value="2015-12">December 2015</option>
+                                        <option value="2015-11">November 2015</option>
+                                        <option value="2015-10">October 2015</option>
+                                        <option value="2015-09">September 2015</option>
+                                        <option value="2015-08">August 2015</option>
+                                        <option value="2015-07">July 2015</option>
+                                        <option value="2015-06">June 2015</option>
+                                        <option value="2015-05">May 2015</option>
+                                        <option value="2015-04">April 2015</option>
+                                        <option value="2015-03">March 2015</option>
+                                        <option value="2015-02">February 2015</option>
+                                        <option value="2015-01">January 2015</option>
+                                        <option value="2014-12">December 2014</option>
+                                        <option value="2014-11">November 2014</option>
+                                        <option value="2014-10">October 2014</option>
+                                        <option value="2014-09">September 2014</option>
+                                        <option value="2014-08">August 2014</option>
+                                        <option value="2014-07">July 2014</option>
+                                        <option value="2014-06">June 2014</option>
+                                        <option value="2014-05">May 2014</option>
+                                        <option value="2014-04">April 2014</option>
+                                        <option value="2014-03">March 2014</option>
+                                        <option value="2014-02">February 2014</option>
+                                        <option value="2014-01">January 2014</option>
+                                        <option value="2013-12">December 2013</option>
+                                        <option value="2013-11">November 2013</option>
+                                        <option value="2013-10">October 2013</option>
+                                        <option value="2013-09">September 2013</option>
+                                        <option value="2013-08">August 2013</option>
+                                        <option value="2013-07">July 2013</option>
+                                        <option value="2013-06">June 2013</option>
+                                        <option value="2013-05">May 2013</option>
+                                        <option value="2013-04">April 2013</option>
+                                        <option value="2013-03">March 2013</option>
+                                        <option value="2013-02">February 2013</option>
+                                        <option value="2013-01">January 2013</option>
+                                        <option value="2012-12">December 2012</option>
+                                        <option value="2012-11">November 2012</option>
+                                        <option value="2012-10">October 2012</option>
+                                        <option value="2012-09">September 2012</option>
+                                        <option value="2012-08">August 2012</option>
+                                        <option value="2012-07">July 2012</option>
+                                        <option value="2012-06">June 2012</option>
+                                        <option value="2012-05">May 2012</option>
+                                        <option value="2012-04">April 2012</option>
+                                        <option value="2012-03">March 2012</option>
+                                        <option value="2012-02">February 2012</option>
+                                        <option value="2012-01">January 2012</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" name="show_month" value="ok">
+                                </td>
+                                <td style="padding:0 10px;">
+                                    <select name="week" class="form-control " style="width:300px;">
+                                        <option value="2018-04-22;2018-04-28" selected="">Sunday 22-04-2018 — Saturday 28-04-2018</option>
+                                        <option value="2018-04-15;2018-04-21">Sunday 15-04-2018 — Saturday 21-04-2018</option>
+                                        <option value="2018-04-08;2018-04-14">Sunday 08-04-2018 — Saturday 14-04-2018</option>
+                                        <option value="2018-04-01;2018-04-07">Sunday 01-04-2018 — Saturday 07-04-2018</option>
+                                        <option value="2018-03-25;2018-03-31">Sunday 25-03-2018 — Saturday 31-03-2018</option>
+                                        <option value="2018-03-18;2018-03-24">Sunday 18-03-2018 — Saturday 24-03-2018</option>
+                                        <option value="2018-03-11;2018-03-17">Sunday 11-03-2018 — Saturday 17-03-2018</option>
+                                        <option value="2018-03-04;2018-03-10">Sunday 04-03-2018 — Saturday 10-03-2018</option>
+                                        <option value="2018-02-25;2018-03-03">Sunday 25-02-2018 — Saturday 03-03-2018</option>
+                                        <option value="2018-02-18;2018-02-24">Sunday 18-02-2018 — Saturday 24-02-2018</option>
+                                        <option value="2018-02-11;2018-02-17">Sunday 11-02-2018 — Saturday 17-02-2018</option>
+                                        <option value="2018-02-04;2018-02-10">Sunday 04-02-2018 — Saturday 10-02-2018</option>
+                                        <option value="2018-01-28;2018-02-03">Sunday 28-01-2018 — Saturday 03-02-2018</option>
+                                        <option value="2018-01-21;2018-01-27">Sunday 21-01-2018 — Saturday 27-01-2018</option>
+                                        <option value="2018-01-14;2018-01-20">Sunday 14-01-2018 — Saturday 20-01-2018</option>
+                                        <option value="2018-01-07;2018-01-13">Sunday 07-01-2018 — Saturday 13-01-2018</option>
+                                        <option value="2017-12-31;2018-01-06">Sunday 31-12-2017 — Saturday 06-01-2018</option>
+                                        <option value="2017-12-24;2017-12-30">Sunday 24-12-2017 — Saturday 30-12-2017</option>
+                                        <option value="2017-12-17;2017-12-23">Sunday 17-12-2017 — Saturday 23-12-2017</option>
+                                        <option value="2017-12-10;2017-12-16">Sunday 10-12-2017 — Saturday 16-12-2017</option>
+                                        <option value="2017-12-03;2017-12-09">Sunday 03-12-2017 — Saturday 09-12-2017</option>
+                                        <option value="2017-11-26;2017-12-02">Sunday 26-11-2017 — Saturday 02-12-2017</option>
+                                        <option value="2017-11-19;2017-11-25">Sunday 19-11-2017 — Saturday 25-11-2017</option>
+                                        <option value="2017-11-12;2017-11-18">Sunday 12-11-2017 — Saturday 18-11-2017</option>
+                                        <option value="2017-11-05;2017-11-11">Sunday 05-11-2017 — Saturday 11-11-2017</option>
+                                        <option value="2017-10-29;2017-11-04">Sunday 29-10-2017 — Saturday 04-11-2017</option>
+                                        <option value="2017-10-22;2017-10-28">Sunday 22-10-2017 — Saturday 28-10-2017</option>
+                                        <option value="2017-10-15;2017-10-21">Sunday 15-10-2017 — Saturday 21-10-2017</option>
+                                        <option value="2017-10-08;2017-10-14">Sunday 08-10-2017 — Saturday 14-10-2017</option>
+                                        <option value="2017-10-01;2017-10-07">Sunday 01-10-2017 — Saturday 07-10-2017</option>
+                                        <option value="2017-09-24;2017-09-30">Sunday 24-09-2017 — Saturday 30-09-2017</option>
+                                        <option value="2017-09-17;2017-09-23">Sunday 17-09-2017 — Saturday 23-09-2017</option>
+                                        <option value="2017-09-10;2017-09-16">Sunday 10-09-2017 — Saturday 16-09-2017</option>
+                                        <option value="2017-09-03;2017-09-09">Sunday 03-09-2017 — Saturday 09-09-2017</option>
+                                        <option value="2017-08-27;2017-09-02">Sunday 27-08-2017 — Saturday 02-09-2017</option>
+                                        <option value="2017-08-20;2017-08-26">Sunday 20-08-2017 — Saturday 26-08-2017</option>
+                                        <option value="2017-08-13;2017-08-19">Sunday 13-08-2017 — Saturday 19-08-2017</option>
+                                        <option value="2017-08-06;2017-08-12">Sunday 06-08-2017 — Saturday 12-08-2017</option>
+                                        <option value="2017-07-30;2017-08-05">Sunday 30-07-2017 — Saturday 05-08-2017</option>
+                                        <option value="2017-07-23;2017-07-29">Sunday 23-07-2017 — Saturday 29-07-2017</option>
+                                        <option value="2017-07-16;2017-07-22">Sunday 16-07-2017 — Saturday 22-07-2017</option>
+                                        <option value="2017-07-09;2017-07-15">Sunday 09-07-2017 — Saturday 15-07-2017</option>
+                                        <option value="2017-07-02;2017-07-08">Sunday 02-07-2017 — Saturday 08-07-2017</option>
+                                        <option value="2017-06-25;2017-07-01">Sunday 25-06-2017 — Saturday 01-07-2017</option>
+                                        <option value="2017-06-18;2017-06-24">Sunday 18-06-2017 — Saturday 24-06-2017</option>
+                                        <option value="2017-06-11;2017-06-17">Sunday 11-06-2017 — Saturday 17-06-2017</option>
+                                        <option value="2017-06-04;2017-06-10">Sunday 04-06-2017 — Saturday 10-06-2017</option>
+                                        <option value="2017-05-28;2017-06-03">Sunday 28-05-2017 — Saturday 03-06-2017</option>
+                                        <option value="2017-05-21;2017-05-27">Sunday 21-05-2017 — Saturday 27-05-2017</option>
+                                        <option value="2017-05-14;2017-05-20">Sunday 14-05-2017 — Saturday 20-05-2017</option>
+                                        <option value="2017-05-07;2017-05-13">Sunday 07-05-2017 — Saturday 13-05-2017</option>
+                                        <option value="2017-04-30;2017-05-06">Sunday 30-04-2017 — Saturday 06-05-2017</option>
+                                        <option value="2017-04-23;2017-04-29">Sunday 23-04-2017 — Saturday 29-04-2017</option>
+                                        <option value="2017-04-16;2017-04-22">Sunday 16-04-2017 — Saturday 22-04-2017</option>
+                                        <option value="2017-04-09;2017-04-15">Sunday 09-04-2017 — Saturday 15-04-2017</option>
+                                        <option value="2017-04-02;2017-04-08">Sunday 02-04-2017 — Saturday 08-04-2017</option>
+                                        <option value="2017-03-26;2017-04-01">Sunday 26-03-2017 — Saturday 01-04-2017</option>
+                                        <option value="2017-03-19;2017-03-25">Sunday 19-03-2017 — Saturday 25-03-2017</option>
+                                        <option value="2017-03-12;2017-03-18">Sunday 12-03-2017 — Saturday 18-03-2017</option>
+                                        <option value="2017-03-05;2017-03-11">Sunday 05-03-2017 — Saturday 11-03-2017</option>
+                                        <option value="2017-02-26;2017-03-04">Sunday 26-02-2017 — Saturday 04-03-2017</option>
+                                        <option value="2017-02-19;2017-02-25">Sunday 19-02-2017 — Saturday 25-02-2017</option>
+                                        <option value="2017-02-12;2017-02-18">Sunday 12-02-2017 — Saturday 18-02-2017</option>
+                                        <option value="2017-02-05;2017-02-11">Sunday 05-02-2017 — Saturday 11-02-2017</option>
+                                        <option value="2017-01-29;2017-02-04">Sunday 29-01-2017 — Saturday 04-02-2017</option>
+                                        <option value="2017-01-22;2017-01-28">Sunday 22-01-2017 — Saturday 28-01-2017</option>
+                                        <option value="2017-01-15;2017-01-21">Sunday 15-01-2017 — Saturday 21-01-2017</option>
+                                        <option value="2017-01-08;2017-01-14">Sunday 08-01-2017 — Saturday 14-01-2017</option>
+                                        <option value="2017-01-01;2017-01-07">Sunday 01-01-2017 — Saturday 07-01-2017</option>
+                                        <option value="2016-12-25;2016-12-31">Sunday 25-12-2016 — Saturday 31-12-2016</option>
+                                        <option value="2016-12-18;2016-12-24">Sunday 18-12-2016 — Saturday 24-12-2016</option>
+                                        <option value="2016-12-11;2016-12-17">Sunday 11-12-2016 — Saturday 17-12-2016</option>
+                                        <option value="2016-12-04;2016-12-10">Sunday 04-12-2016 — Saturday 10-12-2016</option>
+                                        <option value="2016-11-27;2016-12-03">Sunday 27-11-2016 — Saturday 03-12-2016</option>
+                                        <option value="2016-11-20;2016-11-26">Sunday 20-11-2016 — Saturday 26-11-2016</option>
+                                        <option value="2016-11-13;2016-11-19">Sunday 13-11-2016 — Saturday 19-11-2016</option>
+                                        <option value="2016-11-06;2016-11-12">Sunday 06-11-2016 — Saturday 12-11-2016</option>
+                                        <option value="2016-10-30;2016-11-05">Sunday 30-10-2016 — Saturday 05-11-2016</option>
+                                        <option value="2016-10-23;2016-10-29">Sunday 23-10-2016 — Saturday 29-10-2016</option>
+                                        <option value="2016-10-16;2016-10-22">Sunday 16-10-2016 — Saturday 22-10-2016</option>
+                                        <option value="2016-10-09;2016-10-15">Sunday 09-10-2016 — Saturday 15-10-2016</option>
+                                        <option value="2016-10-02;2016-10-08">Sunday 02-10-2016 — Saturday 08-10-2016</option>
+                                        <option value="2016-09-25;2016-10-01">Sunday 25-09-2016 — Saturday 01-10-2016</option>
+                                        <option value="2016-09-18;2016-09-24">Sunday 18-09-2016 — Saturday 24-09-2016</option>
+                                        <option value="2016-09-11;2016-09-17">Sunday 11-09-2016 — Saturday 17-09-2016</option>
+                                        <option value="2016-09-04;2016-09-10">Sunday 04-09-2016 — Saturday 10-09-2016</option>
+                                        <option value="2016-08-28;2016-09-03">Sunday 28-08-2016 — Saturday 03-09-2016</option>
+                                        <option value="2016-08-21;2016-08-27">Sunday 21-08-2016 — Saturday 27-08-2016</option>
+                                        <option value="2016-08-14;2016-08-20">Sunday 14-08-2016 — Saturday 20-08-2016</option>
+                                        <option value="2016-08-07;2016-08-13">Sunday 07-08-2016 — Saturday 13-08-2016</option>
+                                        <option value="2016-07-31;2016-08-06">Sunday 31-07-2016 — Saturday 06-08-2016</option>
+                                        <option value="2016-07-24;2016-07-30">Sunday 24-07-2016 — Saturday 30-07-2016</option>
+                                        <option value="2016-07-17;2016-07-23">Sunday 17-07-2016 — Saturday 23-07-2016</option>
+                                        <option value="2016-07-10;2016-07-16">Sunday 10-07-2016 — Saturday 16-07-2016</option>
+                                        <option value="2016-07-03;2016-07-09">Sunday 03-07-2016 — Saturday 09-07-2016</option>
+                                        <option value="2016-06-26;2016-07-02">Sunday 26-06-2016 — Saturday 02-07-2016</option>
+                                        <option value="2016-06-19;2016-06-25">Sunday 19-06-2016 — Saturday 25-06-2016</option>
+                                        <option value="2016-06-12;2016-06-18">Sunday 12-06-2016 — Saturday 18-06-2016</option>
+                                        <option value="2016-06-05;2016-06-11">Sunday 05-06-2016 — Saturday 11-06-2016</option>
+                                        <option value="2016-05-29;2016-06-04">Sunday 29-05-2016 — Saturday 04-06-2016</option>
+                                        <option value="2016-05-22;2016-05-28">Sunday 22-05-2016 — Saturday 28-05-2016</option>
+                                        <option value="2016-05-15;2016-05-21">Sunday 15-05-2016 — Saturday 21-05-2016</option>
+                                        <option value="2016-05-08;2016-05-14">Sunday 08-05-2016 — Saturday 14-05-2016</option>
+                                        <option value="2016-05-01;2016-05-07">Sunday 01-05-2016 — Saturday 07-05-2016</option>
+                                        <option value="2016-04-24;2016-04-30">Sunday 24-04-2016 — Saturday 30-04-2016</option>
+                                        <option value="2016-04-17;2016-04-23">Sunday 17-04-2016 — Saturday 23-04-2016</option>
+                                        <option value="2016-04-10;2016-04-16">Sunday 10-04-2016 — Saturday 16-04-2016</option>
+                                        <option value="2016-04-03;2016-04-09">Sunday 03-04-2016 — Saturday 09-04-2016</option>
+                                        <option value="2016-03-27;2016-04-02">Sunday 27-03-2016 — Saturday 02-04-2016</option>
+                                        <option value="2016-03-20;2016-03-26">Sunday 20-03-2016 — Saturday 26-03-2016</option>
+                                        <option value="2016-03-13;2016-03-19">Sunday 13-03-2016 — Saturday 19-03-2016</option>
+                                        <option value="2016-03-06;2016-03-12">Sunday 06-03-2016 — Saturday 12-03-2016</option>
+                                        <option value="2016-02-28;2016-03-05">Sunday 28-02-2016 — Saturday 05-03-2016</option>
+                                        <option value="2016-02-21;2016-02-27">Sunday 21-02-2016 — Saturday 27-02-2016</option>
+                                        <option value="2016-02-14;2016-02-20">Sunday 14-02-2016 — Saturday 20-02-2016</option>
+                                        <option value="2016-02-07;2016-02-13">Sunday 07-02-2016 — Saturday 13-02-2016</option>
+                                        <option value="2016-01-31;2016-02-06">Sunday 31-01-2016 — Saturday 06-02-2016</option>
+                                        <option value="2016-01-24;2016-01-30">Sunday 24-01-2016 — Saturday 30-01-2016</option>
+                                        <option value="2016-01-17;2016-01-23">Sunday 17-01-2016 — Saturday 23-01-2016</option>
+                                        <option value="2016-01-10;2016-01-16">Sunday 10-01-2016 — Saturday 16-01-2016</option>
+                                        <option value="2016-01-03;2016-01-09">Sunday 03-01-2016 — Saturday 09-01-2016</option>
+                                        <option value="2015-12-27;2016-01-02">Sunday 27-12-2015 — Saturday 02-01-2016</option>
+                                        <option value="2015-12-20;2015-12-26">Sunday 20-12-2015 — Saturday 26-12-2015</option>
+                                        <option value="2015-12-13;2015-12-19">Sunday 13-12-2015 — Saturday 19-12-2015</option>
+                                        <option value="2015-12-06;2015-12-12">Sunday 06-12-2015 — Saturday 12-12-2015</option>
+                                        <option value="2015-11-29;2015-12-05">Sunday 29-11-2015 — Saturday 05-12-2015</option>
+                                        <option value="2015-11-22;2015-11-28">Sunday 22-11-2015 — Saturday 28-11-2015</option>
+                                        <option value="2015-11-15;2015-11-21">Sunday 15-11-2015 — Saturday 21-11-2015</option>
+                                        <option value="2015-11-08;2015-11-14">Sunday 08-11-2015 — Saturday 14-11-2015</option>
+                                        <option value="2015-11-01;2015-11-07">Sunday 01-11-2015 — Saturday 07-11-2015</option>
+                                        <option value="2015-10-25;2015-10-31">Sunday 25-10-2015 — Saturday 31-10-2015</option>
+                                        <option value="2015-10-18;2015-10-24">Sunday 18-10-2015 — Saturday 24-10-2015</option>
+                                        <option value="2015-10-11;2015-10-17">Sunday 11-10-2015 — Saturday 17-10-2015</option>
+                                        <option value="2015-10-04;2015-10-10">Sunday 04-10-2015 — Saturday 10-10-2015</option>
+                                        <option value="2015-09-27;2015-10-03">Sunday 27-09-2015 — Saturday 03-10-2015</option>
+                                        <option value="2015-09-20;2015-09-26">Sunday 20-09-2015 — Saturday 26-09-2015</option>
+                                        <option value="2015-09-13;2015-09-19">Sunday 13-09-2015 — Saturday 19-09-2015</option>
+                                        <option value="2015-09-06;2015-09-12">Sunday 06-09-2015 — Saturday 12-09-2015</option>
+                                        <option value="2015-08-30;2015-09-05">Sunday 30-08-2015 — Saturday 05-09-2015</option>
+                                        <option value="2015-08-23;2015-08-29">Sunday 23-08-2015 — Saturday 29-08-2015</option>
+                                        <option value="2015-08-16;2015-08-22">Sunday 16-08-2015 — Saturday 22-08-2015</option>
+                                        <option value="2015-08-09;2015-08-15">Sunday 09-08-2015 — Saturday 15-08-2015</option>
+                                        <option value="2015-08-02;2015-08-08">Sunday 02-08-2015 — Saturday 08-08-2015</option>
+                                        <option value="2015-07-26;2015-08-01">Sunday 26-07-2015 — Saturday 01-08-2015</option>
+                                        <option value="2015-07-19;2015-07-25">Sunday 19-07-2015 — Saturday 25-07-2015</option>
+                                        <option value="2015-07-12;2015-07-18">Sunday 12-07-2015 — Saturday 18-07-2015</option>
+                                        <option value="2015-07-05;2015-07-11">Sunday 05-07-2015 — Saturday 11-07-2015</option>
+                                        <option value="2015-06-28;2015-07-04">Sunday 28-06-2015 — Saturday 04-07-2015</option>
+                                        <option value="2015-06-21;2015-06-27">Sunday 21-06-2015 — Saturday 27-06-2015</option>
+                                        <option value="2015-06-14;2015-06-20">Sunday 14-06-2015 — Saturday 20-06-2015</option>
+                                        <option value="2015-06-07;2015-06-13">Sunday 07-06-2015 — Saturday 13-06-2015</option>
+                                        <option value="2015-05-31;2015-06-06">Sunday 31-05-2015 — Saturday 06-06-2015</option>
+                                        <option value="2015-05-24;2015-05-30">Sunday 24-05-2015 — Saturday 30-05-2015</option>
+                                        <option value="2015-05-17;2015-05-23">Sunday 17-05-2015 — Saturday 23-05-2015</option>
+                                        <option value="2015-05-10;2015-05-16">Sunday 10-05-2015 — Saturday 16-05-2015</option>
+                                        <option value="2015-05-03;2015-05-09">Sunday 03-05-2015 — Saturday 09-05-2015</option>
+                                        <option value="2015-04-26;2015-05-02">Sunday 26-04-2015 — Saturday 02-05-2015</option>
+                                        <option value="2015-04-19;2015-04-25">Sunday 19-04-2015 — Saturday 25-04-2015</option>
+                                        <option value="2015-04-12;2015-04-18">Sunday 12-04-2015 — Saturday 18-04-2015</option>
+                                        <option value="2015-04-05;2015-04-11">Sunday 05-04-2015 — Saturday 11-04-2015</option>
+                                        <option value="2015-03-29;2015-04-04">Sunday 29-03-2015 — Saturday 04-04-2015</option>
+                                        <option value="2015-03-22;2015-03-28">Sunday 22-03-2015 — Saturday 28-03-2015</option>
+                                        <option value="2015-03-15;2015-03-21">Sunday 15-03-2015 — Saturday 21-03-2015</option>
+                                        <option value="2015-03-08;2015-03-14">Sunday 08-03-2015 — Saturday 14-03-2015</option>
+                                        <option value="2015-03-01;2015-03-07">Sunday 01-03-2015 — Saturday 07-03-2015</option>
+                                        <option value="2015-02-22;2015-02-28">Sunday 22-02-2015 — Saturday 28-02-2015</option>
+                                        <option value="2015-02-15;2015-02-21">Sunday 15-02-2015 — Saturday 21-02-2015</option>
+                                        <option value="2015-02-08;2015-02-14">Sunday 08-02-2015 — Saturday 14-02-2015</option>
+                                        <option value="2015-02-01;2015-02-07">Sunday 01-02-2015 — Saturday 07-02-2015</option>
+                                        <option value="2015-01-25;2015-01-31">Sunday 25-01-2015 — Saturday 31-01-2015</option>
+                                        <option value="2015-01-18;2015-01-24">Sunday 18-01-2015 — Saturday 24-01-2015</option>
+                                        <option value="2015-01-11;2015-01-17">Sunday 11-01-2015 — Saturday 17-01-2015</option>
+                                        <option value="2015-01-04;2015-01-10">Sunday 04-01-2015 — Saturday 10-01-2015</option>
+                                        <option value="2014-12-28;2015-01-03">Sunday 28-12-2014 — Saturday 03-01-2015</option>
+                                        <option value="2014-12-21;2014-12-27">Sunday 21-12-2014 — Saturday 27-12-2014</option>
+                                        <option value="2014-12-14;2014-12-20">Sunday 14-12-2014 — Saturday 20-12-2014</option>
+                                        <option value="2014-12-07;2014-12-13">Sunday 07-12-2014 — Saturday 13-12-2014</option>
+                                        <option value="2014-11-30;2014-12-06">Sunday 30-11-2014 — Saturday 06-12-2014</option>
+                                        <option value="2014-11-23;2014-11-29">Sunday 23-11-2014 — Saturday 29-11-2014</option>
+                                        <option value="2014-11-16;2014-11-22">Sunday 16-11-2014 — Saturday 22-11-2014</option>
+                                        <option value="2014-11-09;2014-11-15">Sunday 09-11-2014 — Saturday 15-11-2014</option>
+                                        <option value="2014-11-02;2014-11-08">Sunday 02-11-2014 — Saturday 08-11-2014</option>
+                                        <option value="2014-10-26;2014-11-01">Sunday 26-10-2014 — Saturday 01-11-2014</option>
+                                        <option value="2014-10-19;2014-10-25">Sunday 19-10-2014 — Saturday 25-10-2014</option>
+                                        <option value="2014-10-12;2014-10-18">Sunday 12-10-2014 — Saturday 18-10-2014</option>
+                                        <option value="2014-10-05;2014-10-11">Sunday 05-10-2014 — Saturday 11-10-2014</option>
+                                        <option value="2014-09-28;2014-10-04">Sunday 28-09-2014 — Saturday 04-10-2014</option>
+                                        <option value="2014-09-21;2014-09-27">Sunday 21-09-2014 — Saturday 27-09-2014</option>
+                                        <option value="2014-09-14;2014-09-20">Sunday 14-09-2014 — Saturday 20-09-2014</option>
+                                        <option value="2014-09-07;2014-09-13">Sunday 07-09-2014 — Saturday 13-09-2014</option>
+                                        <option value="2014-08-31;2014-09-06">Sunday 31-08-2014 — Saturday 06-09-2014</option>
+                                        <option value="2014-08-24;2014-08-30">Sunday 24-08-2014 — Saturday 30-08-2014</option>
+                                        <option value="2014-08-17;2014-08-23">Sunday 17-08-2014 — Saturday 23-08-2014</option>
+                                        <option value="2014-08-10;2014-08-16">Sunday 10-08-2014 — Saturday 16-08-2014</option>
+                                        <option value="2014-08-03;2014-08-09">Sunday 03-08-2014 — Saturday 09-08-2014</option>
+                                        <option value="2014-07-27;2014-08-02">Sunday 27-07-2014 — Saturday 02-08-2014</option>
+                                        <option value="2014-07-20;2014-07-26">Sunday 20-07-2014 — Saturday 26-07-2014</option>
+                                        <option value="2014-07-13;2014-07-19">Sunday 13-07-2014 — Saturday 19-07-2014</option>
+                                        <option value="2014-07-06;2014-07-12">Sunday 06-07-2014 — Saturday 12-07-2014</option>
+                                        <option value="2014-06-29;2014-07-05">Sunday 29-06-2014 — Saturday 05-07-2014</option>
+                                        <option value="2014-06-22;2014-06-28">Sunday 22-06-2014 — Saturday 28-06-2014</option>
+                                        <option value="2014-06-15;2014-06-21">Sunday 15-06-2014 — Saturday 21-06-2014</option>
+                                        <option value="2014-06-08;2014-06-14">Sunday 08-06-2014 — Saturday 14-06-2014</option>
+                                        <option value="2014-06-01;2014-06-07">Sunday 01-06-2014 — Saturday 07-06-2014</option>
+                                        <option value="2014-05-25;2014-05-31">Sunday 25-05-2014 — Saturday 31-05-2014</option>
+                                        <option value="2014-05-18;2014-05-24">Sunday 18-05-2014 — Saturday 24-05-2014</option>
+                                        <option value="2014-05-11;2014-05-17">Sunday 11-05-2014 — Saturday 17-05-2014</option>
+                                        <option value="2014-05-04;2014-05-10">Sunday 04-05-2014 — Saturday 10-05-2014</option>
+                                        <option value="2014-04-27;2014-05-03">Sunday 27-04-2014 — Saturday 03-05-2014</option>
+                                        <option value="2014-04-20;2014-04-26">Sunday 20-04-2014 — Saturday 26-04-2014</option>
+                                        <option value="2014-04-13;2014-04-19">Sunday 13-04-2014 — Saturday 19-04-2014</option>
+                                        <option value="2014-04-06;2014-04-12">Sunday 06-04-2014 — Saturday 12-04-2014</option>
+                                        <option value="2014-03-30;2014-04-05">Sunday 30-03-2014 — Saturday 05-04-2014</option>
+                                        <option value="2014-03-23;2014-03-29">Sunday 23-03-2014 — Saturday 29-03-2014</option>
+                                        <option value="2014-03-16;2014-03-22">Sunday 16-03-2014 — Saturday 22-03-2014</option>
+                                        <option value="2014-03-09;2014-03-15">Sunday 09-03-2014 — Saturday 15-03-2014</option>
+                                        <option value="2014-03-02;2014-03-08">Sunday 02-03-2014 — Saturday 08-03-2014</option>
+                                        <option value="2014-02-23;2014-03-01">Sunday 23-02-2014 — Saturday 01-03-2014</option>
+                                        <option value="2014-02-16;2014-02-22">Sunday 16-02-2014 — Saturday 22-02-2014</option>
+                                        <option value="2014-02-09;2014-02-15">Sunday 09-02-2014 — Saturday 15-02-2014</option>
+                                        <option value="2014-02-02;2014-02-08">Sunday 02-02-2014 — Saturday 08-02-2014</option>
+                                        <option value="2014-01-26;2014-02-01">Sunday 26-01-2014 — Saturday 01-02-2014</option>
+                                        <option value="2014-01-19;2014-01-25">Sunday 19-01-2014 — Saturday 25-01-2014</option>
+                                        <option value="2014-01-12;2014-01-18">Sunday 12-01-2014 — Saturday 18-01-2014</option>
+                                        <option value="2014-01-05;2014-01-11">Sunday 05-01-2014 — Saturday 11-01-2014</option>
+                                        <option value="2013-12-29;2014-01-04">Sunday 29-12-2013 — Saturday 04-01-2014</option>
+                                        <option value="2013-12-22;2013-12-28">Sunday 22-12-2013 — Saturday 28-12-2013</option>
+                                        <option value="2013-12-15;2013-12-21">Sunday 15-12-2013 — Saturday 21-12-2013</option>
+                                        <option value="2013-12-08;2013-12-14">Sunday 08-12-2013 — Saturday 14-12-2013</option>
+                                        <option value="2013-12-01;2013-12-07">Sunday 01-12-2013 — Saturday 07-12-2013</option>
+                                        <option value="2013-11-24;2013-11-30">Sunday 24-11-2013 — Saturday 30-11-2013</option>
+                                        <option value="2013-11-17;2013-11-23">Sunday 17-11-2013 — Saturday 23-11-2013</option>
+                                        <option value="2013-11-10;2013-11-16">Sunday 10-11-2013 — Saturday 16-11-2013</option>
+                                        <option value="2013-11-03;2013-11-09">Sunday 03-11-2013 — Saturday 09-11-2013</option>
+                                        <option value="2013-10-27;2013-11-02">Sunday 27-10-2013 — Saturday 02-11-2013</option>
+                                        <option value="2013-10-20;2013-10-26">Sunday 20-10-2013 — Saturday 26-10-2013</option>
+                                        <option value="2013-10-13;2013-10-19">Sunday 13-10-2013 — Saturday 19-10-2013</option>
+                                        <option value="2013-10-06;2013-10-12">Sunday 06-10-2013 — Saturday 12-10-2013</option>
+                                        <option value="2013-09-29;2013-10-05">Sunday 29-09-2013 — Saturday 05-10-2013</option>
+                                        <option value="2013-09-22;2013-09-28">Sunday 22-09-2013 — Saturday 28-09-2013</option>
+                                        <option value="2013-09-15;2013-09-21">Sunday 15-09-2013 — Saturday 21-09-2013</option>
+                                        <option value="2013-09-08;2013-09-14">Sunday 08-09-2013 — Saturday 14-09-2013</option>
+                                        <option value="2013-09-01;2013-09-07">Sunday 01-09-2013 — Saturday 07-09-2013</option>
+                                        <option value="2013-08-25;2013-08-31">Sunday 25-08-2013 — Saturday 31-08-2013</option>
+                                        <option value="2013-08-18;2013-08-24">Sunday 18-08-2013 — Saturday 24-08-2013</option>
+                                        <option value="2013-08-11;2013-08-17">Sunday 11-08-2013 — Saturday 17-08-2013</option>
+                                        <option value="2013-08-04;2013-08-10">Sunday 04-08-2013 — Saturday 10-08-2013</option>
+                                        <option value="2013-07-28;2013-08-03">Sunday 28-07-2013 — Saturday 03-08-2013</option>
+                                        <option value="2013-07-21;2013-07-27">Sunday 21-07-2013 — Saturday 27-07-2013</option>
+                                        <option value="2013-07-14;2013-07-20">Sunday 14-07-2013 — Saturday 20-07-2013</option>
+                                        <option value="2013-07-07;2013-07-13">Sunday 07-07-2013 — Saturday 13-07-2013</option>
+                                        <option value="2013-06-30;2013-07-06">Sunday 30-06-2013 — Saturday 06-07-2013</option>
+                                        <option value="2013-06-23;2013-06-29">Sunday 23-06-2013 — Saturday 29-06-2013</option>
+                                        <option value="2013-06-16;2013-06-22">Sunday 16-06-2013 — Saturday 22-06-2013</option>
+                                        <option value="2013-06-09;2013-06-15">Sunday 09-06-2013 — Saturday 15-06-2013</option>
+                                        <option value="2013-06-02;2013-06-08">Sunday 02-06-2013 — Saturday 08-06-2013</option>
+                                        <option value="2013-05-26;2013-06-01">Sunday 26-05-2013 — Saturday 01-06-2013</option>
+                                        <option value="2013-05-19;2013-05-25">Sunday 19-05-2013 — Saturday 25-05-2013</option>
+                                        <option value="2013-05-12;2013-05-18">Sunday 12-05-2013 — Saturday 18-05-2013</option>
+                                        <option value="2013-05-05;2013-05-11">Sunday 05-05-2013 — Saturday 11-05-2013</option>
+                                        <option value="2013-04-28;2013-05-04">Sunday 28-04-2013 — Saturday 04-05-2013</option>
+                                        <option value="2013-04-21;2013-04-27">Sunday 21-04-2013 — Saturday 27-04-2013</option>
+                                        <option value="2013-04-14;2013-04-20">Sunday 14-04-2013 — Saturday 20-04-2013</option>
+                                        <option value="2013-04-07;2013-04-13">Sunday 07-04-2013 — Saturday 13-04-2013</option>
+                                        <option value="2013-03-31;2013-04-06">Sunday 31-03-2013 — Saturday 06-04-2013</option>
+                                        <option value="2013-03-24;2013-03-30">Sunday 24-03-2013 — Saturday 30-03-2013</option>
+                                        <option value="2013-03-17;2013-03-23">Sunday 17-03-2013 — Saturday 23-03-2013</option>
+                                        <option value="2013-03-10;2013-03-16">Sunday 10-03-2013 — Saturday 16-03-2013</option>
+                                        <option value="2013-03-03;2013-03-09">Sunday 03-03-2013 — Saturday 09-03-2013</option>
+                                        <option value="2013-02-24;2013-03-02">Sunday 24-02-2013 — Saturday 02-03-2013</option>
+                                        <option value="2013-02-17;2013-02-23">Sunday 17-02-2013 — Saturday 23-02-2013</option>
+                                        <option value="2013-02-10;2013-02-16">Sunday 10-02-2013 — Saturday 16-02-2013</option>
+                                        <option value="2013-02-03;2013-02-09">Sunday 03-02-2013 — Saturday 09-02-2013</option>
+                                        <option value="2013-01-27;2013-02-02">Sunday 27-01-2013 — Saturday 02-02-2013</option>
+                                        <option value="2013-01-20;2013-01-26">Sunday 20-01-2013 — Saturday 26-01-2013</option>
+                                        <option value="2013-01-13;2013-01-19">Sunday 13-01-2013 — Saturday 19-01-2013</option>
+                                        <option value="2013-01-06;2013-01-12">Sunday 06-01-2013 — Saturday 12-01-2013</option>
+                                        <option value="2012-12-30;2013-01-05">Sunday 30-12-2012 — Saturday 05-01-2013</option>
+                                        <option value="2012-12-23;2012-12-29">Sunday 23-12-2012 — Saturday 29-12-2012</option>
+                                        <option value="2012-12-16;2012-12-22">Sunday 16-12-2012 — Saturday 22-12-2012</option>
+                                        <option value="2012-12-09;2012-12-15">Sunday 09-12-2012 — Saturday 15-12-2012</option>
+                                        <option value="2012-12-02;2012-12-08">Sunday 02-12-2012 — Saturday 08-12-2012</option>
+                                        <option value="2012-11-25;2012-12-01">Sunday 25-11-2012 — Saturday 01-12-2012</option>
+                                        <option value="2012-11-18;2012-11-24">Sunday 18-11-2012 — Saturday 24-11-2012</option>
+                                        <option value="2012-11-11;2012-11-17">Sunday 11-11-2012 — Saturday 17-11-2012</option>
+                                        <option value="2012-11-04;2012-11-10">Sunday 04-11-2012 — Saturday 10-11-2012</option>
+                                        <option value="2012-10-28;2012-11-03">Sunday 28-10-2012 — Saturday 03-11-2012</option>
+                                        <option value="2012-10-21;2012-10-27">Sunday 21-10-2012 — Saturday 27-10-2012</option>
+                                        <option value="2012-10-14;2012-10-20">Sunday 14-10-2012 — Saturday 20-10-2012</option>
+                                        <option value="2012-10-07;2012-10-13">Sunday 07-10-2012 — Saturday 13-10-2012</option>
+                                        <option value="2012-09-30;2012-10-06">Sunday 30-09-2012 — Saturday 06-10-2012</option>
+                                        <option value="2012-09-23;2012-09-29">Sunday 23-09-2012 — Saturday 29-09-2012</option>
+                                        <option value="2012-09-16;2012-09-22">Sunday 16-09-2012 — Saturday 22-09-2012</option>
+                                        <option value="2012-09-09;2012-09-15">Sunday 09-09-2012 — Saturday 15-09-2012</option>
+                                        <option value="2012-09-02;2012-09-08">Sunday 02-09-2012 — Saturday 08-09-2012</option>
+                                        <option value="2012-08-26;2012-09-01">Sunday 26-08-2012 — Saturday 01-09-2012</option>
+                                        <option value="2012-08-19;2012-08-25">Sunday 19-08-2012 — Saturday 25-08-2012</option>
+                                        <option value="2012-08-12;2012-08-18">Sunday 12-08-2012 — Saturday 18-08-2012</option>
+                                        <option value="2012-08-05;2012-08-11">Sunday 05-08-2012 — Saturday 11-08-2012</option>
+                                        <option value="2012-07-29;2012-08-04">Sunday 29-07-2012 — Saturday 04-08-2012</option>
+                                        <option value="2012-07-22;2012-07-28">Sunday 22-07-2012 — Saturday 28-07-2012</option>
+                                        <option value="2012-07-15;2012-07-21">Sunday 15-07-2012 — Saturday 21-07-2012</option>
+                                        <option value="2012-07-08;2012-07-14">Sunday 08-07-2012 — Saturday 14-07-2012</option>
+                                        <option value="2012-07-01;2012-07-07">Sunday 01-07-2012 — Saturday 07-07-2012</option>
+                                        <option value="2012-06-24;2012-06-30">Sunday 24-06-2012 — Saturday 30-06-2012</option>
+                                        <option value="2012-06-17;2012-06-23">Sunday 17-06-2012 — Saturday 23-06-2012</option>
+                                        <option value="2012-06-10;2012-06-16">Sunday 10-06-2012 — Saturday 16-06-2012</option>
+                                        <option value="2012-06-03;2012-06-09">Sunday 03-06-2012 — Saturday 09-06-2012</option>
+                                        <option value="2012-05-27;2012-06-02">Sunday 27-05-2012 — Saturday 02-06-2012</option>
+                                        <option value="2012-05-20;2012-05-26">Sunday 20-05-2012 — Saturday 26-05-2012</option>
+                                        <option value="2012-05-13;2012-05-19">Sunday 13-05-2012 — Saturday 19-05-2012</option>
+                                        <option value="2012-05-06;2012-05-12">Sunday 06-05-2012 — Saturday 12-05-2012</option>
+                                        <option value="2012-04-29;2012-05-05">Sunday 29-04-2012 — Saturday 05-05-2012</option>
+                                        <option value="2012-04-22;2012-04-28">Sunday 22-04-2012 — Saturday 28-04-2012</option>
+                                        <option value="2012-04-15;2012-04-21">Sunday 15-04-2012 — Saturday 21-04-2012</option>
+                                        <option value="2012-04-08;2012-04-14">Sunday 08-04-2012 — Saturday 14-04-2012</option>
+                                        <option value="2012-04-01;2012-04-07">Sunday 01-04-2012 — Saturday 07-04-2012</option>
+                                        <option value="2012-03-25;2012-03-31">Sunday 25-03-2012 — Saturday 31-03-2012</option>
+                                        <option value="2012-03-18;2012-03-24">Sunday 18-03-2012 — Saturday 24-03-2012</option>
+                                        <option value="2012-03-11;2012-03-17">Sunday 11-03-2012 — Saturday 17-03-2012</option>
+                                        <option value="2012-03-04;2012-03-10">Sunday 04-03-2012 — Saturday 10-03-2012</option>
+                                        <option value="2012-02-26;2012-03-03">Sunday 26-02-2012 — Saturday 03-03-2012</option>
+                                        <option value="2012-02-19;2012-02-25">Sunday 19-02-2012 — Saturday 25-02-2012</option>
+                                        <option value="2012-02-12;2012-02-18">Sunday 12-02-2012 — Saturday 18-02-2012</option>
+                                        <option value="2012-02-05;2012-02-11">Sunday 05-02-2012 — Saturday 11-02-2012</option>
+                                        <option value="2012-01-29;2012-02-04">Sunday 29-01-2012 — Saturday 04-02-2012</option>
+                                        <option value="2012-01-22;2012-01-28">Sunday 22-01-2012 — Saturday 28-01-2012</option>
+                                        <option value="2012-01-15;2012-01-21">Sunday 15-01-2012 — Saturday 21-01-2012</option>
+                                        <option value="2012-01-08;2012-01-14">Sunday 08-01-2012 — Saturday 14-01-2012</option>
+                                        <option value="2012-01-01;2012-01-07">Sunday 01-01-2012 — Saturday 07-01-2012</option>
+                                        <option value="2011-12-25;2011-12-31">Sunday 25-12-2011 — Saturday 31-12-2011</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" name="show_week" value="ok">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-12" style="margin-top: 30px">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <table class="table table-striped table-bordered table-info dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Balance</th>
+                                    <th>Unit</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span>24-04-2018, 17:41:09</span>
+                                    </td>
+                                    <td>
+                                        <span>Order S2OW6K</span>
+                                    </td>
+                                    <td>
+                                        <span>$</span>
+                                    </td>
+                                    <td>
+                                        <span>95.000</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>24-04-2018, 17:41:09</span>
+                                    </td>
+                                    <td>
+                                        <span>Order S2OW6K</span>
+                                    </td>
+                                    <td>
+                                        <span>$</span>
+                                    </td>
+                                    <td>
+                                        <span>95.000</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

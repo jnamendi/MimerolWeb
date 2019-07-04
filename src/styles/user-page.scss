@@ -1,0 +1,52 @@
+@import "~styles/variables.scss";
+.user-page {
+    background-color: $grey1;
+    .user-left {
+        margin-top: 50px;
+        .navigation {
+            border: 1px solid $grey-lightest;
+            background-color: $body-bg;
+            ul {
+                li {
+                    margin: 20px 0 20px 15px;
+                    i {
+                        margin-right: 5px;
+                        width: 15px;
+                    }
+                    a {
+                        font-size: $font-size-base;
+                        color: $grey6;
+                        &:hover {
+                            color: $orange;
+                        }
+                        &.active {
+                            font-weight: bold;
+                            color: $orange;
+                        }
+                    }
+                    &.logout {
+                        border-top: 1px solid $border-color;
+                        padding-top: 10px;
+                        margin-left: 0;
+                        padding-left: 15px;
+                        margin-bottom: 15px;
+                        a {
+                            font-weight: bold;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .user-right {
+        margin-top: 50px;
+        margin-bottom: 15px;
+        padding: 20px;
+        padding-bottom: 20px;
+        background-color: $body-bg;
+        h2 {
+            padding-top: 20px;
+        }
+    }
+}

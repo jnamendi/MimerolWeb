@@ -1,0 +1,66 @@
+<div *ngIf="visible" class="dialog-container">
+    <div class="dialog-wrapper">
+        <div class="dialog-header">
+            <h4 class="title" [innerHTML]="'Commons.Texts.OrderDetails' | translate"></h4> ({{orderCode}})
+            <a class="btn-close" (click)="onClose(false)"></a>
+        </div>
+        <div class="order-box">
+            <div class="order-wrapper">
+                <div class="order-picture">
+                    <img class="logo" src="{{ownerOrderModel.imageUrl =='' ? 'assets/images/logo.png' : clientState.BaseUrl + ownerOrderModel.imageUrl}}"
+                        alt="{{ownerOrderModel.restaurantName}}" />
+                </div>
+                <div class="order-detail">
+                    <h2 class="restaurant-name">
+                        {{ownerOrderModel.restaurantName}}
+                    </h2>
+                    <p>
+                        <i>#{{ownerOrderModel.orderCode}}</i>
+                    </p>
+                    <p>{{ownerOrderModel.totalPrice}} {{currencySymbol}}</p>
+                    <p>{{ownerOrderModel.orderDate | date: 'dd-MM-yyyy'}}
+                        <span [innerHTML]="'Components.Order.At' | translate"></span> {{ownerOrderModel.orderDate | date: 'HH:mm'}} -
+                        <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
+                        <span *ngIf="ownerOrderModel.orderInfos && ownerOrderModel.orderInfos[0]">{{ownerOrderModel.orderInfos[0].address}}, {{ownerOrderModel.orderInfos[0].district}}, {{ownerOrderModel.orderInfos[0].city}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="order-details">
+            <h4>
+                <b>Your order</b>
+            </h4>
+            <div class="order-details-content">
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr *ngFor="let orderItem of ownerOrderModel.orderLineitems">
+                            <td>{{orderItem.quantity}}x</td>
+                            <td>{{orderItem.menuItemName}}</td>
+                            <td>{{orderItem.total}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="delivery-costs">Delivery:</td>
+                            <td>{{ownerOrderModel.deliveryCost}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="total-costs">
+                                <b>Total:</b>
+                            </td>
+                            <td>
+                                <b>{{ownerOrderModel.totalPrice}} {{currencySymbol}}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="payment-method">Payment method:</td>
+                            <td>{{paymentMethod[ownerOrderModel.paymentType]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="overlay is-open" (click)="onClose(false)"></div>
+</div>

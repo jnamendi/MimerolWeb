@@ -1,0 +1,73 @@
+<div class="">
+    <h4>Review this restaurant</h4>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <form action="">
+                    <div class="box-body">
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Order code</label>
+                            <div class="col-md-9">
+                                <span>
+                                   32HKHJJ344 
+                                </span> -
+                                <span> 31/05/2018</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Quality</label>
+                            <div class="col-md-9">
+                                <p-rating name="quality" [ngModel]="5" stars="5" [cancel]="false"></p-rating>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Delivery</label>
+                            <div class="col-md-9">
+                                <p-rating name="delivery" [ngModel]="5" stars="5" [cancel]="false"></p-rating>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Delivery time</label>
+                            <div class="col-md-9">
+                                <span>
+                                    <select name="" id="">
+                                        <option value="">15 min</option>
+                                        <option value="">30 min</option>
+                                        <option value="">45 min</option>
+                                        <option value="">60 min</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Reviewer </label>
+                            <div class="col-md-9">
+                                <div class="form-input">
+                                    <input noSpaces inputFocus name="voucher" type="text" required>
+                                    <label>Reviewer</label>
+                                    <!-- <div *ngIf="voucher.invalid && (voucher.dirty || voucher.touched || a.submitted)" class="error">
+                                    <div *ngIf="voucher.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formGroupExampleInput" class="col-md-3">Remarks</label>
+                            <div class="col-md-9">
+                                <div class="form-input">
+                                    <textarea rows="3" inputFocus name="remarks" class="textarea_form"></textarea>
+                                    <label [innerHTML]="'Commons.Texts.Remarks' | translate"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <button class="btn btn-default btn-primary" type="submit">Submit you review</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

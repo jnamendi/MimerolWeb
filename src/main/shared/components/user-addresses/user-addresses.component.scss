@@ -1,0 +1,44 @@
+@import "~styles/variables.scss";
+.address-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .address-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid $border-color;
+        .address-picture {
+            max-width: 155px;
+            text-align: left;
+            font-size: 12px;
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin-right: 20px;
+            img.logo {
+                max-width: 100%;
+            }
+        }
+        .detail {
+            .address {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            .city,
+            .phone {
+                font-size: 1.125rem;
+                margin-bottom: 15px;
+                font-style: italic;
+                color: $grey-lighter;
+            }
+            .action {
+                a {
+                    color: $green-text;
+                    &:hover {
+                        color: $green-text-darker;
+                    }
+                }
+            }
+        }
+    }
+}

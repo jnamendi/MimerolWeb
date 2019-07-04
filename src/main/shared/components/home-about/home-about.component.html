@@ -1,0 +1,22 @@
+<!-- section about-->
+<section id="section3" class="section section-about">
+    <div class="bg_whatsay">
+        <div class="container">
+            <div class="row">
+                <div class="title_main title_whatsay ">
+                    <h1 class="wow fadeInDown" [innerHTML]="'Components.Home.WhatSay' | translate"></h1>
+                </div>
+                <div class="col-sm-7">
+                    <ul class="bxslider wow fadeInDown" data-wow-delay="0.3s">
+                        <li *ngFor="let item of commentModels">
+                            <h3>{{item.fullName}}
+                                <span>{{item.addressLine1}}</span>
+                            </h3>
+                            {{item.description}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

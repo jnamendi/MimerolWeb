@@ -1,0 +1,127 @@
+<div class="admin-main-content form-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h2 class="title" [innerHTML]="'Admin.Rating.RatingManagement' | translate"></h2>
+            </div>
+        </div>
+
+        <div class="row filter-pane">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group text-left">
+                    <a [routerLink]="['new']" routerLinkActive="active" class="btn btn-default btn-primary">
+                        <span [innerHTML]="'Commons.Texts.New' | translate"></span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" class="btn btn-default btn-danger" (click)="onDeleteItems()" [disabled]="!isSelectedItem() || clientState.isBusy">
+                        <span [innerHTML]="'Commons.Texts.Delete' | translate"></span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="ratingsAdminModels.length > 0 && !!message" class="form-message">
+            <h2 class="message {{isError ? 'error' : ''}}">
+                {{message}}
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title" [innerHTML]="'Admin.Rating.ManageYourRating' | translate"></h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>
+                                                <input type="text" class="form-control input-sm" />
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control input-sm" />
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>
+                                                <input type="text" class="form-control input-sm" />
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control input-sm" />
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>
+                                                <input type="checkbox" [checked]="isSelectdAllItems()" (change)="onChangeDeletedItems()">
+                                            </th> -->
+                                            <th></th>
+                                            <th class="text-center">No.</th>
+                                            <th [innerHTML]="'Commons.Texts.RestaurantName' | translate"></th>
+                                            <th [innerHTML]="'Commons.Texts.Username' | translate"></th>
+                                            <th [innerHTML]="'Commons.Texts.StarQuality' | translate"></th>
+                                            <th [innerHTML]="'Commons.Texts.StarDelivery' | translate"></th>
+                                            <th [innerHTML]="'Commons.Texts.CreatedDate' | translate"></th>
+                                            <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of ratingsAdminModels; let i = index;">
+                                            <td class="text-center">
+                                                <input type="checkbox" name="itemDelete{{i}}" [(ngModel)]="item.isDeleted">
+                                            </td>
+                                            <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                            <td>
+                                                <a routerLink="./{{item && item.ratingId}}" routerLinkActive="active">
+                                                    <span>{{item && item.restaurantName}}</span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <span>{{item && item.userName}}</span>
+                                            </td>
+                                            <td>
+                                                <p-rating [ngModel]="item && item.quality" readonly="true" stars="5" [cancel]="false"></p-rating>
+                                            </td>
+                                            <td>
+                                                <p-rating [ngModel]="item && item.delivery" readonly="true" stars="5" [cancel]="false"></p-rating>
+                                            </td>
+                                            <td>
+                                                {{item.createdDate | amFromUtc | amDateFormat: 'DD-MM-YYYY'}}
+                                            </td>
+                                            <td>
+                                                <span>{{i18nService.getTransEnum(ratingStatus[item && item.status])}}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a title="Delete" class="btn btn-default btn-danger" (click)="onDeleteItem(item.ratingId)">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- <p *ngIf="paginModel && paginModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <!-- <pagination *ngIf="paginModel && paginModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="paginModel.totalCount" [itemsPerPage]="5" [rotate]="false" (pageChanged)="onPageChanged($event)"
+                            [currentPageIndex]="paginModel.pageNumber">
+                        </pagination> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
