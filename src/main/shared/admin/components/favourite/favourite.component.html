@@ -1,0 +1,90 @@
+<div class="admin-main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h2 class="title" [innerHTML]="'Admin.Favourite.FavouriteManagement' | translate"></h2>
+            </div>
+        </div>
+        <!-- <div class="row filter-pane">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group text-left">
+                    <a [routerLink]="['new']" routerLinkActive="active" class="btn btn-default btn-primary">
+                        <span>New</span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" class="btn btn-default btn-danger" (click)="onDeleteItems()">
+                        <span>Delete</span>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title" [innerHTML]="'Admin.Favourite.ManageYourFavourite' | translate"></h3>
+                        <!-- <div class="box-tools">
+                            <button class="btn btn-default btn-secondary">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-default btn-secondary">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                            </button>
+                        </div> -->
+                    </div>
+                    <div class="box-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th [innerHTML]="'Commons.Texts.RestaurantName' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Username' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of favouriteAdminModels; let i = index;">
+                                    <td>{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td>
+                                        <span>{{item && item.restaurantName}}</span>
+                                        <!-- <a routerLink="./{{item && item.restaurantId}}" routerLinkActive="active">
+                                            <span>{{item && item.restaurantId}}</span>
+                                        </a> -->
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.userName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{i18nService.getTransEnum(favouriteAdminStatus[item && item.status])}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <p *ngIf="paginModel && paginModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
+                    </div>
+                    <div class="box-footer">
+                        <!-- <pagination *ngIf="paginModel && paginModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="paginModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
+                            [currentPageIndex]="paginModel.pageNumber">
+                        </pagination> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

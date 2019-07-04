@@ -1,0 +1,36 @@
+<div class="col-md-3">
+    <div class="user-left">
+        <div class="navigation">
+            <ul>
+                <li class="active">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-start']" [innerHTML]="'Components.MyAccount.TxtStart' | translate"></a>
+                </li>
+                <li>
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-orders']" [innerHTML]="'Commons.Texts.Orders' | translate"></a>
+                </li>
+                <li>
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-favourite']" [innerHTML]="'Components.MyAccount.TxtFavourite' | translate"></a>
+                </li>
+                <li>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-addresses']" [innerHTML]="'Commons.Texts.Addresses' | translate"></a>
+                </li>
+                <li>
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-details']" [innerHTML]="'Commons.Texts.Details' | translate"></a>
+                </li>
+                <li>
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['', 'user-change-pass']" [innerHTML]="'Components.MyAccount.TxtChangePassword' | translate"></a>
+                </li>
+                <li class="logout">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <a [innerHTML]="'Commons.Links.Logout' | translate" (click)="onLogout()"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

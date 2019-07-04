@@ -1,0 +1,134 @@
+<div class="main-content">
+    <div id="container">
+        <section class="section_child">
+            <div class="bg_child" style="background-image:url(../../../../assets/images/bg-child.jpg);">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <h1>
+                            <span class="fonts-light" [innerHTML]="'Components.LoginAndSignUp.TxtLoginAndSignUp' | translate"></span>
+                        </h1>
+                        <!-- <p class="description_shop">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            </p> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- section login -->
+        <section class="section section-login">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 border_login">
+                        <div class="login_box" style="margin-top:0">
+                            <!-- Create div first for Login Form-->
+                            <div id="first" *ngIf="!isForgotPassword">
+                                <h2 [innerHTML]="'Commons.Links.Login' | translate"></h2>
+                                <form (ngSubmit)="onLogin(f.valid)" #f="ngForm" novalidate>
+                                    <div class="form-input">
+                                        <input type="email" noSpaces inputFocus required name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="userLogin.email" #email="ngModel">
+                                        <label>{{'Commons.Texts.Email' | translate}}</label>
+                                        <div *ngIf="email.invalid && (email.dirty || email.touched || f.submitted)" class="error">
+                                            <div *ngIf="email.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="email.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="password" noSpaces inputFocus required name="password" [(ngModel)]="userLogin.password" #password="ngModel">
+                                        <label [innerHTML]="'Commons.Texts.Password' | translate"></label>
+                                        <div *ngIf="password.invalid && (password.dirty || password.touched || f.submitted)" class="error">
+                                            <div *ngIf="password.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                            <div *ngIf="password.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="i18nService.getTransError(loginError)">
+                                    </div>
+                                    <div class="form-cta">
+                                        <button type="submit" [disabled]="clientState.isBusy" class="btn" [innerHTML]="'Commons.Links.Login' | translate"></button>
+                                        <a id="signup" class="button-secondary" (click)="onToggleForgotPassword(true)" [innerHTML]="'Components.LoginAndSignUp.TxtForgotPassword' | translate"></a>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Create div second for Signup Form-->
+                            <div id="second" *ngIf="isForgotPassword">
+                                <h2 [innerHTML]="'Components.LoginAndSignUp.TxtForgotPassword' | translate"></h2>
+                                <div *ngIf="!isSendForgotPasswordLink" class="form">
+                                    <form (ngSubmit)="onForgotPassword(f.valid)" #f="ngForm">
+                                        <div class="form-input">
+                                            <input type="email" inputFocus required name="recoveryEmail" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="recoveryEmail" #recovery="ngModel">
+                                            <label>{{'Commons.Texts.Email' | translate}}</label>
+                                            <div *ngIf="recovery.invalid && (recovery.dirty || recovery.touched || f.submitted)" class="error">
+                                                <div *ngIf="recovery.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="recovery.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="i18nService.getTransError(forgotError)">
+                                        </div>
+                                        <div class="form-cta">
+                                            <button type="submit" [disabled]="clientState.isBusy" class="btn" [innerHTML]="'Components.LoginAndSignUp.BtnSend' | translate"></button>
+                                            <a id="signin" class="button-secondary" (click)="onToggleForgotPassword(false)" [innerHTML]="'Components.LoginAndSignUp.TxtBackToLogin' | translate"></a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div *ngIf="isSendForgotPasswordLink" class="success">
+                                    <p [innerHTML]="'Components.LoginAndSignUp.SendPasswordSuccess' | translate"></p>
+                                    <p>
+                                        <b>{{recoveryEmail}}</b>
+                                    </p>
+                                    <a (click)="onToggleForgotPassword(false)" [innerHTML]="'Components.LoginAndSignUp.TxtBackToLogin' | translate"></a>
+                                </div>
+                            </div>
+                            <h2>Or</h2>
+                            <div class="social_login">
+                                <button type="button" [disabled]="clientState.isBusy" class="face_login" (click)="signInWithFB()" [innerHTML]="'Components.LoginAndSignUp.TxtLoginFB' | translate"></button>
+                                <button type="button" [disabled]="clientState.isBusy" class="google_login" (click)="signInWithGoogle()" [innerHTML]="'Components.LoginAndSignUp.TxtLoginGG' | translate"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="login_box">
+                            <h2 [innerHTML]="'Commons.Texts.SignUp' | translate"></h2>
+                            <div *ngIf="!isSigninSuccess" class="form">
+                                <form (ngSubmit)="onSignin(f.valid)" #f="ngForm">
+                                    <div class="form-input">
+                                        <input type="email" noSpaces required inputFocus name="emailSignin" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="userSignin.email" #emailSignin="ngModel">
+                                        <label>{{'Commons.Texts.Email' | translate}}</label>
+                                        <div *ngIf="emailSignin.invalid && (emailSignin.dirty || emailSignin.touched || f.submitted)" class="error">
+                                            <div *ngIf="emailSignin.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="emailSignin.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="text" required inputFocus name="fullName" [(ngModel)]="userSignin.fullName" #fullName="ngModel">
+                                        <label [innerHTML]="'Commons.Texts.Name' | translate"></label>
+                                        <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched || f.submitted)" class="error">
+                                            <div *ngIf="fullName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="password" required inputFocus name="passwordSignin" minlength="8" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,200}$" [(ngModel)]="userSignin.password" #passwordSignin="ngModel">
+                                        <label [innerHTML]="'Commons.Texts.Password' | translate">Password</label>
+                                        <div *ngIf="passwordSignin.invalid && (passwordSignin.dirty || passwordSignin.touched || f.submitted)" class="error">
+                                            <div *ngIf="passwordSignin.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="passwordSignin.errors?.pattern" [innerHTML]="'Commons.Error.ErrPatternPassword' | translate"></div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="i18nService.getTransError(signInError)">
+                                    </div>
+
+                                    <div class="form-cta">
+                                        <button type="submit" [disabled]="clientState.isBusy" class="btn" [innerHTML]="'Components.LoginAndSignUp.BtnSend' | translate">Send</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="isSigninSuccess" class="success">
+                                <p [innerHTML]="'Components.LoginAndSignUp.SendSignInSuccess' | translate"></p>
+                                <b>{{userSignin.email}}.</b>
+                                <p>{{'Components.LoginAndSignUp.FollowInstructions' | translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+@import "~styles/variables.scss";
+.admin-main-content {
+    .box-primary {
+        .box-body {
+            .preview-img {
+                img {
+                    border: 1px solid #ccc;
+                    margin-top: 5px;
+                    border-radius: 4px;
+                    padding: 3px;
+                }
+            }
+        }
+    }
+}

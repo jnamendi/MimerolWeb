@@ -1,0 +1,52 @@
+.sticker_fillter {
+    height: 100vh;
+    width: calc(100vw - 20px);
+    right: 0;
+    transform: translate3d(calc(100vw - 20px), 0, 0);
+    padding: 20px;
+    position: fixed;
+    min-height: 100%;
+    max-height: none;
+    top: 0;
+    display: block;
+    background: $body-bg;
+    overflow: auto;
+    z-index: 55;
+    transition: transform .3s ease-in-out;
+    &.is-open {
+        transform: translate3d(0, 0, 0);
+    }
+    @media #{$mq-sm} {
+        width: 380px;
+        transform: translate3d(380px, 0, 0);
+    }
+    .filter-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        width: 40px;
+        height: 40px;
+        background-size: 100%;
+        background: rgb(255, 125, 38);
+        background: linear-gradient(135deg, rgba(255, 125, 38, 1) 0%, rgba(222, 90, 2, 1) 100%);
+        left: 0 !important;
+        border-radius: 0 100% 100% 0;
+        &::before {
+            content: '';
+            background-image: url(~assets/images/icon/delete.png);
+            width: 15px;
+            height: 15px;
+            display: block;
+            background-size: 100%;
+            margin-left: 10px;
+        }
+    }
+    .item_search {
+        margin: 10px 0 0;
+        padding: 0;
+        li {
+            padding: 5px 0;
+        }
+    }
+}

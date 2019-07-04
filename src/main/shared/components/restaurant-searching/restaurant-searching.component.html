@@ -1,0 +1,13 @@
+<form accept-charset="UTF-8" method="get" action="/esearch" class="clearfix" (ngSubmit)="onSearchFoods()">
+    <input class="form-text-2" autocomplete="off" name="search" [placeholder]="'Commons.Texts.KeyWord' | translate" type="text" [formControl]="searchInput">
+    <button class="btn--search--2" type="submit">
+        <img src="assets\images\icon\search.png">
+    </button>
+    <ul *ngIf="searchRestaurantResults && searchRestaurantResults.length > 0 && isShowSearchResult" class="search-results fadeInDown">
+        <li *ngFor="let item of searchRestaurantResults" (click)="onSelectedRestaurant(item)">
+            <span class="title">{{item.restaurantName}}</span>
+            <span class="subtitle">{{item.addressLine1}}</span>
+        </li>
+    </ul>
+</form>
+<div class="overlay {{isShowSearchResult? 'is-open':''}}" (click)="onFocusOut()"></div>

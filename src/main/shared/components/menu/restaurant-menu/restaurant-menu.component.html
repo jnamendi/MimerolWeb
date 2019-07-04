@@ -1,0 +1,23 @@
+<div id="sticker">
+    <div class="menu_categories">
+        <div id="bs-collapse" class="item">
+            <div class="panel category-list">
+                <div class="panel-heading title_child">
+                    <h4 class="panel-title panel-title-main">
+                        <a>
+                            Menu
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse">
+                    <ul class="item_search">
+                        <li *ngFor="let item of menu">
+                            <a (click)="onSelectMenu(item.menuId)" data-scroll-nav="0">{{item.menuName}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

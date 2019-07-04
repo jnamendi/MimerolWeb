@@ -1,0 +1,113 @@
+<div class="owner-main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h4 class="title" [innerHTML]="'Owner.ContactInfo.ContactInfoTitle' | translate"></h4>
+                <h5 class="subtitle" [innerHTML]="'Owner.ContactInfo.ContactInfoSubTitle' | translate"></h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div *ngIf="userOwnerModelArray && userOwnerModelArray.length > 0" class="box box-warning">
+                    <form (ngSubmit)="onUpdateContactInfo(f)" #f="ngForm" novalidate>
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmergencyNumber1' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" name="emergency1" [(ngModel)]="userOwnerModelArray[0].emergencyNumber1" #emergency1="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmergencyNumber2' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" name="emergency2" [(ngModel)]="userOwnerModelArray[0].emergencyNumber2" #emergency2="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.ContactName' | translate">Contact name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="contactName" [(ngModel)]="userOwnerModelArray[0].contactName" #contactName="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmailRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="userOwnerModelArray.length > 0 && userOwnerModelArray[0].email"
+                                        #email="ngModel" required/>
+                                    <div *ngIf="email.invalid && (email.dirty || email.touched || f.submitted)" class="error">
+                                        <div *ngIf="email.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        <div *ngIf="email.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.Website' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="website" [(ngModel)]="userOwnerModelArray[0].website" #website="ngModel" />
+                                </div>
+                            </div>
+                            <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="'Commons.HttpStatus.' + errorStatus | translate"></div>
+                            <div *ngIf="updateSuccess" class="success" [innerHTML]="'Owner.ContactInfo.UpdateContactSuccess' | translate"></div>
+                        </div>
+                        <div class="box-footer">
+                            <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-success" [innerHTML]="'Owner.ContactInfo.UpdateInformation' | translate"></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div *ngIf="userOwnerModelArray && userOwnerModelArray.length == 0" class="box box-warning">
+                    <form (ngSubmit)="onCreateContactInfo(f)" #f="ngForm" novalidate>
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmergencyNumber1' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" name="emergency1" [(ngModel)]="userOwnerModel.emergencyNumber1" #emergency1="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmergencyNumber2' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" name="emergency2" [(ngModel)]="userOwnerModel.emergencyNumber2" #emergency2="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.ContactName' | translate">Contact name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="contactName" [(ngModel)]="userOwnerModel.contactName" #contactName="ngModel"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.EmailRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" [(ngModel)]="userOwnerModel.email"
+                                        #email="ngModel" required/>
+                                    <div *ngIf="email.invalid && (email.dirty || email.touched || f.submitted)" class="error">
+                                        <div *ngIf="email.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        <div *ngIf="email.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-3" [innerHTML]="'Commons.Texts.Website' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="website" [(ngModel)]="userOwnerModel.website" #website="ngModel" />
+                                </div>
+                            </div>
+                            <div *ngIf="updateSuccess" class="success" [innerHTML]="'Owner.ContactInfo.UpdateContactSuccess' | translate"></div>
+                        </div>
+                        <div class="box-footer">
+                            <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-success" [innerHTML]="'Owner.ContactInfo.UpdateInformation' | translate"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

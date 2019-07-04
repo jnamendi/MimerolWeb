@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="email-confirm" style="float: left; width: 50%; margin: 0 auto">
+        <div class="email-header" style="float: left; width: 100%;">
+            <img style="width: 65px; float: left;" src="https://bmbsoft.com.vn:8443/images/mimerol_logo.png" />
+            <h2 style="float: right; color: #777474; margin-left: 20px;">Register new user</h2>
+        </div>
+        <div class="email-body" style="float: left; border:1px solid #cccccc; width: 100%; margin-top: 15px; padding: 10px">
+            <h3 style="color: blue; margin: 0; border-bottom: 1px solid #ccc; padding-bottom: 10px;">A new password has been created for your account with ${siteName}!</h3>
+            <p>Hello ${fullName},</p>
+            <p>You already become a member of system ${siteName}.</p>
+            <p>Please access into system with information below:</p>
+
+            <p>Username: ${userName}</p>
+            <p>Password: ${password}</p>
+
+            <p>Yours sincerely, </p>
+            <p>${siteName}</p>
+        </div>
+        <div class="email-footer" style="float: left; text-align: center; width: 100%; padding-top: 15px;">
+            <a style="color: #ff7d26; margin: 0 5px;" href="https://bmbsoft.com.vn/">Homepage</a>
+            <span style="color: #cccccc; font-weight: bold">|</span>
+            <a style="color: #ff7d26; margin: 0 5px;" href="https://bmbsoft.com.vn//contact-us">Contact us</a>
+            <span style="color: #cccccc; font-weight: bold">|</span>
+            <a style="color: #ff7d26" href="https://bmbsoft.com.vn//term">Term</a>
+            <p>&copy; ${year} ${siteName}</p>
+        </div>
+    </div>
+</body>
+
+</html>

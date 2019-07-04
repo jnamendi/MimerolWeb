@@ -1,0 +1,113 @@
+@import "~styles/variables.scss";
+.header-top {
+    padding: 37.5px 0;
+    background: $body-bg;
+    width: 100%;
+    z-index: 54;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid #f2f2f2;
+    transition: background-color 0.2s ease-out;
+    .header-nav {
+        position: relative;
+        z-index: 21;
+        float: left;
+        .nav-toggle {
+            width: 18px;
+            height: 18px;
+            position: relative;
+            transform: rotate(0deg);
+            cursor: pointer;
+            position: relative;
+            top: 5px;
+            display: inline-block;
+            span {
+                display: block;
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                background: #333;
+                opacity: 1;
+                left: 0;
+                transform: rotate(0deg);
+                transform-origin: left center;
+                &:nth-child(1) {
+                    top: 0px;
+                }
+                &:nth-child(2) {
+                    top: 7px;
+                }
+                &:nth-child(3) {
+                    top: 14px;
+                }
+            }
+        }
+    }
+    .header-logo {
+        position: absolute;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 4;
+        a {
+            background-image: url(~assets/images/logo.png);
+            width: 68px;
+            height: 72px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+    }
+    .is-clicked {
+        ~.header-logo a {
+            background-image: url(~assets/images/logo2.png);
+        }
+        ~div a.nav-toggle span {
+            background: #fff;
+        }
+    }
+    a.nav-trigger {
+        display: block;
+        width: 18px;
+        height: 18px;
+        text-align: center;
+        background: url(~assets/images/icon/search-black.png) no-repeat;
+        background-size: 100%;
+        float: right;
+        &.is-clicked {
+            z-index: 21;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            text-indent: -99999px;
+            background: url(~assets/images/icon/delete.png) no-repeat;
+            background-size: 100%;
+            position: relative;
+            top: 3px;
+        }
+    }
+    .cd-primary-nav {
+        margin: 0;
+        width: 100%;
+        background: #f46b45;
+        background: linear-gradient(to right, #ff7d26, #de5a02);
+        backface-visibility: hidden;
+        // overflow: auto;
+        display: none;
+        transition-duration: 0.1s;
+        z-index: -10;
+        position: fixed;
+        left: 0;
+        top: 0;
+        &.is-visible {
+            display: block;
+            z-index: 2;
+        }
+        .block_links {
+            max-width: 800px;
+            margin: 90px auto 40px;
+        }
+    }
+}

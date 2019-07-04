@@ -1,0 +1,19 @@
+.menu_categories {
+    width: 100%;
+    background: #fff;
+    margin-top: 20px;
+    padding: 0 15px;
+    float: left;
+    min-height: 100vh;
+    .title_child a,
+    .item .panel-title-main a i {
+        color: #e6670a;
+    }
+    .category-list {
+        &.collapse {
+            .item {
+                .panel-title-main {}
+            }
+        }
+    }
+}

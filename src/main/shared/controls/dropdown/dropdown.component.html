@@ -1,0 +1,9 @@
+<div *ngIf="data && data.length > 0" class="nc-select {{isToggleDropdown? 'open' : ''}}" tabindex="0" (click)="onToggleDropdown()">
+  <span class="current">{{selectedItem.text}}</span>
+  <ul class="list">
+    <li *ngFor="let item of data" data-value="item.value" class="option {{item.value == selectedItem.value ? 'selected' : ''}}"
+      (click)="onDropdownChange(item)">{{item.text}}
+    </li>
+  </ul>
+</div>
+<div class="overlay {{isToggleDropdown? 'is-open':''}}" (click)="onToggleDropdown(true)"></div>

@@ -1,0 +1,63 @@
+@import "~styles/variables.scss";
+.main-content {
+    .contact-page {
+        margin-top: 20px;
+    }
+    .success {
+        margin: 20px 0;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+    }
+    h3,
+    h4 {
+        font-size: 1.25rem;
+    }
+    .form-group {
+        label {
+            margin: 10px 0px;
+            font-weight: 500;
+        }
+    }
+    .sidebars {
+        margin-top: 15px;
+        .callus {
+            background-color: $orange;
+            padding: 20px 10px;
+            color: $body_bg;
+            border-radius: 6px;
+            margin-left: 24.990%;
+            h3 {
+                color: $body_bg;
+                font-weight: 700;
+                text-align: center;
+                border-bottom: 0px;
+                margin: 0px;
+                padding: 0px;
+                font-size: 1.25rem;
+            }
+            h4 {
+                color: $body_bg;
+                text-align: center;
+                margin-top: 10px;
+                font-size: 1.25rem;
+                font-weight: 500;
+            }
+        }
+    }
+    input[type=submit],
+    button[type=submit] {
+        margin: 0;
+        height: 40px;
+        font-size: 0.9em;
+        font-weight: 600;
+        background: linear-gradient(to bottom, #3597b4, #3597b4);
+        box-shadow: none;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        color: $body_bg;
+        &:hover {
+            opacity: .8;
+        }
+    }
+}

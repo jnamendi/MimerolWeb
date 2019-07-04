@@ -1,0 +1,6 @@
+<div class="main-content">
+    <agm-map *ngIf="orderCheckedOutModel" [latitude]="orderCheckedOutModel.latitude" [longitude]="orderCheckedOutModel.longitude">
+        <agm-marker [iconUrl]="icon" [markerClickable]="true" [latitude]="orderCheckedOutModel.latitude" [longitude]="orderCheckedOutModel.longitude"></agm-marker>
+    </agm-map>
+</div>
+<order-checkout-dialog *ngIf="orderCheckedOutModel" [visible]="isConfirmOder" [checkedoutItem]="orderCheckedOutModel"></order-checkout-dialog>

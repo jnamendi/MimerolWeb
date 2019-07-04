@@ -1,0 +1,9 @@
+<div class="admin-page">
+    <div class=" wrapper">
+        <admin-header (toggleAdminNav)="onToggleAdmimNav($event)"></admin-header>
+        <admin-sidebar [isToggleAdminNav]="isToggleAdminNav"></admin-sidebar>
+        <div class="admin-main {{isToggleAdminNav ?  'collapse':''}}">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

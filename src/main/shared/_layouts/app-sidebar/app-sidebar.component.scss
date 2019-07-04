@@ -1,0 +1,105 @@
+@import "~styles/variables.scss";
+nav {
+    height: 100%;
+    width: 100%;
+    transform: translate3d(-100%, 0, 0);
+    position: fixed;
+    min-height: 100%;
+    max-height: none;
+    top: 0;
+    display: block;
+    background: $body-bg;
+    overflow: auto;
+    z-index: 55;
+    padding-left: 30px;
+    transition: all .3s ease-in-out;
+    @media #{$mq-sm} {
+        width: 380px;
+        transform: translate3d(-380px, 0, 0);
+    }
+    &.is-open {
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+        opacity: 1;
+    }
+    .nav-header {
+        display: flex;
+        align-items: stretch;
+        margin-bottom: 4rem;
+        .nav-logo {
+            background-image: url(~assets/images/logo.png);
+            width: 120px;
+            height: 125px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-top: 5rem;
+        }
+        .nav-close {
+            margin-left: auto;
+            border: none;
+            width: 40px;
+            height: 40px;
+            background-size: 100%;
+            background: rgb(255, 125, 38);
+            border-radius: 100% 0 0 100%;
+            position: relative;
+            &::before {
+                content: '';
+                background-image: url(~assets/icons/delete.png);
+                width: 15px;
+                height: 15px;
+                display: block;
+                background-size: 100%;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                z-index: 9;
+                bottom: 0;
+                margin: auto;
+            }
+        }
+    }
+    .nav-menu {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            padding: 14px 0;
+            a {
+                color: $link-color;
+                font-size: $font-size-h4;
+                position: relative;
+                text-decoration: none;
+            }
+        }
+    }
+    .nav-sub {
+        margin: 4rem 0 0 0;
+        padding: 0;
+        li {
+            list-style: none;
+            padding: 6px 0;
+            a,
+            span {
+                color: $link-color;
+                line-height: 100%;
+                font-size: $font-size-base-smaller;
+                letter-spacing: 1px;
+                text-decoration: none;
+            }
+            &.sub {
+                a,
+                span {
+                    margin-right: 12px;
+                }
+            }
+            span {
+                &.logout {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

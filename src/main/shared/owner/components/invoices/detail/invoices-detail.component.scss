@@ -1,0 +1,65 @@
+@import "~styles/variables.scss";
+.order-box {
+    margin-bottom: 20px;
+    padding: 0 10px;
+    .order-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid $border-color;
+        .order-picture {
+            max-width: 155px;
+            text-align: left;
+            font-size: 12px;
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin-right: 20px;
+            img.logo {
+                max-width: 100%;
+            }
+        }
+        .order-detail {
+            h2.restaurant-name {
+                padding: 0;
+                color: #333;
+                font-weight: 800;
+                font-size: 1.2rem;
+                line-height: 1.4rem;
+                margin: 0;
+                a {
+                    line-height: 1.4rem;
+                    font-size: 1.2rem;
+                    margin: 0 0 8px;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #333;
+                }
+            }
+        }
+    }
+}
+
+.order-details {
+    padding: 10px;
+    h4 {
+        border-bottom: 1px dotted #ccc;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    .order-details-content {
+        table {
+            width: 100%;
+            tr {
+                td {
+                    &:last-child,
+                    &.delivery-costs,
+                    &.total-costs,
+                    &.payment-method {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}

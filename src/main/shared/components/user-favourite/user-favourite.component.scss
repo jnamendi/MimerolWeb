@@ -1,0 +1,54 @@
+@import "~styles/variables.scss";
+.favourite-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .favourite-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid $border-color;
+        .favourite-picture {
+            max-width: 155px;
+            text-align: left;
+            font-size: 12px;
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin-right: 20px;
+            img.logo {
+                max-width: 100%;
+            }
+        }
+        .favourite-detail {
+            h2.restaurant-name {
+                padding: 0;
+                color: #333;
+                font-weight: 800;
+                font-size: 1.2rem;
+                line-height: 1.4rem;
+                margin: 0;
+                a {
+                    line-height: 1.4rem;
+                    font-size: 1.2rem;
+                    margin: 0 0 8px;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #333;
+                }
+            }
+            .restaurant-rating {
+                margin-top: 5px;
+                .rating {
+                    float: left;
+                    margin-right: 10px;
+                }
+            }
+            .address {
+                margin: 10px 0 8px 0;
+                line-height: 20px;
+                font-style: italic;
+                text-transform: capitalize;
+            }
+        }
+    }
+}

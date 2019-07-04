@@ -1,0 +1,58 @@
+<nav class="{{isToggleNav ? 'is-open':''}}">
+    <div class="nav-header">
+        <a class="nav-logo" [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)"></a>
+        <button class="nav-close" (click)="onToggleNav(true)">
+            <span></span>
+        </button>
+    </div>
+    <div class="nav-body">
+        <ul class="nav-menu">
+            <li>
+                <a [routerLink]="['', 'contact-us']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.About' | translate}}</a>
+            </li>
+            <li *ngIf="isAuthen">
+                <a [routerLink]="['', 'user-favourite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Favorites' | translate}}</a>
+            </li>
+            <!-- <li>
+                <a [routerLink]="['', 'apps']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">Apps</a>
+            </li> -->
+            <li>
+                <a href="https://takeawaycom.homerun.co/" target="_blank">{{'Commons.Links.Career' | translate}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-footer">
+        <ul class="nav-sub">
+            <li *ngIf="!isAuthen">
+                <a [routerLink]="['', 'login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Login' | translate}} / {{'Commons.Links.Register' | translate}}</a>
+            </li>
+            <li *ngIf="isAuthen">
+                <a [routerLink]="['', 'user-details']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">
+                    <span>{{userName}}</span>
+                </a>
+                <span> / </span>
+                <span (click)="onLogout()" class="logout">{{'Commons.Links.Logout' | translate}}</span>
+            </li>
+            <li class="sub">
+                <span>{{'Commons.Texts.FollowUs' | translate}}: </span>
+                <a href="https://www.facebook.com/fooddelivery" target="_blank">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/fooddelivery" target="_blank">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/fooddelivery" target="_blank">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+            <li class="sub">
+                <span> {{'Commons.Texts.Languages' | translate}}: </span>
+                <a *ngFor="let lang of languages" (click)="setLanguage(lang)">{{lang.split('-')[0].toUpperCase()}}</a>
+            </li>
+            <li>
+                <a [routerLink]="['', 'term']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Term' | translate}}</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="overlay {{isToggleNav ? 'is-open':''}}" (click)="onToggleNav(true)"></div>

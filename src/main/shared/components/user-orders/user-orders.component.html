@@ -1,0 +1,39 @@
+<div class="user-page main-content">
+    <page-user-banner></page-user-banner>
+    <div class="container">
+        <div class="row">
+            <page-user-left-menu></page-user-left-menu>
+            <div class="col-md-9">
+                <div class="user-right">
+                    <h2 [innerHTML]="'Commons.Texts.RecentOrders' | translate"></h2>
+                    <p *ngIf="orderModel && orderModel.length == 0" [innerHTML]="'Components.Order.TxtOrderEmpty' | translate"></p>
+                    <div *ngIf="orderModel && orderModel.length > 0" class="order-box">
+                        <div *ngFor="let order of orderModel" class="order-wrapper">
+                            <div class="order-picture">
+                                <a (click)="onOrderDetail(order.orderId, order.orderCode)">
+                                    <img class="logo" src="{{order.imageUrl =='' ? 'assets/images/logo.png' : clientState.BaseUrl + order.imageUrl}}" alt="{{order.restaurantName}}"
+                                    />
+                                </a>
+                            </div>
+                            <div class="order-detail">
+                                <h2 class="restaurant-name">
+                                    <a (click)="onOrderDetail(order.orderId, order.orderCode)">{{order.restaurantName}}</a>
+                                </h2>
+                                <p>
+                                    <i>#{{order.orderCode}}</i>
+                                </p>
+                                <p>{{order.totalPrice}} {{currencySymbol}}</p>
+                                <p>{{order.orderDate | date: 'dd-MM-yyyy'}}
+                                    <span [innerHTML]=" 'Components.Order.At' | translate "></span> {{order.orderDate | date: 'HH:mm'}} -
+                                    <span [innerHTML]=" 'Components.Order.DeliveredTo' | translate "></span> {{order.orderInfos[0].address}}, {{order.orderInfos[0].district}}, {{order.orderInfos[0].city}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<page-user-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isDetail" [visible]="isDetail" (onSuccess)="onSuccess($event)" [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></page-user-orders-detail>

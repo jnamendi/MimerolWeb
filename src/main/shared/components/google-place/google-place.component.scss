@@ -1,0 +1,96 @@
+@import "~styles/variables.scss";
+.search-wrapper {
+    position: relative;
+    z-index: 9;
+    .search-input {
+        position: relative;
+        z-index: 10;
+        input {
+            font-size: 13px;
+            border-radius: 50px;
+            padding: 20px 25px;
+            border: none;
+            background: $body-bg;
+            width: 100%;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(135deg, rgba(255, 125, 38, 1) 0%, rgba(222, 90, 2, 1) 100%);
+            img {
+                color: $body-bg;
+                position: relative;
+                left: -5px;
+                background-size: 100%;
+                width: 23px;
+                top: 3px;
+            }
+        }
+    }
+    .search-results-wrapper {
+        background: $body-bg;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+        .search-results {
+            max-height: 250px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            &::before {
+            content: "";
+            padding: 1px 1px 1px 0;
+            height: 16px;
+            text-align: right;
+            display: block;
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3.png);
+            background-position: 100%;
+            background-repeat: no-repeat;
+            background-size: 120px 14px;
+            margin-top: 5px;
+            margin-right: 5px;
+            }
+            span.pac-icon{
+                width: 15px;
+                height: 20px;
+                margin-right: 7px;
+                margin-top: 0px;
+                display: inline-block;
+                vertical-align: top;
+                background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons.png);
+                background-size: 34px;
+                background-position: -1px -161px;
+            }
+            li {
+                line-height: 1.5;
+                margin: 0;
+                padding: 5px 0 5px 10px;
+                font-size: .8125rem;
+                display: inline-flex;
+                flex: 1;
+                width: 100%;
+                cursor: pointer;
+                span {
+                    font-size: .8125rem;
+                    &.name {
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        max-width: 90%;
+                    }
+                }
+                &:hover,
+                &.active {
+                    background-color: #eee;
+                }
+            }
+        }
+    }
+}
+
+.overlay {
+    background-color: transparent;
+    z-index: 7;
+}

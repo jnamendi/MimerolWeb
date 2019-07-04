@@ -1,0 +1,243 @@
+<div class="admin-main-content form-detail">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-header">
+                <h2 class="title" [innerHTML]="'Commons.Texts.MenuItem' | translate"></h2>
+            </div>
+            <div *ngIf="!!message" class="form-message">
+                <h2 class="message {{isError ? 'error' : ''}}">
+                    {{message}}
+                </h2>
+                <a [routerLink]="['..']" routerLinkActive="active" class="landing">
+                    <span class="btn btn-default btn-primary" [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
+                </a>
+            </div>
+            <div *ngIf="adminMenuItem" class="form-content">
+                <div class="box box-primary">
+                    <form (ngSubmit)="onUpdateMenuItem(f.valid)" #f="ngForm">
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="restaurantName" class="form-control" [(ngModel)]="adminMenuItem.restaurantId" #restaurant="ngModel" (change)="onGetMenuByRestaurantId(adminMenuItem.restaurantId)"
+                                        required>
+                                        <option [ngValue]="null" disabled [innerHTML]="'Commons.Texts.SelectRestaurant' | translate"></option>
+                                        <option *ngFor="let item of restaurantAdminModels; let i = index;" value="{{item.restaurantId}}">{{item.restaurantName}}</option>
+                                    </select>
+                                    <div *ngIf="restaurant.invalid && (restaurant.dirty || restaurant.touched || f.submitted)" class="error">
+                                        <div *ngIf="restaurant.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.MenuRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="menu" class="form-control" [(ngModel)]="adminMenuItem.menuId" #menu="ngModel" required>
+                                        <option [ngValue]="null" disabled [innerHTML]="'Commons.Texts.SelectMenu' | translate"></option>
+                                        <option *ngFor="let item of menuAdminModels; let i = index;" value="{{item.menuId}}">{{item.menuName}}</option>
+                                    </select>
+                                    <div *ngIf="menu.invalid && (menu.dirty || menu.touched || f.submitted)" class="error">
+                                        <div *ngIf="menu.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.MenuItemRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <p-tabView>
+                                        <p-tabPanel *ngFor="let lang of adminMenuItem.languageLst; let i = index;" [selected]="i==0" header="{{lang.name}}">
+                                            <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let k = index;">
+                                                <div *ngIf="field.inputType && field.inputType == 'textarea'">
+                                                    <label>{{field.label}}</label>
+                                                    <textarea type="text" class="form-control" #menuItemDescription="ngModel" id="{{field.code}}{{i}}{{k}}" name="{{field.code}}{{i}}{{k}}"
+                                                        [(ngModel)]="field.value" [required]="i==0" noSpaces></textarea>
+                                                    <div *ngIf="menuItemDescription.invalid && (menuItemDescription.dirty || menuItemDescription.touched || f.submitted)" class="error">
+                                                        <div *ngIf="menuItemDescription.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                        <div *ngIf="menuItemDescription.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!field.inputType || field.inputType == 'input'">
+                                                    <label>{{field.label}}</label>
+                                                    <input type="text" class="form-control" #menuItemDescription="ngModel" id="{{field.code}}{{i}}{{k}}" name="{{field.code}}{{i}}{{k}}"
+                                                        [(ngModel)]="field.value" [required]="i==0" noSpaces>
+                                                    <div *ngIf="menuItemDescription.invalid && (menuItemDescription.dirty || menuItemDescription.touched || f.submitted)" class="error">
+                                                        <div *ngIf="menuItemDescription.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                        <div *ngIf="menuItemDescription.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p-tabPanel>
+                                    </p-tabView>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Image' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="file" name="upimage" id="upimage" placeholder="Select images to upload..." accept=".gif,.jpg,.jpeg,.png" (change)="detectFiles($event)"
+                                    />
+                                    <div class="preview-img">
+                                        <img *ngIf="!imgUrl && adminMenuItem.imageUrl" src="{{clientState.BaseUrl + adminMenuItem.imageUrl}}" width="200">
+                                        <img *ngIf="imgUrl" src="{{imgUrl}}" width="200">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.PriceRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        min="0" class="form-control" [(ngModel)]="adminMenuItem.price" name="menuItemPrice" #menuItemPrice="ngModel"
+                                        required/>
+                                    <div *ngIf="menuItemPrice.invalid && (menuItemPrice.dirty || menuItemPrice.touched || f.submitted)" class="error">
+                                        <div *ngIf="menuItemPrice.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2"></label>
+                                <div class="col-md-10">
+                                    <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Admin.MenuItem.AddSingleChoice' | translate"></button>
+                                    <button type="button" (click)="onAddMoreExtraItem(2)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Admin.MenuItem.AddMutipleChoice' | translate"></button>
+                                </div>
+                            </div>
+                            <div *ngFor="let extra of adminMenuItem.menuExtraLst; let i = index" class="menu-extra-item">
+                                <!-- Single Choice -->
+                                <div class="box box-success" *ngIf="extra.extraItemType == 1">
+                                    <div class="box-header flex">
+                                        <h3 class="box-title" [innerHTML]="'Commons.Texts.SingleChoice' | translate"></h3>
+                                        <div class="action">
+                                            <button type="button" (click)="onAddMoreExtraItem(1)" style="background: gray" class="btn btn-default">+</button>
+                                            <button type="button" (click)="onRemoveExtraItem(extra)" style="background: gray" class="btn btn-default">-</button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row form-group">
+                                            <label class="col-md-2" [innerHTML]="'Commons.Texts.ExtraItemNameRequired' | translate"></label>
+                                            <div class="col-md-6">
+                                                <p-tabView>
+                                                    <p-tabPanel *ngFor="let lang of extra.languageLst; let j = index;" [selected]="j==0" header="{{lang.name}}">
+                                                        <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let k = index;">
+                                                            <input type="text" class="form-control" #menuExtraItemName="ngModel" id="{{field.code}}{{i}}{{j}}{{k}}" name="{{field.code}}{{i}}{{j}}{{k}}"
+                                                                [(ngModel)]="field.value" [required]="j==0" noSpaces>
+                                                            <div *ngIf="menuExtraItemName.invalid && (menuExtraItemName.dirty || menuExtraItemName.touched || f.submitted)" class="error">
+                                                                <div *ngIf="menuExtraItemName.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                                <div *ngIf="menuExtraItemName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                            </div>
+                                                        </div>
+                                                    </p-tabPanel>
+                                                </p-tabView>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="col-md-5" [innerHTML]="'Commons.Texts.TitleRequired' | translate"></label>
+                                                    <label class="col-md-3" [innerHTML]="'Commons.Texts.Price' | translate"></label>
+                                                </div>
+                                                <div *ngFor="let extraItem of extra.extraItemLst; let j = index" class="col-md-12">
+                                                    <div class="col-md-5">
+                                                        <p-tabView>
+                                                            <p-tabPanel *ngFor="let lang of extraItem.extraItem; let k = index;" [selected]="k==0" header="{{lang.name}}">
+                                                                <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let l = index;">
+                                                                    <input type="text" class="form-control" #menuExtraItemTitle="ngModel" id="{{field.code}}{{i}}{{j}}{{k}}{{l}}" name="{{field.code}}{{i}}{{j}}{{k}}{{l}}"
+                                                                        [(ngModel)]="field.value" [required]="k==0" noSpaces>
+                                                                    <div *ngIf="menuExtraItemTitle.invalid && (menuExtraItemTitle.dirty || menuExtraItemTitle.touched || f.submitted)" class="error">
+                                                                        <div *ngIf="menuExtraItemTitle.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                                        <div *ngIf="menuExtraItemTitle.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </p-tabPanel>
+                                                        </p-tabView>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                            class="form-control" [(ngModel)]="extraItem.price" name="extraItemPrice{{i}}{{j}}{{k}}{{l}}">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" (click)="onAddMoreExtraItemDetail(extra.extraItemLst)" style="background: gray" class="btn btn-default">+</button>
+                                                        <button type="button" (click)="onRemoveExtraItemDetail(extraItem, extra.extraItemLst)" style="background: gray" class="btn btn-default">-</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Multiple choice -->
+                                <div class="box box-warning" *ngIf="extra.extraItemType == 2">
+                                    <div class="box-header flex">
+                                        <h3 class="box-title" [innerHTML]="'Commons.Texts.MultipleChoice' | translate"></h3>
+                                        <div class="action">
+                                            <button type="button" (click)="onAddMoreExtraItem(2)" style="background: gray" class="btn btn-default">+</button>
+                                            <button type="button" (click)="onRemoveExtraItem(extra)" style="background: gray" class="btn btn-default">-</button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row form-group">
+                                            <label class="col-md-2" [innerHTML]="'Commons.Texts.ExtraItemNameRequired' | translate"></label>
+                                            <div class="col-md-6">
+                                                <p-tabView>
+                                                    <p-tabPanel *ngFor="let lang of extra.languageLst; let j = index;" [selected]="j==0" header="{{lang.name}}">
+                                                        <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let k = index;">
+                                                            <input type="text" class="form-control" #menuExtraItemName="ngModel" id="{{field.code}}{{i}}{{j}}{{k}}" name="{{field.code}}{{i}}{{j}}{{k}}"
+                                                                [(ngModel)]="field.value" [required]="j==0" noSpaces>
+                                                            <div *ngIf="menuExtraItemName.invalid && (menuExtraItemName.dirty || menuExtraItemName.touched || f.submitted)" class="error">
+                                                                <div *ngIf="menuExtraItemName.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                                <div *ngIf="menuExtraItemName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                            </div>
+                                                        </div>
+                                                    </p-tabPanel>
+                                                </p-tabView>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="col-md-5" [innerHTML]="'Commons.Texts.TitleRequired' | translate"></label>
+                                                    <label class="col-md-3" [innerHTML]="'Commons.Texts.Price' | translate"></label>
+                                                </div>
+                                                <div *ngFor="let extraItem of extra.extraItemLst; let j = index " class="col-md-12">
+                                                    <div class="col-md-5">
+                                                        <p-tabView>
+                                                            <p-tabPanel *ngFor="let lang of extraItem.extraItem; let k = index;" [selected]="k==0" header="{{lang.name}}">
+                                                                <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let l = index;">
+                                                                    <input type="text" class="form-control" #menuExtraItemTitle="ngModel" id="{{field.code}}{{i}}{{j}}{{k}}{{l}}" name="{{field.code}}{{i}}{{j}}{{k}}{{l}}"
+                                                                        [(ngModel)]="field.value" [required]="k==0" noSpaces>
+                                                                    <div *ngIf="menuExtraItemTitle.invalid && (menuExtraItemTitle.dirty || menuExtraItemTitle.touched || f.submitted)" class="error">
+                                                                        <div *ngIf="menuExtraItemTitle.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                                        <div *ngIf="menuExtraItemTitle.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </p-tabPanel>
+                                                        </p-tabView>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                            class="form-control" [(ngModel)]="extraItem.price" name="extraItemPrice{{i}}{{j}}{{k}}{{l}}">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" (click)="onAddMoreExtraItemDetail(extra.extraItemLst)" style="background: gray" class="btn btn-default">+</button>
+                                                        <button type="button" (click)="onRemoveExtraItemDetail(extraItem, extra.extraItemLst)" style="background: gray" class="btn btn-default">-</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="button" class="btn btn-default btn-danger" (click)="onDeleteMenuItem()" [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

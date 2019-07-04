@@ -1,0 +1,42 @@
+<div class="user-page main-content">
+  <page-user-banner></page-user-banner>
+  <div class="container">
+    <div class="row">
+      <page-user-left-menu></page-user-left-menu>
+      <div class="col-md-9">
+        <div class="user-right">
+          <h2 [innerHTML]="'Commons.Texts.Addresses' | translate"></h2>
+          <p *ngIf="addressModels && addressModels.length <= 0" [innerHTML]="'Components.MyAccount.TxtAddressesEmpty' | translate"></p>
+          <div *ngIf="addressModels && addressModels.length > 0" class="address-box">
+            <div *ngFor="let address of addressModels" class="address-wrapper">
+              <div class="address-picture">
+                <!-- <a href="" class="img-link"> -->
+                <img class="logo" src="/assets/images/logo.png" border="0">
+                <!-- </a> -->
+              </div>
+              <div class="detail">
+                <h4 class="address">{{address.address}}</h4>
+                <!-- <h4 class="address">{{address.addressDesc}}</h4>
+                <h4 class="address">{{address.districtName}}</h4> -->
+                <h5 class="city">{{address.cityName}}</h5>
+                <h5 class="phone">{{address.phoneNumber}}</h5>
+                <div class="action">
+                  <a (click)="onOpenUpdateAddress(address.addressId)" [innerHTML]="'Components.MyAccount.TxtUpdateAddresses' | translate"></a>
+                  <span> - </span>
+                  <a (click)="onOpenDelete(address.addressId)" [innerHTML]="'Components.MyAccount.TxtDeleteAddresses' | translate"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-default btn-primary" (click)="onOpenCreateAddress()" [innerHTML]="'Components.MyAccount.TxtAddAddresses' | translate"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<address-creation *ngIf="isCreation" [visible]="isCreation" (onSuccess)="onSuccess($event)"></address-creation>
+<address-details *ngIf="selectedAddressId && isUpdation" [visible]="isUpdation" (onSuccess)="onSuccess($event)"
+  [addressId]="selectedAddressId"></address-details>
+<confirm-dialog *ngIf="isDeleteConfirm" [visible]="isDeleteConfirm" (confirm)="onDeleteAddress($event)" [header]="'Confirm'"
+  [content]="'Are you sure want to delete?'" [confirmText]="'Yes'"></confirm-dialog>

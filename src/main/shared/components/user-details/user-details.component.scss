@@ -1,0 +1,9 @@
+@import "~styles/variables.scss";
+.personal-data-form,
+.change-password-form {
+    margin-top: 20px;
+}
+
+.error {
+    color: $red;
+}

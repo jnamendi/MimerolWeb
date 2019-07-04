@@ -1,0 +1,48 @@
+<div class="user-page main-content">
+  <page-user-banner></page-user-banner>
+  <div class="container">
+    <div class="row">
+      <page-user-left-menu></page-user-left-menu>
+      <div class="col-md-9">
+        <div class="user-right">
+          <h2 [innerHTML]="'Components.MyAccount.TxtChangePassword' | translate"></h2>
+          <form (ngSubmit)="onChangePassword(f)" #f="ngForm" novalidate>
+            <div class="row change-password-form">
+              <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                  <label [innerHTML]="'Components.MyAccount.TxtOldPassword' | translate">Old password</label>
+                  <input class="form-control" type="password" required name="oldPassword" [(ngModel)]="userChangePasswordModel.oldPassword"
+                    #oldPassword="ngModel">
+                  <div *ngIf="oldPassword.invalid && (oldPassword.dirty || oldPassword.touched || f.submitted)" class="error">
+                    <div *ngIf="oldPassword.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label [innerHTML]="'Components.MyAccount.TxtNewPassword' | translate"></label>
+                  <input class="form-control" type="password" required name="newPassword" minlength="8" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,200}$"
+                    validateEqual="confirmPasswordChange" reverse="true" [(ngModel)]="userChangePasswordModel.newPassword"
+                    #newPassword="ngModel">
+                  <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched || f.submitted)" class="error">
+                    <div *ngIf="newPassword.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                    <div *ngIf="newPassword.errors?.pattern" [innerHTML]="'Commons.Error.ErrPatternPassword' | translate"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label [innerHTML]="'Components.MyAccount.TxtRepeatPassword' | translate"></label>
+                  <input class="form-control" type="password" reverse="false" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordChange="ngModel"
+                    validateEqual="newPassword">
+                  <div *ngIf="confirmPasswordChange.invalid && (newPassword.dirty || newPassword.touched || !f.submited)" class="error" [innerHTML]="'Commons.Error.ErrPasswordMismatch' | translate"></div>
+                </div>
+                <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="'Commons.HttpStatus.' + changePasswordStatusError | translate"></div>
+                <div *ngIf="isChangePasswordSuccess" class="success" [innerHTML]="'Components.MyAccount.ChangePasswordSuccess' | translate"></div>
+              </div>
+              <div class="col-md-12">
+                <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary" [innerHTML]="'Components.MyAccount.TxtChangePassword' | translate">Change password</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

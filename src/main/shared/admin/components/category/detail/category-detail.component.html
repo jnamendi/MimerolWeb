@@ -1,0 +1,72 @@
+<div class="admin-main-content form-detail">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-header">
+                <h2 class="title">
+                    <span class="title-one" [innerHTML]="'Commons.Texts.Category' | translate"></span>
+                    <!-- <span>{{categoryAdminModel.name}}</span> -->
+                </h2>
+            </div>
+            <div *ngIf="!!message" class="form-message">
+                <h2 class="message {{isError ? 'error' : ''}}">
+                    {{message}}
+                </h2>
+                <a [routerLink]="['..']" routerLinkActive="active" class="landing">
+                    <span class="btn btn-default btn-primary" [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
+                </a>
+            </div>
+            <div class="form-content">
+                <div class="box box-primary">
+                    <form (ngSubmit)="onUpdateCategory(f.valid)" #f="ngForm">
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.CategoryNameRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <p-tabView>
+                                        <p-tabPanel *ngFor="let lang of categoryAdminModel.languageLst; let i = index;" [selected]="i==0" header="{{lang.name}}">
+                                            <div class="form-group col-xs-12 col-sm-6" *ngFor="let feild of lang.contentDef; let k = index;">
+                                                <input type="text" class="form-control" #categoryName="ngModel" id="{{feild.code}}{{i}}{{k}}" name="{{feild.code}}{{i}}{{k}}"
+                                                    [(ngModel)]="feild.value" required noSpaces>
+                                                <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)" class="error">
+                                                    <div *ngIf="categoryName.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                    <div *ngIf="categoryName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                </div>
+                                            </div>
+                                        </p-tabPanel>
+                                    </p-tabView>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.SortOrder' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" min="1" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="sortOrder" [(ngModel)]="categoryAdminModel.sortOrder" #sortOrder="ngModel"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Status' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="status" class="form-control" [(ngModel)]="categoryAdminModel.status" #status="ngModel" required>
+                                        <option value="1" [innerHTML]="'Commons.Texts.Publish' | translate"></option>
+                                        <option value="0" [innerHTML]="'Commons.Texts.UnPublish' | translate"></option>
+                                    </select>
+                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
+                                        <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="button" class="btn btn-default btn-danger" (click)="onDeleteCategory()" [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

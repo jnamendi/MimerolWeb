@@ -1,0 +1,155 @@
+/* Base*/
+$FONT_BASE: 13px;
+$SCREEN_XXS: 350px;
+$SCREEN_XS: 480px;
+$SCREEN_SM: 768px;
+$SCREEN_MD: 992px;
+$SCREEN_LG: 1100px;
+$SCREEN_HD: 1400px;
+
+/* Colors */
+
+$grey-superlight:                       #eee;
+$grey-lightest:                         #ddd;
+$grey-lighter:                          #bbb;
+$grey-light:                            #999;
+$grey:                                  #777;
+$grey1:                                 #f5f5f5;
+$grey6:                                 #333333;
+$grey-dark:                             #555;
+$grey-darker:                           #222;
+$grey-background:                       #f2f2f2;
+$yellow:                                #ffed00;
+$yellow-dark:                           #eab71f;
+$dark:                                  #212121;
+$dark2:                                 #2b2b2b;
+$dark3:                                 #111;
+$orange:                                #ff6a00;
+$orange1:                               #e6670a;
+$orange-text-bold:                      #de5a02;
+$orange-text:                           #ff7d26;
+$red:                                   #e30613;
+$red-dark:                              #e10a1a;
+$pink:                                  #e6007e;
+$green:                                 #83ad02;
+$green1:                                #3c763d;
+$green-text:                            #008488;
+$green-text-darker:                     #007477;
+$purple:                                #c3006b;
+$bluegrey:                              #6d838f;
+$turquoise:                             #6ecfc6;
+$blue:                                  #017dfc;
+$text-color:                            #222;
+$body-bg:                               #ffffff;
+$border-color:                          #CCC;
+$section-bg:                            #f5f6f9;
+
+
+// Gutter
+$gutter:                                30px;
+// Typography
+$font-family-serif:                     Montserrat, serif;
+
+$font-family-base:                      $font-family-serif;
+$font-size-base-mobile:                 $FONT_BASE;
+$font-size-base:                        16px;
+$font-size-paragraph:                   19px;
+$font-size-sans-paragraph:              18px;
+$font-size-base-tiny:                   10px;
+$font-size-base-smaller:                12px;
+$font-size-base-small:                  14px;
+$font-size-tiny:                        12px;
+$font-size-smaller:                     13px;
+$font-size-small:                       14px;
+$font-size-huge:                        45px;
+$font-size-jumbo:                       60px;
+$font-size-h1:                          45px;
+$font-size-h1-xxs:                      30px;
+$font-size-h1-xs:                       35px;
+$font-size-h2:                          28px;
+$font-size-h3:                          24px;
+$font-size-h4:                          20px;
+$font-size-h5:                          18px;
+$font-size-h6:                          $font-size-base;
+
+// new font settings
+$type-base-font-size:                   16px;
+$type-base-line-height:                 24px;
+
+// Heading sizes
+$type-h1-size:                          48px;
+$type-h2-size:                          36px;
+$type-h3-size:                          30px;
+$type-h4-size:                          24px;
+$type-h5-size:                          20px;
+$type-h6-size:                          $font-size-base;
+
+$line-height-base:                      1.5; // 20/16
+
+// Headings
+$headings-font-weight:                  400;
+$headings-font-weight-bold:             600;
+$headings-line-height:                  1.1;
+$headings-color:                        #000;
+
+// Buttons
+$button-color:                          $grey;
+$button-color-primary:                  $grey-darker;
+$button-color-secondary:                $grey-lighter;
+
+// Links
+$link-color:                            $text-color;
+$link-hover-color:                      $link-color;
+$link-hover-decoration:                 none;
+
+//  Media queries
+$screen-xxs:                            $SCREEN_XXS;
+$screen-xxs-min:                        $screen-xxs;
+$screen-xs:                             $SCREEN_XS;
+$screen-xs-min:                         $screen-xs;
+$screen-sm:                             $SCREEN_SM;
+$screen-sm-min:                         $screen-sm;
+$screen-md:                             $SCREEN_MD;
+$screen-md-min:                         $screen-md;
+$screen-lg:                             $SCREEN_LG;
+$screen-lg-min:                         $screen-lg;
+$screen-hd:                             $SCREEN_HD;
+$screen-hd-min:                         $screen-hd;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xxxs-max:                       ($screen-xxs-min - 1);
+$screen-xxs-max:                        ($screen-xs-min - 1);
+$screen-xs-max:                         ($screen-sm-min - 1);
+$screen-sm-max:                         ($screen-md-min - 1);
+$screen-md-max:                         ($screen-lg-min - 1);
+$screen-lg-max:                         ($screen-hd-min - 1);
+
+$mq-xxs:                                "only screen and (min-width: #{$screen-xxs})";
+$mq-xs:                                 "only screen and (min-width: #{$screen-xs})";
+$mq-sm:                                 "only screen and (min-width: #{$screen-sm})";
+$mq-md:                                 "only screen and (min-width: #{$screen-md})";
+$mq-lg:                                 "only screen and (min-width: #{$screen-lg})";
+$mq-retina:                             "only screen and (-webkit-min-device-pixel-ratio: 1.25), only screen and (min--moz-device-pixel-ratio: 1.25), only screen and (-o-min-device-pixel-ratio: 1.25/1), only screen and (min-device-pixel-ratio: 1.25), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)";
+
+$mq-xxs-only:                           "only screen and (max-width: #{$screen-xxs})";
+$mq-xs-only:                            "only screen and (min-width: #{$screen-xxs}) and (max-width: #{$screen-xs-max})";
+$mq-sm-only:                            "only screen and (min-width: #{$screen-xs}) and (max-width: #{$screen-sm-max})";
+$mq-md-only:                            "only screen and (min-width: #{$screen-sm}) and (max-width: #{$screen-md-max})";
+$mq-lg-only:                            "only screen and (min-width: #{$screen-md}) and (max-width: #{$screen-lg-max})";
+$mq-breakpoint-list:                    "xxs", "xs", "sm", "md", "lg";
+
+$mq-small-screens-only:                 "only screen and (max-width: #{$screen-xxs-max})";
+
+// padding
+$padding-xxl:                           $gutter * 2;    // 60px
+$padding-xl:                            $gutter * 1.5;  // 45px
+$padding-lg:                            $gutter;        // 30px
+$padding-md:                            $gutter / 1.5;  // 20px
+$padding-sm:                            $gutter / 2;    // 15px
+$padding-xs:                            $gutter / 3;    // 10px
+$padding-xxs:                           $gutter / 6;    // 5px
+
+// z-index
+$body-z-index:                           1;
+$negative-z-index:                      -1;
+$fullscreen-z-index:                    -1;

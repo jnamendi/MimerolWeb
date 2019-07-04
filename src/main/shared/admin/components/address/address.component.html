@@ -1,0 +1,65 @@
+<div class="admin-main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 header">
+                <h2 class="title" [innerHTML]="'Admin.Address.AddressManagement' | translate"></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title" [innerHTML]="'Admin.Address.ManageYourAddress' | translate"></h3>
+                    </div>
+                    <div class="box-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th [innerHTML]="'Commons.Texts.Username' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.AddressName' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Phone' | translate"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of addressAdminModels; let i = index;">
+                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td>
+                                        <span>{{item && item.userName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.address}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.phoneNumber}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <p *ngIf="paginModel && paginModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
+                    </div>
+                    <div class="box-footer">
+                        <!-- <pagination *ngIf="paginModel && paginModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="paginModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
+                            [currentPageIndex]="paginModel.pageNumber">
+                        </pagination> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

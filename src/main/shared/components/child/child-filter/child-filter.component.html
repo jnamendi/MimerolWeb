@@ -1,0 +1,67 @@
+<div class="sticker_fillter {{isToggleFilter ? 'is-open': ''}}">
+    <button class="filter-close" (click)="onCloseFilter()"></button>
+    <div id="bs-collapse" class="item">
+        <div class="panel">
+            <div class="panel-heading title_child {{filterFoods && filterFoods.food.isToggle ? 'open' : ''}}">
+                <h4 class="panel-title panel-title-main">
+                    <a (click)="onToggleFilterItem(0)">
+                        Foods
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="one" class="" *ngIf="categoryFilters && categoryFilters.length > 0">
+                <ul id="more" class="item_search">
+                    <li>
+                        <a (click)="onCategoryFilter(0)">Select all</a>
+                    </li>
+                    <li *ngFor="let item of categoryFilters">
+                        <a (click)="onCategoryFilter(item.categoryId)" [ngClass]="{'active': item.categoryId == categoryIdFiltered}">
+                            <span class="pull-right">({{item.numberOfRest}})</span>{{item.categoryName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading title_child {{filterPrice && filterPrice.price.isToggle ? 'open' : ''}}">
+                <h4 class="panel-title panel-title-main">
+                    <a (click)="onToggleFilterItem(1)">
+                        Price
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div *ngIf="rankPrice" id="tow" class="panel-collapse collapse in">
+                <div class="price-range">
+                    <div id="slider_price"></div>
+                    <p-slider [(ngModel)]="priceFiltered" [min]="0" [max]="this.rankPrice.maxPrice" [step]="10" [range]="true" (onSlideEnd)="onHandleSlideEnd($event)"></p-slider>
+                    <p>
+                        <span id="app_min_price">{{priceFiltered[0]}}C$</span>
+                        <span id="app_max_price" class="fr">{{priceFiltered[1]}}C$</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading title_child {{filterCost && filterCost.cost.isToggle ? 'open' : ''}}">
+                <h4 class="panel-title panel-title-main">
+                    <a (click)="onToggleFilterItem(2)">
+                        Delivery costs
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="three" class="" *ngIf="deliveryCostFilters && deliveryCostFilters.length > 0">
+                <ul id="more" class="item_search">
+                    <li *ngFor="let item of deliveryCostFilters, let i = index">
+                        <input class="magic-radio" type="radio" [checked]="item.value === costFiltered" [value]="item.value" name="item{{i}}" id="item{{i}}" (change)="onDeliveryFilter(item.value)">
+                        <label class="text" for="item{{i}}">
+                            {{item.name}}
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay {{isToggleFilter? 'is-open':''}}" (click)="onCloseFilter()"></div>

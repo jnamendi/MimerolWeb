@@ -1,0 +1,95 @@
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="main">
+                    <h1>How can we help you?</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="contact-page">
+                                <h4>Contact</h4>
+                                <p>If you have an urgent question concerning an order you placed on Mimerol.com, we advise you
+                                    to directly contact the restaurant. You can find the number of the restaurant in the
+                                    confirmation e-mail we sent you. For less urgent matters and general questions, please
+                                    fill out the form below. Customer Service is available 7 days a week, from 07:30am to
+                                    11:00pm. </p>
+                                <form (ngSubmit)="onCreateContact(f)" #f="ngForm" novalidate>
+                                    <div class="contact-form">
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Commons.Texts.SubjectRequired' | translate"></label>
+                                            <input type="text" name="subject" class="form-control" required [(ngModel)]="contactModel.subject" #subject="ngModel" />
+                                            <div *ngIf="subject.invalid && (subject.dirty || subject.touched || f.submitted)" class="error">
+                                                <div *ngIf="subject.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Components.ContactUs.ContactTypeRequired' | translate"></label>
+                                            <select name="contactType" class="form-control" required [(ngModel)]="contactModel.contactType" #contactType="ngModel">
+                                                <option value="Question">Question</option>
+                                                <option value="Suggestion">Suggestion</option>
+                                                <option value="Complaint">Complaint</option>
+                                            </select>
+                                            <div *ngIf="contactType.invalid && (contactType.dirty || contactType.touched || f.submitted)" class="error">
+                                                <div *ngIf="contactType.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Commons.Texts.NameRequired' | translate"></label>
+                                            <input type="text" name="contactName" class="form-control" required [(ngModel)]="contactModel.contactName" #contactName="ngModel"
+                                            />
+                                            <div *ngIf="contactName.invalid && (contactName.dirty || contactName.touched || f.submitted)" class="error">
+                                                <div *ngIf="contactName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Commons.Texts.PhoneRequired' | translate"></label>
+                                            <input type="text" name="contactPhone" class="form-control" maxlength="100" required [(ngModel)]="contactModel.contactPhone"
+                                                #contactPhone="ngModel" />
+                                            <div *ngIf="contactPhone.invalid && (contactPhone.dirty || contactPhone.touched || f.submitted)" class="error">
+                                                <div *ngIf="contactPhone.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Commons.Texts.EmailRequired' | translate"></label>
+                                            <input type="text" name="contactEmail" class="form-control" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required
+                                                [(ngModel)]="contactModel.contactEmail" #contactEmail="ngModel" />
+                                            <div *ngIf="contactEmail.invalid && (contactEmail.dirty || contactEmail.touched || f.submitted)" class="error">
+                                                <div *ngIf="contactEmail.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="contactEmail.errors?.pattern" [innerHTML]="'Commons.Error.ErrFormatEmail' | translate"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label [innerHTML]="'Commons.Texts.MessageRequired' | translate"></label>
+                                            <textarea rows="5" name="contactMessage" class="form-control" required [(ngModel)]="contactModel.contactMessage" #contactMessage="ngModel"></textarea>
+                                            <div *ngIf="contactMessage.invalid && (contactMessage.dirty || contactMessage.touched || f.submitted)" class="error">
+                                                <div *ngIf="contactMessage.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="'Commons.HttpStatus.' + createContactStatusError | translate"></div>
+                                        <div *ngIf="isCreateContactSuccess" class="success" [innerHTML]="'Components.ContactUs.SendContactSuccess' | translate"></div>
+                                        <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary">Send contact</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="sidebars">
+                                <div class="callus grid-06 off-06">
+                                    <h3 [innerHTML]="'Commons.Texts.CustomerService' | translate"></h3>
+                                    <h4>1800 6123</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

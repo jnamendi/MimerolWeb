@@ -1,0 +1,145 @@
+<div class="admin-main-content form-detail">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-header">
+                <h2 class="title" [innerHTML]="'Admin.Promotion.CreatePromotion' | translate"></h2>
+            </div>
+
+            
+
+            <div class="form-content">
+                <div class="box box-primary">
+                    <form (ngSubmit)="onSubmit(f.valid)" #f="ngForm">
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.PromotionNameRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <p-tabView>
+                                        <p-tabPanel *ngFor="let lang of promotionAdminModel.languageLst; let i = index;" [selected]="i==0" header="{{lang.name}}">
+                                            <div class="form-group col-xs-12" *ngFor="let field of lang.contentDef; let k = index;">
+                                                <div *ngIf="field.inputType && field.inputType == 'textarea'">
+                                                    <label>{{field.label}}</label>
+                                                    <textarea rows="5" type="text" class="form-control" #promotionDescription="ngModel" id="{{field.code}}{{i}}{{k}}" name="{{field.code}}{{i}}{{k}}"
+                                                        [(ngModel)]="field.value" [required]="i==0" noSpaces></textarea>
+                                                    <div *ngIf="promotionDescription.invalid && (promotionDescription.dirty || promotionDescription.touched || f.submitted)"
+                                                        class="error">
+                                                        <div *ngIf="promotionDescription.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                        <div *ngIf="promotionDescription.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!field.inputType || field.inputType == 'input'">
+                                                    <label>{{field.label}}</label>
+                                                    <input type="text" class="form-control" #promotionName="ngModel" id="{{field.code}}{{i}}{{k}}" name="{{field.code}}{{i}}{{k}}"
+                                                        [(ngModel)]="field.value" [required]="i==0" noSpaces>
+                                                    <div *ngIf="promotionName.invalid && (promotionName.dirty || promotionName.touched || f.submitted)" class="error">
+                                                        <div *ngIf="promotionName.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                        <div *ngIf="promotionName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p-tabPanel>
+                                    </p-tabView>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="restaurantName" class="form-control" [(ngModel)]="promotionAdminModel.restaurantId" #restaurantName="ngModel"
+                                        required>
+                                        <option [ngValue]="null" disabled [innerHTML]="'Commons.Texts.SelectRestaurant' | translate"></option>
+                                        <option *ngFor="let item of restaurantAdminModels; let i = index;" value="{{item.restaurantId}}">{{item.restaurantName}}</option>
+                                    </select>
+                                    <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)" class="error">
+                                        <div *ngIf="restaurantName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.ValueRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="value" [(ngModel)]="promotionAdminModel.value" #value="ngModel"
+                                    />
+                                    <div *ngIf="value.invalid && (value.dirty || value.touched || f.submitted)" class="error">
+                                        <div *ngIf="value.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.PromotionCodeRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="code" [(ngModel)]="promotionAdminModel.code" #code="ngModel" />
+                                    <div *ngIf="code.invalid && (code.dirty || code.touched || f.submitted)" class="error">
+                                        <div *ngIf="code.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.MinOrderRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" min="0" class="form-control" name="minOrder" [(ngModel)]="promotionAdminModel.minOrder" #minOrder="ngModel"
+                                        required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                    />
+                                    <div *ngIf="minOrder.invalid && (minOrder.dirty || minOrder.touched || f.submitted)" class="error">
+                                        <div *ngIf="minOrder.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.StartDateRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <p-calendar name="startDate" [(ngModel)]="promotionAdminModel.startDate" comparsion="lesser" dateComparsion="endDate" #startDate="ngModel" showButtonBar="true" showIcon="true"
+                                        required></p-calendar>
+                                    <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched || f.submitted)" class="error">
+                                        <div *ngIf="startDate.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        <div *ngIf="startDate.errors?.dateInValid" [innerHTML]="'Commons.Error.ErrorStartDate' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.EndDateRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <p-calendar name="endDate" [(ngModel)]="promotionAdminModel.endDate" comparsion="greater" dateComparsion="startDate" #endDate="ngModel"
+                                        showButtonBar="true" showIcon="true" required></p-calendar>
+                                    <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched || f.submitted)" class="error">
+                                        <div *ngIf="endDate.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        <div *ngIf="endDate.errors?.dateInValid" [innerHTML]="'Commons.Error.ErrorEndDate' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Status' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="status" class="form-control" [(ngModel)]="promotionAdminModel.status" #status="ngModel" required>
+                                        <option value="1" [innerHTML]="'Commons.Texts.Publish' | translate"></option>
+                                        <option value="0" [innerHTML]="'Commons.Texts.UnPublish' | translate"></option>
+                                    </select>
+                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
+                                        <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!!message" class="form-message">
+                                <h2 class="message {{isError ? 'error' : ''}}">
+                                    {{message}}
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
