@@ -1,3 +1,6 @@
 # Add any directories, files, or patterns you don't want to be tracked by version control
 /node_modules/*
 .awcache/
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/MimerolWeb/config/applicationhost.config
