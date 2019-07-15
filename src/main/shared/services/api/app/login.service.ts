@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { UserApi } from "../../../mocks/app/user/user.api";
 import { HttpService } from '../../http/http.service';
-import { JwtTokenHelper } from '../../../common';
 import { Observable } from 'rxjs/Observable';
 import { ApiUrl } from '../../api-url/api-url';
 import { ApiHelper } from '../../api-helper';
-import { ApiResponse, ApiResponsePaging } from '../../api-response/api-response';
-import { UserModel, UserTokenParsing } from '../../../models';
+import { ApiResponse } from '../../api-response/api-response';
+import { UserModel } from '../../../models';
 import { StorageKey } from '../../storage-key/storage-key';
 
 export interface LoginInterface {
@@ -26,16 +24,12 @@ export class LoginService implements LoginInterface {
 
     onLogin = (user: UserModel): Observable<ApiResponse> => {
         let body = JSON.stringify(user);
-        return this.http.HttpPost(ApiUrl.UserLogin, body, false)
-            .map(ApiHelper.extractData)
-            .catch(ApiHelper.onFail);
+        return this.http.HttpPost(ApiUrl.UserLogin, body, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 
     onSignin = (user: UserModel): Observable<ApiResponse> => {
         let body = JSON.stringify(user);
-        return this.http.HttpPost(ApiUrl.UserResgister, body, false)
-            .map(ApiHelper.extractData)
-            .catch(ApiHelper.onFail);
+        return this.http.HttpPost(ApiUrl.UserResgister, body, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 
     onLogout = async (): Promise<void> => {
@@ -44,22 +38,16 @@ export class LoginService implements LoginInterface {
 
     onForgotPassword(email: string, languageCode: string): Observable<ApiResponse> {
         let body = JSON.stringify({ email, languageCode });
-        return this.http.HttpPost(ApiUrl.UserForgotPassword, body, false)
-            .map(ApiHelper.extractData)
-            .catch(ApiHelper.onFail);
+        return this.http.HttpPost(ApiUrl.UserForgotPassword, body, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 
     onActivateAccount(token: string): Observable<ApiResponse> {
         let body = JSON.stringify({ token });
-        return this.http.HttpPost(ApiUrl.UserActivateAccount, body, false)
-            .map(ApiHelper.extractData)
-            .catch(ApiHelper.onFail);
+        return this.http.HttpPost(ApiUrl.UserActivateAccount, body, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 
     onResendActivate(email: string, languageCode: string): Observable<ApiResponse> {
         let body = JSON.stringify({ email, languageCode });
-        return this.http.HttpPost(ApiUrl.UserResendEmail, body, false)
-            .map(ApiHelper.extractData)
-            .catch(ApiHelper.onFail);
+        return this.http.HttpPost(ApiUrl.UserResendEmail, body, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }
