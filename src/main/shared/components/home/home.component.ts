@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getAddressOnChange = (event) => {
-    console.log(event)
+    // console.log(event)
   }
 
   getAddress(place: Object) {

@@ -128,7 +128,7 @@ export class ChildComponent implements OnInit {
   }
 
   onFilterHandle = (event) => {
-    console.log(event)
+    // console.log(event)
   }
 
   onCategoryFilter = (categoryId: number) => {

@@ -67,7 +67,7 @@ export class AdminMenuItemComponent implements OnDestroy {
     }
 
     onGetData = (data:any) => {
-        console.log(data)
+        // console.log(data)
     }
 
     onGetMenuItems = () => {
