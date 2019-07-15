@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../services';
 import { ClientState } from '../../state';
 import { ApiError } from '../../services/api-response/api-response';
@@ -12,7 +12,6 @@ import { StorageKey } from '../../services/storage-key/storage-key';
 })
 
 export class VerifyComponent implements OnInit, OnChanges, OnDestroy {
-
   private sub: any;
   private token: string;
   private isVerified: boolean;
