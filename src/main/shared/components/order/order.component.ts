@@ -153,16 +153,107 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.child.onGetTotalItemPrice();
   }
 
+  //#region --- Payment withs
+  predictOrderPay = (totalPrice: number) => {
+    let result = new Array();
+
+    let redundant = Math.floor(totalPrice / 500) * 500;
+    let newPay = totalPrice - redundant;
+    let hundreds = Math.floor(newPay / 100);
+    let tens = Math.floor((newPay % 100) / 10);
+    let ones = (Math.floor(newPay % 100) % 10);
+
+    // calculate for ones
+    let arrOnes = this.detectPredictMatrix(ones, true);
+    arrOnes.forEach(function (item) {
+      result.push(hundreds * 100 + tens * 10 + item + redundant);
+    });
+
+    //calculate for tens
+    tens++;
+    let arrTens = this.detectPredictMatrix(tens, false);
+    arrTens.forEach(function (item) {
+      result.push(hundreds * 100 + item * 10 + redundant);
+    });
+
+    // calculate for hundred
+    hundreds++;
+    let arrHundreds = this.detectPredictMatrix(hundreds, false);
+    arrHundreds.forEach(function (item) {
+      result.push(item * 100 + redundant);
+    });
+
+    return result;
+  }
+
+  detectPredictMatrix = (x, isUnit) => {
+    let arr = [];
+    switch (x) {
+      case 0:
+        arr.push(0);
+        break;
+      case 1:
+        if (isUnit) {
+          arr.push(1, 5);
+        } else {
+          arr.push(1, 2, 5);
+        }
+        break;
+      case 2:
+        arr.push(2, 5);
+        break;
+      case 3:
+        arr.push(4, 5);
+        break;
+      case 4:
+        arr.push(4, 5);
+        break;
+      case 5:
+        if (isUnit) {
+          arr.push(5);
+        } else {
+          arr.push(5, 6)
+        }
+        break;
+      case 6:
+        if (isUnit) {
+          arr.push(6)
+        } else {
+          arr.push(6, 7)
+        }
+        break;
+      case 7:
+        if (isUnit) {
+          arr.push(7)
+        } else {
+          arr.push(7, 8)
+        }
+        break;
+      case 8:
+        if (isUnit) {
+          arr.push(8)
+        } else {
+          arr.push(8, 9)
+        }
+        break;
+      case 9:
+        arr.push(9);
+        break;
+    }
+    return arr;
+  }
+
   onBuildPaymentWiths = () => {
     var totalPrice = this.onGetTotalItemPrice();
     if (totalPrice) {
-      this.paymentWiths = [totalPrice, totalPrice + 1000, totalPrice + 2000];
+      this.paymentWiths = this.predictOrderPay(totalPrice);
       this.orderModel.paymentWith = this.paymentWiths[0];
       return;
     }
     this.paymentWiths = [0];
     this.orderModel.paymentWith = 0;
   }
+  //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
     if (!isValid) {
