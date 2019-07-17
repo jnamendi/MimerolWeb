@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private deliveryTimes: Array<string> = [];
   private isResClose: boolean;
   private existingEmail: string;
-  private paymentWiths: Array<number> = []
+  private paymentWiths = []
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
   private userAddressModels: AddressModel[] = [];
@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private googleAddress: string = '';
   private placeTimeout: any;
   private currentCountryCode: string;
+
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -153,16 +154,109 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.child.onGetTotalItemPrice();
   }
 
+  //#region --- Payment withs
+  predictOrderPay = (totalPrice: number) => {
+    let result = new Set();
+    result.add(totalPrice);
+    let redundant = Math.floor(totalPrice / 1000) * 1000;
+    let newPay = totalPrice - redundant;
+    let hundreds = Math.floor(newPay / 100);
+    let tens = Math.floor((newPay % 100) / 10);
+    let ones = (Math.floor(newPay % 100) % 10);
+
+    // calculate for ones
+    let arrOnes = this.detectPredictMatrix(ones, true);
+    arrOnes.forEach(function (item) {
+      result.add(hundreds * 100 + tens * 10 + item + redundant);
+    });
+
+    //calculate for tens
+    if (ones !== 0) tens++;
+    let arrTens = this.detectPredictMatrix(tens, false);
+    arrTens.forEach(function (item) {
+      result.add(hundreds * 100 + item * 10 + redundant);
+    });
+
+    // calculate for hundred
+    if (tens !== 0) hundreds++;
+    let arrHundreds = this.detectPredictMatrix(hundreds, false);
+    arrHundreds.forEach(function (item) {
+      result.add(item * 100 + redundant);
+    });
+
+    if (500 < totalPrice && totalPrice < 1000) result.add(1000);
+
+    return result;
+  }
+
+  detectPredictMatrix = (x, isUnit) => {
+    let arr = [];
+    switch (x) {
+      case 0:
+        arr.push(0);
+        break;
+      case 1:
+        if (isUnit) {
+          arr.push(1, 5);
+        } else {
+          arr.push(1, 2, 5);
+        }
+        break;
+      case 2:
+        arr.push(2, 5);
+        break;
+      case 3:
+        arr.push(3, 4, 5);
+        break;
+      case 4:
+        arr.push(4, 5);
+        break;
+      case 5:
+        if (isUnit) {
+          arr.push(5);
+        } else {
+          arr.push(5, 6)
+        }
+        break;
+      case 6:
+        if (isUnit) {
+          arr.push(6)
+        } else {
+          arr.push(6, 7)
+        }
+        break;
+      case 7:
+        if (isUnit) {
+          arr.push(7)
+        } else {
+          arr.push(7, 8)
+        }
+        break;
+      case 8:
+        if (isUnit) {
+          arr.push(8)
+        } else {
+          arr.push(8, 9)
+        }
+        break;
+      case 9:
+        arr.push(9);
+        break;
+    }
+    return arr;
+  }
+
   onBuildPaymentWiths = () => {
     var totalPrice = this.onGetTotalItemPrice();
     if (totalPrice) {
-      this.paymentWiths = [totalPrice, totalPrice + 1000, totalPrice + 2000];
+      this.paymentWiths = Array.from(this.predictOrderPay(totalPrice));
       this.orderModel.paymentWith = this.paymentWiths[0];
       return;
     }
     this.paymentWiths = [0];
     this.orderModel.paymentWith = 0;
   }
+  //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
     if (!isValid) {

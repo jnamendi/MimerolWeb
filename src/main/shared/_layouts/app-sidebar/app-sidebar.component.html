@@ -1,6 +1,7 @@
 <nav class="{{isToggleNav ? 'is-open':''}}">
     <div class="nav-header">
-        <a class="nav-logo" [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)"></a>
+        <a class="nav-logo" [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            (click)="onToggleNav(true)"></a>
         <button class="nav-close" (click)="onToggleNav(true)">
             <span></span>
         </button>
@@ -8,26 +9,29 @@
     <div class="nav-body">
         <ul class="nav-menu">
             <li>
-                <a [routerLink]="['', 'contact-us']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.About' | translate}}</a>
+                <a [routerLink]="['', 'contact-us']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onToggleNav(true)">{{'Commons.Links.About' | translate}}</a>
             </li>
             <li *ngIf="isAuthen">
-                <a [routerLink]="['', 'user-favourite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Favorites' | translate}}</a>
+                <a [routerLink]="['', 'user-favourite']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onToggleNav(true)">{{'Commons.Links.Favorites' | translate}}</a>
             </li>
-            <!-- <li>
-                <a [routerLink]="['', 'apps']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">Apps</a>
-            </li> -->
             <li>
-                <a href="https://takeawaycom.homerun.co/" target="_blank">{{'Commons.Links.Career' | translate}}</a>
+                <a href="#">{{'Commons.Links.Career' | translate}}</a>
             </li>
         </ul>
     </div>
     <div class="nav-footer">
         <ul class="nav-sub">
             <li *ngIf="!isAuthen">
-                <a [routerLink]="['', 'login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Login' | translate}} / {{'Commons.Links.Register' | translate}}</a>
+                <a [routerLink]="['', 'login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onToggleNav(true)">{{'Commons.Links.Login' | translate}} /
+                    {{'Commons.Links.Register' | translate}}</a>
             </li>
             <li *ngIf="isAuthen">
-                <a [routerLink]="['', 'user-details']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">
+                <a [routerLink]="['', 'user-details']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">
                     <span>{{userName}}</span>
                 </a>
                 <span> / </span>
@@ -38,10 +42,10 @@
                 <a href="https://www.facebook.com/Mimerol" target="_blank">
                     <i class="fa fa-facebook"></i>
                 </a>
-                <a href="#" target="_blank">
+                <a href="#">
                     <i class="fa fa-instagram"></i>
                 </a>
-                <a href="https://twitter.com/fooddelivery" target="_blank">
+                <a href="#">
                     <i class="fa fa-twitter"></i>
                 </a>
             </li>
@@ -50,7 +54,8 @@
                 <a *ngFor="let lang of languages" (click)="setLanguage(lang)">{{lang.split('-')[0].toUpperCase()}}</a>
             </li>
             <li>
-                <a [routerLink]="['', 'term']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onToggleNav(true)">{{'Commons.Links.Term' | translate}}</a>
+                <a [routerLink]="['', 'term']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onToggleNav(true)">{{'Commons.Links.Term' | translate}}</a>
             </li>
         </ul>
     </div>

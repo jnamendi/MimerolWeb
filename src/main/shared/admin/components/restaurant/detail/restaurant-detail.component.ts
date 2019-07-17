@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { RestaurantAdminModel, RestaurantModule } from '../../../../models/restaurant/admin-restaurant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Language } from '../../../../models/langvm.model';
@@ -29,7 +29,7 @@ import { DistrictModel } from '../../../../models/district/district.model';
     templateUrl: './restaurant-detail.component.html',
     styleUrls: ['./restaurant-detail.component.scss']
 })
-export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
+export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private sub: any;
     private restaurantId: number;
     private restaurantModel: RestaurantAdminModel = new RestaurantAdminModel();
@@ -163,10 +163,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
                 });
             });
         }
-    }
-
-    ngAfterViewChecked(): void {
-        // throw new Error("Method not implemented.");
     }
 
     getPosition = (position) => {
@@ -430,26 +426,32 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
         };
 
         this.clientState.isBusy = true;
-        this.restaurantAdminService.updateRestaurant(newRestaurant).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/restaurant']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
-        })
+        this.restaurantAdminService.updateRestaurant(newRestaurant).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/restaurant']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
+        });
     }
 
     onDeleteRestaurant = () => {
         this.clientState.isBusy = true;
-        this.restaurantAdminService.deleteRestaurant(+this.restaurantModel.restaurantId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/restaurant']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.restaurantAdminService.deleteRestaurant(+this.restaurantModel.restaurantId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/restaurant']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            }
+        });
     }
 
     setAddressLine1 = (place: Address) => {

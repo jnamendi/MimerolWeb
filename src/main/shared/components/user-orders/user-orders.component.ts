@@ -41,6 +41,8 @@ export class UserOrdersComponent {
           this.orderModel = res.content.map((item, index) => {
             return <OrderModel>{ ...item };
           });
+
+          console.log(this.orderModel)
         }
       }, (err: ApiError) => {
         this.error = err.message;

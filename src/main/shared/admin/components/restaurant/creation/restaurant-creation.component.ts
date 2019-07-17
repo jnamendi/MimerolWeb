@@ -105,11 +105,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, 
         this.longitude = -86.251389;
         this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
         this.onGetCities();
-
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(this.getPosition, err => {
-        //     });
-        // }
     }
 
     ngAfterViewInit(): void {
@@ -150,7 +145,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, 
                 });
             });
         });
-
     }
 
     onGetCities = () => {
