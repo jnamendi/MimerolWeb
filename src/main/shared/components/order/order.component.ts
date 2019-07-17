@@ -206,7 +206,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         arr.push(2, 5);
         break;
       case 3:
-        arr.push(4, 5);
+        arr.push(3, 4, 5);
         break;
       case 4:
         arr.push(4, 5);
