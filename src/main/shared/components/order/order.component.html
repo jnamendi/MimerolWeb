@@ -85,9 +85,8 @@
                                 </div>
 
                                 <div *ngIf="!orderModel.addressId && !!currentCountryCode" class="form-input">
-                                    <input type="text" inputFocus class="form-control" name="address"
-                                        autocomplete="off" [(ngModel)]="orderModel.address" #address="ngModel"
-                                        required [options]="{
+                                    <input type="text" inputFocus class="form-control" name="address" autocomplete="off"
+                                        [(ngModel)]="orderModel.address" #address="ngModel" required [options]="{
                                                         types: ['address'],
                                                     componentRestrictions: { country: currentCountryCode}
                                                     }" (setAddress)="setAddress($event)"
