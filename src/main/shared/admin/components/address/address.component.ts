@@ -34,9 +34,6 @@ export class AdminAddressComponent {
     ) {
         this.dtOptions = {
             pageLength: this.currentPageSize,
-            // columnDefs: [
-            //     { targets: 4, orderable: false }
-            // ],
             order: [
                 [0, "asc"]
             ]
@@ -78,26 +75,4 @@ export class AdminAddressComponent {
             this.clientState.isBusy = false;
         });
     }
-
-    // onPageChanged(pageIndex: number = 1) {
-    //     if (pageIndex < 0)
-    //         return;
-    //     this.currentPageIndex = pageIndex;
-    //     this.onGetAddresss(pageIndex);
-    // }
-
-    // onChangeDeletedItems = () => {
-    //     this.isDeletedItems = !this.isDeletedItems;
-    //     this.addressAdminModels.map(item => {
-    //         item.isDeleted = this.isDeletedItems;
-    //     })
-    // }
-
-    // isSelectdAllItems = () => {
-    //     return !this.addressAdminModels.some(item => !item.isDeleted);
-    // }
-
-    // isSelectedItem = () => {
-    //     return this.addressAdminModels.some(item => item.isDeleted);
-    // }
 }
