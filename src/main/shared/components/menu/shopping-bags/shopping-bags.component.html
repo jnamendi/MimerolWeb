@@ -55,26 +55,25 @@
                     </dt>
                     <dd *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0" class="order-prices__value">{{selectedMenuItems.discount}} %</dd>
                     
-                    <!-- Price from -->
-                    <dt class="order-prices__label">
-                        <span class="order-prices__label-text">Price from</span>
-                    </dt>
-                    <dd class="order-prices__value">{{spainCurrency.symbol}} {{restaurantModel.minPrice}}</dd>
-
                 </dl>
                 <div class="divider"></div>
                 <dl class="order-prices">
                     <dt class="order-prices__label">
-                        <span class="order-prices__label-text">Total</span>
+                        <span class="order-prices__label-text" style="font-weight: bold;">Total</span>
                     </dt>
                     <dd class="order-prices__value font_large">{{spainCurrency.symbol}} {{totalItemsPrice.toLocaleString()}}</dd>
                 </dl>
+
+                <dl class="order-prices" *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">
+                        <dt class="order-prices__label">
+                            <span style="color: #380;font-weight: bold;" [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
+                        </dt>
+                        <dd class="order-prices__value">
+                            <span style="color: #380;font-weight: bold;">{{spainCurrency.symbol}} {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
+                        </dd>
+                    </dl>
                 
                 <p *ngIf="!isInOrder" class="btn_checkout">
-                
-                    <!-- Price need from -->
-                    <span *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice" [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
-                    <span *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">{{spainCurrency.symbol}} {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
                 
                     <a *ngIf="this.totalSubItemsPrice > 0 && this.totalSubItemsPrice >= this.restaurantModel.minPrice"
                         class="btn btn_black  pull-right" (click)="onCheckOut()" [innerHTML]="'Commons.Texts.Checkout' | translate"></a>

@@ -182,7 +182,7 @@
             "Review": "Reseña",
             "Delivery": "Entrega",
             "PayWith": "Usted paga (con):",
-            "NeedCreateOrder": "Para crear un pedido necesita precio de pedido"
+            "NeedCreateOrder": "Cantidad necesaria para alcanzar el valor mínimo del pedido"
         },
         "Links": {
             "Title": "Enlaces",

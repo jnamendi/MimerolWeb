@@ -182,7 +182,7 @@
             "Review": "Review",
             "Delivery": "Delivery",
             "PayWith": "You pay (with):",
-            "NeedCreateOrder": "To create order you need order price from"
+            "NeedCreateOrder": "Amount needed to reach the minimum order value"
         },
         "Links": {
             "Title": "Links",
