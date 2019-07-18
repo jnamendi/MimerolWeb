@@ -83,26 +83,33 @@ export class AdminMenuDetailComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.menuAdminService.updateMenu(this.menuAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.menuAdminService.updateMenu(this.menuAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeleteMenu = () => {
         this.clientState.isBusy = true;
-        this.menuAdminService.deleteMenu(+this.menuAdminModel.menuId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+
+        this.menuAdminService.deleteMenu(+this.menuAdminModel.menuId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

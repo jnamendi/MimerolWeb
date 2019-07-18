@@ -94,13 +94,6 @@ export class AdminMenuComponent implements OnDestroy {
         });
     }
 
-    // onPageChanged(pageIndex: number = 1) {
-    //     if (pageIndex < 0)
-    //         return;
-    //     this.currentPageIndex = pageIndex;
-    //     this.onGetMenus(pageIndex);
-    // }
-
     onChangeDeletedItems = () => {
         this.isDeletedItems = !this.isDeletedItems;
     }
@@ -120,14 +113,18 @@ export class AdminMenuComponent implements OnDestroy {
             });
             if (deletedIds && deletedIds.length > 0) {
                 this.clientState.isBusy = true;
-                this.menuAdminService.deleteManyMenu(deletedIds).subscribe(res => {
-                    this.onGetMenus();
-                    this.message = "Items have been deleted successfully.";
-                    this.clientState.isBusy = false;
-                }, (err: ApiError) => {
-                    this.message = err.message;
-                    this.isError = true;
-                    this.clientState.isBusy = false;
+
+                this.menuAdminService.deleteManyMenu(deletedIds).subscribe({
+                    complete: () => {
+                        this.onGetMenus();
+                        this.message = "Items have been deleted successfully.";
+                        this.clientState.isBusy = false;
+                    },
+                    error: (err: ApiError) => {
+                        this.message = err.message;
+                        this.isError = true;
+                        this.clientState.isBusy = false;
+                    },
                 });
             }
         }
@@ -135,12 +132,16 @@ export class AdminMenuComponent implements OnDestroy {
 
     onDeleteItem = (menuId: number) => {
         if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-            this.menuAdminService.deleteMenu(menuId).subscribe(res => {
-                this.onGetMenus();
-            }, (err: ApiError) => {
-                this.message = err.message;
-                this.isError = true;
-                this.clientState.isBusy = false;
+
+            this.menuAdminService.deleteMenu(menuId).subscribe({
+                complete: () => {
+                    this.onGetMenus();
+                },
+                error: (err: ApiError) => {
+                    this.message = err.message;
+                    this.isError = true;
+                    this.clientState.isBusy = false;
+                },
             });
         }
     }
