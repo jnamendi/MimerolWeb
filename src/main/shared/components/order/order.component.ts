@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private voucher: VoucherModel = new VoucherModel();
   private deliveryTimes: Array<string> = [];
   private isResClose: boolean;
-  private existingEmail: string;
+  // private existingEmail: string;
   private paymentWiths = []
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
@@ -298,9 +298,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     }, (err: ApiError) => {
       this.clientState.isBusy = false;
-      if (err.status == 2) {
-        this.existingEmail = this.orderModel.email;
-      }
+      // if (err.status == 2) {
+      //   this.existingEmail = this.orderModel.email;
+      // }
     });
   }
 
@@ -345,7 +345,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (isConfirm) {
       this.router.navigate(['login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
     }
-    this.existingEmail = "";
+    // this.existingEmail = "";
   }
 
   onCloseConfirm = (isConfirm: boolean) => {
