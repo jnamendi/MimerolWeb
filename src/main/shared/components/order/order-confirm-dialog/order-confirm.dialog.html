@@ -10,7 +10,6 @@
                 <p *ngIf="isResClose" [innerHTML]="'Components.Order.RestaurantClosed' | translate"></p>
                 <p *ngIf="!!existingEmail" [innerHTML]="'Components.Order.EmailExists' | translate"></p>
             </div>
-
         </div>
         <div class="dialog-footer">
             <button *ngIf="isEmpty || isResClose" type="button" class="btn btn-default btn-primary" (click)="onClosePopup()" [innerHTML]="'Commons.Texts.Ok' | translate"></button>

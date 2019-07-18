@@ -34,6 +34,7 @@ export class AppRestaurantModel extends BaseModel {
     estDeliveryTime: string;
     city: string;
     categoryIds: Array<RestaurantCategory>;
+    restaurantClosed?: boolean;
 }
 
 export class RankPrice {

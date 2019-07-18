@@ -53,7 +53,8 @@
                     </div>
 
                     <sticky [sticky-offset-top]="100">
-                        <div class="cart">
+                            <!-- Check restaurant is open or not, if closed else hiden button cart -->
+                        <div class="cart" *ngIf="!restaurantModel.restaurantClosed">
                             <div id="sticker2-sticky-wrapper" class="sticky-wrapper" style="height: 60px;">
                                 <div id="sticker2">
                                     <a data-offcanvas-trigger="right" (click)="onOpenShoppingBags(true)">

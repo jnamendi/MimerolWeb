@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtTokenHelper } from '../../../common';
-import { StorageService, I18nService } from '../../../core';
+import { StorageService, I18nService, CoreService } from '../../../core';
 import { StorageKey } from '../../../services/storage-key/storage-key';
 import { Configs } from '../../../common/configs/configs';
 import { RestaurantMenuItemModel, OrderItem } from '../../../models/restaurant-menu/restaurant-menu.model';
@@ -28,6 +28,7 @@ export class ShoppingBagsComponent implements OnInit {
   // private totalItemsVATPrice: number;
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
+  private isResClose: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,8 @@ export class ShoppingBagsComponent implements OnInit {
     private storageService: StorageService,
     private clientState: ClientState,
     private appRestaurantService: RestaurantAppService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private coreService: CoreService
   ) {
   }
 
@@ -151,7 +153,14 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCheckOut = () => {
-    this.router.navigate(['./order', this.restaurantId])
+    // if (!this.coreService.timeInRange(this.restaurantModel.openTime, this.restaurantModel.closeTime)) {
+    //   this.isResClose = true;
+    //   return;
+    // }
+    // else{
+      this.router.navigate(['./order', this.restaurantId])
+    // }
+    
   }
 
   onGetShopingBag = (): OrderItem => {
@@ -162,5 +171,9 @@ export class ShoppingBagsComponent implements OnInit {
 
   onGetTotalItemPrice = (): number => {
     return this.totalItemsPrice;
+  }
+
+  onCloseConfirm = (isConfirm: boolean) => {
+    this.isResClose = false;
   }
 }

@@ -63,7 +63,8 @@
                     </dt>
                     <dd class="order-prices__value font_large">{{spainCurrency.symbol}} {{totalItemsPrice.toLocaleString()}}</dd>
                 </dl>
-
+                
+                <!-- If minimum price higher subitem price else show messenger -->
                 <dl class="order-prices" *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">
                         <dt class="order-prices__label">
                             <span style="color: #380;font-weight: bold;" [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
@@ -74,8 +75,10 @@
                     </dl>
                 
                 <p *ngIf="!isInOrder" class="btn_checkout">
-                
-                    <a *ngIf="this.totalSubItemsPrice > 0 && this.totalSubItemsPrice >= this.restaurantModel.minPrice"
+                    
+                        <span style="color: #ff0000;" *ngIf="this.restaurantModel.restaurantClosed" [innerHTML]="'Components.Order.RestaurantClosed' | translate"></span>
+
+                    <a *ngIf="this.totalSubItemsPrice > 0 && this.totalSubItemsPrice >= this.restaurantModel.minPrice && !this.restaurantModel.restaurantClosed" 
                         class="btn btn_black  pull-right" (click)="onCheckOut()" [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
                 </p>
             </form>

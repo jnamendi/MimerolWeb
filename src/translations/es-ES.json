@@ -317,7 +317,7 @@
             "TxtOrderEmpty": "No has ordenado nada todavía.",
             "At": "a",
             "DeliveredTo": "Entregado a",
-            "RestaurantClosed": "Este restaurante está cerrado.",
+            "RestaurantClosed": "El restaurante está cerrado por el momento. Por favor, inténtelo de nuevo mañana o seleccione un restaurante diferente.",
             "OrderEmpty": "Su pedido está vacío, por favor <a [routerLink]=\"['/child']\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\"> agregue más </a>",
             "EmailExists": "El correo electrónico ya existe, haga clic en Aceptar para iniciar sesión primero.",
             "SelectYourRating": "Por favor seleccione su clasificación para este restaurante",
