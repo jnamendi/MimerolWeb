@@ -93,13 +93,6 @@ export class AdminCategoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged(pageIndex: number = 1) {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetCategories(pageIndex);
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -119,14 +112,18 @@ export class AdminCategoryComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.categoryAdminService.deleteManyCategory(deletedIds).subscribe(res => {
-          this.onGetCategories();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+
+        this.categoryAdminService.deleteManyCategory(deletedIds).subscribe({
+          complete: () => {
+            this.onGetCategories();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -134,12 +131,15 @@ export class AdminCategoryComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (categoryId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.categoryAdminService.deleteCategory(categoryId).subscribe(res => {
-        this.onGetCategories();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+      this.categoryAdminService.deleteCategory(categoryId).subscribe({
+        complete: () => {
+          this.onGetCategories();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }
