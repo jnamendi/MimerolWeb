@@ -165,13 +165,17 @@ export class AdminMenuItemDetailComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.menuItemAdminService.updateMenuItem(this.adminMenuItem).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu-item']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+
+        this.menuItemAdminService.updateMenuItem(this.adminMenuItem).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu-item']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 
@@ -227,14 +231,17 @@ export class AdminMenuItemDetailComponent {
 
     onDeleteMenuItem = () => {
         this.clientState.isBusy = true;
-        this.menuItemAdminService.deleteMenuItem(+this.adminMenuItem.menuItemId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu-item']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.menuItemAdminService.deleteMenuItem(+this.adminMenuItem.menuItemId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu-item']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

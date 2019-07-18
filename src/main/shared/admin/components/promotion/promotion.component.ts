@@ -91,13 +91,6 @@ export class AdminPromotionComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged(pageIndex: number = 1) {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetPromotions(pageIndex);
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -117,14 +110,17 @@ export class AdminPromotionComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.promotionAdminService.deleteManyPromotion(deletedIds).subscribe(res => {
-          this.onGetPromotions();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+        this.promotionAdminService.deleteManyPromotion(deletedIds).subscribe({
+          complete: () => {
+            this.onGetPromotions();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -132,12 +128,15 @@ export class AdminPromotionComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (promotionId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.promotionAdminService.deletePromotion(promotionId).subscribe(res => {
-        this.onGetPromotions();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+      this.promotionAdminService.deletePromotion(promotionId).subscribe({
+        complete: () => {
+          this.onGetPromotions();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }

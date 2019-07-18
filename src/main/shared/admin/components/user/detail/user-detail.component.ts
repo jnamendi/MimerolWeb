@@ -59,27 +59,33 @@ export class AdminUserDetailComponent implements OnInit, OnDestroy {
             return;
         }
         this.clientState.isBusy = true;
-        this.userAdminService.updateUser(this.userAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/user']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-            this.error = err;
-        })
+        this.userAdminService.updateUser(this.userAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/user']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+                this.error = err;
+            },
+        });
     }
 
     onDeleteUser = () => {
         this.clientState.isBusy = true;
-        this.userAdminService.deleteUser(+this.userAdminModel.userId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/user']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.userAdminService.deleteUser(+this.userAdminModel.userId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/user']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

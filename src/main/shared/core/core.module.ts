@@ -22,8 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StickyModule } from 'ng2-sticky-kit';
 import { CoreService } from "./core.service";
 import { DataTablesModule } from "angular-datatables";
-import { AgmCoreModule } from '../../../../node_modules/@agm/core';
-import { environment } from 'environments/environment';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -51,6 +50,7 @@ import { environment } from 'environments/environment';
         DropdownModule,
         StickyModule,
         DataTablesModule,
+        NgSelectModule,
     ],
     exports: [
         CommonModule,
@@ -74,7 +74,8 @@ import { environment } from 'environments/environment';
         CheckboxModule,
         DropdownModule,
         StickyModule,
-        DataTablesModule
+        DataTablesModule,
+        NgSelectModule,
     ],
     providers: [
         HttpModule,

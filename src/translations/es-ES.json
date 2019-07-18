@@ -181,7 +181,8 @@
             "AddressDescRequired": "Descripción de la dirección <span class='error'>*</span>",
             "Review": "Reseña",
             "Delivery": "Entrega",
-            "PayWith": "Usted paga (con):"
+            "PayWith": "Usted paga (con):",
+            "NeedCreateOrder": "Cantidad necesaria para alcanzar el valor mínimo del pedido"
         },
         "Links": {
             "Title": "Enlaces",

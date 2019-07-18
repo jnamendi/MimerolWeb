@@ -54,11 +54,10 @@ export class AdminMenuItemComponent implements OnDestroy {
                 // (see https://github.com/l-lin/angular-datatables/issues/87)
                 $('td', row).unbind('click');
                 $('td', row).bind('click', () => {
-                  self.onGetData(data);
+                    self.onGetData(data);
                 });
                 return row;
-              }
-        
+            }
         };
     }
 
@@ -66,7 +65,7 @@ export class AdminMenuItemComponent implements OnDestroy {
         this.onGetMenuItems();
     }
 
-    onGetData = (data:any) => {
+    onGetData = (data: any) => {
         // console.log(data)
     }
 
@@ -110,13 +109,6 @@ export class AdminMenuItemComponent implements OnDestroy {
         });
     }
 
-    // onPageChanged(pageIndex: number = 1) {
-    //     if (pageIndex < 0)
-    //         return;
-    //     this.currentPageIndex = pageIndex;
-    //     this.onGetMenuItems(pageIndex);
-    // }
-
     onChangeDeletedItems = () => {
         this.isDeletedItems = !this.isDeletedItems;
     }
@@ -136,14 +128,18 @@ export class AdminMenuItemComponent implements OnDestroy {
             });
             if (deletedIds && deletedIds.length > 0) {
                 this.clientState.isBusy = true;
-                this.menuItemAdminService.deleteManyMenuItem(deletedIds).subscribe(res => {
-                    this.onGetMenuItems();
-                    this.message = "Items have been deleted successfully.";
-                    this.clientState.isBusy = false;
-                }, (err: ApiError) => {
-                    this.message = err.message;
-                    this.isError = true;
-                    this.clientState.isBusy = false;
+
+                this.menuItemAdminService.deleteManyMenuItem(deletedIds).subscribe({
+                    complete: () => {
+                        this.onGetMenuItems();
+                        this.message = "Items have been deleted successfully.";
+                        this.clientState.isBusy = false;
+                    },
+                    error: (err: ApiError) => {
+                        this.message = err.message;
+                        this.isError = true;
+                        this.clientState.isBusy = false;
+                    },
                 });
             }
         }
@@ -151,12 +147,15 @@ export class AdminMenuItemComponent implements OnDestroy {
 
     onDeleteItem = (menuId: number) => {
         if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-            this.menuItemAdminService.deleteMenuItem(menuId).subscribe(res => {
-                this.onGetMenuItems();
-            }, (err: ApiError) => {
-                this.message = err.message;
-                this.isError = true;
-                this.clientState.isBusy = false;
+            this.menuItemAdminService.deleteMenuItem(menuId).subscribe({
+                complete: () => {
+                    this.onGetMenuItems();
+                },
+                error: (err: ApiError) => {
+                    this.message = err.message;
+                    this.isError = true;
+                    this.clientState.isBusy = false;
+                },
             });
         }
     }
