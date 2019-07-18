@@ -94,13 +94,6 @@ export class AdminRestaurantComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged(pageIndex: number = 1) {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetRestaurants(pageIndex);
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -120,14 +113,17 @@ export class AdminRestaurantComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.restaurantAdminService.deleteManyRestaurant(deletedIds).subscribe(res => {
-          this.onGetRestaurants();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+        this.restaurantAdminService.deleteManyRestaurant(deletedIds).subscribe({
+          complete: () => {
+            this.onGetRestaurants();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -135,12 +131,16 @@ export class AdminRestaurantComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (menuId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.restaurantAdminService.deleteRestaurant(menuId).subscribe(res => {
-        this.onGetRestaurants();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+
+      this.restaurantAdminService.deleteRestaurant(menuId).subscribe({
+        complete: () => {
+          this.onGetRestaurants();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }

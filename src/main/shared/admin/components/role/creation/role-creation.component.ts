@@ -53,13 +53,16 @@ export class AdminRoleCreationComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.roleAdminService.createRole(this.roleAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/role']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.roleAdminService.createRole(this.roleAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/role']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 }

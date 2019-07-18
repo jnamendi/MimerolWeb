@@ -98,26 +98,32 @@ export class AdminCommentDetailComponent implements OnInit, OnDestroy {
             return;
         }
         this.clientState.isBusy = true;
-        this.commentAdminService.updateComment(this.commentAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/comment']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.commentAdminService.updateComment(this.commentAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/comment']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeleteComment = () => {
         this.clientState.isBusy = true;
-        this.commentAdminService.deleteComment(+this.commentAdminModel.resCommentId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/comment']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.commentAdminService.deleteComment(+this.commentAdminModel.resCommentId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/comment']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

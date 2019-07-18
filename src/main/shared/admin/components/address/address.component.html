@@ -12,7 +12,8 @@
                         <h3 class="box-title" [innerHTML]="'Admin.Address.ManageYourAddress' | translate"></h3>
                     </div>
                     <div class="box-body">
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="row-border hover table table-striped table-bordered">
                             <tfoot>
                                 <tr>
                                     <th></th>
@@ -37,7 +38,8 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of addressAdminModels; let i = index;">
-                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td class="text-center">
+                                        {{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
                                     <td>
                                         <span>{{item && item.userName}}</span>
                                     </td>
@@ -50,13 +52,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <p *ngIf="paginModel && paginModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
-                    </div>
-                    <div class="box-footer">
-                        <!-- <pagination *ngIf="paginModel && paginModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
-                            [totalItems]="paginModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
-                            [currentPageIndex]="paginModel.pageNumber">
-                        </pagination> -->
                     </div>
                 </div>
             </div>

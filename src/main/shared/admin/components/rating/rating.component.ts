@@ -92,21 +92,6 @@ export class AdminRatingComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged = (pageIndex: number = 1) => {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetRatings(pageIndex);
-  // }
-
-  // onSearching = () => {
-  //   if (!!this.searchingText) {
-  //     this.onGetRatings(this.currentPageIndex, this.currentPageSize, this.searchingText);
-  //   } else {
-  //     this.onGetRatings(this.currentPageIndex, this.currentPageSize);
-  //   }
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -126,14 +111,18 @@ export class AdminRatingComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.ratingAdminService.deleteManyRating(deletedIds).subscribe(res => {
-          this.onGetRatings();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+
+        this.ratingAdminService.deleteManyRating(deletedIds).subscribe({
+          complete: () => {
+            this.onGetRatings();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -141,12 +130,15 @@ export class AdminRatingComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (ratingId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.ratingAdminService.deleteRating(ratingId).subscribe(res => {
-        this.onGetRatings();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+      this.ratingAdminService.deleteRating(ratingId).subscribe({
+        complete: () => {
+          this.onGetRatings();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }

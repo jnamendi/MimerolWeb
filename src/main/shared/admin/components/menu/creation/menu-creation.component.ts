@@ -78,43 +78,51 @@ export class AdminMenuCreationComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.menuAdminService.createMenu(this.menuAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+
+        this.menuAdminService.createMenu(this.menuAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 
     onSubmitAndCreate = () => {
         this.clientState.isBusy = true;
         let restaurantId = this.menuAdminModel.restaurantId;
-        this.menuAdminService.createMenu(this.menuAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.message = "CreateSuccess";
-            this.isError = false;
 
-            this.languageService.getLanguagesFromService().subscribe(res => {
-                this.languageSupported = res.content.data.map(lang => {
-                    return <Language>{ ...lang };
+        this.menuAdminService.createMenu(this.menuAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.message = "CreateSuccess";
+                this.isError = false;
+
+                this.languageService.getLanguagesFromService().subscribe(res => {
+                    this.languageSupported = res.content.data.map(lang => {
+                        return <Language>{ ...lang };
+                    });
+
+                    this.menuAdminModel = <MenuAdminModel>{
+                        menuId: null,
+                        name: '',
+                        restaurantId: restaurantId,
+                        status: 1,
+                        languageLst: this.languageSupported.map(lang => {
+                            return MenuModule.initTranslator(lang);
+                        })
+                    };
                 });
-
-                this.menuAdminModel = <MenuAdminModel>{
-                    menuId: null,
-                    name: '',
-                    restaurantId: restaurantId,
-                    status: 1,
-                    languageLst: this.languageSupported.map(lang => {
-                        return MenuModule.initTranslator(lang);
-                    })
-                };
-            });
-        }, (err: ApiError) => {
-            this.message = "EnterRequiredField";
-            this.isError = true;
-            this.clientState.isBusy = false;
+            },
+            error: (err: ApiError) => {
+                this.message = "EnterRequiredField";
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 }

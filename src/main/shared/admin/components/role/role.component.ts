@@ -13,6 +13,7 @@ import { Configs } from '../../../common/configs/configs';
     selector: 'admin-role',
     templateUrl: './role.component.html'
 })
+
 export class AdminRoleComponent implements OnDestroy {
     private roleAdminModels: RoleAdminModel[] = [];
     private isDeletedItems: boolean;
@@ -89,10 +90,6 @@ export class AdminRoleComponent implements OnDestroy {
         });
     }
 
-    // onPageChanged() {
-    //     this.onGetRoles();
-    // }
-
     onChangeDeletedItems = () => {
         this.isDeletedItems = !this.isDeletedItems;
     }
@@ -112,14 +109,17 @@ export class AdminRoleComponent implements OnDestroy {
             });
             if (deletedIds && deletedIds.length > 0) {
                 this.clientState.isBusy = true;
-                this.roleAdminService.deleteManyRole(deletedIds).subscribe(res => {
-                    this.onGetRoles();
-                    this.message = "Items have been deleted successfully.";
-                    this.clientState.isBusy = false;
-                }, (err: ApiError) => {
-                    this.message = err.message;
-                    this.isError = true;
-                    this.clientState.isBusy = false;
+                this.roleAdminService.deleteManyRole(deletedIds).subscribe({
+                    complete: () => {
+                        this.onGetRoles();
+                        this.message = "Items have been deleted successfully.";
+                        this.clientState.isBusy = false;
+                    },
+                    error: (err: ApiError) => {
+                        this.message = err.message;
+                        this.isError = true;
+                        this.clientState.isBusy = false;
+                    },
                 });
             }
         }
@@ -127,12 +127,15 @@ export class AdminRoleComponent implements OnDestroy {
 
     onDeleteItem = (roleId: number) => {
         if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-            this.roleAdminService.deleteRole(roleId).subscribe(res => {
-                this.onGetRoles();
-            }, (err: ApiError) => {
-                this.message = err.message;
-                this.isError = true;
-                this.clientState.isBusy = false;
+            this.roleAdminService.deleteRole(roleId).subscribe({
+                complete: () => {
+                    this.onGetRoles();
+                },
+                error: (err: ApiError) => {
+                    this.message = err.message;
+                    this.isError = true;
+                    this.clientState.isBusy = false;
+                },
             });
         }
     }

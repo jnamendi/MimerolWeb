@@ -38,14 +38,16 @@ export class AdminUserCreationComponent implements OnInit {
             return;
         }
         this.clientState.isBusy = true;
-        this.userAdminService.createUser(this.userAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/user']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.userAdminService.createUser(this.userAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/user']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
-
 }

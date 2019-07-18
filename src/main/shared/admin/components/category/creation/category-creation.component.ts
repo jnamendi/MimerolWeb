@@ -56,17 +56,17 @@ export class AdminCategoryCreationComponent implements OnInit {
             return;
         }
         this.clientState.isBusy = true;
-        this.categoryAdminService.createCategory(this.categoryAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/category']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+
+        this.categoryAdminService.createCategory(this.categoryAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/category']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
-    }
-
-    handleFileInput = (files: FileList) => {
-
     }
 }

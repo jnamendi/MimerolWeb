@@ -93,21 +93,6 @@ export class AdminUserComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged = (pageIndex: number = 1) => {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetUsers(pageIndex);
-  // }
-
-  // onSearching = () => {
-  //   if (!!this.searchingText) {
-  //     this.onGetUsers(this.currentPageIndex, this.currentPageSize, this.searchingText);
-  //   } else {
-  //     this.onGetUsers(this.currentPageIndex, this.currentPageSize);
-  //   }
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -127,14 +112,17 @@ export class AdminUserComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.userAdminService.deleteManyUser(deletedIds).subscribe(res => {
-          this.onGetUsers();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+        this.userAdminService.deleteManyUser(deletedIds).subscribe({
+          complete: () => {
+            this.onGetUsers();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -142,12 +130,16 @@ export class AdminUserComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (userId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.userAdminService.deleteUser(userId).subscribe(res => {
-        this.onGetUsers();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+
+      this.userAdminService.deleteUser(userId).subscribe({
+        complete: () => {
+          this.onGetUsers();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }

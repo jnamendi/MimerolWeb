@@ -118,13 +118,16 @@ export class AdminMenuItemCreationComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.menuItemAdminService.createMenuItem(this.adminMenuItem).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/menu-item']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.menuItemAdminService.createMenuItem(this.adminMenuItem).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/menu-item']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 
@@ -132,33 +135,37 @@ export class AdminMenuItemCreationComponent {
         this.clientState.isBusy = true;
         let restaurantId = this.adminMenuItem.restaurantId;
         let menuId = this.adminMenuItem.menuId;
-        this.menuItemAdminService.createMenuItem(this.adminMenuItem).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.message = "CreateSuccess";
-            this.isError = false;
 
-            this.languageService.getLanguagesFromService().subscribe(res => {
-                this.languageSupported = res.content.data.map(lang => {
-                    return <Language>{ ...lang };
-                });
-                this.adminMenuItem = <AdminMenuItem>{
-                    file: null,
-                    isCombo: false,
-                    menuId: menuId,
-                    restaurantId: restaurantId,
-                    price: 0,
-                    languageLst: this.languageSupported.map(lang => {
-                        return AdminMenuItemModule.initAdminMenuItemTranslator(lang);
-                    }),
-                    menuExtraLst: [
-                    ]
-                };
+        this.menuItemAdminService.createMenuItem(this.adminMenuItem).subscribe({
+            complete: () => {
                 this.clientState.isBusy = false;
-            });
-        }, (err: ApiError) => {
-            this.message = "EnterRequiredField";
-            this.isError = true;
-            this.clientState.isBusy = false;
+                this.message = "CreateSuccess";
+                this.isError = false;
+
+                this.languageService.getLanguagesFromService().subscribe(res => {
+                    this.languageSupported = res.content.data.map(lang => {
+                        return <Language>{ ...lang };
+                    });
+                    this.adminMenuItem = <AdminMenuItem>{
+                        file: null,
+                        isCombo: false,
+                        menuId: menuId,
+                        restaurantId: restaurantId,
+                        price: 0,
+                        languageLst: this.languageSupported.map(lang => {
+                            return AdminMenuItemModule.initAdminMenuItemTranslator(lang);
+                        }),
+                        menuExtraLst: [
+                        ]
+                    };
+                    this.clientState.isBusy = false;
+                });
+            },
+            error: (err: ApiError) => {
+                this.message = "EnterRequiredField";
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 

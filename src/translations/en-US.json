@@ -181,7 +181,8 @@
             "AddressDescRequired": "Address description <span class='error'>*</span>",
             "Review": "Review",
             "Delivery": "Delivery",
-            "PayWith": "You pay (with):"
+            "PayWith": "You pay (with):",
+            "NeedCreateOrder": "Amount needed to reach the minimum order value"
         },
         "Links": {
             "Title": "Links",

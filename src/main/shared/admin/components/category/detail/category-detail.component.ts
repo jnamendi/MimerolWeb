@@ -65,30 +65,32 @@ export class AdminCategoryDetailComponent implements OnInit, OnDestroy {
             return;
         }
         this.clientState.isBusy = true;
-        this.categoryAdminService.updateCategory(this.categoryAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/category']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.categoryAdminService.updateCategory(this.categoryAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/category']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeleteCategory = () => {
         this.clientState.isBusy = true;
-        this.categoryAdminService.deleteCategory(+this.categoryAdminModel.categoryId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/category']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
-    }
-
-    handleFileInput = (files: FileList) => {
-
+        this.categoryAdminService.deleteCategory(+this.categoryAdminModel.categoryId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/category']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

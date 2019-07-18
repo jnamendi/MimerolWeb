@@ -1,11 +1,13 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtTokenHelper } from '../../../common';
-import { StorageService } from '../../../core';
+import { StorageService, I18nService } from '../../../core';
 import { StorageKey } from '../../../services/storage-key/storage-key';
 import { Configs } from '../../../common/configs/configs';
 import { RestaurantMenuItemModel, OrderItem } from '../../../models/restaurant-menu/restaurant-menu.model';
 import { ClientState } from '../../../state';
+import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
+import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.model';
 
 @Component({
   selector: 'shopping-bags',
@@ -20,6 +22,7 @@ export class ShoppingBagsComponent implements OnInit {
   @Output() itemInBags: EventEmitter<number> = new EventEmitter();
   @Output() removedItem: EventEmitter<number> = new EventEmitter();
 
+  private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private selectedMenuItems: OrderItem;
   private totalSubItemsPrice: number;
   // private totalItemsVATPrice: number;
@@ -30,7 +33,9 @@ export class ShoppingBagsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private storageService: StorageService,
-    private clientState: ClientState
+    private clientState: ClientState,
+    private appRestaurantService: RestaurantAppService,
+    private i18nService: I18nService
   ) {
   }
 
@@ -41,6 +46,21 @@ export class ShoppingBagsComponent implements OnInit {
     }
     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
     this.onCalculatePrice();
+
+    this.onGetRestaurantDetails();
+  }
+
+  onGetRestaurantDetails = () => {
+    if (this.restaurantId && this.restaurantId != 0) {
+      this.clientState.isBusy = true;
+      let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
+      this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
+        this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+        this.clientState.isBusy = false;
+      }, (err) => {
+        this.clientState.isBusy = false;
+      });
+    }
   }
 
   onCalculatePrice = () => {
@@ -120,8 +140,6 @@ export class ShoppingBagsComponent implements OnInit {
   // }
 
   onCalculateTotalPrices = (discountValue: number = 0) => {
-    // this.totalItemsPrice = (this.totalSubItemsPrice + this.totalItemsVATPrice) + (this.selectedMenuItems.deliveryCost || 0);
-
     this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
       this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
@@ -131,6 +149,9 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCheckOut = () => {
+    if (this.totalSubItemsPrice < this.restaurantModel.minPrice) {
+      return;
+    }
     this.router.navigate(['./order', this.restaurantId])
   }
 
