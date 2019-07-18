@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private deliveryTimes: Array<string> = [];
   private isResClose: boolean;
   private existingEmail: string;
-  private paymentWiths: Array<number> = []
+  private paymentWiths = []
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
   private userAddressModels: AddressModel[] = [];
@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private googleAddress: string = '';
   private placeTimeout: any;
   private currentCountryCode: string;
+
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -155,9 +156,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   //#region --- Payment withs
   predictOrderPay = (totalPrice: number) => {
-    let result = new Array();
-
-    let redundant = Math.floor(totalPrice / 500) * 500;
+    let result = new Set();
+    result.add(totalPrice);
+    let redundant = Math.floor(totalPrice / 1000) * 1000;
     let newPay = totalPrice - redundant;
     let hundreds = Math.floor(newPay / 100);
     let tens = Math.floor((newPay % 100) / 10);
@@ -166,22 +167,24 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
     arrOnes.forEach(function (item) {
-      result.push(hundreds * 100 + tens * 10 + item + redundant);
+      result.add(hundreds * 100 + tens * 10 + item + redundant);
     });
 
     //calculate for tens
-    tens++;
+    if (ones !== 0) tens++;
     let arrTens = this.detectPredictMatrix(tens, false);
     arrTens.forEach(function (item) {
-      result.push(hundreds * 100 + item * 10 + redundant);
+      result.add(hundreds * 100 + item * 10 + redundant);
     });
 
     // calculate for hundred
-    hundreds++;
+    if (tens !== 0) hundreds++;
     let arrHundreds = this.detectPredictMatrix(hundreds, false);
     arrHundreds.forEach(function (item) {
-      result.push(item * 100 + redundant);
+      result.add(item * 100 + redundant);
     });
+
+    if (500 < totalPrice && totalPrice < 1000) result.add(1000);
 
     return result;
   }
@@ -203,7 +206,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         arr.push(2, 5);
         break;
       case 3:
-        arr.push(4, 5);
+        arr.push(3, 4, 5);
         break;
       case 4:
         arr.push(4, 5);
@@ -246,7 +249,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onBuildPaymentWiths = () => {
     var totalPrice = this.onGetTotalItemPrice();
     if (totalPrice) {
-      this.paymentWiths = this.predictOrderPay(totalPrice);
+      this.paymentWiths = Array.from(this.predictOrderPay(totalPrice));
       this.orderModel.paymentWith = this.paymentWiths[0];
       return;
     }
