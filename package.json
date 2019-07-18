@@ -76,6 +76,7 @@
         "@angularclass/hmr": "^1.2.2",
         "@angularclass/hmr-loader": "^3.0.4",
         "@auth0/angular-jwt": "^1.1.0",
+        "@ng-select/ng-select": "^1.4.1",
         "@ngx-translate/core": "9.1.1",
         "@ngx-translate/http-loader": "^3.0.1",
         "amazing-time-picker": "^1.5.3",
