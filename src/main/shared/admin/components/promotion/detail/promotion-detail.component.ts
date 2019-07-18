@@ -73,7 +73,7 @@ export class AdminPromotionDetailComponent implements OnInit, OnDestroy {
                     })
                 })
             }
-            
+
             promotionModelFromRes.startDate = new Date(promotionModelFromRes.startDate);
             promotionModelFromRes.endDate = new Date(promotionModelFromRes.endDate);
 
@@ -107,26 +107,32 @@ export class AdminPromotionDetailComponent implements OnInit, OnDestroy {
             return;
         }
         this.clientState.isBusy = true;
-        this.promotionAdminService.updatePromotion(this.promotionAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/promotion']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.promotionAdminService.updatePromotion(this.promotionAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/promotion']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeletePromotion = () => {
         this.clientState.isBusy = true;
-        this.promotionAdminService.deletePromotion(+this.promotionAdminModel.promotionId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/promotion']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.promotionAdminService.deletePromotion(+this.promotionAdminModel.promotionId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/promotion']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {
