@@ -424,7 +424,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             ...this.restaurantModel,
             address: this.googleAddressLine1,
         };
-
         this.clientState.isBusy = true;
         this.restaurantAdminService.updateRestaurant(newRestaurant).subscribe({
             complete: () => {

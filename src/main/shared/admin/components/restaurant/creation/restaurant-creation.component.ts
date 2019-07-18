@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { RestaurantAdminModel, RestaurantModule, RestaurantStatus } from '../../../../models/restaurant/admin-restaurant.model';
 import { ClientState } from '../../../../state';
 import { Language } from '../../../../models/langvm.model';
@@ -31,7 +31,7 @@ import { DistrictModel } from '../../../../models/district/district.model';
     styleUrls: ['./restaurant-creation.component.scss']
 })
 
-export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private restaurantModel: RestaurantAdminModel = new RestaurantAdminModel();
     private languageSupported: Language[] = [];
     private message: string;
@@ -93,7 +93,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, 
         }, err => {
             this.currentCountryCode = JwtTokenHelper.countryCode;
         });
-
     }
 
     ngOnInit(): void {
@@ -382,14 +381,16 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, 
         let newRestaurant = <RestaurantAdminModel>{
             ...this.restaurantModel,
         };
-
-        this.restaurantAdminService.createRestaurant(newRestaurant).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/restaurant']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.restaurantAdminService.createRestaurant(newRestaurant).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/restaurant']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 
@@ -415,10 +416,5 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit, 
 
     onGetLongtitude = (lng: string) => {
         this.restaurantModel.longitude = +lng;
-    }
-
-    ngOnDestroy(): void {
-        // this.latCtrlSub.unsubscribe();
-        // this.lngCtrlSub.unsubscribe();
     }
 }
