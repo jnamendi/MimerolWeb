@@ -46,7 +46,7 @@ export class ShoppingBagsComponent implements OnInit {
     }
     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
     this.onCalculatePrice();
-    
+
     this.onGetRestaurantDetails();
   }
 
@@ -140,8 +140,6 @@ export class ShoppingBagsComponent implements OnInit {
   // }
 
   onCalculateTotalPrices = (discountValue: number = 0) => {
-    // this.totalItemsPrice = (this.totalSubItemsPrice + this.totalItemsVATPrice) + (this.selectedMenuItems.deliveryCost || 0);
-
     this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
       this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
@@ -151,6 +149,9 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCheckOut = () => {
+    if (this.totalSubItemsPrice < this.restaurantModel.minPrice) {
+      return;
+    }
     this.router.navigate(['./order', this.restaurantId])
   }
 

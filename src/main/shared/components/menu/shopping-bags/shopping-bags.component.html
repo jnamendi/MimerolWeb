@@ -4,7 +4,8 @@
         <div class="item_cart">
             <h3 [innerHTML]="'Commons.Texts.ShoppingBag' | translate"></h3>
         </div>
-        <div class="cart-inner" *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length > 0">
+        <div class="cart-inner"
+            *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length > 0">
             <form>
                 <div id="srcoll_menu" slimScroll width="auto" height="320px">
                     <ul class="list_item_manager">
@@ -12,7 +13,8 @@
                             <div class="img_ads">
                                 <div class="box_img">
                                     <a class="active">
-                                        <img src="{{!item.urlImge ? 'assets/images/logo.png' : clientState.BaseUrl + item.urlImge}}" alt="{{item.restaurantName}}" />
+                                        <img src="{{!item.urlImge ? 'assets/images/logo.png' : clientState.BaseUrl + item.urlImge}}"
+                                            alt="{{item.restaurantName}}" />
                                     </a>
                                 </div>
                             </div>
@@ -20,13 +22,19 @@
                                 <a>{{item.menuItemName}}</a>
                                 <div class="quantity">
                                     <div class="quantity-container">
-                                        <input name="qty{{i}}" class="qty" maxlength="4" (change)="onChangeItemQuantity(item)" [(ngModel)]="item.quantity" type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                        <input name="qty{{i}}" class="qty" maxlength="4"
+                                            (change)="onChangeItemQuantity(item)" [(ngModel)]="item.quantity"
+                                            type="text"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
                                         <div class="button-container">
-                                            <button class="cart-qty-minus" type="button" (click)="decreaseItem(item)">-</button>
-                                            <button class="cart-qty-plus" type="button" (click)="increaseItem(item)">+</button>
+                                            <button class="cart-qty-minus" type="button"
+                                                (click)="decreaseItem(item)">-</button>
+                                            <button class="cart-qty-plus" type="button"
+                                                (click)="increaseItem(item)">+</button>
                                         </div>
                                     </div>
-                                    <a class="remove" (click)="onRemoveItem(item)" [innerHTML]="'Commons.Texts.Remove' | translate"></a>
+                                    <a class="remove" (click)="onRemoveItem(item)"
+                                        [innerHTML]="'Commons.Texts.Remove' | translate"></a>
                                 </div>
                             </div>
                             <div class="price_checkout">
@@ -40,46 +48,57 @@
                     <dt class="order-prices__label">
                         <span class="order-prices__label-text">Subtotal</span>
                     </dt>
-                    <dd class="order-prices__value">{{spainCurrency.symbol}} {{totalSubItemsPrice.toLocaleString()}}</dd>
+                    <dd class="order-prices__value">{{spainCurrency.symbol}} {{totalSubItemsPrice.toLocaleString()}}
+                    </dd>
                     <!-- <dt class="order-prices__label">
                         <span class="order-prices__label-text">VAT</span>
                     </dt>
                     <dd class="order-prices__value">{{spainCurrency.symbol}} {{totalItemsVATPrice}}</dd> -->
                     <dt class="order-prices__label">
-                        <span class="order-prices__label-text" [innerHTML]="'Commons.Texts.DeliveryCost' | translate"></span>
+                        <span class="order-prices__label-text"
+                            [innerHTML]="'Commons.Texts.DeliveryCost' | translate"></span>
                     </dt>
-                    <dd *ngIf="selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost > 0" class="order-prices__value">{{spainCurrency.symbol}} {{selectedMenuItems.deliveryCost.toLocaleString()}}</dd>
-                    <dd *ngIf="!selectedMenuItems.deliveryCost || (selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost <= 0)" class="order-prices__value">Free</dd>
-                    <dt *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0" class="order-prices__label">
+                    <dd *ngIf="selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost > 0"
+                        class="order-prices__value">{{spainCurrency.symbol}}
+                        {{selectedMenuItems.deliveryCost.toLocaleString()}}</dd>
+                    <dd *ngIf="!selectedMenuItems.deliveryCost || (selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost <= 0)"
+                        class="order-prices__value">Free</dd>
+                    <dt *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0"
+                        class="order-prices__label">
                         <span class="order-prices__label-text">Discount</span>
                     </dt>
-                    <dd *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0" class="order-prices__value">{{selectedMenuItems.discount}} %</dd>
-                    
+                    <dd *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0"
+                        class="order-prices__value">{{selectedMenuItems.discount}} %</dd>
+
                 </dl>
                 <div class="divider"></div>
                 <dl class="order-prices">
                     <dt class="order-prices__label">
-                        <span class="order-prices__label-text" style="font-weight: bold;">Total</span>
+                        <span class="order-prices__label-text">Total</span>
                     </dt>
-                    <dd class="order-prices__value font_large">{{spainCurrency.symbol}} {{totalItemsPrice.toLocaleString()}}</dd>
+                    <dd class="order-prices__value font_large">{{spainCurrency.symbol}}
+                        {{totalItemsPrice.toLocaleString()}}</dd>
                 </dl>
 
-                <dl class="order-prices" *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">
-                        <dt class="order-prices__label">
-                            <span style="color: #380;font-weight: bold;" [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
-                        </dt>
-                        <dd class="order-prices__value">
-                            <span style="color: #380;font-weight: bold;">{{spainCurrency.symbol}} {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
-                        </dd>
-                    </dl>
-                
+                <dl class="order-min-price" *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">
+                    <dt class="order-min-price__label">
+                        <span [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
+                    </dt>
+                    <dd class="order-min-price__value">
+                        <span>{{spainCurrency.symbol}}
+                            {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
+                    </dd>
+                </dl>
+
                 <p *ngIf="!isInOrder" class="btn_checkout">
-                
-                    <a *ngIf="this.totalSubItemsPrice > 0 && this.totalSubItemsPrice >= this.restaurantModel.minPrice"
-                        class="btn btn_black  pull-right" (click)="onCheckOut()" [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
+                    <a *ngIf="this.totalSubItemsPrice > 0"
+                        [ngClass]="{'btn-disabled': this.totalSubItemsPrice < this.restaurantModel.minPrice}"
+                        class="btn btn_black pull-right" (click)="onCheckOut()"
+                        [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
                 </p>
             </form>
         </div>
-        <div *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0" [innerHTML]="'Commons.Error.ErrNoItem' | translate"></div>
+        <div *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0"
+            [innerHTML]="'Commons.Error.ErrNoItem' | translate"></div>
     </div>
 </div>
