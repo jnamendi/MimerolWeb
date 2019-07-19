@@ -89,23 +89,15 @@
                             {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
                     </dd>
                 </dl>
-                <!-- If minimum price higher subitem price else show messenger -->
-                <dl class="order-prices" *ngIf="this.totalSubItemsPrice < this.restaurantModel.minPrice">
-                        <dt class="order-prices__label">
-                            <span style="color: #380;font-weight: bold;" [innerHTML]="'Commons.Texts.NeedCreateOrder' | translate"></span>
-                        </dt>
-                        <dd class="order-prices__value">
-                            <span style="color: #380;font-weight: bold;">{{spainCurrency.symbol}} {{restaurantModel.minPrice - totalSubItemsPrice}}</span>
-                        </dd>
-                    </dl>
-                
+
                 <p *ngIf="!isInOrder" class="btn_checkout">
-                        <span style="color: #ff0000;" *ngIf="this.restaurantModel.restaurantClosed" [innerHTML]="'Components.Order.RestaurantClosed' | translate"></span>
-                        
-                        <a *ngIf="this.totalSubItemsPrice > 0 && !this.restaurantModel.restaurantClosed"
-                            [ngClass]="{'btn-disabled': this.totalSubItemsPrice < this.restaurantModel.minPrice}"
-                            class="btn btn_black pull-right" (click)="onCheckOut()"
-                            [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
+                    <a *ngIf="this.totalSubItemsPrice > 0"
+                        [ngClass]="{'btn-disabled': this.totalSubItemsPrice < this.restaurantModel.minPrice || this.restaurantModel.restaurantClosed==true}"
+                        class="btn btn_black pull-right" (click)="onCheckOut()"
+                        [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
+                </p>
+                <p class="restaurant-closed" *ngIf="this.restaurantModel.restaurantClosed"
+                    [innerHTML]="'Components.Order.RestaurantClosed' | translate"></p>
             </form>
         </div>
         <div *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0"

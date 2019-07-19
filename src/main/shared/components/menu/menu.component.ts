@@ -15,6 +15,7 @@ import { RestaurantAppService } from '../../services/api/restaurant/app-restaura
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
+
 export class MenuComponent implements OnInit, OnChanges, OnDestroy {
   private isVisibleBags: boolean;
   private sub: Subscription;
@@ -54,7 +55,6 @@ export class MenuComponent implements OnInit, OnChanges, OnDestroy {
         this.onGetOrderReivewInfo(this.orderKey);
       }
     })
-
   }
 
   ngOnInit(): void {
