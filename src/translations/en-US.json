@@ -183,7 +183,15 @@
             "Delivery": "Delivery",
             "PayWith": "You pay (with):",
             "NeedCreateOrder": "Amount needed to reach the minimum order value",
-            "Minutes": "minutes"
+            "Minutes": "minutes",
+            "ReceivedYourOrder": "Thank you, we received your order",
+            "YourOrderHasBeenProcessed": "Your order has been processed and is being sent to",
+            "YourOrderReference": "Your order reference:",
+            "CheckRoute": "Check route",
+            "ForgotSomthing": "Forgot somthing?",
+            "CreateNewOrder": "Create new order",
+            "NeedHelp": "Need help",
+            "ContactUs": "Contact us"
         },
         "Links": {
             "Title": "Links",
