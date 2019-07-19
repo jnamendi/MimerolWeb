@@ -74,7 +74,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   }
 
   onSelectItem = (item: RestaurantMenuItemModel) => {
-    if (!this.coreService.timeInRange(this.restaurantDetailModel.openTime, this.restaurantDetailModel.closeTime)) {
+    if (this.restaurantDetailModel.restaurantClosed == true) {
       item.isSelected = false;
       this.isResClose = true;
       return;

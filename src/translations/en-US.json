@@ -124,8 +124,8 @@
             "MinPriceRequired": "Min price <span class='error'>*</span>",
             "Price": "Price",
             "PriceRequired": "Price <span class='error'>*</span>",
-            "EstimateTime": "Estimate delivery time",
-            "EstimateTimeRequired": "Estimate delivery time <span class='error'>*</span>",
+            "EstimateTime": "Estimate delivery time (minutes)",
+            "EstimateTimeRequired": "Estimate delivery time (minutes) <span class='error'>*</span>",
             "EmergencyNumber1": "Emergency number (1)",
             "EmergencyNumber2": "Emergency number (2)",
             "ContactName": "Contact name",
@@ -182,7 +182,16 @@
             "Review": "Review",
             "Delivery": "Delivery",
             "PayWith": "You pay (with):",
-            "NeedCreateOrder": "Amount needed to reach the minimum order value"
+            "NeedCreateOrder": "Amount needed to reach the minimum order value",
+            "Minutes": "minutes",
+            "ReceivedYourOrder": "Thank you, we received your order",
+            "YourOrderHasBeenProcessed": "Your order has been processed and is being sent to",
+            "YourOrderReference": "Your order reference:",
+            "CheckRoute": "Check route",
+            "ForgotSomthing": "Forgot somthing?",
+            "CreateNewOrder": "Create new order",
+            "NeedHelp": "Need help",
+            "ContactUs": "Contact us"
         },
         "Links": {
             "Title": "Links",
@@ -214,7 +223,8 @@
             "ErrorEndDate": "End date must be greater than start date",
             "ErrorOpenTime": "Open time must be lesser than close time",
             "ErrorCloseTime": "Close time must be greater than open time",
-            "ErrorSearchAddress": "Address is not found"
+            "ErrorSearchAddress": "Address is not found",
+            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart."
         },
         "HttpStatus": {
             "1": "Error when process the data.",
@@ -317,7 +327,7 @@
             "TxtOrderEmpty": "You have not ordered anything yet.",
             "At": "at",
             "DeliveredTo": "Delivered to",
-            "RestaurantClosed": "This restaurant is closed.",
+            "RestaurantClosed": "Restaurant is closed at the moment. Please try again tomorrow or select a different restaurant.",
             "OrderEmpty": "Your order is empty, please <a [routerLink]=\"['/child']\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">add more</a>",
             "EmailExists": "The email already exists, please click Ok to login first.",
             "SelectYourRating": "Please select your rating for this restaurant",

@@ -1,19 +1,20 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtTokenHelper } from '../../../common';
-import { StorageService, I18nService } from '../../../core';
+import { StorageService, I18nService, CoreService } from '../../../core';
 import { StorageKey } from '../../../services/storage-key/storage-key';
 import { Configs } from '../../../common/configs/configs';
 import { RestaurantMenuItemModel, OrderItem } from '../../../models/restaurant-menu/restaurant-menu.model';
 import { ClientState } from '../../../state';
-import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
 import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.model';
+import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
 
 @Component({
   selector: 'shopping-bags',
   templateUrl: './shopping-bags.component.html',
   styleUrls: ['./shopping-bags.component.scss']
 })
+
 export class ShoppingBagsComponent implements OnInit {
   @Input() isToggleFilter: boolean;
   @Input() isInOrder: boolean;
@@ -28,14 +29,16 @@ export class ShoppingBagsComponent implements OnInit {
   // private totalItemsVATPrice: number;
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
+  private isResClose: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private storageService: StorageService,
     private clientState: ClientState,
+    private i18nService: I18nService,
+    private coreService: CoreService,
     private appRestaurantService: RestaurantAppService,
-    private i18nService: I18nService
   ) {
   }
 
@@ -46,7 +49,6 @@ export class ShoppingBagsComponent implements OnInit {
     }
     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
     this.onCalculatePrice();
-
     this.onGetRestaurantDetails();
   }
 
@@ -65,7 +67,6 @@ export class ShoppingBagsComponent implements OnInit {
 
   onCalculatePrice = () => {
     // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
-
     Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
   }
 
@@ -149,7 +150,7 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCheckOut = () => {
-    if (this.totalSubItemsPrice < this.restaurantModel.minPrice) {
+    if (this.totalSubItemsPrice < this.restaurantModel.minPrice || this.restaurantModel.restaurantClosed == true) {
       return;
     }
     this.router.navigate(['./order', this.restaurantId])
@@ -163,5 +164,9 @@ export class ShoppingBagsComponent implements OnInit {
 
   onGetTotalItemPrice = (): number => {
     return this.totalItemsPrice;
+  }
+
+  onCloseConfirm = (isConfirm: boolean) => {
+    this.isResClose = false;
   }
 }
