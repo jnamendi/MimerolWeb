@@ -235,6 +235,9 @@
                                                 </div> -->
                                                 <div class="{{isError ? 'error' : ''}}" *ngIf="isError">{{message}}
                                                 </div>
+                                                <div *ngIf="isShowAlert">
+                                                    SHOP BAG IS EMPTY
+                                                </div>
                                             </div>
                                             <button type="submit"
                                                 [innerHTML]="'Commons.Texts.Apply' | translate"></button>

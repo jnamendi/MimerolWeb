@@ -52,6 +52,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private currentCountryCode: string;
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
 
+  private isShowAlert : boolean = false;
+
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -284,6 +286,14 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
+    if(this.totalItemsInBag > 0 && this.selectedMenuItems.totalSubPrice < this.restaurantModel.minPrice){
+      let el = document.getElementById("sticker");
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+    if(this.totalItemsInBag <=0){
+      this.isShowAlert = true;
+      return;
+    }
     if (!isValid) {
       return;
     }
