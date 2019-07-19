@@ -191,7 +191,8 @@
             "ForgotSomthing": "Forgot somthing?",
             "CreateNewOrder": "Create new order",
             "NeedHelp": "Need help",
-            "ContactUs": "Contact us"
+            "ContactUs": "Contact us",
+            "ShopBagEmpty": "SHOP BAG IS EMPTY"
         },
         "Links": {
             "Title": "Links",

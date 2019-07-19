@@ -191,7 +191,8 @@
             "ForgotSomthing": "Olvido algo?",
             "CreateNewOrder": "Crear nuevo pedido",
             "NeedHelp": "Necesitas ayuda",
-            "ContactUs": "Contáctenos"
+            "ContactUs": "Contáctenos",
+            "ShopBagEmpty": "LA BOLSA DE COMPRAS ESTA VACÍA"
         },
         "Links": {
             "Title": "Enlaces",
