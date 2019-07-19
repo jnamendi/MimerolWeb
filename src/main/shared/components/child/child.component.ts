@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DropdownModel } from '../../models';
-import { StorageService, I18nService } from '../../core';
+import { StorageService, I18nService, CoreService } from '../../core';
 import { AreaSearch } from '../../models/google/country-restaurant.model';
 import { ApiError } from '../../services/api-response/api-response';
 import { AppRestaurantModel, AppRestaurantSearch, CategoryFilter, RankPrice } from '../../models/restaurant/app-restaurant.model';
@@ -19,6 +19,7 @@ export class ChildComponent implements OnInit {
   private isToggleFilter: boolean;
   private sortDropdown: DropdownModel[];
   private searchArea: AreaSearch = new AreaSearch();
+  private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private restaurantModels: AppRestaurantModel[] = [];
   private restaurantModelsTemp: AppRestaurantModel[] = [];
   private restaurantSearch: AppRestaurantSearch = new AppRestaurantSearch();
@@ -28,6 +29,7 @@ export class ChildComponent implements OnInit {
   private deliveryTypeAttributes: AttributeModel[] = [];
   private message: string;
   private isError: boolean;
+  private isResClose: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +39,7 @@ export class ChildComponent implements OnInit {
     private clientState: ClientState,
     private attributeService: AttributeService,
     private i18nService: I18nService,
+    private coreService: CoreService
   ) {
 
     this.searchArea = JwtTokenHelper.GetSearchRestaurantArea();
@@ -162,7 +165,7 @@ export class ChildComponent implements OnInit {
   }
 
   onNavigateToMenu = (restaurantId: number) => {
-    this.router.navigate(['menu', restaurantId]);
+    this.router.navigate(['menu', restaurantId])
   }
 
   onSortChange = (sortDropdownItem: DropdownModel) => {
@@ -221,4 +224,7 @@ export class ChildComponent implements OnInit {
     })
   }
 
+  onCloseConfirm = (isConfirm: boolean) => {
+    this.isResClose = false;
+  }
 }

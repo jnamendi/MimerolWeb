@@ -17,6 +17,8 @@ import { CityModel } from '../../models/city/city.model';
 import { DistrictModel } from '../../models/district/district.model';
 import { AddressModel } from '../../models/address/address.model';
 import { Address } from 'ng2-google-place-autocomplete/src/app/ng2-google-place.classes';
+import { RestaurantAppService } from '../../services/api/restaurant/app-restaurant.service';
+import { AppRestaurantModel } from '../../models/restaurant/app-restaurant.model';
 
 @Component({
   selector: 'page-order',
@@ -48,6 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private googleAddress: string = '';
   private placeTimeout: any;
   private currentCountryCode: string;
+  private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
 
 
   @ViewChild(ShoppingBagsComponent) child;
@@ -65,7 +68,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private addressService: AddressService,
     private cdRef: ChangeDetectorRef,
     private i18nService: I18nService,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private appRestaurantService: RestaurantAppService,
   ) {
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = +params['restaurantId'];
@@ -103,6 +107,20 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       return this.coreService.compareTimeGreaterThanCurrent(t);
     });
     this.onGetCities();
+    this.onGetRestaurantDetails();
+  }
+
+  onGetRestaurantDetails = () => {
+    if (this.restaurantId && this.restaurantId != 0) {
+      this.clientState.isBusy = true;
+      let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
+      this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
+        this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+        this.clientState.isBusy = false;
+      }, (err) => {
+        this.clientState.isBusy = false;
+      });
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -259,6 +277,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
+
+    //Check restaurant is open or not
+    if(this.restaurantModel.restaurantClosed){
+      this.isResClose = true;
+      return;
+    }
+
     if (!isValid) {
       return;
     }

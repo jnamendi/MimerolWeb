@@ -92,10 +92,12 @@
 
                 <p *ngIf="!isInOrder" class="btn_checkout">
                     <a *ngIf="this.totalSubItemsPrice > 0"
-                        [ngClass]="{'btn-disabled': this.totalSubItemsPrice < this.restaurantModel.minPrice}"
+                        [ngClass]="{'btn-disabled': this.totalSubItemsPrice < this.restaurantModel.minPrice || this.restaurantModel.restaurantClosed==true}"
                         class="btn btn_black pull-right" (click)="onCheckOut()"
                         [innerHTML]="'Commons.Texts.Checkout' | translate"></a>
                 </p>
+                <p class="restaurant-closed" *ngIf="this.restaurantModel.restaurantClosed"
+                    [innerHTML]="'Components.Order.RestaurantClosed' | translate"></p>
             </form>
         </div>
         <div *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0"
