@@ -235,9 +235,6 @@
                                                 </div> -->
                                                 <div class="{{isError ? 'error' : ''}}" *ngIf="isError">{{message}}
                                                 </div>
-                                                <div *ngIf="isShowAlert">
-                                                        {{ "Commons.Texts.ShopBagEmpty" | translate }}
-                                                </div>
                                             </div>
                                             <button type="submit"
                                                 [innerHTML]="'Commons.Texts.Apply' | translate"></button>
@@ -246,6 +243,9 @@
                                     <div class="btn_checkout">
                                         <a class="button-secondary pull-left" (click)="onGoBack()"
                                             [innerHTML]="'Commons.Texts.Back' | translate"></a>
+                                        <div *ngIf="isShowAlert" class="alert pull-center">
+                                                {{ "Commons.Texts.ShopBagEmpty" | translate }}
+                                        </div>
                                         <button type="submit" class="btn"
                                             [innerHTML]="'Commons.Texts.Submit' | translate"></button>
                                     </div>
