@@ -10,8 +10,8 @@ require('zone.js/dist/long-stack-trace-zone');
 // export const ENV_FIREBASE_CONFIG: any = FIREBASE_CONFIG;
 
 export const environment: Environment = {
-  production: false,
-  showDevModule: true,
+  production: true,
+  showDevModule: false,
   defaultLanguage: 'es-ES',
   supportedLanguages: [
     'en-US',

@@ -9,7 +9,7 @@ enableProdMode();
 
 export const environment: Environment = {
   production: true,
-  showDevModule: true,
+  showDevModule: false,
   defaultLanguage: 'es-ES',
   supportedLanguages: [
     'en-US',
