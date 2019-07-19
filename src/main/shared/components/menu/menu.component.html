@@ -89,8 +89,7 @@
 <div class="mobile-menu  sticker_fillter js-offcanvas c-offcanvas c-offcanvas--right c-offcanvas--overlay {{isVisibleBags ? 'is-open': 'is-closed'}}"
     aria-hidden="true">
     <button class="filter-close" (click)="onOpenShoppingBags(false)"></button>
-    <shopping-bags *ngIf="isVisibleBags" [restaurantId]="restaurantId"
-        [restaurantClosed]="this.restaurantModel.restaurantClosed" [minPrice]="this.restaurantModel.minPrice" [isInOrder]="false"
+    <shopping-bags *ngIf="isVisibleBags" [restaurantId]="restaurantId" [isInOrder]="false"
         (removedItem)="onRemoveMenuItem($event)" (itemInBags)="onGetItemsInBag($event)"></shopping-bags>
 </div>
 <div class="overlay {{isVisibleBags? 'is-open':''}}" (click)="onOpenShoppingBags(false)"></div>

@@ -7,6 +7,7 @@ import { Configs } from '../../../common/configs/configs';
 import { RestaurantMenuItemModel, OrderItem } from '../../../models/restaurant-menu/restaurant-menu.model';
 import { ClientState } from '../../../state';
 import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.model';
+import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
 
 @Component({
   selector: 'shopping-bags',
@@ -18,8 +19,6 @@ export class ShoppingBagsComponent implements OnInit {
   @Input() isToggleFilter: boolean;
   @Input() isInOrder: boolean;
   @Input() restaurantId: number;
-  @Input() restaurantClosed: boolean;
-  @Input() minPrice: number;
 
   @Output() itemInBags: EventEmitter<number> = new EventEmitter();
   @Output() removedItem: EventEmitter<number> = new EventEmitter();
@@ -38,7 +37,8 @@ export class ShoppingBagsComponent implements OnInit {
     private storageService: StorageService,
     private clientState: ClientState,
     private i18nService: I18nService,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private appRestaurantService: RestaurantAppService,
   ) {
   }
 
@@ -49,14 +49,24 @@ export class ShoppingBagsComponent implements OnInit {
     }
     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
     this.onCalculatePrice();
+    this.onGetRestaurantDetails();
+  }
 
-    this.restaurantModel.restaurantClosed = this.restaurantClosed;
-    this.restaurantModel.minPrice = this.minPrice;
+  onGetRestaurantDetails = () => {
+    if (this.restaurantId && this.restaurantId != 0) {
+      this.clientState.isBusy = true;
+      let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
+      this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
+        this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+        this.clientState.isBusy = false;
+      }, (err) => {
+        this.clientState.isBusy = false;
+      });
+    }
   }
 
   onCalculatePrice = () => {
     // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
-
     Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
   }
 
@@ -140,7 +150,7 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCheckOut = () => {
-    if (this.totalSubItemsPrice < this.restaurantModel.minPrice || this.restaurantClosed == true) {
+    if (this.totalSubItemsPrice < this.restaurantModel.minPrice || this.restaurantModel.restaurantClosed == true) {
       return;
     }
     this.router.navigate(['./order', this.restaurantId])
