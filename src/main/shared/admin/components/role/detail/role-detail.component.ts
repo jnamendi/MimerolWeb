@@ -62,26 +62,32 @@ export class AdminRoleDetailComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.roleAdminService.updateRole(this.roleAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/role']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.roleAdminService.updateRole(this.roleAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/role']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeleteRole = () => {
         this.clientState.isBusy = true;
-        this.roleAdminService.deleteRole(+this.roleAdminModel.roleId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/role']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.roleAdminService.deleteRole(+this.roleAdminModel.roleId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/role']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

@@ -89,13 +89,16 @@ export class AdminRatingCreationComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.ratingAdminService.createRating(this.ratingAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/rating']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.ratingAdminService.createRating(this.ratingAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/rating']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 }

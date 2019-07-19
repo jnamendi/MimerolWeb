@@ -98,26 +98,32 @@ export class AdminRatingDetailComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.ratingAdminService.updateRating(this.ratingAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/rating']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.ratingAdminService.updateRating(this.ratingAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/rating']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     onDeleteRating = () => {
         this.clientState.isBusy = true;
-        this.ratingAdminService.deleteRating(+this.ratingAdminModel.ratingId).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/rating']);
-        }, (err: ApiError) => {
-            this.clientState.isBusy = false;
-            this.message = err.message;
-            this.isError = true;
-        })
+        this.ratingAdminService.deleteRating(+this.ratingAdminModel.ratingId).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/rating']);
+            },
+            error: (err: ApiError) => {
+                this.clientState.isBusy = false;
+                this.message = err.message;
+                this.isError = true;
+            },
+        });
     }
 
     ngOnDestroy(): void {

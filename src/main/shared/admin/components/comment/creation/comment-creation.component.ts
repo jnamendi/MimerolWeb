@@ -93,13 +93,16 @@ export class AdminCommentCreationComponent implements OnInit {
             return;
         }
         this.clientState.isBusy = true;
-        this.commentAdminService.createComment(this.commentAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/comment']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.commentAdminService.createComment(this.commentAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/comment']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 }

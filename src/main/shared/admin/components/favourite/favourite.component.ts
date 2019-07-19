@@ -13,6 +13,7 @@ import { I18nService } from '../../../core/i18n.service';
     selector: 'admin-favourite',
     templateUrl: './favourite.component.html'
 })
+
 export class AdminFavouriteComponent implements OnInit {
     private favouriteAdminModels: FavouriteAdminModel[] = [];
     private paginModel: PagingModel;
@@ -36,9 +37,6 @@ export class AdminFavouriteComponent implements OnInit {
     ) {
         this.dtOptions = {
             pageLength: this.currentPageSize,
-            // columnDefs: [
-            //     { targets: 4, orderable: false }
-            // ],
             order: [
                 [0, "asc"]
             ]
@@ -82,19 +80,4 @@ export class AdminFavouriteComponent implements OnInit {
             this.clientState.isBusy = false;
         });
     }
-
-    // onPageChanged(pageIndex: number = 1) {
-    //     if (pageIndex < 0)
-    //         return;
-    //     this.currentPageIndex = pageIndex;
-    //     this.onGetFavourites(pageIndex);
-    // }
-
-    // isSelectdAllItems = () => {
-    //     return !this.favouriteAdminModels.some(item => !item.isDeleted);
-    // }
-
-    // isSelectedItem = () => {
-    //     return this.favouriteAdminModels.some(item => item.isDeleted);
-    // }
 }

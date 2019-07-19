@@ -92,13 +92,6 @@ export class AdminCommentComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onPageChanged(pageIndex: number = 1) {
-  //   if (pageIndex < 0)
-  //     return;
-  //   this.currentPageIndex = pageIndex;
-  //   this.onGetComments(pageIndex);
-  // }
-
   onChangeDeletedItems = () => {
     this.isDeletedItems = !this.isDeletedItems;
   }
@@ -118,14 +111,17 @@ export class AdminCommentComponent implements OnInit, OnDestroy {
       });
       if (deletedIds && deletedIds.length > 0) {
         this.clientState.isBusy = true;
-        this.commentAdminService.deleteManyComment(deletedIds).subscribe(res => {
-          this.onGetComments();
-          this.message = "Items have been deleted successfully.";
-          this.clientState.isBusy = false;
-        }, (err: ApiError) => {
-          this.message = err.message;
-          this.isError = true;
-          this.clientState.isBusy = false;
+        this.commentAdminService.deleteManyComment(deletedIds).subscribe({
+          complete: () => {
+            this.onGetComments();
+            this.message = "Items have been deleted successfully.";
+            this.clientState.isBusy = false;
+          },
+          error: (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+          },
         });
       }
     }
@@ -133,12 +129,15 @@ export class AdminCommentComponent implements OnInit, OnDestroy {
 
   onDeleteItem = (commentId: number) => {
     if (window.confirm('Are you sure want to delete the item has been choosen?')) {
-      this.commentAdminService.deleteComment(commentId).subscribe(res => {
-        this.onGetComments();
-      }, (err: ApiError) => {
-        this.message = err.message;
-        this.isError = true;
-        this.clientState.isBusy = false;
+      this.commentAdminService.deleteComment(commentId).subscribe({
+        complete: () => {
+          this.onGetComments();
+        },
+        error: (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        },
       });
     }
   }

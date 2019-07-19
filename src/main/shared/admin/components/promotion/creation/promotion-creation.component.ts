@@ -13,7 +13,7 @@ import { RestaurantAdminModel } from '../../../../models/restaurant/admin-restau
     selector: 'admin-promotion-creation',
     templateUrl: './promotion-creation.component.html'
 })
-export class AdminPromotionCreationComponent {
+export class AdminPromotionCreationComponent implements OnInit {
     private languageSupported: Language[] = [];
     private promotionAdminModel: PromotionAdminModel = new PromotionAdminModel();
     private restaurantAdminModels: RestaurantAdminModel[] = [];
@@ -77,13 +77,16 @@ export class AdminPromotionCreationComponent {
             return;
         }
         this.clientState.isBusy = true;
-        this.promotionAdminService.createPromotion(this.promotionAdminModel).subscribe(res => {
-            this.clientState.isBusy = false;
-            this.router.navigate(['admin/promotion']);
-        }, (err: ApiError) => {
-            this.message = err.message;
-            this.isError = true;
-            this.clientState.isBusy = false;
+        this.promotionAdminService.createPromotion(this.promotionAdminModel).subscribe({
+            complete: () => {
+                this.clientState.isBusy = false;
+                this.router.navigate(['admin/promotion']);
+            },
+            error: (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+                this.clientState.isBusy = false;
+            },
         });
     }
 }
