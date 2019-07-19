@@ -191,8 +191,7 @@
             "ForgotSomthing": "Olvido algo?",
             "CreateNewOrder": "Crear nuevo pedido",
             "NeedHelp": "Necesitas ayuda",
-            "ContactUs": "Contáctenos",
-            "ShopBagEmpty": "LA BOLSA DE COMPRAS ESTA VACÍA"
+            "ContactUs": "Contáctenos"
         },
         "Links": {
             "Title": "Enlaces",
@@ -224,7 +223,8 @@
             "ErrorEndDate": "La fecha de finalización debe ser mayor que la fecha de inicio",
             "ErrorOpenTime": "El tiempo de apertura debe ser menor que el tiempo de cierre",
             "ErrorCloseTime": "El tiempo de cierre debe ser mayor que el tiempo abierto",
-            "ErrorSearchAddress": "Dirección no encontrada"
+            "ErrorSearchAddress": "Dirección no encontrada",
+            "ShopBagEmpty": "O seu carrinho de compras está vazio. Por favor, para ver o menu do restaurante e adicionar produtos ao seu carrinho de compras."
         },
         "HttpStatus": {
             "1": "Error al procesar los datos.",

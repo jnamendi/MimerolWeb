@@ -235,9 +235,6 @@
                                                 </div> -->
                                                 <div class="{{isError ? 'error' : ''}}" *ngIf="isError">{{message}}
                                                 </div>
-                                                <div *ngIf="isShowAlert">
-                                                        {{ "Commons.Texts.ShopBagEmpty" | translate }}
-                                                </div>
                                             </div>
                                             <button type="submit"
                                                 [innerHTML]="'Commons.Texts.Apply' | translate"></button>
@@ -254,7 +251,7 @@
                         </div>
                     </div>
                     <div class="col-sm-5 total_pc">
-                        <div id="sticker">
+                        <div id="sticker" id="shoppingBags">
                             <shopping-bags [isInOrder]="true" [restaurantId]="restaurantId"
                                 (itemInBags)="onGetItemsInBag($event)"></shopping-bags>
                         </div>

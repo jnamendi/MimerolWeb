@@ -191,8 +191,7 @@
             "ForgotSomthing": "Forgot somthing?",
             "CreateNewOrder": "Create new order",
             "NeedHelp": "Need help",
-            "ContactUs": "Contact us",
-            "ShopBagEmpty": "SHOP BAG IS EMPTY"
+            "ContactUs": "Contact us"
         },
         "Links": {
             "Title": "Links",
@@ -224,7 +223,8 @@
             "ErrorEndDate": "End date must be greater than start date",
             "ErrorOpenTime": "Open time must be lesser than close time",
             "ErrorCloseTime": "Close time must be greater than open time",
-            "ErrorSearchAddress": "Address is not found"
+            "ErrorSearchAddress": "Address is not found",
+            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart."
         },
         "HttpStatus": {
             "1": "Error when process the data.",

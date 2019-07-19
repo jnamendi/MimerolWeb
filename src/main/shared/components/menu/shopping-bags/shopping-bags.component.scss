@@ -223,3 +223,19 @@
 .restaurant-closed {
     color: #ff0000;
 }
+
+.shop-bag-empty {
+    margin-top: 37px;
+    text-align: center;
+    margin-bottom: 50px;
+
+    i {
+        font-size: 69px;
+    }
+
+    p {
+        font-size: 13px;
+        color: #d9021b !important;
+        margin-top: 10px;
+    }
+}
