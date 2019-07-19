@@ -1,33 +1,33 @@
 <div *ngIf="visible && checkedoutItem" class="dialog-container">
     <div class="dialog-wrapper order-checkout">
         <div class="dialog-header">
-            <h4 class="title">Thank you, we received your order</h4>
+            <h4 class="title">{{ "Commons.Texts.ReceivedYourOrder" | translate }}</h4>
             <a class="btn-close" (click)="onClose()"></a>
         </div>
         <div class="dialog-body">
             <div class="confirm-message">
-                Your order has been processed and is being sent to {{checkedoutItem.name}}
+                {{ "Commons.Texts.YourOrderHasBeenProcessed" | translate }} {{checkedoutItem.name}}
             </div>
             <div class="content">
                 <img src="{{!checkedoutItem.imageUrl ? 'assets/images/logo.png' : baseUrl + checkedoutItem.imageUrl}}" alt="">
                 <div class="info">
                     <p>{{checkedoutItem.name}}</p>
                     <p>
-                        <b>Your order reference: {{checkedoutItem.orderCode}}</b>
+                        <b>{{ "Commons.Texts.YourOrderReference" | translate }} {{checkedoutItem.orderCode}}</b>
                     </p>
                 </div>
             </div>
         </div>
         <div class="dialog-footer">
-            <button type="button" class="btn btn-default btn-primary" (click)="onCheckRoute()">Check route</button>
+            <button type="button" class="btn btn-default btn-primary" (click)="onCheckRoute()">{{ "Commons.Texts.CheckRoute" | translate }}</button>
             <div class="extra-action">
                 <div class="cta forgot-cta">
-                    <p>Forgot somthing?</p>
-                    <a [routerLink]="['', 'child']">Create new order</a>
+                    <p>{{ "Commons.Texts.ForgotSomthing" | translate }}</p>
+                    <a [routerLink]="['', 'child']">{{ "Commons.Texts.CreateNewOrder" | translate }}</a>
                 </div>
                 <div class="cta help-cta">
-                    <p>Need help?</p>
-                    <a target="_blank" [routerLink]="['', 'contact-us']">Contact us</a>
+                    <p>{{ "Commons.Texts.NeedHelp" | translate }}</p>
+                    <a target="_blank" [routerLink]="['', 'contact-us']">{{ "Commons.Texts.ContactUs" | translate }}</a>
                 </div>
                 <div class="cta face-cta">
                     <a target="_blank" href="https://www.facebook.com/fooddelivery">
