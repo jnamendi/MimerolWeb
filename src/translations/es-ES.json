@@ -124,8 +124,8 @@
             "MinPriceRequired": "Precio mínimo <span class='error'>*</span>",
             "Price": "Precio",
             "PriceRequired": "Precio <span class='error'>*</span>",
-            "EstimateTime": "Estimar el tiempo de entrega",
-            "EstimateTimeRequired": "Estimar el tiempo de entrega <span class='error'>*</span>",
+            "EstimateTime": "Estimar el tiempo de entrega (minutos)",
+            "EstimateTimeRequired": "Estimar el tiempo de entrega (minutos) <span class='error'>*</span>",
             "EmergencyNumber1": "Número de emergencia (1)",
             "EmergencyNumber2": "Número de emergencia (2)",
             "ContactName": "Nombre de contacto",
@@ -182,7 +182,16 @@
             "Review": "Reseña",
             "Delivery": "Entrega",
             "PayWith": "Usted paga (con):",
-            "NeedCreateOrder": "Cantidad necesaria para alcanzar el valor mínimo del pedido"
+            "NeedCreateOrder": "Cantidad necesaria para alcanzar el valor mínimo del pedido",
+            "Minutes": "minutos",
+            "ReceivedYourOrder": "Gracias, recibimos tu pedido",
+            "YourOrderHasBeenProcessed": "Su pedido ha sido procesado y se está enviando a",
+            "YourOrderReference": "Su referencia de pedido:",
+            "CheckRoute": "Ver ruta",
+            "ForgotSomthing": "Olvido algo?",
+            "CreateNewOrder": "Crear nuevo pedido",
+            "NeedHelp": "Necesitas ayuda",
+            "ContactUs": "Contáctenos"
         },
         "Links": {
             "Title": "Enlaces",

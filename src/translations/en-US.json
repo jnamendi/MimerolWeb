@@ -124,8 +124,8 @@
             "MinPriceRequired": "Min price <span class='error'>*</span>",
             "Price": "Price",
             "PriceRequired": "Price <span class='error'>*</span>",
-            "EstimateTime": "Estimate delivery time",
-            "EstimateTimeRequired": "Estimate delivery time <span class='error'>*</span>",
+            "EstimateTime": "Estimate delivery time (minutes)",
+            "EstimateTimeRequired": "Estimate delivery time (minutes) <span class='error'>*</span>",
             "EmergencyNumber1": "Emergency number (1)",
             "EmergencyNumber2": "Emergency number (2)",
             "ContactName": "Contact name",
@@ -182,7 +182,16 @@
             "Review": "Review",
             "Delivery": "Delivery",
             "PayWith": "You pay (with):",
-            "NeedCreateOrder": "Amount needed to reach the minimum order value"
+            "NeedCreateOrder": "Amount needed to reach the minimum order value",
+            "Minutes": "minutes",
+            "ReceivedYourOrder": "Thank you, we received your order",
+            "YourOrderHasBeenProcessed": "Your order has been processed and is being sent to",
+            "YourOrderReference": "Your order reference:",
+            "CheckRoute": "Check route",
+            "ForgotSomthing": "Forgot somthing?",
+            "CreateNewOrder": "Create new order",
+            "NeedHelp": "Need help",
+            "ContactUs": "Contact us"
         },
         "Links": {
             "Title": "Links",
