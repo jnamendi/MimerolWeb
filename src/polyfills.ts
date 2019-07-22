@@ -48,3 +48,5 @@ if ('production' === ENV) {
   require('zone.js/dist/long-stack-trace-zone');
 
 }
+
+import 'url-search-params-polyfill';
