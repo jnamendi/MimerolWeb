@@ -100,6 +100,7 @@ export class ChildComponent implements OnInit {
       //   rs.deliveryTime = deliveryTime && deliveryTime.attributeName || '';
       //   rs.deliveryType = deliveryType && deliveryType.attributeName || '';
       // });
+      this.onSortRestauranByAlphabetical();
       this.restaurantModelsTemp = this.restaurantModels;
       this.categoryFilters = this.restaurantSearch && [...this.restaurantSearch.categories];
       this.rankPrice = this.restaurantSearch && { ...this.restaurantSearch.rankPrice };
@@ -218,8 +219,10 @@ export class ChildComponent implements OnInit {
 
   onSortRestauranByAlphabetical = () => {
     this.restaurantModels.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
+      let genreA = a.restaurantName.toLocaleUpperCase();
+      let genreB = b.restaurantName.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
       return 0;
     })
   }
