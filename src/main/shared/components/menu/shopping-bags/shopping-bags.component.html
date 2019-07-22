@@ -100,7 +100,10 @@
                     [innerHTML]="'Components.Order.RestaurantClosed' | translate"></p>
             </form>
         </div>
-        <div *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0"
-            [innerHTML]="'Commons.Error.ErrNoItem' | translate"></div>
+        <div class="shop-bag-empty"
+            *ngIf="selectedMenuItems && selectedMenuItems.orderItemsRequest && selectedMenuItems.orderItemsRequest.length <= 0">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            <p [innerHTML]="'Commons.Error.ShopBagEmpty' | translate"></p>
+        </div>
     </div>
 </div>

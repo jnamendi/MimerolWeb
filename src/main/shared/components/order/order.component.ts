@@ -52,9 +52,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private currentCountryCode: string;
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
 
-  private isShowAlert : boolean = false;
-
-
   @ViewChild(ShoppingBagsComponent) child;
 
   constructor(
@@ -279,21 +276,20 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
-
     //Check restaurant is open or not
-    if(this.restaurantModel.restaurantClosed){
+    if (this.restaurantModel.restaurantClosed) {
       this.isResClose = true;
       return;
     }
 
-    if(this.totalItemsInBag > 0 && this.selectedMenuItems.totalSubPrice < this.restaurantModel.minPrice){
-      let el = document.getElementById("sticker");
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-    if(this.totalItemsInBag <=0){
-      this.isShowAlert = true;
+    //--- Check total bags
+    if (this.totalItemsInBag > 0 && this.selectedMenuItems.totalSubPrice < this.restaurantModel.minPrice || this.totalItemsInBag <= 0) {
+      let shoppingBags = document.getElementById("shoppingBags");
+      shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
       return;
     }
+
+    //--- Check valid form
     if (!isValid) {
       return;
     }
