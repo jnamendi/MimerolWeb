@@ -1,5 +1,5 @@
 export class ApiUrl {
-    static BaseUrl = "https://bmbsoft.com.vn:8090/";
+    static BaseUrl = "https://192.168.0.107:8443/ofo/";
 
     // IP APi
     public static IPApi = "https://ipinfo.io/json";
