@@ -8,4 +8,5 @@ export class UserOwnerModel extends BaseModel {
     emergencyNumber2?: string;
     userId?: number;
     website?: string;
+    aliasName?: string;
 }

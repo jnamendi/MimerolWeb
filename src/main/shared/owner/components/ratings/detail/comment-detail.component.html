@@ -1,0 +1,107 @@
+<div class="admin-main-content form-detail">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-header">
+                <h2 class="title">
+                    <span class="title-one" [innerHTML]="'Commons.Texts.Comment' | translate"></span>
+                    <span></span>
+                </h2>
+            </div>
+            <div *ngIf="!!message" class="form-message">
+                <h2 class="message {{isError ? 'error' : ''}}">
+                    {{message}}
+                </h2>
+                <a [routerLink]="['..']" routerLinkActive="active" class="landing">
+                    <span>Back to list</span>
+                </a>
+            </div>
+            <div class="form-content">
+                <div class="box box-primary">
+                    <form (ngSubmit)="onUpdateComment(f.valid)" #f="ngForm">
+                        <div class="box-body">
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.UsernameRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="userName" class="form-control" [(ngModel)]="restaurantCommentOwnerModel.userId" #userName="ngModel" required disabled>
+                                        <option *ngFor="let item of userOwnerModel; let i = index;" value="{{item.userId}}">{{item.aliasName}}</option>
+                                    </select>
+                                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)" class="error">
+                                        <div *ngIf="userName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="restaurantName" class="form-control" [(ngModel)]="restaurantCommentOwnerModel.restaurantId" #restaurantName="ngModel"
+                                        required disabled>
+                                        <option *ngFor="let item of restaurantOwnerModel; let i = index;" value="{{item.restaurantId}}">{{item.restaurantName}}</option>
+                                    </select>
+                                    <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)" class="error">
+                                        <div *ngIf="restaurantName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.DescriptionRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="description" rows="5" [(ngModel)]="restaurantCommentOwnerModel.description" #description="ngModel"
+                                        required></textarea>
+                                    <div *ngIf="description.invalid && (description.dirty || description.touched || f.submitted)" class="error">
+                                        <div *ngIf="description.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.StarQualityRequired' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" min="1" max="5" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="starQuality" [(ngModel)]="restaurantCommentOwnerModel.starQuality" #starQuality="ngModel"
+                                        required/>
+                                    <div *ngIf="starQuality.invalid && (starQuality.dirty || starQuality.touched || f.submitted)" class="error">
+                                        <div *ngIf="starQuality.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.StarShipRequied' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" min="1" max="5" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="starShip" [(ngModel)]="restaurantCommentOwnerModel.starShip" #starShip="ngModel"
+                                        required/>
+                                    <div *ngIf="starShip.invalid && (starShip.dirty || starShip.touched || f.submitted)" class="error">
+                                        <div *ngIf="starShip.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Status' | translate"></label>
+                                <div class="col-md-6">
+                                    <select name="status" class="form-control" [(ngModel)]="restaurantCommentOwnerModel.status" #status="ngModel" required>
+                                        <option value="1" [innerHTML]="'Commons.Texts.Publish' | translate"></option>
+                                        <option value="0" [innerHTML]="'Commons.Texts.UnPublish' | translate"></option>
+                                    </select>
+                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
+                                        <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default btn-primary">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger">
+                                <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
