@@ -22,7 +22,7 @@
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.UsernameRequired' | translate"></label>
                                 <div class="col-md-6">
-                                    <select name="userName" class="form-control" [(ngModel)]="commentAdminModel.userId" #userName="ngModel" required>
+                                    <select name="userName" class="form-control" [(ngModel)]="commentAdminModel.userId" #userName="ngModel" required disabled>
                                         <option *ngFor="let item of userAdminModels; let i = index;" value="{{item.userId}}">{{item.aliasName}}</option>
                                     </select>
                                     <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)" class="error">
@@ -35,7 +35,7 @@
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
                                 <div class="col-md-6">
                                     <select name="restaurantName" class="form-control" [(ngModel)]="commentAdminModel.restaurantId" #restaurantName="ngModel"
-                                        required>
+                                        required disabled>
                                         <option *ngFor="let item of restaurantAdminModels; let i = index;" value="{{item.restaurantId}}">{{item.restaurantName}}</option>
                                     </select>
                                     <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)" class="error">
