@@ -26,3 +26,4 @@ export { OwnerMenuItemDetailComponent } from './menu-item/detail/menu-item-detai
 export { OwnerPromotionComponent } from './promotion/promotion.component';
 export { OwnerPromotionCreationComponent } from './promotion/creation/promotion-creation.component';
 export { OwnerPromotionDetailComponent } from './promotion/detail/promotion-detail.component';
+export { OwnerCommentDetailComponent } from './ratings/detail/comment-detail.component';

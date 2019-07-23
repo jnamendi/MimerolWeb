@@ -10,6 +10,7 @@ export interface UserOwnerInterface {
     createUserInfo(userOwnerModel: UserOwnerModel): Observable<ApiResponse>;
     updateUserInfo(userOwnerModel: UserOwnerModel): Observable<ApiResponse>;
     onGetByUserId(userId: number): Observable<ApiListResponse>;
+    getAllUserSortByName(languageCode?: string): Observable<ApiListResponse>;
 }
 
 @Injectable()
@@ -30,5 +31,8 @@ export class UserOwnerService implements UserOwnerInterface {
 
     onGetByUserId(userId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.UserInfoGetByUserId + '/' + userId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+    getAllUserSortByName(languageCode?: string): Observable<ApiListResponse> {
+        return this.http.HttpGet(ApiUrl.UserGetAllSortByName, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }
