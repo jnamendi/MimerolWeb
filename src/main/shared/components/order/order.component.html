@@ -93,7 +93,7 @@
                                         (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
                                         id="autocomplete" ng2-google-place-autocomplete />
                                     <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
-                                    <div *ngIf="address.invalid && (address.dirty || address.touched || f.submitted)"
+                                    <div *ngIf="address.invalid && (address.touched || f.submitted)"
                                         class="error">
                                         <div *ngIf="address.errors?.required"
                                             [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
