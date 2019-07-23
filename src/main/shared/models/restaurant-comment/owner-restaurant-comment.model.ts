@@ -20,6 +20,7 @@ export class RestaurantCommentOwnerModel {
 }
 
 export enum RestaurantCommentStatus {
-    UnPublish = 1,
+    UnPublish = 0,
+    Publish = 1,
     Approve = 6,
 }

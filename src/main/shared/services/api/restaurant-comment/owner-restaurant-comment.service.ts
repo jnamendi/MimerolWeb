@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../http/http.service';
-import { ApiResponsePaging, ApiListResponse } from '../../api-response/api-response';
+import { ApiResponsePaging, ApiListResponse,ApiResponse } from '../../api-response/api-response';
 import { Observable } from 'rxjs/Observable';
 import { ApiHelper } from '../../api-helper';
 import { ApiUrl } from '../../api-url/api-url';
+import { RestaurantCommentOwnerModel } from '../../../models/restaurant-comment/owner-restaurant-comment.model';
 
 export interface RestaurantCommentOwnerInterface {
     getRestaurantCommentByResId(pageIndex?: number, pageSize?: number, resId?: number): Observable<ApiResponsePaging>;
     getCommentByOwner(userId: number): Observable<ApiListResponse>;
+    getComment(commentId: number): Observable<ApiResponse>;
 }
 
 @Injectable()
@@ -28,5 +30,13 @@ export class RestaurantCommentOwnerService implements RestaurantCommentOwnerInte
 
     getCommentByOwner(userId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.RestaurantCommentGetByOwner + '/' + userId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+
+    getComment(commentId: number): Observable<ApiResponse>{
+        return this.http.HttpGet(ApiUrl.CommentGetById + '/' + commentId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+    updateComment(restaurantCommentOwnerModel: RestaurantCommentOwnerModel):Observable<ApiResponse>{
+        let body = JSON.stringify(restaurantCommentOwnerModel);
+        return this.http.HttpPut(ApiUrl.CommentCreate + '/' + restaurantCommentOwnerModel.resCommentId, body, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }

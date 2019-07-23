@@ -50,7 +50,10 @@
                             <tbody>
                                 <tr *ngFor="let item of restaurantCommentOwnerModels; let i = index;">
                                     <td class="text-center">{{i + 1}}</td>
-                                    <td>{{item && item.description}}</td>
+                                    <td>
+                                        <a routerLink="./{{item && item.resCommentId}}" routerLinkActive="active">
+                                            <span>{{item && item.description}}</span>
+                                        </a>
                                     <td>
                                         <!-- <a routerLink="./{{item && item.resCommentId}}" routerLinkActive="active">
                                             
@@ -67,7 +70,7 @@
                                         <p-rating [ngModel]="item && item.starShip" readonly="true" stars="5" [cancel]="false"></p-rating>
                                     </td>
                                     <td>
-                                        <span>{{restaurantCommentStatus[item && item.status]}}</span>
+                                        <span >{{restaurantCommentStatus[item && item.status]}}</span>
                                     </td>
                                 </tr>
                             </tbody>

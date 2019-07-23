@@ -11,6 +11,7 @@ export class AppRestaurantSearch {
 export class AppRestaurantModel extends BaseModel {
     restaurantId: number;
     name: string;
+    restaurantName:string;
     slogan: string;
     address: string;
     latitude: string;
