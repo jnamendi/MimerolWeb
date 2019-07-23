@@ -76,15 +76,19 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.router.navigate(['']);
       }
     });
-    this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
+    //--- Get menu items
+    this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
     if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0) {
       this.router.navigate(['child']);
     }
-    this.isAuthen = this.authService.isAuthenticated();
+
     this.orderModel.restaurantId = this.selectedMenuItems.restaurantId;
+    this.orderModel.paymentType = 1;
     this.currentCountryCode = JwtTokenHelper.countryCode;
 
+    //--- Check authen
+    this.isAuthen = this.authService.isAuthenticated();
     if (this.isAuthen) {
       this.userInfo = JwtTokenHelper.GetUserInfo();
       if (this.userInfo) {
@@ -92,6 +96,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.orderModel.name = this.userInfo.fullName;
         this.orderModel.email = this.userInfo.email;
         this.orderModel.number = this.userInfo.phone;
+        
         this.onGetAddressForCurrentUser();
       }
     }
