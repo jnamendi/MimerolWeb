@@ -49,6 +49,12 @@
                                                 dataKey="categoryId" field="categoryName" [multiple]="true" required
                                                 #categoryName="ngModel">
                                             </p-autoComplete>
+                                            <!-- <ng-select name="categoryName" [items]="categoryAdminModels"
+                                                bindValue="categoryId" bindLabel="categoryName" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.categoryIds" #categoryName="ngModel"
+                                                placeholder="Select category name">
+                                            </ng-select> -->
+
                                             <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="categoryName.errors?.required"
