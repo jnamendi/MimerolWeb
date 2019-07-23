@@ -93,7 +93,7 @@
                                         (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
                                         id="autocomplete" ng2-google-place-autocomplete />
                                     <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
-                                    <div *ngIf="address.invalid && (address.dirty || address.touched || f.submitted)"
+                                    <div *ngIf="address.invalid && (address.touched || f.submitted)"
                                         class="error">
                                         <div *ngIf="address.errors?.required"
                                             [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
@@ -208,14 +208,14 @@
                                     </label>
                                     <div *ngIf="orderModel.paymentType == 1 && orderModel.paymentWith"
                                         class="form-input" style="margin-top: 15px; margin-bottom: 0">
-                                        <select name="paymentType" inputFocus [(ngModel)]="orderModel.paymentWith"
-                                            [required]="orderModel.paymentType == 1" #paymentType="ngModel">
+                                        <select name="paymentWith" inputFocus [(ngModel)]="orderModel.paymentWith"
+                                            [required]="orderModel.paymentType == 1" #paymentWith="ngModel">
                                             <option *ngFor="let item of paymentWiths" [value]="item">{{item}}</option>
                                         </select>
                                         <label [innerHTML]="'Commons.Texts.PayWith' | translate"></label>
-                                        <div *ngIf="paymentType.invalid && (paymentType.dirty || paymentType.touched || a.submitted)"
+                                        <div *ngIf="paymentWith.invalid && (paymentWith.dirty || paymentWith.touched || a.submitted)"
                                             class="error">
-                                            <div *ngIf="paymentType.errors?.required"
+                                            <div *ngIf="paymentWith.errors?.required"
                                                 [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                         </div>
                                     </div>
@@ -244,7 +244,7 @@
                                         <a class="button-secondary pull-left" (click)="onGoBack()"
                                             [innerHTML]="'Commons.Texts.Back' | translate"></a>
                                         <div *ngIf="isShowAlert" class="alert pull-center">
-                                                {{ "Commons.Texts.ShopBagEmpty" | translate }}
+                                            {{ "Commons.Texts.ShopBagEmpty" | translate }}
                                         </div>
                                         <button type="submit" class="btn"
                                             [innerHTML]="'Commons.Texts.Submit' | translate"></button>
