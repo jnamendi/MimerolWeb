@@ -13,6 +13,7 @@ import {
   OwnerContactsComponent,
   OwnerOrdersComponent,
   OwnerRatingsComponent,
+  OwnerCommentDetailComponent,
   OwnerArchiveComponent,
   OwnerMerchandiseInfoComponent,
   OwnerMerchandiseOrderStatusComponent,
@@ -74,6 +75,7 @@ const routes: Routes = [
       { path: 'promotion', component: OwnerPromotionComponent },
       { path: 'promotion/new', component: OwnerPromotionCreationComponent },
       { path: 'promotion/:id', component: OwnerPromotionDetailComponent },
+      { path: 'comments/:id', component: OwnerCommentDetailComponent}
     ]
   },
 ];

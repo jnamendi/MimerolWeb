@@ -25,6 +25,7 @@ export class MenuHeaderComponent implements OnInit {
   private isError: boolean;
   private isAuthen: boolean;
   private error: string;
+  private ratingPercent: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +51,12 @@ export class MenuHeaderComponent implements OnInit {
       let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
       this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
         this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+
+        //--- Calculate rating
+        if (this.restaurantModel.rating > 0) {
+          this.ratingPercent = (this.restaurantModel.rating * 100) / 5;
+        }
+
         this.clientState.isBusy = false;
       }, (err: ApiError) => {
         this.message = err.message;
