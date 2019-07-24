@@ -1,0 +1,43 @@
+<div style="background:#ffffff">
+
+    <div class="mapInfo">
+        <div class='agm-map-container-inner sebm-google-map-container-inner'>
+            <agm-map [latitude]="restaurantModel.latitude" [longitude]="restaurantModel.longitude" [zoom]=17
+                [maxZoom]=17 [minZoom]=17 [zoomControl]="false" [streetViewControl]="false" [mapDraggable]="false">
+                <agm-marker [iconUrl]="icon" [latitude]="restaurantModel.latitude"
+                    [longitude]="restaurantModel.longitude"></agm-marker>
+            </agm-map>
+        </div>
+        <div class="addressMapInfo">
+            <span style="font-weight: bold;">Address</span><br>
+            <span>{{restaurantModel.address}}</span><br>
+            <span *ngIf="this.restaurantModel.restaurantClosed" style="color: rgb(255, 0, 0)">Close</span>
+            <span *ngIf="!this.restaurantModel.restaurantClosed" style="color: #10d365">Open</span>
+        </div>
+    </div>
+
+    <div>
+        <p>
+            <img src="assets/icons/ic_delivery_times.svg" alt="">
+        </p>
+        <span class="title">Delivery times</span>
+    </div>
+
+    <div>
+        <p>
+            <img src="assets/icons/ic_delivery_costs.png" alt="">
+        </p>
+        <span class="title">Delivery costs</span> <br>
+        <span>Price from: {{restaurantModel.minPrice}}</span>
+    </div>
+
+    <div>
+        <p>
+            <img src="" alt="">
+        </p>
+        <span class="title">Payment methods</span>
+        <p>
+            <img src="assets/icons/ic_cash_payment.png" alt="">
+        </p>
+    </div>
+</div>
