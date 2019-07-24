@@ -27,7 +27,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   private menuItemModels: RestaurantMenuItemModel[] = [];
   private selectedExtraItem: MenuExtraItem = null;
   private deliveryCost: number;
-  private restaurantDetailModel: AppRestaurantModel;
+  private restaurantDetailModel: AppRestaurantModel = new AppRestaurantModel();
   private searchItem: string;
   private menuItemTemps: RestaurantMenuItemModel[] = [];
   private spainCurrency = Configs.SpainCurrency;
@@ -48,15 +48,26 @@ export class MenuItemsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
-    this.appRestaurantService.getRestaurantDetails(this.restaurantId, this.i18nService.language.split('-')[0].toLocaleLowerCase()).subscribe(res => {
-      this.restaurantDetailModel = <AppRestaurantModel>{ ...res.content };
-    }, (err: ApiError) => {
-      this.message = err.message;
-      this.isError = true;
-    })
     setTimeout(() => {
       this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length || 0);
     }, 300);
+
+    this.onGetRestaurantDetails();
+  }
+
+  onGetRestaurantDetails = () => {
+    if (this.restaurantId && this.restaurantId != 0) {
+      this.clientState.isBusy = true;
+      let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
+      this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
+        this.restaurantDetailModel = <AppRestaurantModel>{ ...res.content };
+        this.clientState.isBusy = false;
+      }, (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+        this.clientState.isBusy = false;
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
