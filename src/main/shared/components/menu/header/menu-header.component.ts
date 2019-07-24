@@ -25,7 +25,7 @@ export class MenuHeaderComponent implements OnInit {
   private isError: boolean;
   private isAuthen: boolean;
   private error: string;
-  private ratingPercent: number;
+  private ratingPercent: number = 0;
 
   constructor(
     private route: ActivatedRoute,
