@@ -111,19 +111,19 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <!-- <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
+                                            <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
                                                         types: ['address'],
                                                     componentRestrictions: { country: currentCountryCode}
                                                     }" (setAddress)="setAddressLine1($event)" (street_number)='street_number=$event' (street)='street=$event' (city)='onGetCityLine1($event)' (state)='state=$event' (district)='onGetDistrictLine1($event)'
                                                 (country)='country=$event' (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)' (lng)='onGetLongtitude($event)' (adr_address)='onGetAddressLine1($event)' (name)='name=$event' (place_id)='place_id=$event'
                                                 (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event' (CountryCodes)='CountryCodes=$event' id="autocomplete"
-                                                ng2-google-place-autocomplete> -->
-                                            <input autocorrect="off" autocapitalize="off" spellcheck="off"
+                                                ng2-google-place-autocomplete>
+                                            <!-- <input autocorrect="off" autocapitalize="off" spellcheck="off"
                                                 [(ngModel)]="restaurantModel && restaurantModel.address"
                                                 (blur)="onBlurSearch()" (focus)="onFocusSearch()"
                                                 (ngModelChange)="onChangeAddress()" name="addressLine1"
                                                 #addressLine1="ngModel" required type="text" class="form-control"
-                                                #searchControl style="margin-bottom: 5px;" />
+                                                #searchControl style="margin-bottom: 5px;" /> -->
                                             <div *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="addressLine1.errors?.required"
