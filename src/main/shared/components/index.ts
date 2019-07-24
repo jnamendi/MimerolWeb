@@ -34,3 +34,4 @@ export { OrderCheckoutDialogComponent } from './order-checkout/order-checkout-di
 export { OrderCheckoutComponent } from './order-checkout/order-checkout.component';
 export { OrderConfirmComponent } from './order/order-confirm-dialog/order-confirm.dialog';
 export { OrderReviewComponent } from './menu/order-review/order-review.component';
+export { RestaurantInfoComponent } from './menu/restaurant-info/restaurant-info.component';

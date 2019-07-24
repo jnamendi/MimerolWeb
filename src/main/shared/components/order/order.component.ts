@@ -96,7 +96,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.orderModel.name = this.userInfo.fullName;
         this.orderModel.email = this.userInfo.email;
         this.orderModel.number = this.userInfo.phone;
-        
+
         this.onGetAddressForCurrentUser();
       }
     }
@@ -206,7 +206,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       result.add(item * 100 + redundant);
     });
 
-    if (500 < totalPrice && totalPrice < 1000) result.add(1000);
+    if (500 < newPay) result.add(1000 + redundant);
 
     return result;
   }

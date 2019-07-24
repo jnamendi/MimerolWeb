@@ -18,7 +18,7 @@ export class RestaurantCommentService implements RestaurantCommentInterface {
     ) { }
 
     getRestaurantComment(size: number, restaurantId: number): Observable<ApiListResponse> {
-        return this.http.HttpGet(ApiUrl.RestaurantCommentGetBySize + '/' + size + '/' + restaurantId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+        return this.http.HttpGet(ApiUrl.RestaurantCommentGetBySize + '/' + size + '/' + restaurantId, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 
     createRestaurantComment(resCommentModel: RestaurantCommentModel): Observable<ApiResponse> {

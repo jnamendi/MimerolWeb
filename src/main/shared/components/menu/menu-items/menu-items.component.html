@@ -1,9 +1,5 @@
-<!-- <form (ngSubmit)="onSearchMenuItem()" class="search-item-form">
-    <input noSpaces class="form-text-2" [(ngModel)]="searchItem" name="search" placeholder="Find menu item" type="text">
-    <button class="btn--search--2"> <img src="assets\images\icon\search-black.png"></button>
-</form> -->
-
-<div class="news-promotion" *ngIf="restaurantDetailModel && restaurantDetailModel.promotionLineItems && restaurantDetailModel.promotionLineItems[0]">
+<div class="news-promotion"
+    *ngIf="restaurantDetailModel && restaurantDetailModel.promotionLineItems && restaurantDetailModel.promotionLineItems[0]">
     <div class="promotion-item">
         <span class="icon-discount icon-discount-code"></span>
         <div class="title">
@@ -27,14 +23,16 @@
     <div *ngIf="menuItemModels && menuItemModels.length > 0" class="item-wrapper">
         <div class="fp_inner_box" data-scroll-index="0" *ngFor="let item of menuItemModels; let i = index">
             <div class="menu_item">
-                <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}" [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)">
-                <label class="text" for="{{i}}">
+                <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
+                    [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)">
+                <label class="text" for="{{i}}"
+                    [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
                     <div class="menu_image">
                         <div class="img_ads">
                             <div class="box_img">
                                 <a class="active">
-                                    <img src="{{!item.urlImge ? 'assets/images/logo.png' : clientState.BaseUrl + item.urlImge}}" alt="{{item.restaurantName}}"
-                                    />
+                                    <img src="{{!item.urlImge ? 'assets/images/logo.png' : clientState.BaseUrl + item.urlImge}}"
+                                        alt="{{item.restaurantName}}" />
                                 </a>
                             </div>
                         </div>
@@ -50,18 +48,26 @@
                 <div class="row">
                     <div class="extra_items" *ngFor="let extraItem of item.menuExraItems; let i = index">
                         <label class="extra_item_name">{{extraItem.name}}:</label>
-                        <div *ngIf="extraItem.extraItemType == 1 && extraItem.extraitems && extraItem.extraitems.length > 0" class="item single_choice">
+                        <div *ngIf="extraItem.extraItemType == 1 && extraItem.extraitems && extraItem.extraitems.length > 0"
+                            class="item single_choice">
                             <div class="col-xs-6">
-                                <select class="form-control" name="single_choice{{i}}" [(ngModel)]="extraItem.selectedExtraItem" (ngModelChange)="onSelectSingleExtraItem(item, extraItem)">
-                                    <option [ngValue]="null" selected [innerHTML]="'Components.Order.SelectOneExtraItem' | translate"></option>
-                                    <option *ngFor="let extItem of extraItem.extraitems" [ngValue]="extItem">{{extItem.name}}(+${{extItem.priceRate}})</option>
+                                <select class="form-control" name="single_choice{{i}}"
+                                    [(ngModel)]="extraItem.selectedExtraItem"
+                                    (ngModelChange)="onSelectSingleExtraItem(item, extraItem)">
+                                    <option [ngValue]="null" selected
+                                        [innerHTML]="'Components.Order.SelectOneExtraItem' | translate"></option>
+                                    <option *ngFor="let extItem of extraItem.extraitems" [ngValue]="extItem">
+                                        {{extItem.name}}(+${{extItem.priceRate}})</option>
                                 </select>
                             </div>
                         </div>
-                        <div *ngIf="extraItem.extraItemType == 2 && extraItem.extraitems && extraItem.extraitems.length > 0" class="item multiple_choice">
+                        <div *ngIf="extraItem.extraItemType == 2 && extraItem.extraitems && extraItem.extraitems.length > 0"
+                            class="item multiple_choice">
                             <div *ngFor="let extItem of extraItem.extraitems; let i = index" class="col-xs-6">
                                 <div class="extra-item-checkbox">
-                                    <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+${{extItem.priceRate}})" [(ngModel)]="extItem.isSelected" binary="true" (onChange)="onSelectExtraItem(item, extItem)"></p-checkbox>
+                                    <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+${{extItem.priceRate}})"
+                                        [(ngModel)]="extItem.isSelected" binary="true"
+                                        (onChange)="onSelectExtraItem(item, extItem)"></p-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -74,4 +80,5 @@
         There is no item.
     </div>
 </div>
-<order-confirm-dialog [visible]="isResClose" [isResClose]="isResClose" (onClose)="onCloseConfirm($event)"></order-confirm-dialog>
+<order-confirm-dialog [visible]="isResClose" [isResClose]="isResClose" (onClose)="onCloseConfirm($event)">
+</order-confirm-dialog>

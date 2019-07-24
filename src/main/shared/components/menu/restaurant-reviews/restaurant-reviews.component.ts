@@ -43,8 +43,9 @@ export class RestaurantReviewsComponent implements OnInit {
         if (res.content == null) {
           this.restaurantComments = [];
           return;
+        } else {
+          this.restaurantComments = <RestaurantCommentModel[]>[...res.content];
         }
-        this.restaurantComments = <RestaurantCommentModel[]>[...res.content];
       }, (err: ApiError) => {
         this.message = err.message;
         this.isError = true;

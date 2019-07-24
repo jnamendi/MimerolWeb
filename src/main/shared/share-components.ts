@@ -42,6 +42,7 @@ import {
     OrderCheckoutComponent,
     OrderConfirmComponent,
     OrderReviewComponent,
+    RestaurantInfoComponent,
 } from './components';
 
 export const SharedComponents = [
@@ -84,4 +85,5 @@ export const SharedComponents = [
     OrderCheckoutComponent,
     OrderConfirmComponent,
     OrderReviewComponent,
+    RestaurantInfoComponent,
 ];
