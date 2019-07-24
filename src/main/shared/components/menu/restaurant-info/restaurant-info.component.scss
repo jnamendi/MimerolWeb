@@ -1,17 +1,103 @@
-agm-map {
-    height: 300px;
-  }
-.agm-map-container-inner {
-  width: inherit;
-  height: inherit;
-}
-.addressMapInfo{
-    span{
-        color: #000;
-        font-size: 13px;
+.restaurant-info {
+    padding: 20px;
+
+    .map-container {
+        position: relative;
+
+        agm-map {
+            height: 300px;
+        }
+
+        .agm-map-container-inner {
+            width: inherit;
+            height: inherit;
+        }
+
+        .map-info {
+            position: absolute;
+            bottom: 8%;
+            left: 30%;
+            background-color: #fff;
+            padding: 8px 20px;
+            border: 1px solid #e9e9e9;
+            border-radius: 2px;
+            width: 340px;
+
+            p {
+                padding-bottom: 0;
+            }
+
+            .address-label {
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+            .address {
+                font-size: 12px;
+            }
+
+            .restaurant-close {
+                color: rgb(255, 0, 0);
+                font-size: 12px;
+            }
+
+            .restaurant-open {
+                color: #10d365;
+                font-size: 12px;
+            }
+        }
     }
-}
-img {
-  width: 24px;
-  height: 24px;
+
+    p {
+        padding: 0;
+        margin: 10px 0;
+
+        &.restaurant-info-title {
+            img {
+                width: 24px;
+                height: 24px;
+                margin-right: 15px;
+            }
+
+            span.title {
+                font-weight: 700;
+                font-size: 16px;
+                margin: 0;
+            }
+        }
+    }
+
+    .info-tab-section {
+        color: #666;
+        line-height: 1.71;
+        letter-spacing: normal;
+        background-color: #f4f4f4;
+        padding: 10px 20px;
+        font-size: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        table {
+            width: 100%;
+        }
+
+        .info-pay-methods {
+            width: 72px;
+            height: 48px;
+            border-radius: 2px;
+            background-color: #fff;
+            border: 1px solid #e9e9e9;
+            padding: 0 16px;
+            margin: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            img {
+                width: 40px;
+            }
+        }
+    }
+
 }

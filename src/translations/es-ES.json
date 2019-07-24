@@ -79,7 +79,7 @@
             "OpenTimeRequired": "Tiempo abierto <span class='error'>*</span>",
             "CloseTime": "Hora de cierre",
             "CloseTimeRequired": "Hora de cierre <span class='error'>*</span>",
-            "FreeShip": "Envío gratis",
+            "FreeShip": "Gratis",
             "Quality": "Calidad",
             "StarDelivery": "Entrega estrella",
             "StarDeliveryRequired": "Entrega estrella <span class='error'>*</span>",

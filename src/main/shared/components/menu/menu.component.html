@@ -50,46 +50,29 @@
                     </div>
 
                     <div class="col-sm-8">
-
-                        <div class="tabs_menu">
+                        <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#home">Menu</a></li>
-                                <li><a data-toggle="tab" href="#info">Info</a></li>
+                                <li><a data-toggle="tab" href="#restaurantInfo">Info</a></li>
                             </ul>
-                        </div>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="content">
+                                        <menu-items
+                                            *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems"
+                                            [restaurantId]="restaurantId" [selectedMenuId]="selectedMenuId"
+                                            [menuItems]="restaurantMenu.menuItems" [selectedMenuName]="selectedMenuName"
+                                            (itemInBags)="onGetItemsInBag($event)"></menu-items>
+                                        <restaurant-reviews *ngIf="restaurantId" [restaurantId]="restaurantId">
+                                        </restaurant-reviews>
+                                    </div>
+                                </div>
 
-                        <div class="tab-content">
-
-                            <div id="home" class="tab-pane fade in active">
-
-                                <div class="content">
-                                    <menu-items
-                                        *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems"
-                                        [restaurantId]="restaurantId" [selectedMenuId]="selectedMenuId"
-                                        [menuItems]="restaurantMenu.menuItems" [selectedMenuName]="selectedMenuName"
-                                        (itemInBags)="onGetItemsInBag($event)"></menu-items>
-                                    <restaurant-reviews *ngIf="restaurantId" [restaurantId]="restaurantId">
-                                    </restaurant-reviews>
-
-                                    <!-- <p-tabView class="menu-content">
-                                <p-tabPanel header="Menu">
-                                    <menu-items *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems" [restaurantId]="restaurantId" [selectedMenuId]="selectedMenuId" [menuItems]="restaurantMenu.menuItems" [selectedMenuName]="selectedMenuName" (itemInBags)="onGetItemsInBag($event)"></menu-items>
-                                    <restaurant-reviews *ngIf="restaurantId" [restaurantId]="restaurantId"></restaurant-reviews>
-                                </p-tabPanel>
-                                <p-tabPanel *ngIf="isEnableOrderReview" header="Info">
-                                    <order-review></order-review>
-                                </p-tabPanel>
-    
-                            </p-tabView> -->
+                                <div id="restaurantInfo" class="tab-pane fade">
+                                    <restaurant-info [restaurantId]="restaurantId"></restaurant-info>
                                 </div>
                             </div>
-
-                            <div id="info" class="tab-pane fade">
-                                <restaurant-info [restaurantId]="restaurantId"></restaurant-info>
-                            </div>
-
                         </div>
-
                     </div>
 
                     <sticky [sticky-offset-top]="100">
