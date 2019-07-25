@@ -192,7 +192,20 @@
             "CreateNewOrder": "Create new order",
             "NeedHelp": "Need help",
             "ContactUs": "Contact us",
-            "Info": "Info"
+            "MON": "Monday",
+            "TUE": "Tuesday",
+            "WED": "Wednesday",
+            "THU": "Thursday",
+            "FRI": "Friday",
+            "SAT": "Saturday",
+            "SUN": "Sunday",
+            "Info": "Info",
+            "Close": "Close",
+            "Open": "Open",
+            "DeliveryTimes": "Delivery times",
+            "DeliveryCosts": "Delivery costs",
+            "MinimumOrderAmount": "Minimum order amount",
+            "PaymentMethods": "Payment methods"
         },
         "Links": {
             "Title": "Links",

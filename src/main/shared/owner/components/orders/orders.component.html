@@ -13,7 +13,8 @@
                         <h3 class="box-title" [innerHTML]="'Owner.Orders.ManageYourOrders' | translate"></h3>
                     </div>
                     <div class="box-body">
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="row-border hover table table-striped table-bordered">
                             <tfoot>
                                 <tr>
                                     <th></th>
@@ -46,9 +47,10 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of ownerOrderModels; let i = index;">
-                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
+                                    <td class="text-center">{{i + 1}}</td>
                                     <td>
-                                        <a (click)="onUpdateOrder(item.orderId,item.orderCode)" routerLinkActive="active">
+                                        <a (click)="onUpdateOrder(item.orderId,item.orderCode)"
+                                            routerLinkActive="active">
                                             <span>{{item && item.orderCode}}</span>
                                         </a>
                                     </td>
@@ -56,26 +58,26 @@
                                         <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
                                     </td>
                                     <td>
-                                        <span *ngIf="item && item.orderInfos && item.orderInfos[0]">
-                                            {{item.orderInfos[0].city}}
+                                        <span
+                                            *ngIf="item && item.orderInfos && item.orderInfos[0] && item.orderInfos[0].address">{{item.orderInfos[0].address}}
+                                            -
                                         </span>
+                                        <span
+                                            *ngIf="item && item.orderInfos && item.orderInfos[0] && item.orderInfos[0].district">{{item.orderInfos[0].district}}
+                                            -</span>
+                                        <span
+                                            *ngIf="item && item.orderInfos && item.orderInfos[0] && item.orderInfos[0].city">{{item.orderInfos[0].city}}</span>
                                     </td>
                                     <td>
-                                        <span>{{item && item.totalPrice}} C$</span>
+                                        <span>{{item && item.totalPrice}} {{currencySymbol}}</span>
                                     </td>
                                     <td class="text-center">
-                                        <span [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span>
+                                        <span
+                                            [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <p *ngIf="pagingModel && pagingModel.totalCount == 0" [innerHTML]="'Commons.Texts.NoRecordFound' | translate"></p> -->
-                    </div>
-                    <div class="box-footer">
-                        <!-- <pagination *ngIf="pagingModel && pagingModel.totalCount > 0" [disabled]="clientState.isBusy" [boundaryLinks]="true" [directionLinks]="true"
-                            [totalItems]="pagingModel.totalCount" [itemsPerPage]="currentPageSize" [rotate]="false" (pageChanged)="onPageChanged($event)"
-                            [currentPageIndex]="pagingModel.pageNumber">
-                        </pagination> -->
                     </div>
                 </div>
             </div>
@@ -83,5 +85,5 @@
     </div>
 </div>
 
-<owner-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isUpdation" [visible]="isUpdation" (onSuccess)="onSuccess($event)"
-    [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></owner-orders-detail>
+<owner-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isUpdation" [visible]="isUpdation"
+    (onSuccess)="onSuccess($event)" [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></owner-orders-detail>

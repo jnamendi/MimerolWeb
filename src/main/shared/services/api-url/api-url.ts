@@ -133,6 +133,7 @@ export class ApiUrl {
     public static OrderFullInfo = ApiUrl.BaseUrl + "api/order/get-full-info-by-id";
     public static OrderGetByRestaurantAndStatus = ApiUrl.BaseUrl + "api/order/get-by-restaurant";
     public static OrderUpdate = ApiUrl.BaseUrl + "admin/order/update-order-to";
+    public static OrderGetByOwner = ApiUrl.BaseUrl + "api/order/get-by-owner";
 
     // User Info
     public static UserInfoCreate = ApiUrl.BaseUrl + "admin/user-info/save";
@@ -155,7 +156,7 @@ export class ApiUrl {
     // City
     public static CityGetAll = ApiUrl.BaseUrl + "api/city/getAll";
 
-     // District
-     public static DistrictGetByCity = ApiUrl.BaseUrl + "api/district/get-district-by-city";
+    // District
+    public static DistrictGetByCity = ApiUrl.BaseUrl + "api/district/get-district-by-city";
 
 }
