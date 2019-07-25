@@ -11,7 +11,7 @@
         <a (click)="onToggleAdmimNav()" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-        <div class="navbar-custom-menu">
+        <div class="navbar-admin-menu">
             <ul class="nav navbar-nav">
                 <li class="languages">
                     <a *ngFor="let lang of languages; let last = last" (click)="setLanguage(lang)">{{lang.split('-')[0].toUpperCase()}}

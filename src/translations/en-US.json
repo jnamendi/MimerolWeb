@@ -192,15 +192,16 @@
             "CreateNewOrder": "Create new order",
             "NeedHelp": "Need help",
             "ContactUs": "Contact us",
-            "MON" : "Monday",
+            "MON": "Monday",
             "TUE": "Tuesday",
             "WED": "Wednesday",
-            "THU" : "Thursday",
+            "THU": "Thursday",
             "FRI": "Friday",
             "SAT": "Saturday",
             "SUN": "Sunday",
             "WeekDay": "Weekday",
-            "Time" : "Time"
+            "Time": "Time",
+            "Info": "Info"
         },
         "Links": {
             "Title": "Links",

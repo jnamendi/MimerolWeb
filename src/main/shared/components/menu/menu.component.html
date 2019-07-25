@@ -52,8 +52,10 @@
                     <div class="col-sm-8">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#home">Menu</a></li>
-                                <li><a data-toggle="tab" href="#restaurantInfo">Info</a></li>
+                                <li class="active"><a data-toggle="tab" href="#home"
+                                        [innerHTML]="'Commons.Texts.Menu' | translate"></a></li>
+                                <li><a data-toggle="tab" href="#restaurantInfo"
+                                        [innerHTML]="'Commons.Texts.Info' | translate"></a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="home" class="tab-pane fade in active">

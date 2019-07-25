@@ -192,15 +192,16 @@
             "CreateNewOrder": "Crear nuevo pedido",
             "NeedHelp": "Necesitas ayuda",
             "ContactUs": "Contáctenos",
-            "MON" : "Lunes",
+            "MON": "Lunes",
             "TUE": "Martes",
             "WED": "Miércoles",
-            "THU" : "Jueves",
+            "THU": "Jueves",
             "FRI": "Viernes",
             "SAT": "Sábado",
             "SUN": "Domingo",
             "WeekDay": "Día de la semana",
-            "Time": "Timpo"
+            "Time": "Timpo",
+            "Info": "Información"
         },
         "Links": {
             "Title": "Enlaces",
