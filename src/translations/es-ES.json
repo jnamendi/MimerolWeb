@@ -201,7 +201,9 @@
             "SUN": "Domingo",
             "WeekDay": "Día de la semana",
             "Time": "Timpo",
-            "Info": "Información"
+            "Info": "Información",
+            "FailCodePromotion": "Este código promocional no se aplica a su pedido",
+            "SuccessCodePromotion": "Se ha aplicado el código promocional"
         },
         "Links": {
             "Title": "Enlaces",

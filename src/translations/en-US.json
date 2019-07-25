@@ -201,7 +201,9 @@
             "SUN": "Sunday",
             "WeekDay": "Weekday",
             "Time": "Time",
-            "Info": "Info"
+            "Info": "Info",
+            "FailCodePromotion": "This promotional code does not apply to your order",
+            "SuccessCodePromotion": "The promotional code has been applied"
         },
         "Links": {
             "Title": "Links",
