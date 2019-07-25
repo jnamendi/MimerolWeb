@@ -199,9 +199,13 @@
             "FRI": "Friday",
             "SAT": "Saturday",
             "SUN": "Sunday",
-            "WeekDay": "Weekday",
-            "Time": "Time",
-            "Info": "Info"
+            "Info": "Info",
+            "Close": "Close",
+            "Open": "Open",
+            "DeliveryTimes": "Delivery times",
+            "DeliveryCosts": "Delivery costs",
+            "MinimumOrderAmount": "Minimum order amount",
+            "PaymentMethods": "Payment methods"
         },
         "Links": {
             "Title": "Links",
