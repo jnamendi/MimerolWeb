@@ -4,7 +4,6 @@ import { I18nService } from '../../../core';
 import { ApiError } from '../../../services/api-response/api-response';
 import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.model';
 import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
-import { AgmSnazzyInfoWindow } from "@agm/snazzy-info-window";
 
 @Component({
     selector: 'restaurant-info',
@@ -34,11 +33,11 @@ export class RestaurantInfoComponent implements OnInit {
         this.icon = {
             url: '../../assets/icons/ic_restaurant_location.png',
             scaledSize: {
-              width: 42,
-              height: 42,
-              backgroundSize: 'contain'
+                width: 42,
+                height: 42,
+                backgroundSize: 'contain'
             }
-          }
+        }
     }
 
     onGetRestaurantDetails = () => {
@@ -55,5 +54,4 @@ export class RestaurantInfoComponent implements OnInit {
             });
         }
     }
-
 }
