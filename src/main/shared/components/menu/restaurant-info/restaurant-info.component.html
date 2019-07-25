@@ -21,7 +21,26 @@
             <span class="title">Delivery times</span>
         </p>
         <div class="info-tab-section">
-            <p>Update inprogress...</p>
+            <table>
+                <tr>
+                    <th> {{"Commons.Texts.WeekDay" | translate }} </th>
+                    <th class="text-right"> {{"Commons.Texts.Time" | translate }} </th>
+                </tr>
+                <tr *ngFor="let item of restaurantModel.restaurantWorkTimeModels" >
+                    <td>
+                        <span *ngIf="item.weekDay==='MON'"> {{"Commons.Texts.MON" | translate }}</span>
+                        <span *ngIf="item.weekDay==='TUE'"> {{"Commons.Texts.TUE" | translate }}</span>
+                        <span *ngIf="item.weekDay==='WED'"> {{"Commons.Texts.WED" | translate }}</span>
+                        <span *ngIf="item.weekDay==='THU'"> {{"Commons.Texts.THU" | translate }}</span>
+                        <span *ngIf="item.weekDay==='FRI'"> {{"Commons.Texts.FRI" | translate }}</span>
+                        <span *ngIf="item.weekDay==='SAT'"> {{"Commons.Texts.SAT" | translate }}</span>
+                        <span *ngIf="item.weekDay==='SUN'"> {{"Commons.Texts.SUN" | translate }}</span>
+                    </td>
+                    <td class="text-right">
+                        <span>{{item.openTime}} - {{item.closeTime}}</span>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
