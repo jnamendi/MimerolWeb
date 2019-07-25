@@ -40,6 +40,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private voucher: VoucherModel = new VoucherModel();
   private deliveryTimes: Array<string> = [];
   private isResClose: boolean;
+  private isFailApplyCodePromotion: boolean;
+  private isSuccessApplyCodePromotion: boolean;
   // private existingEmail: string;
   private paymentWiths = []
   private cityModels: CityModel[] = [];
@@ -359,8 +361,12 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!isValid) {
       return;
     }
+    if( this.restaurantModel.promotionLineItems.length > 0 &&this.child.totalSubItemsPrice < this.restaurantModel.promotionLineItems[0].minOrder){
+        this.isFailApplyCodePromotion = true;
+        this.isSuccessApplyCodePromotion = false;
+        return;
+    }
     this.clientState.isBusy = true;
-
     this.voucherService.getPromotionByCode(this.orderModel.promotionCode, this.orderModel.restaurantId).subscribe(res => {
       let voucher = <PromotionModel>{ ...res.content };
       this.child.onCalculateTotalPrices(voucher.value);
@@ -371,6 +377,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isError = true;
       this.clientState.isBusy = false;
     });
+    this.isSuccessApplyCodePromotion = true;
+    this.isFailApplyCodePromotion = false;
+    let shoppingBags = document.getElementById("shoppingBags");
+    shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
   }
 
   onGoBack = () => {

@@ -240,6 +240,12 @@
                                                 [innerHTML]="'Commons.Texts.Apply' | translate"></button>
                                         </form>
                                     </div>
+                                    <div  *ngIf="isFailApplyCodePromotion">
+                                        <span style="color:red" [innerHTML]="'Commons.Texts.FailCodePromotion' | translate"></span>
+                                    </div>
+                                    <div  *ngIf="isSuccessApplyCodePromotion">
+                                        <span style="color:green" [innerHTML]="'Commons.Texts.SuccessCodePromotion' | translate"></span>
+                                    </div>
                                     <div class="btn_checkout">
                                         <a class="button-secondary pull-left" (click)="onGoBack()"
                                             [innerHTML]="'Commons.Texts.Back' | translate"></a>
