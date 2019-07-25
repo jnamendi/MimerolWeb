@@ -104,6 +104,11 @@ export class JwtTokenHelper {
         return itemsInBag;
     }
 
+    public static RemoveItemsInBag = (restaurantId: number) => {
+        let itemsInBagToken = localStorage.removeItem(StorageKey.ItemsInBag + `__${restaurantId}`);
+        return itemsInBagToken;
+    }
+
     public static GetSearchRestaurantArea = (): AreaSearch => {
         let restaurantSearchAreaToken = localStorage.getItem(StorageKey.RestaurantAreaSearch);
         let restaurantSearchAreaDecode = restaurantSearchAreaToken && JwtTokenHelper.DecodeToken(restaurantSearchAreaToken)

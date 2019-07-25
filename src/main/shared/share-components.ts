@@ -41,7 +41,6 @@ import {
     OrderCheckoutDialogComponent,
     OrderCheckoutComponent,
     OrderConfirmComponent,
-    OrderReviewComponent,
     RestaurantInfoComponent,
 } from './components';
 
@@ -84,6 +83,5 @@ export const SharedComponents = [
     OrderCheckoutDialogComponent,
     OrderCheckoutComponent,
     OrderConfirmComponent,
-    OrderReviewComponent,
     RestaurantInfoComponent,
 ];

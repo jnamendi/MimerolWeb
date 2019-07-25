@@ -6,6 +6,7 @@ import {
     NoWhitespaceDirective,
     DateComparison,
     TimeComparison,
+    OnlyNumber,
 } from './directives';
 
 import { SlimScroll } from 'angular-io-slimscroll';
@@ -20,4 +21,5 @@ export const SharedDirectives = [
     NoWhitespaceDirective,
     DateComparison,
     TimeComparison,
+    OnlyNumber,
 ];
