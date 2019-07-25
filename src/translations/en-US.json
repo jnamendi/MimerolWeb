@@ -207,7 +207,7 @@
             "MinimumOrderAmount": "Minimum order amount",
             "PaymentMethods": "Payment methods",
             "FailCodePromotion": "This promotional code does not apply to your order",
-            "SuccessCodePromotion": "The promotional code has been applied",
+            "SuccessCodePromotion": "The promotional code has been applied"
         },
         "Links": {
             "Title": "Links",
