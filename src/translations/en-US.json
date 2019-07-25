@@ -191,7 +191,16 @@
             "ForgotSomthing": "Forgot somthing?",
             "CreateNewOrder": "Create new order",
             "NeedHelp": "Need help",
-            "ContactUs": "Contact us"
+            "ContactUs": "Contact us",
+            "MON" : "Monday",
+            "TUE": "Tuesday",
+            "WED": "Wednesday",
+            "THU" : "Thursday",
+            "FRI": "Friday",
+            "SAT": "Saturday",
+            "SUN": "Sunday",
+            "WeekDay": "Weekday",
+            "Time" : "Time"
         },
         "Links": {
             "Title": "Links",
