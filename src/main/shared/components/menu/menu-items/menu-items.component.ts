@@ -47,11 +47,10 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
-    setTimeout(() => {
-      this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length || 0);
-    }, 300);
+    //--- Remove items for first load
+    JwtTokenHelper.RemoveItemsInBag(this.restaurantId);
 
+    //--- Get restaurant details
     this.onGetRestaurantDetails();
   }
 
