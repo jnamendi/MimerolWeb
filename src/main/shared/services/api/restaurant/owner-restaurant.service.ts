@@ -12,7 +12,6 @@ export interface RestaurantOwnerInterface {
 
 @Injectable()
 export class RestaurantOwnerService implements RestaurantOwnerInterface {
-
     constructor(
         private http: HttpService,
     ) { }
@@ -20,6 +19,7 @@ export class RestaurantOwnerService implements RestaurantOwnerInterface {
     getRestaurantByUserId(userId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.RestaurantGetDetails + '/' + userId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
+
     getAllRestaurantSortByName(): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.RestaurantGetAllSortByName, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }

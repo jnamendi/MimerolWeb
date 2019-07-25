@@ -15,16 +15,17 @@ import { I18nService } from '../../../../core/i18n.service';
   styleUrls: ['./orders-detail.component.scss']
 })
 export class OwnerOrdersDetailComponent {
+  @Input() visible: boolean = false;
+  @Input() orderId: number;
+  @Input() orderCode: string;
+  @Output() onSuccess: EventEmitter<boolean> = new EventEmitter();
+
   private ownerOrderModel: OwnerOrderModel = new OwnerOrderModel();
   private isError: boolean;
   private error: string;
   private statusError: number = 0;
   private paymentMethod: typeof PaymentType = PaymentType;
   private currencySymbol: string = Configs.SpainCurrency.symbol;
-  @Input() visible: boolean = false;
-  @Input() orderId: number;
-  @Input() orderCode: string;
-  @Output() onSuccess: EventEmitter<boolean> = new EventEmitter();
   private isProgressing: boolean;
 
   constructor(
@@ -41,14 +42,20 @@ export class OwnerOrdersDetailComponent {
   }
 
   onOrderFullInfo = () => {
-    this.orderService.getOrderFullInfo(this.orderId, this.orderCode).subscribe(
-      res => {
+    this.clientState.isBusy = true;
+    this.orderService.getOrderFullInfo(this.orderId, this.orderCode).subscribe(res => {
+      if (res.content == null) {
+        this.ownerOrderModel = null;
+      } else {
         this.ownerOrderModel = <OwnerOrderModel>{ ...res.content };
-      }, (err: ApiError) => {
-        this.error = err.message;
-        this.isError = true;
-        this.statusError = err.status;
-      });
+      }
+
+      this.clientState.isBusy = false;
+    }, (err: ApiError) => {
+      this.error = err.message;
+      this.isError = true;
+      this.statusError = err.status;
+    });
   }
 
   onUpdateOrder = (form: NgForm) => {
@@ -61,13 +68,19 @@ export class OwnerOrdersDetailComponent {
     this.ownerOrderModel.languageCode = languageCode;
     this.ownerOrderModel.orderId = this.orderId;
     this.ownerOrderModel.orderCode = this.orderCode;
-    this.orderOwnerService.updateOrder(this.ownerOrderModel).subscribe(res => {
-      this.isProgressing = false;
-      this.onClose(true);
-    }, (err: ApiError) => {
-      this.isError = true;
-      this.error = err.message;
-      this.isProgressing = false;
+
+    this.clientState.isBusy = true;
+    this.orderOwnerService.updateOrder(this.ownerOrderModel).subscribe({
+      complete: () => {
+        this.isProgressing = false;
+        this.onClose(true);
+        this.clientState.isBusy = false;
+      },
+      error: (err: ApiError) => {
+        this.isError = true;
+        this.error = err.message;
+        this.isProgressing = false;
+      },
     });
   }
 
