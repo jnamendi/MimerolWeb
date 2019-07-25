@@ -199,11 +199,15 @@
             "FRI": "Friday",
             "SAT": "Saturday",
             "SUN": "Sunday",
-            "WeekDay": "Weekday",
-            "Time": "Time",
             "Info": "Info",
+            "Close": "Close",
+            "Open": "Open",
+            "DeliveryTimes": "Delivery times",
+            "DeliveryCosts": "Delivery costs",
+            "MinimumOrderAmount": "Minimum order amount",
+            "PaymentMethods": "Payment methods",
             "FailCodePromotion": "This promotional code does not apply to your order",
-            "SuccessCodePromotion": "The promotional code has been applied"
+            "SuccessCodePromotion": "The promotional code has been applied",
         },
         "Links": {
             "Title": "Links",

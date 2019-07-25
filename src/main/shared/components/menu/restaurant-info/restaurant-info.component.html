@@ -8,33 +8,25 @@
             </agm-map>
         </div>
         <div class="map-info">
-            <p class="address-label">Address</p>
+            <p class="address-label" [innerHTML]="'Commons.Texts.Address' | translate"></p>
             <p class="address">{{restaurantModel.address}}</p>
-            <p *ngIf="this.restaurantModel.restaurantClosed" class="restaurant-close">Close</p>
-            <p *ngIf="!this.restaurantModel.restaurantClosed" class="restaurant-open">Open</p>
+            <p *ngIf="this.restaurantModel.restaurantClosed" class="restaurant-close"
+                [innerHTML]="'Commons.Texts.Close' | translate"></p>
+            <p *ngIf="!this.restaurantModel.restaurantClosed" class="restaurant-open"
+                [innerHTML]="'Commons.Texts.Open' | translate"></p>
         </div>
     </div>
 
     <div class="delivery-times">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_delivery_times.svg" alt="delivery_times">
-            <span class="title">Delivery times</span>
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryTimes' | translate"></span>
         </p>
         <div class="info-tab-section">
             <table>
-                <tr>
-                    <th> {{"Commons.Texts.WeekDay" | translate }} </th>
-                    <th class="text-right"> {{"Commons.Texts.Time" | translate }} </th>
-                </tr>
-                <tr *ngFor="let item of restaurantModel.restaurantWorkTimeModels" >
+                <tr *ngFor="let item of restaurantModel.restaurantWorkTimeModels">
                     <td>
-                        <span *ngIf="item.weekDay==='MON'"> {{"Commons.Texts.MON" | translate }}</span>
-                        <span *ngIf="item.weekDay==='TUE'"> {{"Commons.Texts.TUE" | translate }}</span>
-                        <span *ngIf="item.weekDay==='WED'"> {{"Commons.Texts.WED" | translate }}</span>
-                        <span *ngIf="item.weekDay==='THU'"> {{"Commons.Texts.THU" | translate }}</span>
-                        <span *ngIf="item.weekDay==='FRI'"> {{"Commons.Texts.FRI" | translate }}</span>
-                        <span *ngIf="item.weekDay==='SAT'"> {{"Commons.Texts.SAT" | translate }}</span>
-                        <span *ngIf="item.weekDay==='SUN'"> {{"Commons.Texts.SUN" | translate }}</span>
+                        <span>{{"Commons.Texts." + item.weekDay | translate }}</span>
                     </td>
                     <td class="text-right">
                         <span>{{item.openTime}} - {{item.closeTime}}</span>
@@ -47,23 +39,21 @@
     <div class="delivery-costs">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_delivery_costs.png" alt="delivery_costs">
-            <span class="title">Delivery costs</span>
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></span>
         </p>
         <div class="info-tab-section">
             <table>
                 <tr>
-                    <td class="text-left">
-                        Minimum order amount</td>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.MinimumOrderAmount' | translate"></td>
                     <td class="text-right">
                         {{restaurantModel.minPrice}}
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-left">
-                        Delivery costs</td>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></td>
                     <td class="text-right">
                         <span *ngIf="restaurantModel.deliveryCost==0"
-                            [innerHTML]="'Commons.Texts.FreeShip' | translate">FREE</span>
+                            [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
                         <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}}</span>
                     </td>
                 </tr>
@@ -74,7 +64,7 @@
     <div class="payment-methods">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_payment_methods.png" alt="payment_methods">
-            <span class="title">Payment methods</span>
+            <span class="title" [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></span>
         </p>
 
         <div class="info-tab-section">
