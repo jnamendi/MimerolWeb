@@ -399,6 +399,10 @@
             "ManageYourRating": "Manage your rating",
             "CreateRating": "Create a rating"
         },
+        "Orders": {
+            "UpdateOrder": "Update order",
+            "ManageYourOrders": "Manage your orders"
+        },
         "Navs": {
             "AdminNavText": "Admin navigation",
             "Category": "Category",
@@ -411,7 +415,8 @@
             "Users": "Users",
             "Role": "Role",
             "Address": "Address",
-            "Promotion": "Promotion"
+            "Promotion": "Promotion",
+            "Orders": "Orders"
         }
     },
     "Owner": {

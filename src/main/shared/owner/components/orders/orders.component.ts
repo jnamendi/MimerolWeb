@@ -89,7 +89,7 @@ export class OwnerOrdersComponent implements OnDestroy {
     })
   }
 
-  onUpdateOrder = (orderId: number, orderCode: string) => {
+  onGetOrderDetail = (orderId: number, orderCode: string) => {
     if (this.isUpdation) {
       return;
     }
