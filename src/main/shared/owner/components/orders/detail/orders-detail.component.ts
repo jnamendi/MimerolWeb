@@ -58,32 +58,6 @@ export class OwnerOrdersDetailComponent {
     });
   }
 
-  // onUpdateOrder = (form: NgForm) => {
-  //   if (!form.valid) {
-  //     return;
-  //   }
-
-  //   this.isProgressing = true;
-  //   let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
-  //   this.ownerOrderModel.languageCode = languageCode;
-  //   this.ownerOrderModel.orderId = this.orderId;
-  //   this.ownerOrderModel.orderCode = this.orderCode;
-
-  //   this.clientState.isBusy = true;
-  //   this.orderOwnerService.updateOrder(this.ownerOrderModel).subscribe({
-  //     complete: () => {
-  //       this.isProgressing = false;
-  //       this.onClose(true);
-  //       this.clientState.isBusy = false;
-  //     },
-  //     error: (err: ApiError) => {
-  //       this.isError = true;
-  //       this.error = err.message;
-  //       this.isProgressing = false;
-  //     },
-  //   });
-  // }
-
   onClose = (isSuccess: boolean) => {
     this.onSuccess.emit(isSuccess);
   }

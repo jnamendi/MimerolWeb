@@ -400,6 +400,7 @@
             "CreateRating": "Create a rating"
         },
         "Orders": {
+            "UpdateOrder": "Update order",
             "ManageYourOrders": "Manage your orders"
         },
         "Navs": {

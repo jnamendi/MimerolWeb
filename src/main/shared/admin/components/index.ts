@@ -28,3 +28,4 @@ export { AdminPromotionComponent } from './promotion/promotion.component';
 export { AdminPromotionCreationComponent } from './promotion/creation/promotion-creation.component';
 export { AdminPromotionDetailComponent } from './promotion/detail/promotion-detail.component';
 export { AdminOrdersComponent } from './orders/orders.component';
+export { AdminOrdersDetailComponent } from './orders/detail/orders-detail.component';

@@ -46,7 +46,7 @@ export class ApiUrl {
     public static RestaurantEdit = ApiUrl.BaseUrl + "admin/restaurant/edit";
     public static RestaurantInsert = ApiUrl.BaseUrl + "admin/restaurant/insert";
     public static RestaurantCreate = ApiUrl.BaseUrl + "admin/restaurant/save";
-    public static RestaurantGetById = ApiUrl.BaseUrl + "api/restaurant/getById";
+    public static RestaurantGetById = ApiUrl.BaseUrl + "admin/restaurant/getById";
     public static RestaurantGetByName = ApiUrl.BaseUrl + "api/restaurant/getByName";
     public static RestaurantGetByDistrict = ApiUrl.BaseUrl + "admin/restaurant/get-by-district";
     public static RestaurantGetDetails = ApiUrl.BaseUrl + "api/restaurant/get-restaurant-by";

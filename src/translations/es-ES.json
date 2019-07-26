@@ -399,6 +399,7 @@
             "CreateRating": "Crear una calificación"
         },
         "Orders": {
+            "UpdateOrder": "Orden de actualización",
             "ManageYourOrders": "Gestiona tus pedidos"
         },
         "Navs": {

@@ -34,7 +34,8 @@ import {
     AdminPromotionComponent,
     AdminPromotionCreationComponent,
     AdminPromotionDetailComponent,
-    AdminOrdersComponent
+    AdminOrdersComponent,
+    AdminOrdersDetailComponent,
 } from './components';
 
 export const AdminSharedComponents = [
@@ -70,5 +71,6 @@ export const AdminSharedComponents = [
     AdminPromotionComponent,
     AdminPromotionCreationComponent,
     AdminPromotionDetailComponent,
-    AdminOrdersComponent
+    AdminOrdersComponent,
+    AdminOrdersDetailComponent
 ];
