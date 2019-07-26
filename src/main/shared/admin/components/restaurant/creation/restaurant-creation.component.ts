@@ -1,17 +1,17 @@
 
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus } from '../../../../models/restaurant/admin-restaurant.model';
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels } from '../../../../models/restaurant/admin-restaurant.model';
 import { ClientState } from '../../../../state';
 import { Language } from '../../../../models/langvm.model';
 import { ApiError } from '../../../../services/api-response/api-response';
 import { Address } from 'cluster';
-import { CategoryAdminModel, CategoryViewModel, CategoryModule } from '../../../../models/category/admin-category.model';
+import { CategoryAdminModel } from '../../../../models/category/admin-category.model';
 import { Router } from '@angular/router';
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
 import { CategoryAdminService } from '../../../../services/api/category/admin-category.service';
 import { UserAdminService } from '../../../../services/api/user/admin-user.service';
-import { UserAdminModel, UserViewModel, UserModule } from '../../../../models/user/admin-user.model';
+import { UserAdminModel } from '../../../../models/user/admin-user.model';
 import { I18nService } from '../../../../core/i18n.service';
 import { GoogleApiService } from '../../../../services/google-api/google-api.service';
 import { StorageService } from '../../../../core/storage.service';
@@ -40,13 +40,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private googleAddressLine2: string = '';
     private fileUpload: File = null;
     private categoryAdminModels: CategoryAdminModel[] = [];
-    private categoryViewModels: CategoryViewModel[] = [];
-    private categorySearchResults: CategoryViewModel[] = [];
-    private categoryIdsSelected: Array<number> = [];
     private userAdminModels: UserAdminModel[] = [];
-    private userViewModels: UserViewModel[] = []
-    private userSearchResults: UserViewModel[] = [];
-    private userIdsSelected: Array<number> = [];
     private longTitude: number;
     private latTitude: number;
     private imgUrl: string;
@@ -66,6 +60,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private currentAddress: string;
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+
+    private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
 
     @ViewChild('searchControl') searchElementRef: ElementRef;
     @ViewChild('agmMap') agmMap: AgmMap;
@@ -104,6 +100,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.longitude = -86.251389;
         this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
         this.onGetCities();
+        this.onAutoCreateRestaurantWorkTimeId();
     }
 
     ngAfterViewInit(): void {
@@ -285,38 +282,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             } else {
                 this.categoryAdminModels = <CategoryAdminModel[]>[...res.content];
             }
-
-            if (this.categoryAdminModels && this.categoryAdminModels.length > 0) {
-                this.categoryViewModels = this.categoryAdminModels.map(category => {
-                    return CategoryModule.toViewModel(category);
-                });
-                if (this.categoryViewModels && this.categoryViewModels.length > 0) {
-                    this.categorySearchResults = this.categoryViewModels;
-                }
-            }
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
         });
-    }
-
-    filterCategoriesMultiple(event) {
-        let query = event.query;
-        this.categorySearchResults = this.categoryViewModels.filter(
-            category => category.categoryName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectCategory = (event: CategoryViewModel) => {
-        if (!this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected.push(event.categoryId);
-        }
-    }
-
-    onUnSelectCategory = (event: CategoryViewModel) => {
-        if (this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected = this.categoryIdsSelected.filter(i => i != event.categoryId);
-        }
     }
 
     //---Multiple select user
@@ -327,37 +296,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             } else {
                 this.userAdminModels = <UserAdminModel[]>[...res.content]
             }
-            if (this.userAdminModels && this.userAdminModels.length > 0) {
-                this.userViewModels = this.userAdminModels.map(user => {
-                    return UserModule.toViewModel(user);
-                });
-                if (this.userViewModels && this.userViewModels.length > 0) {
-                    this.userSearchResults = this.userViewModels;
-                }
-            }
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
         });
-    }
-
-    filterUsersMultiple(event) {
-        let query = event.query;
-        this.userSearchResults = this.userViewModels.filter(
-            user => user.userName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectUser = (event: UserViewModel) => {
-        if (!this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected.push(event.userId);
-        }
-    }
-
-    onUnSelectUser = (event: UserViewModel) => {
-        if (this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected = this.userIdsSelected.filter(i => i != event.userId);
-        }
     }
 
     detectFiles(event) {
@@ -416,5 +358,47 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
     onGetLongtitude = (lng: string) => {
         this.restaurantModel.longitude = +lng;
+    }
+
+    onAutoCreateRestaurantWorkTimeId = () => {
+        if (this.restaurantWorkTimeModels.restaurantWorkTimeId == null) {
+            let max = 7, i = 0;
+            while (i < max) {
+                let weekDay = "";
+                if (i == 0) weekDay = "MON";
+                else if (i == 1) weekDay = "TUE";
+                else if (i == 2) weekDay = "WED";
+                else if (i == 3) weekDay = "THU";
+                else if (i == 4) weekDay = "FRI";
+                else if (i == 5) weekDay = "SAT";
+                else weekDay = "SUN";
+                this.restaurantModel.restaurantWorkTimeModels.push(
+                    <RestaurantWorkTimeModels>{
+                        restaurantWorkTimeId: i,
+                        weekDay: weekDay
+                    }
+                )
+                i++;
+            }
+        }
+    }
+
+    onAddMoreExtraItem = (weekDay: string) => {
+        this.restaurantModel.restaurantWorkTimeModels.push(
+            <RestaurantWorkTimeModels>{
+                restaurantWorkTimeId: !this.restaurantModel.restaurantWorkTimeModels.length ? 1 : Math.max.apply(Math, this.restaurantModel.restaurantWorkTimeModels.map(function (o) {
+                    return o && o.restaurantWorkTimeId || 0;
+                })) + 1,
+                weekDay: weekDay
+            }
+        )
+    }
+
+    onRemoveExtraItem = (menuExtra: RestaurantWorkTimeModels) => {
+        if (this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.length == 0) {
+            return;
+        }
+        let index = this.restaurantModel.restaurantWorkTimeModels.findIndex(e => e == menuExtra);
+        this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.splice(index, 1);
     }
 }
