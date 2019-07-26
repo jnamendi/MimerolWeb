@@ -113,6 +113,8 @@ export class AdminOrdersComponent implements OnDestroy {
             style = 'label label-info'
         } else if (value == 3) {
             style = 'label label-warning'
+        } else if (value == 4) {
+            style = 'label label-danger'
         } else if (value == 5) {
             style = 'label label-danger'
         } else if (value == 7) {
