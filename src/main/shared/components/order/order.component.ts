@@ -298,6 +298,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     //--- Check valid form
     if (!isValid) {
+      let isErrors = document.getElementsByClassName("error");
+      let error = isErrors[0];
+      error.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
       return;
     }
 
