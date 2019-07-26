@@ -43,17 +43,11 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.CategoryRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel && restaurantModel.categoryIds"
-                                                [suggestions]="categorySearchResults"
-                                                (completeMethod)="filterCategoriesMultiple($event)" name="categoryName"
-                                                dataKey="categoryId" field="categoryName" [multiple]="true" required
-                                                #categoryName="ngModel">
-                                            </p-autoComplete>
-                                            <!-- <ng-select name="categoryName" [items]="categoryAdminModels"
+                                            <ng-select name="categoryName" [items]="categoryAdminModels"
                                                 bindValue="categoryId" bindLabel="categoryName" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.categoryIds" #categoryName="ngModel"
                                                 placeholder="Select category name">
-                                            </ng-select> -->
+                                            </ng-select>
 
                                             <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)"
                                                 class="error">
@@ -67,13 +61,11 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.OwnerRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel && restaurantModel.userIds"
-                                                [suggestions]="userSearchResults"
-                                                (completeMethod)="filterUsersMultiple($event)" name="userName"
-                                                dataKey="userId" (onSelect)="onSelectUser($event)"
-                                                (onUnselect)="onUnSelectUser($event)" field="userName" [multiple]="true"
-                                                required #userName="ngModel">
-                                            </p-autoComplete>
+                                            <ng-select name="userName" [items]="userAdminModels"
+                                                bindValue="userId" bindLabel="userName" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.userIds" #userName="ngModel"
+                                                placeholder="Select category name">
+                                            </ng-select>
                                             <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="userName.errors?.required"
@@ -111,12 +103,22 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
+                                            <input type="text" class="form-control" name="addressLine1"
+                                                [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required
+                                                [options]="{
                                                         types: ['address'],
                                                     componentRestrictions: { country: currentCountryCode}
-                                                    }" (setAddress)="setAddressLine1($event)" (street_number)='street_number=$event' (street)='street=$event' (city)='onGetCityLine1($event)' (state)='state=$event' (district)='onGetDistrictLine1($event)'
-                                                (country)='country=$event' (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)' (lng)='onGetLongtitude($event)' (adr_address)='onGetAddressLine1($event)' (name)='name=$event' (place_id)='place_id=$event'
-                                                (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event' (CountryCodes)='CountryCodes=$event' id="autocomplete"
+                                                    }" (setAddress)="setAddressLine1($event)"
+                                                (street_number)='street_number=$event' (street)='street=$event'
+                                                (city)='onGetCityLine1($event)' (state)='state=$event'
+                                                (district)='onGetDistrictLine1($event)' (country)='country=$event'
+                                                (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)'
+                                                (lng)='onGetLongtitude($event)'
+                                                (adr_address)='onGetAddressLine1($event)' (name)='name=$event'
+                                                (place_id)='place_id=$event' (types)='types=$event' (url)='url=$event'
+                                                (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event'
+                                                (photos)='photos=$event' (airport)='airport=$event'
+                                                (CountryCodes)='CountryCodes=$event' id="autocomplete"
                                                 ng2-google-place-autocomplete>
                                             <!-- <input autocorrect="off" autocapitalize="off" spellcheck="off"
                                                 [(ngModel)]="restaurantModel && restaurantModel.address"
