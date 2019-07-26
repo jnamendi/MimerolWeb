@@ -207,7 +207,7 @@
             "DeliveryCosts": "Delivery costs",
             "MinimumOrderAmount": "Minimum order amount",
             "PaymentMethods": "Payment methods",
-            "FailCodePromotion": "This promotional code does not apply to your order",
+            "FailCodePromotion": "Your amount order needed to reach the minimum order value",
             "SuccessCodePromotion": "The promotional code has been applied"
         },
         "Links": {

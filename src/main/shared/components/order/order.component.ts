@@ -27,32 +27,34 @@ import { AppRestaurantModel } from '../../models/restaurant/app-restaurant.model
 })
 export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  private sub: Subscription;
   private selectedMenuItems: OrderItem = new OrderItem();
-  private totalItemsInBag: number;
   private orderModel: OrderModel = new OrderModel();
+  private userInfo: UserResponseModel = new UserResponseModel();
+  private voucher: VoucherModel = new VoucherModel();
+  private cityModels: CityModel[] = [];
+  private districtModels: DistrictModel[] = [];
+  private userAddressModels: AddressModel[] = [];
+  private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
+
+  private sub: Subscription;
+  private totalItemsInBag: number;
   private isEmptyOder: boolean;
   private restaurantId: number;
-  private userInfo: UserResponseModel = new UserResponseModel();
   private isAuthen: boolean;
   private message: string;
   private isError: boolean;
-  private voucher: VoucherModel = new VoucherModel();
   private deliveryTimes: Array<string> = [];
   private isResClose: boolean;
   private isFailApplyCodePromotion: boolean;
   private isSuccessApplyCodePromotion: boolean;
-  // private existingEmail: string;
   private paymentWiths = []
-  private cityModels: CityModel[] = [];
-  private districtModels: DistrictModel[] = [];
-  private userAddressModels: AddressModel[] = [];
+
   private city: string;
   private district: string;
   private googleAddress: string = '';
   private placeTimeout: any;
   private currentCountryCode: string;
-  private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
+  private currencySymbol: string = Configs.SpainCurrency.symbol;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -339,36 +341,28 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     }, (err: ApiError) => {
       this.clientState.isBusy = false;
-      // if (err.status == 2) {
-      //   this.existingEmail = this.orderModel.email;
-      // }
     });
   }
-
-  // onApplyVoucher = (isValid: boolean) => {
-  //   if (!isValid) {
-  //     return;
-  //   }
-  //   this.clientState.isBusy = true;
-
-  //   this.voucherService.getVoucherByCode(this.orderModel.voucher).subscribe(res => {
-  //     let voucher = <VoucherModel>{ ...res.content };
-  //     this.child.onCalculateTotalPrices(voucher.value);
-  //     this.clientState.isBusy = false;
-  //   }, (err: ApiError) => {
-  //     this.clientState.isBusy = false;
-  //   });
-  // }
 
   onApplyPromotion = (isValid: boolean) => {
     if (!isValid) {
       return;
     }
-    if( this.restaurantModel.promotionLineItems.length > 0 &&this.child.totalSubItemsPrice < this.restaurantModel.promotionLineItems[0].minOrder){
-        this.isFailApplyCodePromotion = true;
+
+    if (this.restaurantModel.promotionLineItems.length > 0 && this.child.totalSubItemsPrice < this.restaurantModel.promotionLineItems[0].minOrder) {
+      this.isFailApplyCodePromotion = true;
+      this.isSuccessApplyCodePromotion = false;
+      return;
+    } else {
+      this.isSuccessApplyCodePromotion = true;
+      this.isFailApplyCodePromotion = false;
+      let shoppingBags = document.getElementById("shoppingBags");
+      shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
+      setTimeout(() => {
         this.isSuccessApplyCodePromotion = false;
-        return;
+      }, 2000);
     }
+
     this.clientState.isBusy = true;
     this.voucherService.getPromotionByCode(this.orderModel.promotionCode, this.orderModel.restaurantId).subscribe(res => {
       let voucher = <PromotionModel>{ ...res.content };
@@ -380,10 +374,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isError = true;
       this.clientState.isBusy = false;
     });
-    this.isSuccessApplyCodePromotion = true;
-    this.isFailApplyCodePromotion = false;
-    let shoppingBags = document.getElementById("shoppingBags");
-    shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
+
+
   }
 
   onGoBack = () => {
@@ -394,7 +386,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (isConfirm) {
       this.router.navigate(['login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
     }
-    // this.existingEmail = "";
   }
 
   onCloseConfirm = (isConfirm: boolean) => {

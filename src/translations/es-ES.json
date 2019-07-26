@@ -206,7 +206,7 @@
             "DeliveryCosts": "Gastos de envío",
             "MinimumOrderAmount": "Cantidad de orden mínima",
             "PaymentMethods": "Métodos de pago",
-            "FailCodePromotion": "Este código promocional no se aplica a su pedido",
+            "FailCodePromotion": "Su orden de cantidad necesaria para alcanzar el valor mínimo de la orden",
             "SuccessCodePromotion": "Se ha aplicado el código promocional"
         },
         "Links": {
