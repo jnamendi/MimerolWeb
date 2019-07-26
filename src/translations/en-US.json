@@ -140,6 +140,7 @@
             "SingleChoice": "Single choice",
             "InProgress": "InProgress",
             "Deliveried": "Deliveried",
+            "Rejected": "Rejected",
             "Canceled": "Canceled",
             "Complete": "Complete",
             "Approve": "Approve",
@@ -205,7 +206,9 @@
             "DeliveryTimes": "Delivery times",
             "DeliveryCosts": "Delivery costs",
             "MinimumOrderAmount": "Minimum order amount",
-            "PaymentMethods": "Payment methods"
+            "PaymentMethods": "Payment methods",
+            "FailCodePromotion": "Your amount order needed to reach the minimum order value",
+            "SuccessCodePromotion": "The promotional code has been applied"
         },
         "Links": {
             "Title": "Links",
@@ -397,6 +400,10 @@
             "ManageYourRating": "Manage your rating",
             "CreateRating": "Create a rating"
         },
+        "Orders": {
+            "UpdateOrder": "Update order",
+            "ManageYourOrders": "Manage your orders"
+        },
         "Navs": {
             "AdminNavText": "Admin navigation",
             "Category": "Category",
@@ -409,7 +416,8 @@
             "Users": "Users",
             "Role": "Role",
             "Address": "Address",
-            "Promotion": "Promotion"
+            "Promotion": "Promotion",
+            "Orders": "Orders"
         }
     },
     "Owner": {

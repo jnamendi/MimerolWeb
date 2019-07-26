@@ -1,4 +1,5 @@
 @import "~styles/variables.scss";
+
 .main-content {
     background-color: #f2f2f2;
     padding-bottom: 0;
@@ -22,6 +23,7 @@
     float: right;
     cursor: pointer;
     margin-top: 12px;
+
     .nav-icon {
         width: 18px;
         height: 18px;
@@ -30,6 +32,7 @@
         cursor: pointer;
         position: relative;
         top: 5px;
+
         span {
             display: block;
             position: absolute;
@@ -41,21 +44,26 @@
             transform: rotate(0deg);
         }
     }
+
     .filter-icon {
         float: left;
         margin-right: 15px;
         top: 2px;
         width: 16px;
+
         span {
             background: #e5620a;
             transform-origin: left center;
+
             &:nth-child(1) {
                 top: 0px;
             }
+
             &:nth-child(2) {
                 width: 8px;
                 top: 6px;
             }
+
             &:nth-child(3) {
                 width: 12px;
                 top: 12px;
@@ -66,6 +74,7 @@
 
 .price-range {
     margin-top: 25px;
+
     p span {
         color: #e5620a;
         font-size: 14px;
@@ -77,6 +86,7 @@
     float: left;
     margin: 15px 0;
     position: relative;
+
     .promotion {
         position: absolute;
         right: 10px;
@@ -86,6 +96,7 @@
         width: 75px;
         height: 75px;
         text-align: right;
+
         span {
             font-size: 12px;
             font-weight: bold;
@@ -103,6 +114,7 @@
             position: absolute;
             top: 19px;
             right: -21px;
+
             &::before {
                 content: "";
                 position: absolute;
@@ -114,6 +126,7 @@
                 border-bottom: 3px solid transparent;
                 border-top: 3px solid #de5a02;
             }
+
             &::after {
                 content: "";
                 position: absolute;
@@ -127,6 +140,7 @@
             }
         }
     }
+
     .closed {
         position: absolute;
         left: 10px;
@@ -136,6 +150,7 @@
         width: 75px;
         height: 75px;
         text-align: right;
+
         span {
             font-size: 12px;
             font-weight: bold;
@@ -153,6 +168,7 @@
             position: absolute;
             top: 19px;
             left: -21px;
+
             &::before {
                 content: "";
                 position: absolute;
@@ -164,6 +180,7 @@
                 border-bottom: 3px solid transparent;
                 border-top: 3px solid #8F0808;
             }
+
             &::after {
                 content: "";
                 position: absolute;
@@ -177,21 +194,25 @@
             }
         }
     }
+
     .product-item {
         border: 1px solid #eee;
         padding: 15px;
         background: #fff;
         height: 452px;
     }
+
     .product-item-link {
         color: #333;
         font-size: 14px;
         line-height: 18px;
         font-weight: 500;
+
         &:hover {
             color: #e5620a;
         }
     }
+
     .reviews-actions {
         font-size: 13px;
         line-height: 10px;
@@ -200,22 +221,27 @@
         color: #adadad;
         display: inline-block;
     }
+
     .product-reviews-summary {
         margin: 10px 0 0;
     }
+
     .product-item-description {
         margin: 11px 0 6px;
         color: #777;
         font-size: 12px;
         line-height: 20px;
     }
+
     .product-info {
         margin-top: 15px;
         padding-top: 15px;
         border-top: 1px solid #eee;
+
         p {
             clear: both;
             font-size: 13px;
+
             span {
                 min-width: 115px;
                 float: left;
@@ -237,6 +263,7 @@
     display: inline-block;
     width: 100%;
     z-index: 3 !important;
+
     .sort {
         p {
             font-size: 11px;
@@ -255,6 +282,7 @@
 
 .rating_user {
     margin-bottom: 5px;
+
     span {
         &::before {
             margin-right: 4px;
@@ -267,6 +295,7 @@
             -moz-user-select: none;
             user-select: none;
         }
+
         &.grey::before {
             color: #ccc;
         }
@@ -276,5 +305,32 @@
 .overlay {
     &.is-open {
         z-index: 7;
+    }
+}
+
+.rating-box {
+    position: relative;
+    vertical-align: middle;
+    font-size: 12px;
+    font-family: FontAwesome;
+    display: inline-block;
+    color: #777;
+    margin-top: -2px;
+
+    &:before {
+        content: "\f006 \f006 \f006 \f006 \f006";
+    }
+
+    .rating {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #FFC107;
+
+        &:before {
+            content: "\f005 \f005 \f005 \f005 \f005";
+        }
     }
 }

@@ -140,6 +140,7 @@
             "SingleChoice": "Elección simple",
             "InProgress": "En progreso",
             "Delivered": "Entregado",
+            "Rejected": "Rechazado",
             "Canceled": "Cancelado",
             "Complete": "Completar",
             "Approve": "Aprobar",
@@ -199,13 +200,14 @@
             "FRI": "Viernes",
             "SAT": "Sábado",
             "SUN": "Domingo",
-            "Info": "Información",
             "Close": "Cerrar",
             "Open": "Abierto",
             "DeliveryTimes": "Tiempos de entrega",
             "DeliveryCosts": "Gastos de envío",
             "MinimumOrderAmount": "Cantidad de orden mínima",
-            "PaymentMethods": "Métodos de pago"
+            "PaymentMethods": "Métodos de pago",
+            "FailCodePromotion": "Su orden de cantidad necesaria para alcanzar el valor mínimo de la orden",
+            "SuccessCodePromotion": "Se ha aplicado el código promocional"
         },
         "Links": {
             "Title": "Enlaces",
@@ -397,6 +399,10 @@
             "ManageYourRating": "Administre su calificación",
             "CreateRating": "Crear una calificación"
         },
+        "Orders": {
+            "UpdateOrder": "Orden de actualización",
+            "ManageYourOrders": "Gestiona tus pedidos"
+        },
         "Navs": {
             "AdminNavText": "Navegación de administrador",
             "Category": "Categoría",
@@ -409,7 +415,8 @@
             "Users": "Usuarios",
             "Role": "Papel",
             "Address": "Dirección",
-            "Promotion": "Promoción"
+            "Promotion": "Promoción",
+            "Orders": "Pedidos"
         }
     },
     "Owner": {

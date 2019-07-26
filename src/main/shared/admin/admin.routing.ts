@@ -36,7 +36,8 @@ import {
   AdminMenuItemDetailComponent,
   AdminPromotionComponent,
   AdminPromotionCreationComponent,
-  AdminPromotionDetailComponent
+  AdminPromotionDetailComponent,
+  AdminOrdersComponent
 } from "./components";
 
 import {
@@ -82,6 +83,7 @@ const routes: Routes = [
       { path: 'promotion', component: AdminPromotionComponent },
       { path: 'promotion/new', component: AdminPromotionCreationComponent },
       { path: 'promotion/:id', component: AdminPromotionDetailComponent },
+      { path: 'orders', component: AdminOrdersComponent },
     ]
   },
 ];

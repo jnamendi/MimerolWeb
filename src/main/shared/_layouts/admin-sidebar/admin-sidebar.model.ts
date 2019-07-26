@@ -58,6 +58,18 @@ export const adminNavItems: AdminNavItem[] = [
                 ],
             },
             {
+                'id': 'orders',
+                'translateKey': 'Admin.Navs.Orders',
+                'title': 'Orders',
+                'icon': 'fa fa-shopping-cart',
+                'subIcon': '',
+                'type': 'nav-parent',
+                'url': 'orders',
+                'isActive': false,
+                'children': [
+                ],
+            },
+            {
                 'id': 'comments',
                 'translateKey': 'Admin.Navs.Comments',
                 'title': 'Comments',

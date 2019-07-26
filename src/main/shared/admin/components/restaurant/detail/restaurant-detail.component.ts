@@ -5,8 +5,8 @@ import { Language } from '../../../../models/langvm.model';
 import { ClientState } from '../../../../state';
 import { ApiError } from '../../../../services/api-response/api-response';
 import { Address } from 'cluster';
-import { CategoryAdminModel, CategoryViewModel, CategoryModule } from '../../../../models/category/admin-category.model';
-import { UserAdminModel, UserViewModel, UserModule } from '../../../../models/user/admin-user.model';
+import { CategoryAdminModel } from '../../../../models/category/admin-category.model';
+import { UserAdminModel } from '../../../../models/user/admin-user.model';
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
 import { CategoryAdminService } from '../../../../services/api/category/admin-category.service';
@@ -40,16 +40,10 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     private googleAddressLine1: string = '';
     private googleAddressLine2: string = '';
     private fileUpload: File = null;
+
     private categoryAdminModels: CategoryAdminModel[] = [];
-    private categoryViewModels: CategoryViewModel[] = [];
-    private categorySearchResults: CategoryViewModel[] = [];
-    private categoryIdsSelected: Array<number> = [];
     private userAdminModels: UserAdminModel[] = [];
-    private userViewModels: UserViewModel[] = []
-    private userSearchResults: UserViewModel[] = [];
-    private userIdsSelected: Array<number> = [];
-    private longTitude: number;
-    private latTitude: number;
+
     public currentPosition: LatLongModel;
     private currentCountryCode: string = JwtTokenHelper.countryCode;
     private isFirstLoad: boolean = true;
@@ -283,7 +277,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
         })
     }
 
-
     onChangeAddress = () => {
         this.restaurantModel.latitude = null;
         this.restaurantModel.longitude = null;
@@ -317,15 +310,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             } else {
                 this.categoryAdminModels = <CategoryAdminModel[]>[...res.content];
             }
-
-            if (this.categoryAdminModels && this.categoryAdminModels.length > 0) {
-                this.categoryViewModels = this.categoryAdminModels.map(category => {
-                    return CategoryModule.toViewModel(category);
-                });
-                if (this.categoryViewModels && this.categoryViewModels.length > 0) {
-                    this.categorySearchResults = this.categoryViewModels;
-                }
-            }
         }, (err: ApiError) => {
             if (err.status == 8) {
                 this.userAdminModels = [];
@@ -334,25 +318,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             this.isError = true;
             this.clientState.isBusy = false;
         });
-    }
-
-    filterCategoriesMultiple(event) {
-        let query = event.query;
-        this.categorySearchResults = this.categoryViewModels.filter(
-            category => category.categoryName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectCategory = (event: CategoryViewModel) => {
-        if (!this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected.push(event.categoryId);
-        }
-    }
-
-    onUnSelectCategory = (event: CategoryViewModel) => {
-        if (this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected = this.categoryIdsSelected.filter(i => i != event.categoryId);
-        }
     }
 
     //---Multiple select user
@@ -364,14 +329,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             } else {
                 this.userAdminModels = <UserAdminModel[]>[...res.content]
             }
-            if (this.userAdminModels && this.userAdminModels.length > 0) {
-                this.userViewModels = this.userAdminModels.map(user => {
-                    return UserModule.toViewModel(user);
-                });
-                if (this.userViewModels && this.userViewModels.length > 0) {
-                    this.userSearchResults = this.userViewModels;
-                }
-            }
         }, (err: ApiError) => {
             if (err.status == 8) {
                 this.userAdminModels = [];
@@ -380,25 +337,6 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             this.isError = true;
             this.clientState.isBusy = false;
         });
-    }
-
-    filterUsersMultiple(event) {
-        let query = event.query;
-        this.userSearchResults = this.userViewModels.filter(
-            user => user.userName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectUser = (event: UserViewModel) => {
-        if (!this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected.push(event.userId);
-        }
-    }
-
-    onUnSelectUser = (event: UserViewModel) => {
-        if (this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected = this.userIdsSelected.filter(i => i != event.userId);
-        }
     }
 
     detectFiles(event: any) {

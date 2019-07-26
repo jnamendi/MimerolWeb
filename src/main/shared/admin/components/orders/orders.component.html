@@ -1,4 +1,4 @@
-<div class="owner-main-content">
+<div class="admin-main-content form-main">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 header">
@@ -10,7 +10,7 @@
             <div class="col-xs-12">
                 <div class="box box-warning">
                     <div class="box-header">
-                        <h3 class="box-title" [innerHTML]="'Owner.Orders.ManageYourOrders' | translate"></h3>
+                        <h3 class="box-title" [innerHTML]="'Admin.Orders.ManageYourOrders' | translate"></h3>
                     </div>
                     <div class="box-body">
                         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
@@ -46,7 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of ownerOrderModels; let i = index;">
+                                <tr *ngFor="let item of adminOrderModels; let i = index;">
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>
                                         <a (click)="onGetOrderDetail(item.orderId,item.orderCode)"
@@ -73,7 +73,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span
-                                            [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span>
+                                            [ngClass]="styleClass(item && item.status)">{{adminOrderStatus[item && item.status]}}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -85,5 +85,5 @@
     </div>
 </div>
 
-<owner-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isUpdation" [visible]="isUpdation"
-    (onSuccess)="onSuccess($event)" [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></owner-orders-detail>
+<admin-orders-detail *ngIf="selectedOrderId && selectedOrderCode && isUpdation" [visible]="isUpdation"
+    (onSuccess)="onSuccess($event)" [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></admin-orders-detail>

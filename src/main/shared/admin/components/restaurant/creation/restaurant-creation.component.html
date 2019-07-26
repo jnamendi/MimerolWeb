@@ -10,7 +10,8 @@
                     {{message}}
                 </h2>
                 <a [routerLink]="['..']" routerLinkActive="active" class="landing">
-                    <span class="btn btn-default btn-primary" [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
+                    <span class="btn btn-default btn-primary"
+                        [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
                 </a>
             </div>
 
@@ -21,47 +22,75 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.RestaurantNameRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.RestaurantNameRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="restaurantName" [(ngModel)]="restaurantModel.restaurantName" #restaurantName="ngModel"
+                                            <input type="text" class="form-control" name="restaurantName"
+                                                [(ngModel)]="restaurantModel.restaurantName" #restaurantName="ngModel"
                                                 required />
-                                            <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)" class="error">
-                                                <div *ngIf="restaurantName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="restaurantName.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.CategoryRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.CategoryRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel.categoryIds" [suggestions]="categorySearchResults" (completeMethod)="filterCategoriesMultiple($event)"
-                                                name="categoryName" field="categoryName" [multiple]="true" required #categoryName="ngModel">
-                                            </p-autoComplete>
-                                            <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)" class="error">
-                                                <div *ngIf="categoryName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <!-- <p-autoComplete [(ngModel)]="restaurantModel.categoryIds"
+                                                [suggestions]="categorySearchResults"
+                                                (completeMethod)="filterCategoriesMultiple($event)" name="categoryName"
+                                                field="categoryName" [multiple]="true" required #categoryName="ngModel">
+                                            </p-autoComplete> -->
+                                            <ng-select name="categoryName" [items]="categoryAdminModels"
+                                                bindValue="categoryId" bindLabel="categoryName" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.categoryIds" #categoryName="ngModel"
+                                                placeholder="Select category name">
+                                            </ng-select>
+                                            <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="categoryName.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.OwnerRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.OwnerRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel.userIds" [suggestions]="userSearchResults" (completeMethod)="filterUsersMultiple($event)"
-                                                name="userName" dataKey="userId" (onSelect)="onSelectUser($event)" (onUnselect)="onUnSelectUser($event)"
-                                                field="aliasName" [multiple]="true" required #userName="ngModel">
-                                            </p-autoComplete>
-                                            <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)" class="error">
-                                                <div *ngIf="userName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <!-- <p-autoComplete [(ngModel)]="restaurantModel.userIds"
+                                                [suggestions]="userSearchResults"
+                                                (completeMethod)="filterUsersMultiple($event)" name="userName"
+                                                dataKey="userId" (onSelect)="onSelectUser($event)"
+                                                (onUnselect)="onUnSelectUser($event)" field="aliasName"
+                                                [multiple]="true" required #userName="ngModel">
+                                            </p-autoComplete> -->
+                                            <ng-select name="userName" [items]="userAdminModels"
+                                                bindValue="userId" bindLabel="userName" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.userIds" #userName="ngModel"
+                                                placeholder="Select user">
+                                            </ng-select>
+                                            <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="userName.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.ImageRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.ImageRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="file" name="upimage" id="upimage" (change)="detectFiles($event)" accept=".png,.jpg" required />
+                                            <input type="file" name="upimage" id="upimage"
+                                                (change)="detectFiles($event)" accept=".png,.jpg" required />
                                             <div *ngIf="f.submitted" class="error">
-                                                <div *ngIf="!imgUrl" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="!imgUrl"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                             <div class="preview-img">
                                                 <img *ngIf="imgUrl" src="{{imgUrl}}" width="200">
@@ -70,15 +99,17 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Slogan' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Slogan' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="restaurantSlogan" [(ngModel)]="restaurantModel.slogan" #restaurantSlogan="ngModel"
-                                            />
+                                            <input type="text" class="form-control" name="restaurantSlogan"
+                                                [(ngModel)]="restaurantModel.slogan" #restaurantSlogan="ngModel" />
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
                                             <!-- <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
                                                         types: ['address'],
@@ -87,14 +118,20 @@
                                                 (country)='country=$event' (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)' (lng)='onGetLongtitude($event)' (adr_address)='onGetAddressLine1($event)' (name)='name=$event' (place_id)='place_id=$event'
                                                 (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event' (CountryCodes)='CountryCodes=$event' id="autocomplete"
                                                 ng2-google-place-autocomplete> -->
-                                            <input autocorrect="off" autocapitalize="off" spellcheck="off" [(ngModel)]="restaurantModel.address" name="addressLine1"
-                                                (blur)="onBlurSearch()" (focus)="onFocusSearch()" (ngModelChange)="onChangeAddress()"
-                                                #addressLine1="ngModel" required type="text" class="form-control" #searchControl
+                                            <input autocorrect="off" autocapitalize="off" spellcheck="off"
+                                                [(ngModel)]="restaurantModel.address" name="addressLine1"
+                                                (blur)="onBlurSearch()" (focus)="onFocusSearch()"
+                                                (ngModelChange)="onChangeAddress()" #addressLine1="ngModel" required
+                                                type="text" class="form-control" #searchControl
                                                 style="margin-bottom: 5px;" />
-                                            <div *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched || f.submitted)" class="error">
-                                                <div *ngIf="addressLine1.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="addressLine1.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
-                                            <div *ngIf="isSearchAddressError" [innerHTML]="'Commons.Error.ErrorSearchAddress' | translate" class="error"></div>
+                                            <div *ngIf="isSearchAddressError"
+                                                [innerHTML]="'Commons.Error.ErrorSearchAddress' | translate"
+                                                class="error"></div>
                                             <!-- <agm-map #agmMap *ngIf="currentPosition" [zoom]="zoom" [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
                                                 <agm-marker [markerClickable]="true" [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
                                             </agm-map> -->
@@ -102,157 +139,605 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.AddressDescRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.AddressDescRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <textarea name="addressDesc" class="form-control" inputFocus [(ngModel)]="restaurantModel.addressDesc" inputFocus rows="5" required
+                                            <textarea name="addressDesc" class="form-control" inputFocus
+                                                [(ngModel)]="restaurantModel.addressDesc" inputFocus rows="5" required
                                                 #addressDesc="ngModel"></textarea>
-                                            <div *ngIf="addressDesc.invalid && (addressDesc.dirty || addressDesc.touched || f.submitted)" class="error">
-                                                <div *ngIf="addressDesc.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="addressDesc.invalid && (addressDesc.dirty || addressDesc.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="addressDesc.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <select name="city" inputFocus [(ngModel)]="restaurantModel.cityId" (change)="onGetDistrictByCity(restaurantModel.cityId)"
-                                                #city="ngModel" class="form-control" required>
+                                            <select name="city" inputFocus [(ngModel)]="restaurantModel.cityId"
+                                                (change)="onGetDistrictByCity(restaurantModel.cityId)" #city="ngModel"
+                                                class="form-control" required>
                                                 <option [ngValue]="null" disabled>Select city</option>
-                                                <option *ngFor="let item of cityModels" [value]="item.cityId">{{item.name}}</option>
+                                                <option *ngFor="let item of cityModels" [value]="item.cityId">
+                                                    {{item.name}}</option>
                                             </select>
-                                            <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)" class="error">
-                                                <div *ngIf="city.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="city.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <select name="district" inputFocus [(ngModel)]="restaurantModel.districtId" #district="ngModel" class="form-control" required>
+                                            <select name="district" inputFocus [(ngModel)]="restaurantModel.districtId"
+                                                #district="ngModel" class="form-control" required>
                                                 <option [ngValue]="null" disabled>Select district</option>
-                                                <option *ngFor="let item of districtModels" [value]="item.districtId">{{item.name}}</option>
+                                                <option *ngFor="let item of districtModels" [value]="item.districtId">
+                                                    {{item.name}}</option>
                                             </select>
-                                            <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)" class="error">
-                                                <div *ngIf="district.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="district.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control" name="latitude" [(ngModel)]="restaurantModel.latitude"
-                                                (keyup)="onGetAddressFromLatLng($event.target.value, restaurantModel.longitude, true)"
-                                            />
+                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
+                                                name="latitude" [(ngModel)]="restaurantModel.latitude"
+                                                (keyup)="onGetAddressFromLatLng($event.target.value, restaurantModel.longitude, true)" />
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control" name="longitude" [(ngModel)]="restaurantModel.longitude"
-                                                (keyup)="onGetAddressFromLatLng(restaurantModel.latitude, $event.target.value, false)"
-                                            />
+                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
+                                                name="longitude" [(ngModel)]="restaurantModel.longitude"
+                                                (keyup)="onGetAddressFromLatLng(restaurantModel.latitude, $event.target.value, false)" />
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.OpenTimeRequired' | translate"></label>
+                                    <!-- Open - Close time -->
+
+                                    <!-- Monday -->
+                                    <label>Monday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'MON'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('MON')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'MON' && extra.restaurantWorkTimeId != 0">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tuesday -->
+                                    <label>Tuesday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'TUE'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('TUE')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'TUE' && extra.restaurantWorkTimeId != 1">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Wednesday -->
+                                    <label>Wednesday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'WED'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('WED')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'WED' && extra.restaurantWorkTimeId != 2">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Thursday -->
+                                    <label>Thursday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'THU'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('THU')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'THU' && extra.restaurantWorkTimeId != 3">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Friday -->
+                                    <label>Friday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'FRI'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('FRI')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'FRI' && extra.restaurantWorkTimeId != 4">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Saturday -->
+                                    <label>Saturday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'SAT'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('SAT')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'SAT' && extra.restaurantWorkTimeId != 5">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sunday -->
+                                    <label>Sunday</label>
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'SUN'">
+                                            <label class="col-md-4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('SUN')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'SUN' && extra.restaurantWorkTimeId != 6">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End -->
+
+                                    <!-- <div class="row form-group">
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.OpenTimeRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="time" comparison="lesser" timeComparison="closeTime" atp-time-picker name="openTime" class="form-control" [(ngModel)]="restaurantModel.openTime"
-                                                #openTime="ngModel" required />
-                                            <div *ngIf="openTime.invalid && (openTime.dirty || openTime.touched || f.submitted)" class="error">
-                                                <div *ngIf="openTime.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
-                                                <div *ngIf="openTime.errors?.timeInValid" [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                            <input type="time" comparison="lesser" timeComparison="closeTime"
+                                                atp-time-picker name="openTime" class="form-control"
+                                                [(ngModel)]="restaurantModel.openTime" #openTime="ngModel" required />
+                                            <div *ngIf="openTime.invalid && (openTime.dirty || openTime.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="openTime.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="openTime.errors?.timeInValid"
+                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.CloseTimeRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.CloseTimeRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="time" comparison="greater" timeComparison="openTime" atp-time-picker name="closeTime" class="form-control" [(ngModel)]="restaurantModel.closeTime"
-                                                #closeTime="ngModel" required />
-                                            <div *ngIf="closeTime.invalid && (closeTime.dirty || closeTime.touched || f.submitted)" class="error">
-                                                <div *ngIf="closeTime.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
-                                                <div *ngIf="closeTime.errors?.timeInValid" [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                            <input type="time" comparison="greater" timeComparison="openTime"
+                                                atp-time-picker name="closeTime" class="form-control"
+                                                [(ngModel)]="restaurantModel.closeTime" #closeTime="ngModel" required />
+                                            <div *ngIf="closeTime.invalid && (closeTime.dirty || closeTime.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="closeTime.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                <div *ngIf="closeTime.errors?.timeInValid"
+                                                    [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Phone1' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Phone1' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="tel" class="form-control" name="phone1" [(ngModel)]="restaurantModel.phone1" #phone1="ngModel" />
+                                            <input type="tel" class="form-control" name="phone1"
+                                                [(ngModel)]="restaurantModel.phone1" #phone1="ngModel" />
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Phone2' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Phone2' | translate"></label>
                                         <div class="col-md-8">
-                                            <input type="tel" class="form-control" name="phone2" [(ngModel)]="restaurantModel.phone2" #phone2="ngModel" />
+                                            <input type="tel" class="form-control" name="phone2"
+                                                [(ngModel)]="restaurantModel.phone2" #phone2="ngModel" />
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.MinPriceRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.MinPriceRequired' | translate"></label>
                                         <div class="col-md-6">
-                                            <input type="number" min="0" class="form-control" name="minPrice" [(ngModel)]="restaurantModel.minPrice" #minPrice="ngModel"
-                                                required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            />
-                                            <div *ngIf="minPrice.invalid && (minPrice.dirty || minPrice.touched || f.submitted)" class="error">
-                                                <div *ngIf="minPrice.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <input type="number" min="0" class="form-control" name="minPrice"
+                                                [(ngModel)]="restaurantModel.minPrice" #minPrice="ngModel" required
+                                                onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                            <div *ngIf="minPrice.invalid && (minPrice.dirty || minPrice.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="minPrice.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.DeliveryCostRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.DeliveryCostRequired' | translate"></label>
                                         <div class="col-md-6">
-                                            <input type="number" min="0" class="form-control" name="deliveryCost" [(ngModel)]="restaurantModel.deliveryCost" #deliveryCost="ngModel"
-                                                required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            />
-                                            <div *ngIf="deliveryCost.invalid && (deliveryCost.dirty || deliveryCost.touched || f.submitted)" class="error">
-                                                <div *ngIf="deliveryCost.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <input type="number" min="0" class="form-control" name="deliveryCost"
+                                                [(ngModel)]="restaurantModel.deliveryCost" #deliveryCost="ngModel"
+                                                required
+                                                onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                            <div *ngIf="deliveryCost.invalid && (deliveryCost.dirty || deliveryCost.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="deliveryCost.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.EstimateTimeRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.EstimateTimeRequired' | translate"></label>
                                         <div class="col-md-6">
-                                            <input type="number" min="0" class="form-control" name="estDeliveryTime" [(ngModel)]="restaurantModel.estDeliveryTime" #estDeliveryTime="ngModel"
-                                                required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            />
-                                            <div *ngIf="estDeliveryTime.invalid && (estDeliveryTime.dirty || estDeliveryTime.touched || f.submitted)" class="error">
-                                                <div *ngIf="estDeliveryTime.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            <input type="number" min="0" class="form-control" name="estDeliveryTime"
+                                                [(ngModel)]="restaurantModel.estDeliveryTime" #estDeliveryTime="ngModel"
+                                                required
+                                                onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                            <div *ngIf="estDeliveryTime.invalid && (estDeliveryTime.dirty || estDeliveryTime.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="estDeliveryTime.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Status' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Status' | translate"></label>
                                         <div class="col-md-8">
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" [value]="1" name="status" [(ngModel)]="restaurantModel.status">Active</label>
+                                                    <input type="radio" [value]="1" name="status"
+                                                        [(ngModel)]="restaurantModel.status">Active</label>
                                                 <label>
-                                                    <input type="radio" [value]="0" name="status" [(ngModel)]="restaurantModel.status">InActive</label>
+                                                    <input type="radio" [value]="0" name="status"
+                                                        [(ngModel)]="restaurantModel.status">InActive</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.DescriptionRequired' | translate"></label>
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.DescriptionRequired' | translate"></label>
                                         <div class="col-md-8">
                                             <p-tabView>
-                                                <p-tabPanel *ngFor="let lang of restaurantModel.languageLst; let i = index;" [selected]="i==0" header="{{lang.name}}">
-                                                    <div class="form-group col-xs-12" *ngFor="let feild of lang.contentDef; let k = index;">
-                                                        <textarea class="form-control" #description="ngModel" id="{{feild.code}}{{i}}{{k}}" name="{{feild.code}}{{i}}{{k}}" [(ngModel)]="feild.value"
+                                                <p-tabPanel
+                                                    *ngFor="let lang of restaurantModel.languageLst; let i = index;"
+                                                    [selected]="i==0" header="{{lang.name}}">
+                                                    <div class="form-group col-xs-12"
+                                                        *ngFor="let feild of lang.contentDef; let k = index;">
+                                                        <textarea class="form-control" #description="ngModel"
+                                                            id="{{feild.code}}{{i}}{{k}}"
+                                                            name="{{feild.code}}{{i}}{{k}}" [(ngModel)]="feild.value"
                                                             required></textarea>
-                                                        <div *ngIf="description.invalid && (description.dirty || description.touched || f.submitted)" class="error">
-                                                            <div *ngIf="description.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                        <div *ngIf="description.invalid && (description.dirty || description.touched || f.submitted)"
+                                                            class="error">
+                                                            <div *ngIf="description.errors?.required"
+                                                                [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </p-tabPanel>
@@ -282,8 +767,10 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" [disabled]="clientState.isBusy" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
-                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger {{clientState.isBusy ? 'link-disabled':''}}"
+                            <button type="submit" [disabled]="clientState.isBusy" class="btn btn-default btn-primary"
+                                [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active"
+                                class="btn btn-default btn-danger {{clientState.isBusy ? 'link-disabled':''}}"
                                 [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
                         </div>
                     </form>

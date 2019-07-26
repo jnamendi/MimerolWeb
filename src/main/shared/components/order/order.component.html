@@ -93,8 +93,7 @@
                                         (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
                                         id="autocomplete" ng2-google-place-autocomplete />
                                     <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
-                                    <div *ngIf="address.invalid && (address.touched || f.submitted)"
-                                        class="error">
+                                    <div *ngIf="address.invalid && (address.touched || f.submitted)" class="error">
                                         <div *ngIf="address.errors?.required"
                                             [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                     </div>
@@ -239,6 +238,14 @@
                                             <button type="submit"
                                                 [innerHTML]="'Commons.Texts.Apply' | translate"></button>
                                         </form>
+                                    </div>
+                                    <div class="promotion-fail" *ngIf="isFailApplyCodePromotion">
+                                        <span [innerHTML]="'Commons.Texts.FailCodePromotion' | translate"></span>
+                                        <span> {{restaurantModel.promotionLineItems[0].minOrder}}
+                                            {{currencySymbol}}</span>
+                                    </div>
+                                    <div class="promotion-success" *ngIf="isSuccessApplyCodePromotion">
+                                        <span [innerHTML]="'Commons.Texts.SuccessCodePromotion' | translate"></span>
                                     </div>
                                     <div class="btn_checkout">
                                         <a class="button-secondary pull-left" (click)="onGoBack()"

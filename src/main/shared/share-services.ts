@@ -1,4 +1,3 @@
-
 import {
     //--App
     HttpService,
@@ -37,6 +36,7 @@ import {
     RatingAdminService,
     MenuItemAdminService,
     PromotionAdminService,
+    OrderAdminService,
     //--Owner
     MenuOwnerService,
     MenuItemOwnerService,
@@ -93,6 +93,7 @@ export const SharedServices = [
     RatingAdminService,
     MenuItemAdminService,
     PromotionAdminService,
+    OrderAdminService,
     //---Owner
     MenuOwnerService,
     MenuItemOwnerService,
