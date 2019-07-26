@@ -140,6 +140,7 @@
             "SingleChoice": "Single choice",
             "InProgress": "InProgress",
             "Deliveried": "Deliveried",
+            "Rejected": "Rejected",
             "Canceled": "Canceled",
             "Complete": "Complete",
             "Approve": "Approve",
