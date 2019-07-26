@@ -24,6 +24,7 @@ export class RestaurantAdminModel extends BaseModel {
     longitude: number;
     openTime?: string;
     closeTime?: string;
+    restaurantWorkTimeModels?: Array<RestaurantWorkTimeModels> = [];
     paymentProviderLst?: any;
     mediaId?: number;
     languageLst?: LanguageList[];
@@ -34,6 +35,14 @@ export class RestaurantAdminModel extends BaseModel {
     estDeliveryTime?: number;
     file?: File;
     addressDesc: string;
+}
+
+export class RestaurantWorkTimeModels {
+    restaurantWorkTimeId?: number;
+    restaurantId?: number;
+    weekDay?: string;
+    openTime?: string;
+    closeTime?: string;
 }
 
 export enum RestaurantStatus {

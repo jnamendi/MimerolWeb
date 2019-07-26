@@ -39,19 +39,3 @@ export enum UserRole {
     Owner = 1,
     Guest = 2,
 }
-
-export class UserViewModel {
-    userId: number;
-    userName: string;
-    aliasName: string;
-}
-
-export module UserModule {
-    export function toViewModel(user: UserAdminModel): UserViewModel {
-        return <UserViewModel>{
-            userId: user.userId,
-            userName: user.userName,
-            aliasName: user.aliasName
-        };
-    }
-}
