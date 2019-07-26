@@ -49,7 +49,7 @@
                                 <tr *ngFor="let item of ownerOrderModels; let i = index;">
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>
-                                        <a (click)="onUpdateOrder(item.orderId,item.orderCode)"
+                                        <a (click)="onGetOrderDetail(item.orderId,item.orderCode)"
                                             routerLinkActive="active">
                                             <span>{{item && item.orderCode}}</span>
                                         </a>

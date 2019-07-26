@@ -134,6 +134,7 @@ export class ApiUrl {
     public static OrderGetByRestaurantAndStatus = ApiUrl.BaseUrl + "api/order/get-by-restaurant";
     public static OrderUpdate = ApiUrl.BaseUrl + "admin/order/update-order-to";
     public static OrderGetByOwner = ApiUrl.BaseUrl + "api/order/get-by-owner";
+    public static OrderGetAllOrder = ApiUrl.BaseUrl + "admin/order/get-all-order";
 
     // User Info
     public static UserInfoCreate = ApiUrl.BaseUrl + "admin/user-info/save";

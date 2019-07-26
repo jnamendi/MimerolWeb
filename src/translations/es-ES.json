@@ -398,6 +398,9 @@
             "ManageYourRating": "Administre su calificación",
             "CreateRating": "Crear una calificación"
         },
+        "Orders": {
+            "ManageYourOrders": "Gestiona tus pedidos"
+        },
         "Navs": {
             "AdminNavText": "Navegación de administrador",
             "Category": "Categoría",
@@ -410,7 +413,8 @@
             "Users": "Usuarios",
             "Role": "Papel",
             "Address": "Dirección",
-            "Promotion": "Promoción"
+            "Promotion": "Promoción",
+            "Orders": "Pedidos"
         }
     },
     "Owner": {
