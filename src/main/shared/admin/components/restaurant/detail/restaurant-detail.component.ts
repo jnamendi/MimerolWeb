@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule } from '../../../../models/restaurant/admin-restaurant.model';
+import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels } from '../../../../models/restaurant/admin-restaurant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Language } from '../../../../models/langvm.model';
 import { ClientState } from '../../../../state';
@@ -417,5 +417,24 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
+    }
+
+    onAddMoreExtraItem = (weekDay: string) => {
+        this.restaurantModel.restaurantWorkTimeModels.push(
+            <RestaurantWorkTimeModels>{
+                restaurantWorkTimeId: !this.restaurantModel.restaurantWorkTimeModels.length ? 1 : Math.max.apply(Math, this.restaurantModel.restaurantWorkTimeModels.map(function (o) {
+                    return o && o.restaurantWorkTimeId || 0;
+                })) + 1,
+                weekDay: weekDay
+            }
+        )
+    }
+
+    onRemoveExtraItem = (menuExtra: RestaurantWorkTimeModels) => {
+        if (this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.length == 0) {
+            return;
+        }
+        let index = this.restaurantModel.restaurantWorkTimeModels.findIndex(e => e == menuExtra);
+        this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.splice(index, 1);
     }
 }

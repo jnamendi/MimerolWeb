@@ -210,14 +210,15 @@
                                         </div>
                                     </div>
 
-                                    <!-- Open - Close time -->
+                                     <!-- Open - Close time -->
 
                                     <!-- Monday -->
-                                    <label>Monday</label>
+                                    <!-- <label>Monday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'MON'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 0">Monday</label>
+                                            <label class="col-md-4" *ngIf="i != 0"></label>
                                             <div class="col-md-3">
                                                 
                                                 <!-- Input open time -->
@@ -269,11 +270,12 @@
                                     </div>
 
                                     <!-- Tuesday -->
-                                    <label>Tuesday</label>
+                                    <!-- <label>Tuesday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'TUE'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 1">Tuesday</label>
+                                            <label class="col-md-4" *ngIf="i != 1"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -325,11 +327,12 @@
                                     </div>
 
                                     <!-- Wednesday -->
-                                    <label>Wednesday</label>
+                                    <!-- <label>Wednesday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'WED'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 2">Wednesday</label>
+                                            <label class="col-md-4" *ngIf="i != 2"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -381,11 +384,12 @@
                                     </div>
 
                                     <!-- Thursday -->
-                                    <label>Thursday</label>
+                                    <!-- <label>Thursday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'THU'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 3">Thursday</label>
+                                            <label class="col-md-4" *ngIf="i != 3"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -437,11 +441,12 @@
                                     </div>
 
                                     <!-- Friday -->
-                                    <label>Friday</label>
+                                    <!-- <label>Friday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'FRI'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 4">Friday</label>
+                                            <label class="col-md-4" *ngIf="i != 4"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -493,11 +498,12 @@
                                     </div>
 
                                     <!-- Saturday -->
-                                    <label>Saturday</label>
+                                    <!-- <label>Saturday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'SAT'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 5">Saturday</label>
+                                            <label class="col-md-4" *ngIf="i != 5"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -549,11 +555,12 @@
                                     </div>
 
                                     <!-- Sunday -->
-                                    <label>Sunday</label>
+                                    <!-- <label>Sunday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'SUN'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 6">Sunday</label>
+                                            <label class="col-md-4" *ngIf="i != 6"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->

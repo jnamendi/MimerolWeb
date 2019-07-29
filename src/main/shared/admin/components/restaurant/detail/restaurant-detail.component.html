@@ -217,11 +217,12 @@
                                     <!-- Open - Close time -->
 
                                     <!-- Monday -->
-                                    <label>Monday</label>
+                                    <!-- <label>Monday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'MON'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 0">Monday</label>
+                                            <label class="col-md-4" *ngIf="i != 0"></label>
                                             <div class="col-md-3">
                                                 
                                                 <!-- Input open time -->
@@ -267,17 +268,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'MON' && extra.restaurantWorkTimeId != 0">-</button>
+                                                    *ngIf="extra.weekDay == 'MON' && i != 0">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Tuesday -->
-                                    <label>Tuesday</label>
+                                    <!-- <label>Tuesday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'TUE'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 1">Tuesday</label>
+                                            <label class="col-md-4" *ngIf="i != 1"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -323,17 +325,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'TUE' && extra.restaurantWorkTimeId != 1">-</button>
+                                                    *ngIf="extra.weekDay == 'TUE' && i != 1">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Wednesday -->
-                                    <label>Wednesday</label>
+                                    <!-- <label>Wednesday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'WED'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 2">Wednesday</label>
+                                            <label class="col-md-4" *ngIf="i != 2"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -379,17 +382,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'WED' && extra.restaurantWorkTimeId != 2">-</button>
+                                                    *ngIf="extra.weekDay == 'WED' && i != 2">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Thursday -->
-                                    <label>Thursday</label>
+                                    <!-- <label>Thursday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'THU'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 3">Thursday</label>
+                                            <label class="col-md-4" *ngIf="i != 3"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -435,17 +439,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'THU' && extra.restaurantWorkTimeId != 3">-</button>
+                                                    *ngIf="extra.weekDay == 'THU' && i != 3">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Friday -->
-                                    <label>Friday</label>
+                                    <!-- <label>Friday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'FRI'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 4">Friday</label>
+                                            <label class="col-md-4" *ngIf="i != 4"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -491,17 +496,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'FRI' && extra.restaurantWorkTimeId != 4">-</button>
+                                                    *ngIf="extra.weekDay == 'FRI' && i != 4">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Saturday -->
-                                    <label>Saturday</label>
+                                    <!-- <label>Saturday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'SAT'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 5">Saturday</label>
+                                            <label class="col-md-4" *ngIf="i != 5"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -547,17 +553,18 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'SAT' && extra.restaurantWorkTimeId != 5">-</button>
+                                                    *ngIf="extra.weekDay == 'SAT' && i != 5">-</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Sunday -->
-                                    <label>Sunday</label>
+                                    <!-- <label>Sunday</label> -->
                                     <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
                                         class="menu-extra-item">
                                         <div class="row form-group" *ngIf="extra.weekDay == 'SUN'">
-                                            <label class="col-md-4"></label>
+                                            <label class="col-md-4" *ngIf="i == 6">Sunday</label>
+                                            <label class="col-md-4" *ngIf="i != 6"></label>
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
@@ -603,7 +610,7 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(extra)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="extra.weekDay == 'SUN' && extra.restaurantWorkTimeId != 6">-</button>
+                                                    *ngIf="extra.weekDay == 'SUN' && i != 6">-</button>
                                             </div>
                                         </div>
                                     </div>
