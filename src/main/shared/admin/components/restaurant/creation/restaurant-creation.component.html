@@ -219,7 +219,7 @@
                                         <div class="row form-group" *ngIf="extra.weekDay == 'MON'">
                                             <label class="col-md-4"></label>
                                             <div class="col-md-3">
-
+                                                
                                                 <!-- Input open time -->
                                                 <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
                                                     name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
@@ -227,7 +227,7 @@
                                                     #menuExtraItemNameOpen="ngModel" required />
 
                                                 <!-- Required open time -->
-                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.touched || f.submitted)"
                                                     class="error">
                                                     <div *ngIf="menuExtraItemNameOpen.errors?.required"
                                                         [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
@@ -245,15 +245,15 @@
                                                     required />
 
                                                 <!-- Required close time -->
-                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.touched || f.submitted)"
                                                     class="error">
                                                     <div *ngIf="menuExtraItemNameClose.errors?.required"
                                                         [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                                     <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
                                                         [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
 
-                                                    <div *ngIf="extra.openTime == extra.closeTime"
-                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                    <!-- <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div> -->
                                                 </div>
                                             </div>
 
