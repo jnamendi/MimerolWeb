@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels } from '../../../../models/restaurant/admin-restaurant.model';
+import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels,  } from '../../../../models/restaurant/admin-restaurant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Language } from '../../../../models/langvm.model';
 import { ClientState } from '../../../../state';
@@ -61,6 +61,8 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     private currentAddress: string;
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+
+    private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
 
     @ViewChild('searchControl') searchElementRef: ElementRef;
     @ViewChild('agmMap') agmMap: AgmMap;
@@ -270,6 +272,8 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
             this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
 
             this.clientState.isBusy = false;
+
+            this.onAutoCreateRestaurantWorkTimeId();
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
@@ -417,6 +421,29 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
+    }
+
+    onAutoCreateRestaurantWorkTimeId = () => {
+        if (this.restaurantModel.restaurantWorkTimeModels.length == 0) {
+            let max = 7, i = 0;
+            while (i < max) {
+                let weekDay = "";
+                if (i == 0) weekDay = "MON";
+                else if (i == 1) weekDay = "TUE";
+                else if (i == 2) weekDay = "WED";
+                else if (i == 3) weekDay = "THU";
+                else if (i == 4) weekDay = "FRI";
+                else if (i == 5) weekDay = "SAT";
+                else weekDay = "SUN";
+                this.restaurantModel.restaurantWorkTimeModels.push(
+                    <RestaurantWorkTimeModels>{
+                        restaurantWorkTimeId: i,
+                        weekDay: weekDay
+                    }
+                )
+                i++;
+            }
+        }
     }
 
     onAddMoreExtraItem = (weekDay: string) => {
