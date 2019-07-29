@@ -69,8 +69,8 @@
                                                 (onUnselect)="onUnSelectUser($event)" field="aliasName"
                                                 [multiple]="true" required #userName="ngModel">
                                             </p-autoComplete> -->
-                                            <ng-select name="userName" [items]="userAdminModels"
-                                                bindValue="userId" bindLabel="userName" [multiple]="true"
+                                            <ng-select name="userName" [items]="userAdminModels" bindValue="userId"
+                                                bindLabel="userName" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.userIds" #userName="ngModel"
                                                 placeholder="Select user">
                                             </ng-select>
@@ -210,7 +210,13 @@
                                         </div>
                                     </div>
 
-                                     <!-- Open - Close time -->
+                                    <!-- Open - Close time -->
+
+                                    <div class="separator-dashed"></div>
+
+                                    <h2 class="separator-dashed-tilte">Working Time</h2>
+
+                                    <div class="separator-dashed"></div>
 
                                     <!-- Monday -->
                                     <!-- <label>Monday</label> -->
@@ -220,12 +226,13 @@
                                             <label class="col-md-4" *ngIf="i == 0">Monday</label>
                                             <label class="col-md-4" *ngIf="i != 0"></label>
                                             <div class="col-md-3">
-                                                
+
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.touched || f.submitted)"
@@ -239,8 +246,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -279,10 +286,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -296,8 +304,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -336,10 +344,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -353,8 +362,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -393,10 +402,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -410,8 +420,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -450,10 +460,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -467,8 +478,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -507,10 +518,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -524,8 +536,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -564,10 +576,11 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
-                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
-                                                    class="form-control" [(ngModel)]="extra.openTime"
-                                                    #menuExtraItemNameOpen="ngModel" required />
+                                                <input type="time" comparison="lesser" atp-time-picker
+                                                    timeComparison="extra.closeTime" name="{{extra.code}}{{i}}openTime"
+                                                    id="{{extra.code}}{{i}}openTime" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel"
+                                                    required />
 
                                                 <!-- Required open time -->
                                                 <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
@@ -581,8 +594,8 @@
                                             <div class="col-md-3">
 
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
-                                                    name="{{extra.code}}{{i}}closeTime"
+                                                <input type="time" comparison="greater" atp-time-picker
+                                                    timeComparison="extra.openTime" name="{{extra.code}}{{i}}closeTime"
                                                     id="{{extra.code}}{{i}}closeTime" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
                                                     required />
@@ -610,6 +623,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="separator-dashed"></div>
+                                    
                                     <!-- End -->
 
                                     <!-- <div class="row form-group">
