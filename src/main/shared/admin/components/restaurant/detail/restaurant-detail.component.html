@@ -214,7 +214,409 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <!-- Open - Close time -->
+
+                                    <!-- Monday -->
+                                    <!-- <label>Monday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'MON'">
+                                            <label class="col-md-4" *ngIf="i == 0">Monday</label>
+                                            <label class="col-md-4" *ngIf="i != 0"></label>
+                                            <div class="col-md-3">
+                                                
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <!-- <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('MON')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'MON' && i != 0">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tuesday -->
+                                    <!-- <label>Tuesday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'TUE'">
+                                            <label class="col-md-4" *ngIf="i == 1">Tuesday</label>
+                                            <label class="col-md-4" *ngIf="i != 1"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('TUE')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'TUE' && i != 1">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Wednesday -->
+                                    <!-- <label>Wednesday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'WED'">
+                                            <label class="col-md-4" *ngIf="i == 2">Wednesday</label>
+                                            <label class="col-md-4" *ngIf="i != 2"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('WED')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'WED' && i != 2">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Thursday -->
+                                    <!-- <label>Thursday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'THU'">
+                                            <label class="col-md-4" *ngIf="i == 3">Thursday</label>
+                                            <label class="col-md-4" *ngIf="i != 3"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('THU')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'THU' && i != 3">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Friday -->
+                                    <!-- <label>Friday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'FRI'">
+                                            <label class="col-md-4" *ngIf="i == 4">Friday</label>
+                                            <label class="col-md-4" *ngIf="i != 4"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('FRI')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'FRI' && i != 4">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Saturday -->
+                                    <!-- <label>Saturday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'SAT'">
+                                            <label class="col-md-4" *ngIf="i == 5">Saturday</label>
+                                            <label class="col-md-4" *ngIf="i != 5"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('SAT')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'SAT' && i != 5">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sunday -->
+                                    <!-- <label>Sunday</label> -->
+                                    <div *ngFor="let extra of restaurantModel.restaurantWorkTimeModels; let i = index"
+                                        class="menu-extra-item">
+                                        <div class="row form-group" *ngIf="extra.weekDay == 'SUN'">
+                                            <label class="col-md-4" *ngIf="i == 6">Sunday</label>
+                                            <label class="col-md-4" *ngIf="i != 6"></label>
+                                            <div class="col-md-3">
+
+                                                <!-- Input open time -->
+                                                <input type="time" comparison="lesser" atp-time-picker timeComparison="extra.closeTime"
+                                                    name="{{extra.code}}{{i}}openTime" id="{{extra.code}}{{i}}openTime"
+                                                    class="form-control" [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" required />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="menuExtraItemNameOpen.invalid && (menuExtraItemNameOpen.dirty || menuExtraItemNameOpen.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameOpen.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" comparison="greater" atp-time-picker timeComparison="extra.openTime"
+                                                    name="{{extra.code}}{{i}}closeTime"
+                                                    id="{{extra.code}}{{i}}closeTime" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel"
+                                                    required />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+
+                                                    <div *ngIf="extra.openTime == extra.closeTime"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem('SUN')"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(extra)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="extra.weekDay == 'SUN' && i != 6">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End -->
+
+                                    <!-- <div class="row form-group">
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.OpenTimeRequired' | translate"></label>
                                         <div class="col-md-8">
@@ -248,7 +650,7 @@
                                                     [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="row form-group">
                                         <label class="col-md-4"
