@@ -82,6 +82,9 @@
 
         table {
             width: 100%;
+            td {
+                vertical-align: top;
+            }
         }
 
         .info-pay-methods {

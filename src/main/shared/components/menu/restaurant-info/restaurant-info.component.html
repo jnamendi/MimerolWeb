@@ -24,12 +24,14 @@
         </p>
         <div class="info-tab-section">
             <table>
-                <tr *ngFor="let item of restaurantModel.restaurantWorkTimeModels">
+                <tr *ngFor="let item of deliveryTimes">
                     <td>
                         <span>{{"Commons.Texts." + item.weekDay | translate }}</span>
                     </td>
                     <td class="text-right">
-                        <span>{{item.openTime}} - {{item.closeTime}}</span>
+                        <ng-container *ngFor="let t of item.list;let i = index">
+                                <span>{{t.openTime}} - {{t.closeTime}}</span> <br>
+                        </ng-container>
                     </td>
                 </tr>
             </table>
