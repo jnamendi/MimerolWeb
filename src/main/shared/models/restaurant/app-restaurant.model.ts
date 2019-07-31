@@ -96,6 +96,7 @@ export class RestaurantWorkTimeModels {
     openTime?: string;
     closeTime?: string;
 }
+
 export class AppPromotionModels {
     name: string;
     code: string;

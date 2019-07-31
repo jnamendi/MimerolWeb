@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels } from '../../../../models/restaurant/admin-restaurant.model';
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from '../../../../models/restaurant/admin-restaurant.model';
 import { ClientState } from '../../../../state';
 import { Language } from '../../../../models/langvm.model';
 import { ApiError } from '../../../../services/api-response/api-response';
@@ -24,6 +24,8 @@ import { Subscription } from '../../../../../../../node_modules/rxjs';
 import { CityService, DistrictService } from '../../../../services';
 import { CityModel } from '../../../../models/city/city.model';
 import { DistrictModel } from '../../../../models/district/district.model';
+import { weekdays } from 'moment';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
     selector: 'restaurant-creation',
@@ -62,6 +64,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private districtModels: DistrictModel[] = [];
 
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
+    private checkOpenCloseIsEmpty: boolean = false;
+    private checkOpenLesserClose: boolean = false;
+    private x: number;
+    private y: number;
 
     @ViewChild('searchControl') searchElementRef: ElementRef;
     @ViewChild('agmMap') agmMap: AgmMap;
@@ -319,6 +325,51 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         if (!isValid || this.isSearchAddressError) {
             return;
         }
+
+        // let check = true;
+        for (let i = 0; i < this.restaurantModel.restaurantWorkTimeModels.length; i++) {
+            if (this.restaurantModel.restaurantWorkTimeModels[i].list.length != 0) {
+                for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels[i].list.length; j++) {
+                    // if (this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime != "" && this.restaurantModel.restaurantWorkTimeModels[i].list[j].closeTime != "") {
+                    //     check = false;
+                    // }
+                    if (j > 0) {
+                        let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime.split(":");
+                        let vH = parseFloat(vTimes[0]);
+                        let vM = parseFloat(vTimes[1]);
+
+                        let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[j - 1].closeTime.split(":");
+                        let eH = parseFloat(eTimes[0]);
+                        let eM = parseFloat(eTimes[1]);
+
+                        if (vH <= eH) {
+                            this.checkOpenLesserClose = true;
+                            this.x = i;
+                            this.y = j;
+                            return;
+                        }else {
+                            this.checkOpenLesserClose = false;
+                        }
+
+                        if (vH == eH && vM <= eM) {
+                            this.checkOpenLesserClose = true;
+                            this.x = i;
+                            this.y = j;
+                            return;
+                        }else {
+                            this.checkOpenLesserClose = false;
+                        }
+                    }
+                }
+            }
+        }
+        // if (check) {
+        //     this.checkOpenCloseIsEmpty = true;
+        //     return;
+        // }
+
+
+
         this.clientState.isBusy = true;
         let newRestaurant = <RestaurantAdminModel>{
             ...this.restaurantModel,
@@ -361,44 +412,41 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     }
 
     onAutoCreateRestaurantWorkTimeId = () => {
-        if (this.restaurantWorkTimeModels.restaurantWorkTimeId == null) {
-            let max = 7, i = 0;
-            while (i < max) {
-                let weekDay = "";
-                if (i == 0) weekDay = "MON";
-                else if (i == 1) weekDay = "TUE";
-                else if (i == 2) weekDay = "WED";
-                else if (i == 3) weekDay = "THU";
-                else if (i == 4) weekDay = "FRI";
-                else if (i == 5) weekDay = "SAT";
-                else weekDay = "SUN";
-                this.restaurantModel.restaurantWorkTimeModels.push(
-                    <RestaurantWorkTimeModels>{
-                        restaurantWorkTimeId: i,
-                        weekDay: weekDay
+        if (this.restaurantModel.restaurantWorkTimeModels.length == 0) {
+            let max = 7, day = "";
+            for (let i = 0; i < max; i++) {
+                if (i == 0) day = "MON";
+                else if (i == 1) day = "TUE";
+                else if (i == 2) day = "WED";
+                else if (i == 3) day = "THU";
+                else if (i == 4) day = "FRI";
+                else if (i == 5) day = "SAT";
+                else if (i == 6) day = "SUN";
+                this.restaurantModel.restaurantWorkTimeModels.push(<RestaurantWorkTimeModels>{
+                    weekDay: day,
+                    list: [],
+                })
+                for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels.length; j++) {
+                    if (this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0) {
+                        this.restaurantModel.restaurantWorkTimeModels[j].list.push(<WorkTimeList>{
+                            openTime: "",
+                            closeTime: "",
+                            idRestaurantWork: j
+                        })
                     }
-                )
-                i++;
+                }
             }
         }
     }
 
-    onAddMoreExtraItem = (weekDay: string) => {
-        this.restaurantModel.restaurantWorkTimeModels.push(
-            <RestaurantWorkTimeModels>{
-                restaurantWorkTimeId: !this.restaurantModel.restaurantWorkTimeModels.length ? 1 : Math.max.apply(Math, this.restaurantModel.restaurantWorkTimeModels.map(function (o) {
-                    return o && o.restaurantWorkTimeId || 0;
-                })) + 1,
-                weekDay: weekDay
-            }
-        )
+    onAddMoreExtraItem = (val: WorkTimeList[], ex: WorkTimeList) => {
+        val.push(<WorkTimeList>{
+            idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1
+        })
     }
 
-    onRemoveExtraItem = (menuExtra: RestaurantWorkTimeModels) => {
-        if (this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.length == 0) {
-            return;
-        }
-        let index = this.restaurantModel.restaurantWorkTimeModels.findIndex(e => e == menuExtra);
-        this.restaurantModel.restaurantWorkTimeModels && this.restaurantModel.restaurantWorkTimeModels.splice(index, 1);
+    onRemoveExtraItem = (menuExtra: WorkTimeList[]) => {
+        let index = menuExtra.findIndex(e => e == menuExtra);
+        menuExtra && menuExtra.splice(index, 1);
     }
 }

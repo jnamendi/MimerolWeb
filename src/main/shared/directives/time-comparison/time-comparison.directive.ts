@@ -1,13 +1,15 @@
-﻿import { Directive, forwardRef, Attribute } from '@angular/core';
+﻿import { Directive, forwardRef, Attribute, Input } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 @Directive({
     selector: '[timeComparison][formControlName],[timeComparison][formControl],[timeComparison][ngModel]',
     providers: [
         { provide: NG_VALIDATORS, useExisting: forwardRef(() => TimeComparison), multi: true }
-    ]
+    ],
+    
 })
 export class TimeComparison implements Validator {
-    constructor(@Attribute('timeComparison') public timeComparison: string,
+    @Input() timeComparison: string
+    constructor(
         @Attribute('comparison') public comparison: string) {
     }
 
@@ -23,16 +25,23 @@ export class TimeComparison implements Validator {
         let v = c.value;
 
         // control value
-        let e = c.root.get(this.timeComparison);
+        // let e = c.root.get(this.timeComparison);
+        let e = this.timeComparison;
 
-        if (!v || !e || !e.value) {
+        // if (!v || !e || !e.value) {
+        //     return;
+        // }
+
+        if (!v || !e) {
             return;
         }
+
         let vTimes = v.split(":");
         let vH = parseFloat(vTimes[0]);
         let vM = parseFloat(vTimes[1]);
 
-        let eTimes = e && e.value.split(":");
+        // let eTimes = e && e.value.split(":");
+        let eTimes = e.split(":");
         let eH = parseFloat(eTimes[0]);
         let eM = parseFloat(eTimes[1]);
 
