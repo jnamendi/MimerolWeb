@@ -250,7 +250,7 @@
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
 
                                                 <!-- Required close time -->
-                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
+                                                <div *ngIf="menuExtraItemNameClose.touched"
                                                     class="error">
                                                     <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
                                                         [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
