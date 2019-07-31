@@ -18,7 +18,7 @@ export class AppRestaurantModel extends BaseModel {
     longitude: string;
     openTime: string;
     closeTime: string;
-    restaurantWorkTimeModels?: Array<RestaurantWorkTimeModels>;
+    restaurantWorkTimeModels?: Array<RestaurantWorkTimeModel> = [];
     phone1: string;
     promotionLineItems : Array<AppPromotionModels>;
     shipArea: string;
@@ -89,13 +89,18 @@ export class CitySearch {
     active: boolean;
 }
 
-export class RestaurantWorkTimeModels {
-    restaurantWorkTimeId?: number;
+export class RestaurantWorkTimeModel {
     restaurantId?: number;
     weekDay?: string;
-    openTime?: string;
-    closeTime?: string;
+    list?: [
+        {
+            openTime?: string,
+            closeTime?: string,
+            idRestaurantWork: number
+        }
+    ]
 }
+
 export class AppPromotionModels {
     name: string;
     code: string;

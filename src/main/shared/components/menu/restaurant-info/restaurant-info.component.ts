@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ClientState } from '../../../state';
 import { I18nService } from '../../../core';
 import { ApiError } from '../../../services/api-response/api-response';
-import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.model';
+import { AppRestaurantModel,RestaurantWorkTimeModel } from '../../../models/restaurant/app-restaurant.model';
 import { RestaurantAppService } from '../../../services/api/restaurant/app-restaurant.service';
 
 @Component({
@@ -14,6 +14,7 @@ import { RestaurantAppService } from '../../../services/api/restaurant/app-resta
 export class RestaurantInfoComponent implements OnInit {
     @Input() restaurantId: number;
     private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
+    private deliveryTimes: Array<RestaurantWorkTimeModel> = [];
     private message: string;
     private isError: boolean;
     private isAuthen: boolean;
@@ -46,6 +47,7 @@ export class RestaurantInfoComponent implements OnInit {
             let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
             this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
                 this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+                this.deliveryTimes = this.restaurantModel.restaurantWorkTimeModels;
                 this.clientState.isBusy = false;
             }, (err: ApiError) => {
                 this.message = err.message;
