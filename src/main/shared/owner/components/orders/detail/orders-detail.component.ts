@@ -7,6 +7,8 @@ import { ApiError } from '../../../../services/api-response/api-response';
 import { OrderOwnerService } from '../../../../services/api/order/owner-order.service';
 import { OwnerOrderModel } from '../../../../models/order/owner-order.model';
 import { I18nService } from '../../../../core/i18n.service';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'owner-orders-detail',
@@ -31,7 +33,8 @@ export class OwnerOrdersDetailComponent {
     private orderService: OrderService,
     private clientState: ClientState,
     private orderOwnerService: OrderOwnerService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +57,32 @@ export class OwnerOrdersDetailComponent {
       this.error = err.message;
       this.isError = true;
       this.statusError = err.status;
+    });
+  }
+
+  onUpdateOrder = (form: NgForm) => {
+    if (!form.valid) {
+      return;
+    }
+
+    this.isProgressing = true;
+    let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
+    this.ownerOrderModel.languageCode = languageCode;
+    this.ownerOrderModel.orderId = this.orderId;
+    this.ownerOrderModel.orderCode = this.orderCode;
+
+    this.clientState.isBusy = true;
+    this.orderOwnerService.updateOrder(this.ownerOrderModel).subscribe({
+      complete: () => {
+        this.isProgressing = false;
+        this.onClose(true);
+        this.clientState.isBusy = false;
+      },
+      error: (err: ApiError) => {
+        this.isError = true;
+        this.error = err.message;
+        this.isProgressing = false;
+      },
     });
   }
 
