@@ -365,8 +365,7 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     }
 
     onUpdateRestaurant = (isValid: boolean) => {
-
-        if (!isValid || this.isSearchAddressError) {
+        if (!isValid) {
             return;
         }
         // let check = true;
