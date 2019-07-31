@@ -3,11 +3,13 @@ import { HttpService } from '../../http/http.service';
 import { Observable } from 'rxjs/Observable';
 import { ApiUrl } from '../../api-url/api-url';
 import { ApiHelper } from '../../api-helper';
-import { ApiResponsePaging, ApiListResponse } from '../../api-response/api-response';
+import { ApiResponsePaging, ApiListResponse, ApiResponse } from '../../api-response/api-response';
+import { OwnerOrderModel } from '../../../models/order/owner-order.model';
 
 export interface OrderOwnerInterface {
     getOrderByRestaurantAndStatus(pageIndex?: number, pageSize?: number, restaurantId?: number): Observable<ApiResponsePaging>;
     getAllOrderByOwner(ownerId: number): Observable<ApiListResponse>;
+    updateOrder(ownerOrderModel: OwnerOrderModel): Observable<ApiResponse>;
 }
 
 @Injectable()
@@ -29,5 +31,10 @@ export class OrderOwnerService implements OrderOwnerInterface {
 
     getAllOrderByOwner(ownerId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.OrderGetByOwner + '/' + ownerId, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+
+    updateOrder(ownerOrderModel: OwnerOrderModel): Observable<ApiResponse> {
+        let body = JSON.stringify(ownerOrderModel);
+        return this.http.HttpPost(ApiUrl.OrderUpdate, body, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }

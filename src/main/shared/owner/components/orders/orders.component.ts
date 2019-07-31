@@ -115,7 +115,7 @@ export class OwnerOrdersComponent implements OnDestroy {
       style = 'label label-info'
     } else if (value == 3) {
       style = 'label label-warning'
-    } else if (value == 5) {
+    } else if (value == 5 || value == 4) {
       style = 'label label-danger'
     } else if (value == 7) {
       style = 'label label-success'
