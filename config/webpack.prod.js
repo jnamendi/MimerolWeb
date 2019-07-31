@@ -151,7 +151,8 @@ module.exports = function(env) {
              */
             new ExtractTextPlugin('[name].[contenthash].css'),
             new CopyWebpackPlugin([
-                { from: 'src/web.config' }
+                { from: 'src/web.config' },
+                { from: 'src/.htaccess' }
             ]),
 
             /**

@@ -4,6 +4,7 @@ import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
 
 export class RestaurantAdminModel extends BaseModel {
+    forEach: any;
     constructor() {
         super();
         this.cityId = null;
@@ -24,6 +25,7 @@ export class RestaurantAdminModel extends BaseModel {
     longitude: number;
     openTime?: string;
     closeTime?: string;
+    restaurantWorkTimeModels?: Array<RestaurantWorkTimeModels> = [];
     paymentProviderLst?: any;
     mediaId?: number;
     languageLst?: LanguageList[];
@@ -34,6 +36,18 @@ export class RestaurantAdminModel extends BaseModel {
     estDeliveryTime?: number;
     file?: File;
     addressDesc: string;
+}
+
+export class WorkTimeList {
+    idRestaurantWork?: number;
+    openTime?: string;
+    closeTime?: string;
+}
+
+export class RestaurantWorkTimeModels {
+    restaurantId?: number;
+    weekDay?: string;
+    list?: Array<WorkTimeList> = [];
 }
 
 export enum RestaurantStatus {

@@ -5,7 +5,8 @@
                 <div class="container">
                     <div class="breadcrumb">
                         <h1>
-                            <span *ngIf="searchArea" class="fonts-light">Order takeaway in</span> {{searchArea.city}}</h1>
+                            <span *ngIf="searchArea" class="fonts-light">Order takeaway in</span> {{searchArea.city}}
+                        </h1>
                         <ul>
                             <li>
                                 <a class="disable" [routerLink]="['']">Home</a>
@@ -47,8 +48,9 @@
             <div>
                 <child-filter [deliveryTypeAttributes]="deliveryTypeAttributes" [rankPrice]="rankPrice"
                     [categoryFilters]="categoryFilters" [searchArea]="searchArea" [isToggleFilter]="isToggleFilter"
-                    (onFilter)="onFilterHandle($event)" (closeFilter)="onToggleFilter($event)" (categoryFilter)="onCategoryFilter($event)"
-                    (deliveryFilter)="onDeliveryFilter($event)" (priceFilter)="onPriceFilter($event)">
+                    (onFilter)="onFilterHandle($event)" (closeFilter)="onToggleFilter($event)"
+                    (categoryFilter)="onCategoryFilter($event)" (deliveryFilter)="onDeliveryFilter($event)"
+                    (priceFilter)="onPriceFilter($event)">
                 </child-filter>
             </div>
 
@@ -56,9 +58,11 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 product" *ngFor="let item of restaurantModels">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 product"
+                                *ngFor="let item of restaurantModels">
                                 <div class="promotion">
-                                    <span *ngIf="item.promotionLineItems && item.promotionLineItems[0]">-{{item.promotionLineItems[0].value}}%</span>
+                                    <span
+                                        *ngIf="item.promotionLineItems && item.promotionLineItems[0]">-{{item.promotionLineItems[0].value}}%</span>
                                 </div>
                                 <div class="closed">
                                     <span *ngIf="item && item.restaurantClosed">CLOSED</span>
@@ -72,25 +76,32 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <a (click)="onNavigateToMenu(item.restaurantId)" class="product-item-link">{{item.restaurantName}}</a>
-                                    <div class="product-item-description" *ngIf="item && item.categoryIds && item.categoryIds.length > 0">
+                                    <a (click)="onNavigateToMenu(item.restaurantId)"
+                                        class="product-item-link">{{item.restaurantName}}</a>
+                                    <div class="product-item-description"
+                                        *ngIf="item && item.categoryIds && item.categoryIds.length > 0">
                                         <span *ngFor="let ct of item.categoryIds; let last = last">{{ct.categoryName}}
                                             <span *ngIf="!last">,</span>
                                         </span>
                                     </div>
                                     <div class="product-reviews-summary">
                                         <div class="rating_user fl">
-                                            <p-rating name="rate" [ngModel]="item.rating" stars="5" [cancel]="false"
-                                                readonly="true"></p-rating>
+                                            <!-- <p-rating name="rate" [ngModel]="item.rating" stars="5" [cancel]="false"
+                                                readonly="true"></p-rating> -->
+
+                                            <div class="rating-box">
+                                                <div class="rating" [style.width]="(item.rating * 100)/5 + '%'" ></div>
+                                            </div>
                                         </div>
-                                        <div class="reviews-actions"> {{item.numOfReview}} reviews </div>
+                                        <div class="reviews-actions">{{item.numOfReview}} reviews </div>
                                     </div>
                                     <div class="product-info">
                                         <p>
                                             <span>Delivery cost:</span> {{item.deliveryCost && item.deliveryCost > 0 ?
                                             item.symbolLeft +' '+ item.deliveryCost : 'Free'}}</p>
                                         <p>
-                                            <span>Delivery time:</span>{{item.estDeliveryTime}} {{ "Commons.Texts.Minutes" | translate }}</p>
+                                            <span>Delivery time:</span>{{item.estDeliveryTime}}
+                                            {{ "Commons.Texts.Minutes" | translate }}</p>
                                         <p>
                                             <span>Price from:</span> {{item.symbolLeft +' '+ item.minPrice}}</p>
                                         <p>
@@ -110,4 +121,5 @@
         </section>
     </div>
 </div>
-<order-confirm-dialog [visible]="isResClose" [isResClose]="isResClose" (onClose)="onCloseConfirm($event)"></order-confirm-dialog>
+<order-confirm-dialog [visible]="isResClose" [isResClose]="isResClose" (onClose)="onCloseConfirm($event)">
+</order-confirm-dialog>

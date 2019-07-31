@@ -4,6 +4,7 @@
 
 .mobile_block {
     display: none;
+
     #sticker3 {
         z-index: 6 !important;
     }
@@ -34,6 +35,7 @@
     height: 72px;
     width: 72px;
     float: left;
+
     a {
         z-index: 3;
         height: 72px;
@@ -48,6 +50,7 @@
         display: table-cell;
         vertical-align: middle;
     }
+
     span {
         i {
             position: absolute;
@@ -72,11 +75,14 @@
     width: 100%;
     margin-top: 20px;
     background: #ffffff;
+
     .ui-tabview {
         padding: 0;
+
         .ui-tabview-nav {
             padding: 0;
         }
+
         .ui-tabview-panels {
             margin: 0;
         }
@@ -87,18 +93,151 @@
     left: inherit !important;
 }
 
+/*---Nav Tabs Custom---*/
+.nav-tabs-custom {
+    margin-top: 20px;
+    background: #fff;
+
+    > {
+        .nav-tabs {
+            margin: 0;
+            border-bottom-color: #f4f4f4;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+
+            >li {
+                border-top: 3px solid transparent;
+                margin-bottom: -2px;
+                margin-right: 5px;
+
+                &.disabled>a {
+                    color: #777;
+                }
+
+                >a {
+                    color: #444;
+                    border-radius: 0;
+
+                    &.text-muted {
+                        color: #999;
+                    }
+
+                    background: transparent;
+                    margin: 0;
+
+                    &:hover {
+                        background: transparent;
+                        margin: 0;
+                        color: #999;
+                    }
+                }
+
+                &:not(.active)>a {
+
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        border-color: transparent;
+                    }
+                }
+
+                &.active {
+                    border-top-color: #e6670a;
+
+                    >a,
+                    &:hover>a {
+                        background-color: #fff;
+                        color: #444;
+                    }
+
+                    >a {
+                        border-top-color: transparent;
+                        border-left-color: #f4f4f4;
+                        border-right-color: #f4f4f4;
+                    }
+                }
+
+                &:first-of-type {
+                    margin-left: 0;
+
+                    &.active>a {
+                        border-left-color: transparent;
+                    }
+                }
+            }
+
+            &.pull-right {
+                float: none !important;
+
+                >li {
+                    float: right;
+
+                    &:first-of-type {
+                        margin-right: 0;
+
+                        >a {
+                            border-left-width: 1px;
+                        }
+
+                        &.active>a {
+                            border-left-color: #f4f4f4;
+                            border-right-color: transparent;
+                        }
+                    }
+                }
+            }
+
+            >li.header {
+                line-height: 35px;
+                padding: 0 10px;
+                font-size: 20px;
+                color: #444;
+
+                > {
+
+                    .fa,
+                    .glyphicon,
+                    .ion {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+        .tab-content {
+            background: #fff;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+    }
+
+    .dropdown.open>a {
+
+        &:active,
+        &:focus {
+            background: transparent;
+            color: #999;
+        }
+    }
+}
+
+/*---End Nav Tabs Custom---*/
+
 @media only screen and (max-width: 991px) {
     .cart {
         height: 60px;
         width: 60px;
+
         a {
             height: 60px;
             width: 60px;
         }
     }
+
     .mobile_block {
         display: block;
     }
+
     .icon_menufoods {
         img {
             position: relative;
@@ -116,10 +255,12 @@
         z-index: 6;
         right: 5%;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
         a {
             top: auto;
         }
     }
+
     .mobile_block {
         #sticker3 {
             top: auto !important;
@@ -127,6 +268,7 @@
             bottom: 20px;
         }
     }
+
     .icon_menufoods {
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         top: 0;

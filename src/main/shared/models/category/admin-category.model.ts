@@ -1,4 +1,4 @@
-import { FieldTranslation, LanguageList, Language } from '../langvm.model';
+import { LanguageList, Language, FieldTranslation } from '../langvm.model';
 import { BaseModel } from '../base.model';
 
 export class CategoryAdminModel extends BaseModel {
@@ -11,11 +11,6 @@ export class CategoryAdminModel extends BaseModel {
     status?: number;
 }
 
-export class CategoryViewModel {
-    categoryId: number;
-    categoryName: string;
-}
-
 export enum CategoryStatus {
     UnPublish = 0,
     Publish = 1,
@@ -23,6 +18,11 @@ export enum CategoryStatus {
     Authorize = 3,
     UnAuthorize = 4,
     InActive = 5
+}
+
+export class CategoryViewModel {
+    categoryId: number;
+    categoryName: string;
 }
 
 export module CategoryModule {

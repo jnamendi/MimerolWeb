@@ -1,0 +1,78 @@
+<div class="restaurant-info">
+    <div class="map-container">
+        <div class='agm-map-container-inner sebm-google-map-container-inner'>
+            <agm-map [latitude]="restaurantModel.latitude" [longitude]="restaurantModel.longitude" [zoom]=17
+                [maxZoom]=17 [minZoom]=17 [zoomControl]="false" [streetViewControl]="false" [mapDraggable]="false">
+                <agm-marker [iconUrl]="icon" [latitude]="restaurantModel.latitude"
+                    [longitude]="restaurantModel.longitude"></agm-marker>
+            </agm-map>
+        </div>
+        <div class="map-info">
+            <p class="address-label" [innerHTML]="'Commons.Texts.Address' | translate"></p>
+            <p class="address">{{restaurantModel.address}}</p>
+            <p *ngIf="this.restaurantModel.restaurantClosed" class="restaurant-close"
+                [innerHTML]="'Commons.Texts.Close' | translate"></p>
+            <p *ngIf="!this.restaurantModel.restaurantClosed" class="restaurant-open"
+                [innerHTML]="'Commons.Texts.Open' | translate"></p>
+        </div>
+    </div>
+
+    <div class="delivery-times">
+        <p class="restaurant-info-title">
+            <img src="assets/icons/ic_delivery_times.svg" alt="delivery_times">
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryTimes' | translate"></span>
+        </p>
+        <div class="info-tab-section">
+            <table>
+                <tr *ngFor="let item of deliveryTimes">
+                    <td>
+                        <span>{{"Commons.Texts." + item.weekDay | translate }}</span>
+                    </td>
+                    <td class="text-right">
+                        <ng-container *ngFor="let t of item.list;let i = index">
+                                <span>{{t.openTime}} - {{t.closeTime}}</span> <br>
+                        </ng-container>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="delivery-costs">
+        <p class="restaurant-info-title">
+            <img src="assets/icons/ic_delivery_costs.png" alt="delivery_costs">
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></span>
+        </p>
+        <div class="info-tab-section">
+            <table>
+                <tr>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.MinimumOrderAmount' | translate"></td>
+                    <td class="text-right">
+                        {{restaurantModel.minPrice}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></td>
+                    <td class="text-right">
+                        <span *ngIf="restaurantModel.deliveryCost==0"
+                            [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
+                        <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="payment-methods">
+        <p class="restaurant-info-title">
+            <img src="assets/icons/ic_payment_methods.png" alt="payment_methods">
+            <span class="title" [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></span>
+        </p>
+
+        <div class="info-tab-section">
+            <div class="info-pay-methods">
+                <img src="assets/icons/ic_cash_payment.png" alt="cash_payment">
+            </div>
+        </div>
+    </div>
+</div>

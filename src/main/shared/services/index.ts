@@ -36,6 +36,7 @@ export { RestaurantAdminService } from './api/restaurant/admin-restaurant.servic
 export { RatingAdminService } from './api/rating/admin-rating.service';
 export { MenuItemAdminService } from './api/menu-item/admin-menu-item.service';
 export { PromotionAdminService } from './api/promotion/admin-promotion.service';
+export { OrderAdminService } from './api/order/admin-order.service';
 
 //--Owner
 export { MenuOwnerService } from './api/menu/owner-menu.service';

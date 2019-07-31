@@ -7,6 +7,7 @@
     text-align: inherit;
     position: relative;
     margin: 18px auto 18px;
+
     img {
         background-size: 100%;
         width: 60px;
@@ -22,34 +23,42 @@
     position: relative;
     overflow: hidden;
     text-align: center;
+
     ul li {
         display: inline-block;
         margin: 0 25px;
+
         a {
             color: #333;
             cursor: pointer;
+
             &.isActive {
                 &:hover {
                     color: #e6670a;
                 }
             }
         }
+
         i {
             font-size: 20px;
+
             &.fa-heart {
                 color: #e6670a;
             }
         }
     }
+
     h2 {
         font-size: 24px;
         line-height: 35px;
         font-family: 'Roboto Slab', serif;
         letter-spacing: 1px;
     }
+
     ul {
         padding: 0;
         margin: 0 0 20px;
+
         li p {
             line-height: 100%;
             font-size: 12px;
@@ -64,6 +73,7 @@
 
 .border-detail {
     margin: 20px 0;
+
     img {
         background-size: 100%;
         width: 310px;
@@ -76,4 +86,31 @@
     margin: auto;
     font-size: 13px;
     color: #777;
+}
+
+.rating-box {
+    position: relative;
+    vertical-align: middle;
+    font-size: 21px;
+    font-family: FontAwesome;
+    display: inline-block;
+    color: #333;
+    margin-top: -2px;
+
+    &:before {
+        content: "\f006";
+    }
+
+    .rating {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #e6670a;
+
+        &:before {
+            content: "\f005";
+        }
+    }
 }

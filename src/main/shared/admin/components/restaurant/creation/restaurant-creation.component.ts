@@ -1,17 +1,17 @@
 
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus } from '../../../../models/restaurant/admin-restaurant.model';
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from '../../../../models/restaurant/admin-restaurant.model';
 import { ClientState } from '../../../../state';
 import { Language } from '../../../../models/langvm.model';
 import { ApiError } from '../../../../services/api-response/api-response';
 import { Address } from 'cluster';
-import { CategoryAdminModel, CategoryViewModel, CategoryModule } from '../../../../models/category/admin-category.model';
+import { CategoryAdminModel } from '../../../../models/category/admin-category.model';
 import { Router } from '@angular/router';
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
 import { CategoryAdminService } from '../../../../services/api/category/admin-category.service';
 import { UserAdminService } from '../../../../services/api/user/admin-user.service';
-import { UserAdminModel, UserViewModel, UserModule } from '../../../../models/user/admin-user.model';
+import { UserAdminModel } from '../../../../models/user/admin-user.model';
 import { I18nService } from '../../../../core/i18n.service';
 import { GoogleApiService } from '../../../../services/google-api/google-api.service';
 import { StorageService } from '../../../../core/storage.service';
@@ -24,6 +24,8 @@ import { Subscription } from '../../../../../../../node_modules/rxjs';
 import { CityService, DistrictService } from '../../../../services';
 import { CityModel } from '../../../../models/city/city.model';
 import { DistrictModel } from '../../../../models/district/district.model';
+import { weekdays } from 'moment';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
     selector: 'restaurant-creation',
@@ -40,13 +42,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private googleAddressLine2: string = '';
     private fileUpload: File = null;
     private categoryAdminModels: CategoryAdminModel[] = [];
-    private categoryViewModels: CategoryViewModel[] = [];
-    private categorySearchResults: CategoryViewModel[] = [];
-    private categoryIdsSelected: Array<number> = [];
     private userAdminModels: UserAdminModel[] = [];
-    private userViewModels: UserViewModel[] = []
-    private userSearchResults: UserViewModel[] = [];
-    private userIdsSelected: Array<number> = [];
     private longTitude: number;
     private latTitude: number;
     private imgUrl: string;
@@ -66,6 +62,12 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private currentAddress: string;
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+
+    private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
+    private checkOpenCloseIsEmpty: boolean = false;
+    private checkOpenLesserClose: boolean = false;
+    private x: number;
+    private y: number;
 
     @ViewChild('searchControl') searchElementRef: ElementRef;
     @ViewChild('agmMap') agmMap: AgmMap;
@@ -104,6 +106,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.longitude = -86.251389;
         this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
         this.onGetCities();
+        this.onAutoCreateRestaurantWorkTimeId();
     }
 
     ngAfterViewInit(): void {
@@ -285,38 +288,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             } else {
                 this.categoryAdminModels = <CategoryAdminModel[]>[...res.content];
             }
-
-            if (this.categoryAdminModels && this.categoryAdminModels.length > 0) {
-                this.categoryViewModels = this.categoryAdminModels.map(category => {
-                    return CategoryModule.toViewModel(category);
-                });
-                if (this.categoryViewModels && this.categoryViewModels.length > 0) {
-                    this.categorySearchResults = this.categoryViewModels;
-                }
-            }
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
         });
-    }
-
-    filterCategoriesMultiple(event) {
-        let query = event.query;
-        this.categorySearchResults = this.categoryViewModels.filter(
-            category => category.categoryName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectCategory = (event: CategoryViewModel) => {
-        if (!this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected.push(event.categoryId);
-        }
-    }
-
-    onUnSelectCategory = (event: CategoryViewModel) => {
-        if (this.categoryIdsSelected.some(i => i == event.categoryId)) {
-            this.categoryIdsSelected = this.categoryIdsSelected.filter(i => i != event.categoryId);
-        }
     }
 
     //---Multiple select user
@@ -327,37 +302,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             } else {
                 this.userAdminModels = <UserAdminModel[]>[...res.content]
             }
-            if (this.userAdminModels && this.userAdminModels.length > 0) {
-                this.userViewModels = this.userAdminModels.map(user => {
-                    return UserModule.toViewModel(user);
-                });
-                if (this.userViewModels && this.userViewModels.length > 0) {
-                    this.userSearchResults = this.userViewModels;
-                }
-            }
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
         });
-    }
-
-    filterUsersMultiple(event) {
-        let query = event.query;
-        this.userSearchResults = this.userViewModels.filter(
-            user => user.userName.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) != -1
-        );
-    }
-
-    onSelectUser = (event: UserViewModel) => {
-        if (!this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected.push(event.userId);
-        }
-    }
-
-    onUnSelectUser = (event: UserViewModel) => {
-        if (this.userIdsSelected.some(i => i == event.userId)) {
-            this.userIdsSelected = this.userIdsSelected.filter(i => i != event.userId);
-        }
     }
 
     detectFiles(event) {
@@ -377,6 +325,51 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         if (!isValid || this.isSearchAddressError) {
             return;
         }
+
+        // let check = true;
+        for (let i = 0; i < this.restaurantModel.restaurantWorkTimeModels.length; i++) {
+            if (this.restaurantModel.restaurantWorkTimeModels[i].list.length != 0) {
+                for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels[i].list.length; j++) {
+                    // if (this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime != "" && this.restaurantModel.restaurantWorkTimeModels[i].list[j].closeTime != "") {
+                    //     check = false;
+                    // }
+                    if (j > 0) {
+                        let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime.split(":");
+                        let vH = parseFloat(vTimes[0]);
+                        let vM = parseFloat(vTimes[1]);
+
+                        let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[j - 1].closeTime.split(":");
+                        let eH = parseFloat(eTimes[0]);
+                        let eM = parseFloat(eTimes[1]);
+
+                        if (vH <= eH) {
+                            this.checkOpenLesserClose = true;
+                            this.x = i;
+                            this.y = j;
+                            return;
+                        }else {
+                            this.checkOpenLesserClose = false;
+                        }
+
+                        if (vH == eH && vM <= eM) {
+                            this.checkOpenLesserClose = true;
+                            this.x = i;
+                            this.y = j;
+                            return;
+                        }else {
+                            this.checkOpenLesserClose = false;
+                        }
+                    }
+                }
+            }
+        }
+        // if (check) {
+        //     this.checkOpenCloseIsEmpty = true;
+        //     return;
+        // }
+
+
+
         this.clientState.isBusy = true;
         let newRestaurant = <RestaurantAdminModel>{
             ...this.restaurantModel,
@@ -416,5 +409,44 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
     onGetLongtitude = (lng: string) => {
         this.restaurantModel.longitude = +lng;
+    }
+
+    onAutoCreateRestaurantWorkTimeId = () => {
+        if (this.restaurantModel.restaurantWorkTimeModels.length == 0) {
+            let max = 7, day = "";
+            for (let i = 0; i < max; i++) {
+                if (i == 0) day = "MON";
+                else if (i == 1) day = "TUE";
+                else if (i == 2) day = "WED";
+                else if (i == 3) day = "THU";
+                else if (i == 4) day = "FRI";
+                else if (i == 5) day = "SAT";
+                else if (i == 6) day = "SUN";
+                this.restaurantModel.restaurantWorkTimeModels.push(<RestaurantWorkTimeModels>{
+                    weekDay: day,
+                    list: [],
+                })
+                for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels.length; j++) {
+                    if (this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0) {
+                        this.restaurantModel.restaurantWorkTimeModels[j].list.push(<WorkTimeList>{
+                            openTime: "",
+                            closeTime: "",
+                            idRestaurantWork: j
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    onAddMoreExtraItem = (val: WorkTimeList[], ex: WorkTimeList) => {
+        val.push(<WorkTimeList>{
+            idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1
+        })
+    }
+
+    onRemoveExtraItem = (menuExtra: WorkTimeList[]) => {
+        let index = menuExtra.findIndex(e => e == menuExtra);
+        menuExtra && menuExtra.splice(index, 1);
     }
 }

@@ -43,17 +43,11 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.CategoryRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel && restaurantModel.categoryIds"
-                                                [suggestions]="categorySearchResults"
-                                                (completeMethod)="filterCategoriesMultiple($event)" name="categoryName"
-                                                dataKey="categoryId" field="categoryName" [multiple]="true" required
-                                                #categoryName="ngModel">
-                                            </p-autoComplete>
-                                            <!-- <ng-select name="categoryName" [items]="categoryAdminModels"
+                                            <ng-select name="categoryName" [items]="categoryAdminModels"
                                                 bindValue="categoryId" bindLabel="categoryName" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.categoryIds" #categoryName="ngModel"
                                                 placeholder="Select category name">
-                                            </ng-select> -->
+                                            </ng-select>
 
                                             <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)"
                                                 class="error">
@@ -67,13 +61,11 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.OwnerRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <p-autoComplete [(ngModel)]="restaurantModel && restaurantModel.userIds"
-                                                [suggestions]="userSearchResults"
-                                                (completeMethod)="filterUsersMultiple($event)" name="userName"
-                                                dataKey="userId" (onSelect)="onSelectUser($event)"
-                                                (onUnselect)="onUnSelectUser($event)" field="userName" [multiple]="true"
-                                                required #userName="ngModel">
-                                            </p-autoComplete>
+                                            <ng-select name="userName" [items]="userAdminModels" bindValue="userId"
+                                                bindLabel="userName" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.userIds" #userName="ngModel"
+                                                placeholder="Select category name">
+                                            </ng-select>
                                             <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="userName.errors?.required"
@@ -111,19 +103,29 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <!-- <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
+                                            <input type="text" class="form-control" name="addressLine1"
+                                                [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required
+                                                [options]="{
                                                         types: ['address'],
                                                     componentRestrictions: { country: currentCountryCode}
-                                                    }" (setAddress)="setAddressLine1($event)" (street_number)='street_number=$event' (street)='street=$event' (city)='onGetCityLine1($event)' (state)='state=$event' (district)='onGetDistrictLine1($event)'
-                                                (country)='country=$event' (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)' (lng)='onGetLongtitude($event)' (adr_address)='onGetAddressLine1($event)' (name)='name=$event' (place_id)='place_id=$event'
-                                                (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event' (CountryCodes)='CountryCodes=$event' id="autocomplete"
-                                                ng2-google-place-autocomplete> -->
-                                            <input autocorrect="off" autocapitalize="off" spellcheck="off"
+                                                    }" (setAddress)="setAddressLine1($event)"
+                                                (street_number)='street_number=$event' (street)='street=$event'
+                                                (city)='onGetCityLine1($event)' (state)='state=$event'
+                                                (district)='onGetDistrictLine1($event)' (country)='country=$event'
+                                                (postal_code)='postal_code=$event' (lat)='onGetLatitude($event)'
+                                                (lng)='onGetLongtitude($event)'
+                                                (adr_address)='onGetAddressLine1($event)' (name)='name=$event'
+                                                (place_id)='place_id=$event' (types)='types=$event' (url)='url=$event'
+                                                (utc_offset)='utc_offset=$event' (vicinity)='vicinity=$event'
+                                                (photos)='photos=$event' (airport)='airport=$event'
+                                                (CountryCodes)='CountryCodes=$event' id="autocomplete"
+                                                ng2-google-place-autocomplete>
+                                            <!-- <input autocorrect="off" autocapitalize="off" spellcheck="off"
                                                 [(ngModel)]="restaurantModel && restaurantModel.address"
                                                 (blur)="onBlurSearch()" (focus)="onFocusSearch()"
                                                 (ngModelChange)="onChangeAddress()" name="addressLine1"
                                                 #addressLine1="ngModel" required type="text" class="form-control"
-                                                #searchControl style="margin-bottom: 5px;" />
+                                                #searchControl style="margin-bottom: 5px;" /> -->
                                             <div *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="addressLine1.errors?.required"
@@ -212,7 +214,66 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <!-- Open - Close time -->
+
+                                    <div class="separator-dashed"></div>
+                                    <h2 class="separator-dashed-tilte">Working Time</h2>
+                                    <div class="separator-dashed"></div>
+                                    <!-- <div *ngIf="checkOpenCloseIsEmpty" class="error" style="text-align: center"
+                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div> -->
+
+                                    <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let j = index"
+                                        class="menu-extra-item">
+                                        <div *ngFor="let extra of val.list; let i = index" class="row form-group">
+                                            <label *ngIf="i == 0" class="col-md-4"
+                                                [innerHTML]="'Commons.Texts.' + val.weekDay | translate"></label>
+                                            <label *ngIf="i > 0" class="col-md-4"></label>
+                                            <div class="col-md-3">
+                                                <!-- Input open time -->
+                                                <input type="time" atp-time-picker comparison="lesser"
+                                                    [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
+                                                    id="{{j}}{{i}}open" class="form-control"
+                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
+
+                                                <!-- Required open time -->
+                                                <div *ngIf="checkOpenLesserClose == true && x == j && y == i"
+                                                    class="error"
+                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <!-- Input close time -->
+                                                <input type="time" atp-time-picker comparison="greater"
+                                                    [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
+                                                    id="{{j}}{{i}}close" class="form-control"
+                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
+
+                                                <!-- Required close time -->
+                                                <div *ngIf="menuExtraItemNameClose.touched"
+                                                    class="error">
+                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
+                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button add and remove open close time -->
+                                            <div class="action col-md-2">
+                                                <button type="button" (click)="onAddMoreExtraItem(val.list, val)"
+                                                    style="background: gray" class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveExtraItem(val.list)"
+                                                    style="background: gray" class="btn btn-default"
+                                                    *ngIf="i > 0">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="separator-dashed"></div>
+
+                                    <!-- End -->
+
+                                    <!-- <div class="row form-group">
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.OpenTimeRequired' | translate"></label>
                                         <div class="col-md-8">
@@ -246,7 +307,7 @@
                                                     [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="row form-group">
                                         <label class="col-md-4"

@@ -15,6 +15,7 @@ import { JwtTokenHelper } from '../../common';
   templateUrl: './child.component.html',
   styleUrls: ['./child.component.scss']
 })
+
 export class ChildComponent implements OnInit {
   private isToggleFilter: boolean;
   private sortDropdown: DropdownModel[];
@@ -85,7 +86,6 @@ export class ChildComponent implements OnInit {
       this.message = err.message;
       this.isError = true;
       this.clientState.isBusy = false;
-
     });
   }
 
