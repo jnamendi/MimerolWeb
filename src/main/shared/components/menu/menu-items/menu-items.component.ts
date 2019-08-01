@@ -127,7 +127,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
 
   onSelectItem = (item: RestaurantMenuItemModel) => {
 
-    if (item.menuExraItems.length > 0) {
+    if (typeof item.menuExraItems != 'undefined') {
       return;
     }
 
@@ -165,7 +165,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   onSelectItemExtra = (item: RestaurantMenuItemModel, extraItems: ExtraItem[], selectExtraItem: MenuExtraItem) => {
 
     // Check menu extra
-    if (item.menuExraItems.length > 0) {
+    if (typeof item.menuExraItems === 'undefined') {
       if (this.restaurantDetailModel.restaurantClosed == true) {
         this.isResClose = true;
         return;
