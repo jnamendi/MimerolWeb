@@ -244,3 +244,15 @@ h2.tint_menu {
     margin-top: 0;
     border: 0;
 }
+.btn_additem {
+    float: right;
+    width: 35px;
+    height: 35px;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    background: #ff7d26;
+    background: -moz-linear-gradient(-45deg, #ff7d26 0%, #de5a02 100%);
+    background: -webkit-linear-gradient(-45deg, #ff7d26 0%, #de5a02 100%);
+    background: linear-gradient(135deg, #ff7d26 0%, #de5a02 100%);
+}
