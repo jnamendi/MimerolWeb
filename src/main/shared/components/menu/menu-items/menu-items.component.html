@@ -23,8 +23,8 @@
     <div *ngIf="menuItemModels && menuItemModels.length > 0" class="item-wrapper">
         <div class="fp_inner_box" data-scroll-index="0" *ngFor="let item of menuItemModels; let i = index">
             <div class="menu_item">
-                <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
-                    [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)">
+                <!-- <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
+                    [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)"> -->
                 <label class="text" for="{{i}}"
                     [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
                     <div class="menu_image">
@@ -43,8 +43,9 @@
                     </h3>
                     <div class="menu_description">{{item.desc}}</div>
                 </label>
+                <button type="button" class="btn_additem" (click)="onSelectItem(item)"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
-            <div *ngIf="item.isSelected && item.menuExraItems && item.menuExraItems.length > 0" class="menu_extraitems">
+            <div *ngIf="item.menuExraItems && item.menuExraItems.length > 0" class="menu_extraitems">
                 <div class="row">
                     <div class="extra_items" *ngFor="let extraItem of item.menuExraItems; let i = index">
                         <label class="extra_item_name">{{extraItem.name}}:</label>
@@ -70,6 +71,9 @@
                                         (onChange)="onSelectExtraItem(item, extItem)"></p-checkbox>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn_additem" (click)="onSelectItemExtra(item, extraItem.extraitems, extraItem.selectedExtraItem)"><i class="fa fa-plus" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
