@@ -25,12 +25,12 @@
         <div class="info-tab-section">
             <table>
                 <tr *ngFor="let item of deliveryTimes">
-                    <td>
+                    <td *ngIf="item.list[0].closeTime.length > 0 && item.list[0].closeTime.length > 0 ">
                         <span>{{"Commons.Texts." + item.weekDay | translate }}</span>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right" *ngIf="item.list[0].closeTime.length > 0 && item.list[0].closeTime.length > 0 ">
                         <ng-container *ngFor="let t of item.list;let i = index">
-                                <span>{{t.openTime}} - {{t.closeTime}}</span> <br>
+                                <span *ngIf="t.openTime.length > 0 && t.closeTime.length > 0; else isEmptyTime">{{t.openTime}} - {{t.closeTime}}</span> <br>
                         </ng-container>
                     </td>
                 </tr>
