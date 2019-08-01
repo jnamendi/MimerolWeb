@@ -3,7 +3,12 @@
         <h1 class="heading-style-2">
             <img *ngIf="restaurantModel.imageUrl" src="{{clientState.BaseUrl + restaurantModel.imageUrl}}"
                 alt="{{restaurantModel.name}}" />{{restaurantModel.name}}</h1>
-        <p class="time">Open time: {{restaurantModel.openTime}} - {{restaurantModel.closeTime}}</p>
+        <p class="time">Open time: 
+            <ng-container *ngFor="let item of restaurantWorkTimeToDay.list;let i = index">
+                <span>{{ item.openTime}} - {{item.closeTime}} </span> 
+                <span *ngIf="restaurantWorkTimeToDay.list.length - 1 > i">|</span>
+            </ng-container>
+        </p>
         <p class="border-detail">
             <img src="assets\images/border.png" alt="">
         </p>

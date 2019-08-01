@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, ChangeDetect
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService, I18nService, CoreService } from '../../core';
 import { JwtTokenHelper } from '../../common';
-import { OrderItem } from '../../models/restaurant-menu/restaurant-menu.model';
+import { OrderItem, RestaurantMenuItemModel } from '../../models/restaurant-menu/restaurant-menu.model';
 import { OrderModel, OrderResponseModel } from '../../models/order/order.model';
 import { Subscription } from 'rxjs';
 import { StorageKey } from '../../services/storage-key/storage-key';
@@ -56,6 +56,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private currentCountryCode: string;
   private currencySymbol: string = Configs.SpainCurrency.symbol;
 
+  private totalSubItemsPrice: number;
+  private totalItemsPrice: number;
+
   @ViewChild(ShoppingBagsComponent) child;
 
   constructor(
@@ -86,6 +89,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0) {
       this.router.navigate(['child']);
     }
+    this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
+    this.onCalculatePrice();
 
     this.orderModel.restaurantId = this.selectedMenuItems.restaurantId;
     this.orderModel.paymentType = 1;
@@ -411,7 +416,41 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onGetAddress = (address: string) => {
     this.googleAddress = address.replace(new RegExp(/(<([^>]+)>)/ig), '');
   }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  onCalculateItemPrice = (item: RestaurantMenuItemModel) => {
+    item.totalPrice = item && item.priceRate * item.quantity || 0;
+    if (item.menuExraItems && item.menuExraItems.some(i => i.extraitems && i.extraitems.some(m => m.isSelected))) {
+      item.menuExraItems.map(i => {
+        i.extraitems.map(m => {
+          if (m.isSelected) {
+            item.totalPrice += +m.priceRate * item.quantity;
+          }
+        });
+      });
+    }
+  }
+
+  onCalculatePrice = () => {
+    // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
+    Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
+  }
+
+  onCalculateSubTotalPrice = () => {
+    this.totalSubItemsPrice = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
+      this.selectedMenuItems.orderItemsRequest.reduce((prev, next) => prev + next.totalPrice, 0) || 0;
+    this.selectedMenuItems.totalSubPrice = this.totalSubItemsPrice;
+  }
+
+  onCalculateTotalPrices = (discountValue: number = 0) => {
+    this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
+    if (discountValue > 0) {
+      this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
+      this.selectedMenuItems.discount = discountValue;
+    }
+    this.selectedMenuItems.totalPrice = this.totalItemsPrice;
   }
 }
