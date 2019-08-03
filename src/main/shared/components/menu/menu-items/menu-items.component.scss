@@ -246,7 +246,7 @@ h2.tint_menu {
 }
 .btn_additem {
     float: right;
-    width: 35px;
+    width: 85px;
     height: 35px;
     border: none;
     color: #fff;
@@ -255,4 +255,32 @@ h2.tint_menu {
     background: -moz-linear-gradient(-45deg, #ff7d26 0%, #de5a02 100%);
     background: -webkit-linear-gradient(-45deg, #ff7d26 0%, #de5a02 100%);
     background: linear-gradient(135deg, #ff7d26 0%, #de5a02 100%);
+    i {
+        padding-left: 8px;
+    }
+}
+.arrow-up {
+    background: transparent;
+    color: #ff7d26;
+    font-size: 30px;
+    font-weight: 900;
+}
+.add_moreOpitons {
+    margin-top: 20px;
+    padding: 0px;
+    .quantityItem {
+        padding: 6px 12px;
+        border: solid 1px #ccc;
+        margin-left: 6px;
+        margin-right: 6px;
+        font-size: 15px;
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    .btn_SubtractOne,.btn_addOne{    
+        font-size: 15px;
+        background: none;
+        border: none;
+    }
 }

@@ -48,6 +48,9 @@ export interface RestaurantMenuItemModel {
     isSelected?: boolean;
     desc: string;
     menuExraItems: Array<RestaurantMenuExtraItemModel>;
+    isShowButton: boolean;
+    isShowButtonArrow: boolean;
+    isShowExtraItem: boolean;
 }
 
 export class RestaurantMenuExtraItemModel {

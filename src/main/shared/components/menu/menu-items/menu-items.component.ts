@@ -34,6 +34,8 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   private message: string;
   private isError: boolean;
   private isResClose: boolean;
+	private priceItem: number;
+	private quantityItem : number;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +75,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.menuItemModels = this.menuItems.filter(item => item.menuId == this.selectedMenuId);
+		this.menuItemModels = this.menuItems.filter(item => item.menuId == this.selectedMenuId);
     this.menuItemModels.map(m => {
       m.menuExraItems && m.menuExraItems.map(e => { return e.selectedExtraItem = null; })
     });
@@ -124,13 +126,20 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   //   this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
   //   this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
   // }
-
+	onShowButtonPlus = (item: RestaurantMenuItemModel) => {
+		item.isShowButton = false;
+		item.isShowExtraItem = false;
+		item.isShowButtonArrow = false;
+	}
   onSelectItem = (item: RestaurantMenuItemModel) => {
-
     if (typeof item.menuExraItems != 'undefined') {
+			item.isShowButtonArrow = true;
+			item.isShowExtraItem = true;
+			item.isShowButton = true;
+			this.priceItem = item.priceOriginal;
+			this.quantityItem = 1;
       return;
-    }
-
+		}
     if (this.restaurantDetailModel.restaurantClosed == true) {
       this.isResClose = true;
       return;
@@ -162,7 +171,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
   }
 
-  onSelectItemExtra = (item: RestaurantMenuItemModel, extraItems: ExtraItem[], selectExtraItem: MenuExtraItem) => {
+  onSelectItemExtra = (item: RestaurantMenuItemModel, selectExtraItem: MenuExtraItem) => {
 
     // Check menu extra
     if (typeof item.menuExraItems === 'undefined') {
@@ -244,7 +253,14 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   }
 
   onSelectExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: MenuExtraItem) => {
-    this.onAddExtraItemToBags(menuItem);
+		if(extraItem.isSelected){
+			this.priceItem = this.priceItem + extraItem.price;
+			extraItem.isSelected = false;
+		} else {
+			this.priceItem = this.priceItem - extraItem.price;
+			extraItem.isSelected = true;
+		}
+		// return;
   }
 
   onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
@@ -261,8 +277,9 @@ export class MenuItemsComponent implements OnInit, OnChanges {
           return i.isSelected = false
         }
       });
-    }
-    this.onAddExtraItemToBags(menuItem);
+		}
+
+    //this.priceItem = 
   }
 
   onAddExtraItemToBags = (menuItem: RestaurantMenuItemModel) => {
@@ -293,5 +310,11 @@ export class MenuItemsComponent implements OnInit, OnChanges {
 
   onCloseConfirm = (isConfirm: boolean) => {
     this.isResClose = false;
-  }
+	}
+	onAddOneItem = () => {
+		(this.quantityItem+1>>1000) ? this.quantityItem = 1000 : this.quantityItem = this.quantityItem+1;
+	}
+	onSubstractOneItem = () => {
+		(0 >= this.quantityItem-1) ? this.quantityItem = 1 : this.quantityItem = this.quantityItem-1;
+	}
 }
