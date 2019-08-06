@@ -180,71 +180,71 @@ export class MenuItemsComponent implements OnInit, OnChanges {
         return;
       }
 
-      this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
+    //   this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
-      if (!this.selectedMenuItems) {
-        this.selectedMenuItems = new OrderItem();
-        this.selectedMenuItems.orderItemsRequest = [];
-      }
+    //   if (!this.selectedMenuItems) {
+    //     this.selectedMenuItems = new OrderItem();
+    //     this.selectedMenuItems.orderItemsRequest = [];
+    //   }
 
-      if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-        && this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
-        // Push order item
-        this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-        // Bynding to MenuExtraItem
-        for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
-          if (this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length > 0) {
-            for (let j = 0; j < this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length; j++) {
-              if (extraItems.length > 0) {
-                // Push extra items
-                this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].extraitems = extraItems;
-              }
-              if (selectExtraItem.isSelected) {
-                // Push selected extra items
-                this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].selectedExtraItem = selectExtraItem;
-              }
-            }
-          }
-        }
-      }
+    //   if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
+    //     && this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
+    //     // Push order item
+    //     this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
+    //     // Bynding to MenuExtraItem
+    //     for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
+    //       if (this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length > 0) {
+    //         for (let j = 0; j < this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length; j++) {
+    //           if (extraItems.length > 0) {
+    //             // Push extra items
+    //             this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].extraitems = extraItems;
+    //           }
+    //           if (selectExtraItem.isSelected) {
+    //             // Push selected extra items
+    //             this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].selectedExtraItem = selectExtraItem;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
 
-      this.selectedMenuItems.restaurantId = this.restaurantId;
-      this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
-      this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
-      this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
-      this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
-      this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
-    } else {
+    //   this.selectedMenuItems.restaurantId = this.restaurantId;
+    //   this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
+    //   this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
+    //   this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
+    //   this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
+    //   this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
+    // } else {
 
-      if (this.restaurantDetailModel.restaurantClosed == true) {
-        this.isResClose = true;
-        return;
-      }
+    //   if (this.restaurantDetailModel.restaurantClosed == true) {
+    //     this.isResClose = true;
+    //     return;
+    //   }
 
-      this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
+    //   this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
-      if (!this.selectedMenuItems) {
-        this.selectedMenuItems = new OrderItem();
-        this.selectedMenuItems.orderItemsRequest = [];
-      }
+    //   if (!this.selectedMenuItems) {
+    //     this.selectedMenuItems = new OrderItem();
+    //     this.selectedMenuItems.orderItemsRequest = [];
+    //   }
 
-      if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-        && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
-        this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-      } else {
-        for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
-          if (this.selectedMenuItems.orderItemsRequest[i].menuItemId == item.menuItemId) {
-            this.selectedMenuItems.orderItemsRequest[i].quantity++;
-          }
-        }
-      }
+    //   if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
+    //     && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
+    //     this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
+    //   } else {
+    //     for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
+    //       if (this.selectedMenuItems.orderItemsRequest[i].menuItemId == item.menuItemId) {
+    //         this.selectedMenuItems.orderItemsRequest[i].quantity++;
+    //       }
+    //     }
+    //   }
 
-      this.selectedMenuItems.restaurantId = this.restaurantId;
-      this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
-      this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
-      this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
-      this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
-      this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
+    //   this.selectedMenuItems.restaurantId = this.restaurantId;
+    //   this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
+    //   this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
+    //   this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
+    //   this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
+    //   this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
     }
   }
 
@@ -255,10 +255,8 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   onSelectExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: MenuExtraItem) => {
 		if(extraItem.isSelected){
 			this.priceItem = this.priceItem + extraItem.price;
-			extraItem.isSelected = false;
 		} else {
 			this.priceItem = this.priceItem - extraItem.price;
-			extraItem.isSelected = true;
 		}
 		// return;
   }
