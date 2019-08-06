@@ -55,7 +55,7 @@ export interface RestaurantMenuItemModel {
 
 export class RestaurantMenuExtraItemModel {
     menuExtraItemId: number;
-    type: ExtraItemType;
+    extraItemType: ExtraItemType;
     name: string;
     extraitems: Array<ExtraItem>;
     selectedExtraItem: MenuExtraItem;
