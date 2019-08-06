@@ -318,11 +318,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
-    if (!this.coreService.timeInRange(this.selectedMenuItems.resOpenTime, this.selectedMenuItems.resCloseTime)) {
-      this.isResClose = true;
-      return;
-    }
-
     let orderInfo = <OrderModel>{
       ...this.orderModel,
       languageCode: this.i18nService.language.split('-')[0].toLocaleLowerCase(),
@@ -332,7 +327,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       restaurantId: this.selectedMenuItems && this.selectedMenuItems.restaurantId,
       address: this.googleAddress,
       orderItem: this.child.onGetShopingBag(),
-      discount: this.selectedMenuItems.discount
+      discount: this.child.onGetShopingBag().discount
     };
     this.clientState.isBusy = true;
     this.orderService.onPaymentOrder(orderInfo).subscribe(res => {
