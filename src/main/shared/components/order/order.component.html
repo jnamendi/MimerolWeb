@@ -271,6 +271,6 @@
         </section>
     </div>
 </div>
-<order-confirm-dialog [visible]="isEmptyOder || isResClose || !!existingEmail" [isEmpty]="isEmptyOder"
+<order-confirm-dialog [visible]="isEmptyOrder || isResClose || !!existingEmail" [isEmpty]="isEmptyOrder"
     [isResClose]="isResClose" [existingEmail]="existingEmail" (onClose)="onCloseConfirm($event)"
     (onConfirmNavigate)="onNavigateToLogin($event)"></order-confirm-dialog>

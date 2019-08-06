@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private sub: Subscription;
   private totalItemsInBag: number;
-  private isEmptyOder: boolean;
+  private isEmptyOrder: boolean;
   private restaurantId: number;
   private isAuthen: boolean;
   private message: string;
@@ -291,7 +291,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
-    //Check restaurant is open or not
+    //--- Check restaurant is open or not
     if (this.restaurantModel.restaurantClosed) {
       this.isResClose = true;
       return;
@@ -312,14 +312,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
+    //--- Check order empty
     if (!this.selectedMenuItems || this.selectedMenuItems
       && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0 || this.selectedMenuItems.totalPrice <= 0) {
-      this.isEmptyOder = true;
-      return;
-    }
-
-    if (!this.coreService.timeInRange(this.selectedMenuItems.resOpenTime, this.selectedMenuItems.resCloseTime)) {
-      this.isResClose = true;
+      this.isEmptyOrder = true;
       return;
     }
 
@@ -331,8 +327,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       deliveryCost: this.selectedMenuItems.deliveryCost,
       restaurantId: this.selectedMenuItems && this.selectedMenuItems.restaurantId,
       address: this.googleAddress,
-      orderItem: this.child.onGetShopingBag(),
-      discount: this.selectedMenuItems.discount
+      orderItem: this.child.onGetShoppingBag(),
+      discount: this.child.onGetShoppingBag().discount
     };
     this.clientState.isBusy = true;
     this.orderService.onPaymentOrder(orderInfo).subscribe(res => {
@@ -392,7 +388,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onCloseConfirm = (isConfirm: boolean) => {
-    this.isEmptyOder = false;
+    this.isEmptyOrder = false;
     this.isResClose = false;
   }
 
