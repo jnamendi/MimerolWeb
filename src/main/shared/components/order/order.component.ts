@@ -119,6 +119,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.deliveryTimes = timeRanges.filter(t => {
       return this.coreService.compareTimeGreaterThanCurrent(t);
     });
+
     this.onGetCities();
     this.onGetRestaurantDetails();
   }
@@ -321,26 +322,23 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isResClose = true;
       return;
     }
-    let district = this.districtModels.find(d => d.districtId == this.orderModel.districtId);
-    let city = this.cityModels.find(c => c.cityId == this.orderModel.cityId);
 
     let orderInfo = <OrderModel>{
       ...this.orderModel,
       languageCode: this.i18nService.language.split('-')[0].toLocaleLowerCase(),
       symbolLeft: Configs.SpainCurrency.symbol,
       currencyCode: Configs.SpainCurrency.code,
-      // time: new Date().toString(),
       deliveryCost: this.selectedMenuItems.deliveryCost,
       restaurantId: this.selectedMenuItems && this.selectedMenuItems.restaurantId,
       address: this.googleAddress,
       orderItem: this.child.onGetShopingBag(),
+      discount: this.selectedMenuItems.discount
     };
     this.clientState.isBusy = true;
     this.orderService.onPaymentOrder(orderInfo).subscribe(res => {
       let orderResponseModel = <OrderResponseModel>res.content;
       if (orderResponseModel) {
         this.storageService.onRemoveToken(`${StorageKey.ItemsInBag}__${this.restaurantId}`);
-        // this.storageService.onSetToken(`${StorageKey.OrderCheckedOut}${orderResponseModel.invoiceCode}`, JwtTokenHelper.CreateSigningToken(orderResponseModel));
         this.clientState.isBusy = false;
         this.router.navigate(['order-checkout', orderResponseModel.orderId], { queryParams: { orderCode: orderResponseModel.invoiceCode } });
       }

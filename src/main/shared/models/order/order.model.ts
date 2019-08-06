@@ -37,6 +37,7 @@ export class OrderModel {
     voucherCode: string;
     voucherId: number;
     paymentWith: number;
+    discount?: number;
 }
 
 export class OrderCheckoutModel {
