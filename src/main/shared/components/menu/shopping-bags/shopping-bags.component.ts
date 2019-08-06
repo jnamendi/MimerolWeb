@@ -26,7 +26,6 @@ export class ShoppingBagsComponent implements OnInit {
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private selectedMenuItems: OrderItem;
   private totalSubItemsPrice: number;
-  // private totalItemsVATPrice: number;
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
   private isResClose: boolean;
@@ -66,7 +65,6 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCalculatePrice = () => {
-    // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
     Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
   }
 
@@ -90,9 +88,6 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onChangeItemQuantity = (item: RestaurantMenuItemModel) => {
-    if (item.quantity) {
-
-    }
     var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
       this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
     this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity = item.quantity != 0 ? +item.quantity : 0;
@@ -135,11 +130,6 @@ export class ShoppingBagsComponent implements OnInit {
     this.selectedMenuItems.totalSubPrice = this.totalSubItemsPrice;
   }
 
-  // onCalculateVAT = () => {
-  //   // this.totalItemsVATPrice = this.totalSubItemsPrice * Configs.VAT / 100;
-  //   // this.selectedMenuItems.taxTotal = this.totalItemsVATPrice;
-  // }
-
   onCalculateTotalPrices = (discountValue: number = 0) => {
     this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
@@ -156,9 +146,7 @@ export class ShoppingBagsComponent implements OnInit {
     this.router.navigate(['./order', this.restaurantId])
   }
 
-  onGetShopingBag = (): OrderItem => {
-    // return <OrderItem>{ ...this.selectedMenuItems, totalPrice: this.totalItemsPrice, taxTotal: this.totalItemsVATPrice, totalSubPrice: this.totalSubItemsPrice };
-
+  onGetShoppingBag = (): OrderItem => {
     return <OrderItem>{ ...this.selectedMenuItems, totalPrice: this.totalItemsPrice, totalSubPrice: this.totalSubItemsPrice };
   }
 
