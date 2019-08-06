@@ -16,35 +16,36 @@
                     <h2 class="restaurant-name">
                         {{ownerOrderModel && ownerOrderModel.restaurantName}}
                     </h2>
-                    <p>
-                        <i>#{{orderCode}}</i>
-                    </p>
+
+                    <p><i>#{{orderCode}}</i></p>
+
                     <p>{{ownerOrderModel && ownerOrderModel.totalPrice}} {{currencySymbol}}</p>
+
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoName">
                         {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoName}}</p>
+
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoEmail">
                         {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoEmail}}</p>
+
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoNumber">
                         {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoNumber}}</p>
-                    <p *ngIf="ownerOrderModel.orderDate">
-                        {{ownerOrderModel && ownerOrderModel.orderDate | date: 'dd-MM-yyyy'}}
-                        <span [innerHTML]="'Components.Order.At' | translate"></span>
-                        <span
-                            *ngIf="ownerOrderModel.orderDate">{{ownerOrderModel && ownerOrderModel.orderDate | date: 'HH:mm'}}
-                            -</span>
-                        <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
-                        <span
-                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].address">{{ownerOrderModel && ownerOrderModel.orderInfos[0].address}},</span>
-                        <span
-                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].district">{{ownerOrderModel && ownerOrderModel.orderInfos[0].district}},</span>
-                        <span
-                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].city">{{ownerOrderModel && ownerOrderModel.orderInfos[0].city}}</span>
-                        <span
-                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].addressDescription">({{ownerOrderModel && ownerOrderModel.orderInfos[0].addressDescription}})</span>
-                    </p>
+
+                    <span *ngIf="ownerOrderModel && ownerOrderModel.orderDate">
+                        {{ownerOrderModel && ownerOrderModel.orderDate | date: 'dd-MM-yyyy'}}</span>
+                    <span [innerHTML]="'Components.Order.At' | translate"></span>
+                    <span *ngIf="ownerOrderModel && ownerOrderModel.orderDate">{{ownerOrderModel && ownerOrderModel.orderDate | date: 'HH:mm'}} - </span>
+                    <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
+                    <span
+                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].address">{{ownerOrderModel && ownerOrderModel.orderInfos[0].address}},</span>
+                    <span
+                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].district">{{ownerOrderModel && ownerOrderModel.orderInfos[0].district}},</span>
+                    <span
+                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].city">{{ownerOrderModel && ownerOrderModel.orderInfos[0].city}}</span>
+                    <span
+                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].addressDescription">({{ownerOrderModel && ownerOrderModel.orderInfos[0].addressDescription}})</span>
                 </div>
             </div>
         </div>
