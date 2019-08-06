@@ -210,7 +210,8 @@
             "FailCodePromotion": "Su orden de cantidad necesaria para alcanzar el valor mínimo de la orden",
             "SuccessCodePromotion": "Se ha aplicado el código promocional",
             "ErrorIsValid": "Se ha producido un error, comprueba los campos ingresados!",
-            "WorkingTime": "Tiempo de trabajo"
+            "WorkingTime": "Tiempo de trabajo",
+            "YourOrder": "Su pedido"
         },
         "Links": {
             "Title": "Enlaces",

@@ -210,7 +210,8 @@
             "FailCodePromotion": "Your amount order needed to reach the minimum order value",
             "SuccessCodePromotion": "The promotional code has been applied",
             "ErrorIsValid": "An error has occurred, please check the fields entered!",
-            "WorkingTime": "Working Time"
+            "WorkingTime": "Working Time",
+            "YourOrder": "Your order"
         },
         "Links": {
             "Title": "Links",
