@@ -3,7 +3,7 @@
         <tr>
             <td style="vertical-align:bottom;width:112px">
                 <img style="width: 65px;float: left;"
-                    src="https://mimerol-test.bmbsoft.com.vn:8888/72a3037e132ea5d7ff5e879d96599072.png">
+                    src="${frontendUrl}/72a3037e132ea5d7ff5e879d96599072.png">
             </td>
             <td
                 style="vertical-align:bottom;width:480px;text-align:right;font-family:Arial;font-size:20px;color:#999999;font-weight:bold">
@@ -25,7 +25,7 @@
             <br>
             <br> Si tiene una solicitud urgente u otra nota sobre su pedido, llame al ${restaurantAddress} al
             ${restaurantPhone}. Si tiene otros problemas, haga clic en Mimerol.com.
-            <a href="https://mimerol-test.bmbsoft.com.vn:8888/contact-us"
+            <a href="${frontendUrl}/contact-us"
                 style="color:#ff3102;font-weight:bold;text-decoration:none" target="_blank">haga clic aquí</a> o
             llámenos al
             1800 6123
@@ -90,12 +90,20 @@
                     <td style="padding-left:10px;width:70px">${deliveryCost} ${symbolLeft}</td>
                 </tr>
                 <tr>
-                    <td>
-                        <b>Total:</b>
-                    </td>
-                    <td style="padding-left:10px;width:70px">
-                        <b>${totalPrice} ${symbolLeft}</b>
-                    </td>
+                    <td>Descuento:</td>
+                    <td style="padding-left:10px;width:70px">${discount}</td>
+                </tr>
+                <tr>
+                    <td><b>Total:</b></td>
+                    <td style="padding-left:10px;width:70px"><b>${totalPrice} ${symbolLeft}</b></td>
+                </tr>
+                <tr>
+                    <td>Pago de invitado:</td>
+                    <td style="padding-left:10px;width:70px">${guestPay} ${symbolLeft}</td>
+                </tr>
+                <tr>
+                    <td>Reembolsos:</td>
+                    <td style="padding-left:10px;width:70px">${refunds} ${symbolLeft}</td>
                 </tr>
             </table>
         </td>
@@ -111,7 +119,9 @@
     <tr>
         <td style="float:left;font-family:Arial;text-align:left;font-size:9pt;font-weight:normal">
             <br>${userName}
+            <br>${userCompanyName}
             <br>${userAddress}
+            <br>${userAddressDesc}
             <br>${userDistrict}
             <br>${userCity}
             <br>Número de teléfono: ${userNumber}
@@ -141,11 +151,11 @@
     <tr>
         <td style="text-align:center;font-family:Arial;font-size:12px">
             <a style="color:#ff3102;font-weight:bold;text-decoration:none"
-                href="https://mimerol-test.bmbsoft.com.vn:8888/">Homepage</a> |
+                href="${frontendUrl}">Homepage</a> |
             <a style="color:#ff3102;font-weight:bold;text-decoration:none"
-                href="https://mimerol-test.bmbsoft.com.vn:8888/">Servicio al cliente</a> |
+                href="${frontendUrl}">Servicio al cliente</a> |
             <a style="color:#ff3102;font-weight:bold;text-decoration:none"
-                href="https://mimerol-test.bmbsoft.com.vn:8888/" target="_blank">Términos de Uso</a>
+                href="${frontendUrl}" target="_blank">Términos de Uso</a>
         </td>
     </tr>
     <tr>
