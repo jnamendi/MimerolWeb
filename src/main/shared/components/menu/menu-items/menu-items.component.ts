@@ -281,22 +281,46 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     return;
   }
 
+  // onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
+  //   if (extraItem.selectedExtraItem == null) {
+  //     extraItem.extraitems.map(i => {
+  //       if (i != null) {
+  //         return i.isSelected = false
+  //       }
+  //     });
+  //   } else {
+  //     extraItem.selectedExtraItem.isSelected = true;
+  //     extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
+  //       if (i != null) {
+  //         return i.isSelected = false
+  //       }
+  //     });
+  //   }
+
+  // }
+
   onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
     if (extraItem.selectedExtraItem == null) {
       extraItem.extraitems.map(i => {
-        if (i != null) {
-          return i.isSelected = false
+        if (i != null && i.isSelected === true) {
+
+          this.priceItem = this.priceItem - i.price;
+          return i.isSelected = false;
+
         }
       });
     } else {
       extraItem.selectedExtraItem.isSelected = true;
       extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
         if (i != null) {
-          return i.isSelected = false
+          if (i.isSelected === true) {
+            this.priceItem = this.priceItem - i.price;
+            return i.isSelected = false;
+          } else return i.isSelected = false
         }
       });
+      this.priceItem = this.priceItem + extraItem.selectedExtraItem.price;
     }
-
   }
 
   onAddExtraItemToBags = (menuItem: RestaurantMenuItemModel) => {

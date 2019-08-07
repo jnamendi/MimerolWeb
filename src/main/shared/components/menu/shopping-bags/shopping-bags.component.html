@@ -28,12 +28,12 @@
                                             onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
                                         <div class="button-container">
                                             <button class="cart-qty-minus" type="button"
-                                                (click)="decreaseItem(item)">-</button>
+                                                (click)="decreaseItem(item, i)">-</button>
                                             <button class="cart-qty-plus" type="button"
-                                                (click)="increaseItem(item)">+</button>
+                                                (click)="increaseItem(item, i)">+</button>
                                         </div>
                                     </div>
-                                    <a class="remove" (click)="onRemoveItem(item)"
+                                    <a class="remove" (click)="onRemoveItem(item, i)"
                                         [innerHTML]="'Commons.Texts.Remove' | translate"></a>
                                 </div>
                             </div>
