@@ -23,29 +23,45 @@
 
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoName">
-                        {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoName}}</p>
+                        <span [innerHTML]="'Commons.Texts.Name' | translate"></span>
+                        <span> : {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoName}}</span>
+                    </p>
 
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoEmail">
-                        {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoEmail}}</p>
+                        <span [innerHTML]="'Commons.Texts.Email' | translate"></span>
+                        <span> : {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoEmail}}</span>
+                    </p>
 
                     <p
                         *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].infoNumber">
-                        {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoNumber}}</p>
+                        <span [innerHTML]="'Commons.Texts.Phone' | translate"></span>
+                        <span> : {{ownerOrderModel && ownerOrderModel.orderInfos[0].infoNumber}}</span>
+                    </p>
 
-                    <span *ngIf="ownerOrderModel && ownerOrderModel.orderDate">
-                        {{ownerOrderModel && ownerOrderModel.orderDate | date: 'dd-MM-yyyy'}}</span>
-                    <span [innerHTML]="'Components.Order.At' | translate"></span>
-                    <span *ngIf="ownerOrderModel && ownerOrderModel.orderDate">{{ownerOrderModel && ownerOrderModel.orderDate | date: 'HH:mm'}} - </span>
-                    <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
-                    <span
-                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].address">{{ownerOrderModel && ownerOrderModel.orderInfos[0].address}},</span>
-                    <span
-                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].district">{{ownerOrderModel && ownerOrderModel.orderInfos[0].district}},</span>
-                    <span
-                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].city">{{ownerOrderModel && ownerOrderModel.orderInfos[0].city}}</span>
-                    <span
-                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].addressDescription">({{ownerOrderModel && ownerOrderModel.orderInfos[0].addressDescription}})</span>
+                    <p
+                        *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].remark">
+                        <span [innerHTML]="'Commons.Texts.Remarks' | translate"></span>
+                        <span> : {{ownerOrderModel && ownerOrderModel.orderInfos[0].remark}}</span>
+                    </p>
+
+                    <p>
+                        <span *ngIf="ownerOrderModel && ownerOrderModel.orderDate">
+                            {{ownerOrderModel && ownerOrderModel.orderDate | date: 'dd-MM-yyyy'}}</span>
+                        <span [innerHTML]="'Components.Order.At' | translate"></span>
+                        <span
+                            *ngIf="ownerOrderModel && ownerOrderModel.orderDate">{{ownerOrderModel && ownerOrderModel.orderDate | date: 'HH:mm'}}
+                            - </span>
+                        <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
+                        <span
+                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].address">{{ownerOrderModel && ownerOrderModel.orderInfos[0].address}},</span>
+                        <span
+                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].district">{{ownerOrderModel && ownerOrderModel.orderInfos[0].district}},</span>
+                        <span
+                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].city">{{ownerOrderModel && ownerOrderModel.orderInfos[0].city}}</span>
+                        <span
+                            *ngIf="ownerOrderModel && ownerOrderModel.orderInfos[0] && ownerOrderModel.orderInfos[0].addressDescription">({{ownerOrderModel && ownerOrderModel.orderInfos[0].addressDescription}})</span>
+                    </p>
                 </div>
             </div>
         </div>
