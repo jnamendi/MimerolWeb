@@ -23,8 +23,8 @@
     <div *ngIf="menuItemModels && menuItemModels.length > 0" class="item-wrapper">
         <div class="fp_inner_box" data-scroll-index="0" *ngFor="let item of menuItemModels; let i = index">
             <div class="menu_item">
-                <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
-                    [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)">
+                <!-- <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
+                    [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)"> -->
                 <label class="text" for="{{i}}"
                     [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
                     <div class="menu_image">
@@ -43,14 +43,16 @@
                     </h3>
                     <div class="menu_description">{{item.desc}}</div>
                 </label>
+                <button *ngIf="!item.isShowButton" type="button" class="btn_additem" (click)="onSelectItem(item)" name="butonAdd">{{spainCurrency.symbol}}{{item.priceOriginal.toLocaleString()}} | <i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button *ngIf="item.isShowButtonArrow" type="button" class="btn_additem arrow-up" (click)="onShowButtonPlus(item)"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
             </div>
-            <div *ngIf="item.isSelected && item.menuExraItems && item.menuExraItems.length > 0" class="menu_extraitems">
+            <div *ngIf="item.menuExraItems && item.menuExraItems.length > 0 && item.isShowExtraItem" class="menu_extraitems">
                 <div class="row">
                     <div class="extra_items" *ngFor="let extraItem of item.menuExraItems; let i = index">
                         <label class="extra_item_name">{{extraItem.name}}:</label>
                         <div *ngIf="extraItem.extraItemType == 1 && extraItem.extraitems && extraItem.extraitems.length > 0"
                             class="item single_choice">
-                            <div class="col-xs-6">
+                            <div class="col-xs-12">
                                 <select class="form-control" name="single_choice{{i}}"
                                     [(ngModel)]="extraItem.selectedExtraItem"
                                     (ngModelChange)="onSelectSingleExtraItem(item, extraItem)">
@@ -67,9 +69,19 @@
                                 <div class="extra-item-checkbox">
                                     <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+${{extItem.priceRate}})"
                                         [(ngModel)]="extItem.isSelected" binary="true"
-                                        (onChange)="onSelectExtraItem(item, extItem)"></p-checkbox>
+                                        (onChange)="onSelectExtraItem(extraItem, extItem)"></p-checkbox>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 add_moreOpitons">
+                        <div class="col-xs-6">
+                            <!-- <button class="btn_SubtractOne" (click)="onSubstractOneItem()" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                            <span class="quantityItem">{{quantityItem}}</span>
+                            <button class="btn_addOne" (click)="onAddOneItem()" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button> -->
+                        </div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn_additem" (click)="onSelectItemExtra(item)">{{spainCurrency.symbol}}{{priceItem.toLocaleString()}} |<i class="fa fa-plus" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>

@@ -64,7 +64,7 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
 
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
-    private checkOpenCloseIsEmpty: boolean = false;
+    private errorIsValid: boolean = false;
     private checkOpenLesserClose: boolean = false;
     private x: number;
     private y: number;
@@ -365,16 +365,17 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     }
 
     onUpdateRestaurant = (isValid: boolean) => {
+
         if (!isValid) {
+            this.errorIsValid = true;
             return;
+        }else {
+            this.errorIsValid = false;
         }
-        // let check = true;
+
         for (let i = 0; i < this.restaurantModel.restaurantWorkTimeModels.length; i++) {
             if (this.restaurantModel.restaurantWorkTimeModels[i].list.length != 0) {
                 for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels[i].list.length; j++) {
-                    // if (this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime != "" && this.restaurantModel.restaurantWorkTimeModels[i].list[j].closeTime != "") {
-                    //     check = false;
-                    // }
                     if (j > 0) {
                         let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime.split(":");
                         let vH = parseFloat(vTimes[0]);
@@ -389,7 +390,7 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
                             this.x = i;
                             this.y = j;
                             return;
-                        }else {
+                        } else {
                             this.checkOpenLesserClose = false;
                         }
 
@@ -398,19 +399,13 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
                             this.x = i;
                             this.y = j;
                             return;
-                        }else {
+                        } else {
                             this.checkOpenLesserClose = false;
                         }
                     }
                 }
             }
         }
-        // if (check) {
-        //     this.checkOpenCloseIsEmpty = true;
-        //     return;
-        // }
-
-        
 
         let newRestaurant = <RestaurantAdminModel>{
             ...this.restaurantModel,

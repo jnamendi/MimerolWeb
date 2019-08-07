@@ -211,12 +211,9 @@
                                     </div>
 
                                     <!-- Open - Close time -->
-
                                     <div class="separator-dashed"></div>
-                                    <h2 class="separator-dashed-tilte">Working Time</h2>
+                                    <h2 class="separator-dashed-tilte" [innerHTML]="'Commons.Texts.WorkingTime' | translate"></h2>
                                     <div class="separator-dashed"></div>
-                                    <!-- <div *ngIf="checkOpenCloseIsEmpty" class="error" style="text-align: center"
-                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div> -->
 
                                     <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let j = index"
                                         class="menu-extra-item">
@@ -230,7 +227,6 @@
                                                     [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
                                                     id="{{j}}{{i}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
-
                                                 <!-- Required open time -->
                                                 <div *ngIf="checkOpenLesserClose == true && x == j && y == i"
                                                     class="error"
@@ -238,22 +234,18 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-
                                                 <!-- Input close time -->
                                                 <input type="time" atp-time-picker comparison="greater"
                                                     [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
                                                     id="{{j}}{{i}}close" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
-
                                                 <!-- Required close time -->
-                                                <div *ngIf="menuExtraItemNameClose.invalid && (menuExtraItemNameClose.dirty || menuExtraItemNameClose.touched || f.submitted)"
-                                                    class="error">
+                                                <div *ngIf="menuExtraItemNameClose.touched" class="error">
                                                     <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
                                                         [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- Button add and remove open close time -->
                                             <div class="action col-md-2">
                                                 <button type="button" (click)="onAddMoreExtraItem(val.list, val)"
@@ -266,7 +258,6 @@
                                     </div>
 
                                     <div class="separator-dashed"></div>
-
                                     <!-- End -->
 
                                     <!-- <div class="row form-group">
@@ -428,6 +419,7 @@
                                     </div> -->
                                 </div>
                             </div>
+                            <div *ngIf="errorIsValid" class="error" [innerHTML]="'Commons.Texts.ErrorIsValid' | translate"></div> 
                         </div>
 
                         <div class="box-footer">

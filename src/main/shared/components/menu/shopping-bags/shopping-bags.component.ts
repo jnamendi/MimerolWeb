@@ -26,7 +26,6 @@ export class ShoppingBagsComponent implements OnInit {
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private selectedMenuItems: OrderItem;
   private totalSubItemsPrice: number;
-  // private totalItemsVATPrice: number;
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
   private isResClose: boolean;
@@ -66,22 +65,19 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onCalculatePrice = () => {
-    // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
     Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
   }
 
-  increaseItem = (item: RestaurantMenuItemModel) => {
-    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
-    this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity += 1;
+  increaseItem = (item: RestaurantMenuItemModel, index: number) => {
+    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && index;
+    this.selectedMenuItems.orderItemsRequest[index].quantity += 1;
     this.onCalculateItemPrice(this.selectedMenuItems.orderItemsRequest[menuItemIndex]);
     this.onCalculatePrice();
     this.onSetSelectedItems();
   }
 
-  decreaseItem = (item: RestaurantMenuItemModel) => {
-    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
+  decreaseItem = (item: RestaurantMenuItemModel, index: number) => {
+    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && index;
     this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity
       = this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity != 0 ? this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity - 1 : 0;
     this.onCalculateItemPrice(this.selectedMenuItems.orderItemsRequest[menuItemIndex]);
@@ -90,9 +86,6 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onChangeItemQuantity = (item: RestaurantMenuItemModel) => {
-    if (item.quantity) {
-
-    }
     var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
       this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
     this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity = item.quantity != 0 ? +item.quantity : 0;
@@ -101,14 +94,17 @@ export class ShoppingBagsComponent implements OnInit {
     this.onSetSelectedItems();
   }
 
-  onRemoveItem = (item: RestaurantMenuItemModel) => {
-    let itemInBags = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
-    this.selectedMenuItems.orderItemsRequest = itemInBags;
-    this.onCalculateItemPrice(item);
+  onRemoveItem = (item: RestaurantMenuItemModel, index: number) => {
+    // let itemInBags = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
+    //   this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
+    // this.selectedMenuItems.orderItemsRequest = itemInBags;
+    // this.onCalculateItemPrice(item);
+    // this.onCalculatePrice();
+    // this.onSetSelectedItems();
+    // this.removedItem.emit(item.menuItemId);
+    this.selectedMenuItems.orderItemsRequest.splice(index, 1);
     this.onCalculatePrice();
     this.onSetSelectedItems();
-    this.removedItem.emit(item.menuItemId);
   }
 
   onSetSelectedItems = () => {
@@ -135,11 +131,6 @@ export class ShoppingBagsComponent implements OnInit {
     this.selectedMenuItems.totalSubPrice = this.totalSubItemsPrice;
   }
 
-  // onCalculateVAT = () => {
-  //   // this.totalItemsVATPrice = this.totalSubItemsPrice * Configs.VAT / 100;
-  //   // this.selectedMenuItems.taxTotal = this.totalItemsVATPrice;
-  // }
-
   onCalculateTotalPrices = (discountValue: number = 0) => {
     this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
@@ -156,9 +147,7 @@ export class ShoppingBagsComponent implements OnInit {
     this.router.navigate(['./order', this.restaurantId])
   }
 
-  onGetShopingBag = (): OrderItem => {
-    // return <OrderItem>{ ...this.selectedMenuItems, totalPrice: this.totalItemsPrice, taxTotal: this.totalItemsVATPrice, totalSubPrice: this.totalSubItemsPrice };
-
+  onGetShoppingBag = (): OrderItem => {
     return <OrderItem>{ ...this.selectedMenuItems, totalPrice: this.totalItemsPrice, totalSubPrice: this.totalSubItemsPrice };
   }
 
