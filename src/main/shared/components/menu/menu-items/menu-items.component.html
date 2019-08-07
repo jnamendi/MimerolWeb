@@ -69,7 +69,7 @@
                                 <div class="extra-item-checkbox">
                                     <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+${{extItem.priceRate}})"
                                         [(ngModel)]="extItem.isSelected" binary="true"
-                                        (onChange)="onSelectExtraItem(item, extItem)"></p-checkbox>
+                                        (onChange)="onSelectExtraItem(extraItem, extItem)"></p-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             <button class="btn_addOne" (click)="onAddOneItem()" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn_additem" (click)="onSelectItemExtra(item, item.menuExraItems)">{{spainCurrency.symbol}}{{priceItem.toLocaleString()}} |<i class="fa fa-plus" aria-hidden="true"></i></button>
+                            <button type="button" class="btn_additem" (click)="onSelectItemExtra(item)">{{spainCurrency.symbol}}{{priceItem.toLocaleString()}} |<i class="fa fa-plus" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>

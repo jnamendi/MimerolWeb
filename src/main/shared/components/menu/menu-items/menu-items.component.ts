@@ -37,6 +37,9 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   private priceItem: number;
   private quantityItem: number;
 
+  // private shopingBagMenuItem: RestaurantMenuItemModel[] = [];
+  // private tempType: Array<RestaurantMenuExtraItemModel>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -188,58 +191,56 @@ export class MenuItemsComponent implements OnInit, OnChanges {
       && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
       this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
     } else {
-      let checkEqualsItem = true;
-      for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
-
-        if (this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length > 0) {
-
-          for (let j = 0; j < this.selectedMenuItems.orderItemsRequest[i].menuExraItems.length; j++) {
-
-            if (item.menuExraItems[j].extraItemType === 2) {
-
-              for (let k = 0; k < item.menuExraItems[j].extraitems.length; k++) {
-
-                if (typeof item.menuExraItems[j].extraitems[k].isSelected != 'undefined' && item.menuExraItems[j].extraitems[k].isSelected) {
-
-                  if (this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].extraitems[k].isSelected && item.menuExraItems[j].extraitems[k].extraItemId === this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].extraitems[k].extraItemId) {
-
+      let checkPush = false;
+      let indexTemp = 0;
+      let shopingBagMenuItem = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
+      if (shopingBagMenuItem != null) {
+        shopingBagMenuItem.forEach(shopingBagMenuExtraItem => {
+          item.menuExraItems.forEach(itemsMenuExtra => {
+            let tempType = shopingBagMenuExtraItem.menuExraItems.filter(x => x.extraItemType === itemsMenuExtra.extraItemType);
+            if (itemsMenuExtra.extraItemType === 2) {
+              tempType.forEach(element => {
+                let tempSelectMutiItem;
+                if (itemsMenuExtra.selectedMultiItem.length === element.selectedMultiItem.length && (itemsMenuExtra.selectedMultiItem.length > 0 && element.selectedMultiItem.length > 0)) {
+                  itemsMenuExtra.selectedMultiItem.forEach(multiExtras => {
+                    tempSelectMutiItem = element.selectedMultiItem.filter(x => x.extraItemId === multiExtras.extraItemId);
+                  })
+                  if (tempSelectMutiItem.length > 0) {
+                    checkPush = false;
+                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
                   } else {
-                    checkEqualsItem = false;
+                    checkPush = true;
                   }
-
+                } else {
+                  checkPush = true;
                 }
-
-              }
-
+              });
+            } else if (checkPush === false && itemsMenuExtra.extraItemType === 1) {
+              tempType.forEach(element => {
+                if ((itemsMenuExtra.selectedExtraItem != null && element.selectedExtraItem != null) && itemsMenuExtra.selectedExtraItem.extraItemId === element.selectedExtraItem.extraItemId) {
+                  checkPush = false;
+                  indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
+                } else {
+                  if (itemsMenuExtra.selectedExtraItem === null && element.selectedExtraItem === null) {
+                    checkPush = false;
+                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
+                  } else {
+                    checkPush = true;
+                  }
+                }
+              });
             }
-            if (item.menuExraItems[j].extraItemType === 1 && item.menuExraItems[j].selectedExtraItem != null) {
-              if (this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].selectedExtraItem != null && item.menuExraItems[j].selectedExtraItem.extraItemId === this.selectedMenuItems.orderItemsRequest[i].menuExraItems[j].selectedExtraItem.extraItemId) {
-
-              } else {
-                checkEqualsItem = false;
-              }
-            }
-
-          }
-
-        }
-
-      }
-
-      if (checkEqualsItem === true) {
-        for (let i = 0; i < this.selectedMenuItems.orderItemsRequest.length; i++) {
-          if (this.selectedMenuItems.orderItemsRequest[i].menuItemId == item.menuItemId) {
-            this.selectedMenuItems.orderItemsRequest[i].quantity++;
-          }
-        }
+          });
+        })
       } else {
-        if (item.quantity > 0) {
-          this.selectedMenuItems.orderItemsRequest.push({ ...item });
-        } else {
-          this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-        }
+        checkPush = true;
       }
 
+      if (checkPush === true) {
+        this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
+      } else {
+        this.selectedMenuItems.orderItemsRequest[indexTemp].quantity++;
+      }
     }
 
     this.selectedMenuItems.restaurantId = this.restaurantId;
@@ -248,40 +249,54 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
     this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
     this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
+
+    this.priceItem = item.priceOriginal;
+    this.quantityItem = 1;
+    item.menuExraItems.forEach(e => {
+      e.extraitems.map(x => {
+        if (x.isSelected && x.isSelected === true) {
+          return x.isSelected = false;
+        }
+      })
+      e.selectedExtraItem = null;
+      e.selectedMultiItem = [];
+    })
   }
 
   onEmitSelectedMenuItem = (totalItems: number) => {
     this.itemInBags.emit(totalItems);
   }
 
-  onSelectExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: MenuExtraItem) => {
-    // if(extraItem.isSelected){
-    // 	this.priceItem = this.priceItem + extraItem.price;
-    // 	extraItem.isSelected = false;
-    // } else {
-    // 	this.priceItem = this.priceItem - extraItem.price;
-    // 	extraItem.isSelected = true;
-    // }
-    // return;
+  onSelectExtraItem = (extraItems: RestaurantMenuExtraItemModel, extraItem: ExtraItem) => {
+    if (typeof extraItems.selectedMultiItem === 'undefined') {
+      extraItems.selectedMultiItem = []
+    }
+    if (extraItem.isSelected) {
+      this.priceItem = this.priceItem + extraItem.price;
+      let arr = extraItems.extraitems.filter(x => x.isSelected && x.isSelected === true);
+      extraItems.selectedMultiItem = arr;
+    } else {
+      this.priceItem = this.priceItem - extraItem.price;
+    }
+    return;
   }
 
   onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
-    // if (extraItem.selectedExtraItem == null) {
-    //   extraItem.extraitems.map(i => {
-    //     if (i != null) {
-    //       return i.isSelected = false
-    //     }
-    //   });
-    // } else {
-    //   extraItem.selectedExtraItem.isSelected = true;
-    //   extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
-    //     if (i != null) {
-    //       return i.isSelected = false
-    //     }
-    //   });
-    // }
+    if (extraItem.selectedExtraItem == null) {
+      extraItem.extraitems.map(i => {
+        if (i != null) {
+          return i.isSelected = false
+        }
+      });
+    } else {
+      extraItem.selectedExtraItem.isSelected = true;
+      extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
+        if (i != null) {
+          return i.isSelected = false
+        }
+      });
+    }
 
-    //this.priceItem = 
   }
 
   onAddExtraItemToBags = (menuItem: RestaurantMenuItemModel) => {
