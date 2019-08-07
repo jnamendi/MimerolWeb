@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private sub: Subscription;
   private totalItemsInBag: number;
-  private isEmptyOder: boolean;
+  private isEmptyOrder: boolean;
   private restaurantId: number;
   private isAuthen: boolean;
   private message: string;
@@ -119,6 +119,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.deliveryTimes = timeRanges.filter(t => {
       return this.coreService.compareTimeGreaterThanCurrent(t);
     });
+
     this.onGetCities();
     this.onGetRestaurantDetails();
   }
@@ -290,7 +291,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
-    //Check restaurant is open or not
+    //--- Check restaurant is open or not
     if (this.restaurantModel.restaurantClosed) {
       this.isResClose = true;
       return;
@@ -311,36 +312,29 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
+    //--- Check order empty
     if (!this.selectedMenuItems || this.selectedMenuItems
       && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0 || this.selectedMenuItems.totalPrice <= 0) {
-      this.isEmptyOder = true;
+      this.isEmptyOrder = true;
       return;
     }
-
-    if (!this.coreService.timeInRange(this.selectedMenuItems.resOpenTime, this.selectedMenuItems.resCloseTime)) {
-      this.isResClose = true;
-      return;
-    }
-    let district = this.districtModels.find(d => d.districtId == this.orderModel.districtId);
-    let city = this.cityModels.find(c => c.cityId == this.orderModel.cityId);
 
     let orderInfo = <OrderModel>{
       ...this.orderModel,
       languageCode: this.i18nService.language.split('-')[0].toLocaleLowerCase(),
       symbolLeft: Configs.SpainCurrency.symbol,
       currencyCode: Configs.SpainCurrency.code,
-      // time: new Date().toString(),
       deliveryCost: this.selectedMenuItems.deliveryCost,
       restaurantId: this.selectedMenuItems && this.selectedMenuItems.restaurantId,
       address: this.googleAddress,
-      orderItem: this.child.onGetShopingBag(),
+      orderItem: this.child.onGetShoppingBag(),
+      discount: this.child.onGetShoppingBag().discount
     };
     this.clientState.isBusy = true;
     this.orderService.onPaymentOrder(orderInfo).subscribe(res => {
       let orderResponseModel = <OrderResponseModel>res.content;
       if (orderResponseModel) {
         this.storageService.onRemoveToken(`${StorageKey.ItemsInBag}__${this.restaurantId}`);
-        // this.storageService.onSetToken(`${StorageKey.OrderCheckedOut}${orderResponseModel.invoiceCode}`, JwtTokenHelper.CreateSigningToken(orderResponseModel));
         this.clientState.isBusy = false;
         this.router.navigate(['order-checkout', orderResponseModel.orderId], { queryParams: { orderCode: orderResponseModel.invoiceCode } });
       }
@@ -394,7 +388,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onCloseConfirm = (isConfirm: boolean) => {
-    this.isEmptyOder = false;
+    this.isEmptyOrder = false;
     this.isResClose = false;
   }
 
