@@ -68,18 +68,16 @@ export class ShoppingBagsComponent implements OnInit {
     Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
   }
 
-  increaseItem = (item: RestaurantMenuItemModel) => {
-    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
-    this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity += 1;
+  increaseItem = (item: RestaurantMenuItemModel, index: number) => {
+    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && index;
+    this.selectedMenuItems.orderItemsRequest[index].quantity += 1;
     this.onCalculateItemPrice(this.selectedMenuItems.orderItemsRequest[menuItemIndex]);
     this.onCalculatePrice();
     this.onSetSelectedItems();
   }
 
-  decreaseItem = (item: RestaurantMenuItemModel) => {
-    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.findIndex(x => x.menuItemId == item.menuItemId);
+  decreaseItem = (item: RestaurantMenuItemModel, index: number) => {
+    var menuItemIndex = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && index;
     this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity
       = this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity != 0 ? this.selectedMenuItems.orderItemsRequest[menuItemIndex].quantity - 1 : 0;
     this.onCalculateItemPrice(this.selectedMenuItems.orderItemsRequest[menuItemIndex]);
@@ -96,14 +94,17 @@ export class ShoppingBagsComponent implements OnInit {
     this.onSetSelectedItems();
   }
 
-  onRemoveItem = (item: RestaurantMenuItemModel) => {
-    let itemInBags = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
-    this.selectedMenuItems.orderItemsRequest = itemInBags;
-    this.onCalculateItemPrice(item);
+  onRemoveItem = (item: RestaurantMenuItemModel, index: number) => {
+    // let itemInBags = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
+    //   this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
+    // this.selectedMenuItems.orderItemsRequest = itemInBags;
+    // this.onCalculateItemPrice(item);
+    // this.onCalculatePrice();
+    // this.onSetSelectedItems();
+    // this.removedItem.emit(item.menuItemId);
+    this.selectedMenuItems.orderItemsRequest.splice(index, 1);
     this.onCalculatePrice();
     this.onSetSelectedItems();
-    this.removedItem.emit(item.menuItemId);
   }
 
   onSetSelectedItems = () => {
