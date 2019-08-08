@@ -93,6 +93,16 @@
                         </tr>
                         <tr>
                             <td></td>
+                            <td class="delivery-costs">{{'Commons.Texts.GuestPay' | translate}}:</td>
+                            <td>{{ownerOrderModel.paymentWith}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="delivery-costs">{{'Commons.Texts.Refunds' | translate}}:</td>
+                            <td>{{ownerOrderModel.paymentWith - ownerOrderModel.totalPrice}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
                             <td class="payment-method">
                                 <span [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></span> :
                             </td>
