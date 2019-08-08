@@ -10,6 +10,7 @@ import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.mo
 import { ApiError } from '../../../services/api-response/api-response';
 import { Configs } from '../../../common/configs/configs';
 import { ClientState } from '../../../state';
+import { equal } from 'assert';
 
 @Component({
   selector: 'menu-items',
@@ -175,6 +176,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   }
 
   onSelectItemExtra = (item: RestaurantMenuItemModel) => {
+
     if (this.restaurantDetailModel.restaurantClosed == true) {
       this.isResClose = true;
       return;
@@ -196,13 +198,16 @@ export class MenuItemsComponent implements OnInit, OnChanges {
       let shopingBagMenuItem = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
       if (shopingBagMenuItem != null) {
         shopingBagMenuItem.forEach(shopingBagMenuExtraItem => {
-          item.menuExraItems.forEach(itemsMenuExtra => {
-            let tempType = shopingBagMenuExtraItem.menuExraItems.filter(x => x.extraItemType === itemsMenuExtra.extraItemType);
-            if (itemsMenuExtra.extraItemType === 2) {
+          item.menuExraItems.forEach(itemsMenuExtra1 => {
+            let tempType = shopingBagMenuExtraItem.menuExraItems.filter(x => x.extraItemType === itemsMenuExtra1.extraItemType);
+            if (itemsMenuExtra1.extraItemType === 2) {
               tempType.forEach(element => {
                 let tempSelectMutiItem;
-                if (itemsMenuExtra.selectedMultiItem.length === element.selectedMultiItem.length && (itemsMenuExtra.selectedMultiItem.length > 0 && element.selectedMultiItem.length > 0)) {
-                  itemsMenuExtra.selectedMultiItem.forEach(multiExtras => {
+                if ((typeof itemsMenuExtra1.selectedMultiItem !== 'undefined') && (typeof element.selectedMultiItem !== 'undefined')
+                  && itemsMenuExtra1.selectedMultiItem.length === element.selectedMultiItem.length
+                  && itemsMenuExtra1.selectedMultiItem.length > 0
+                  && element.selectedMultiItem.length > 0) {
+                  itemsMenuExtra1.selectedMultiItem.forEach(multiExtras => {
                     tempSelectMutiItem = element.selectedMultiItem.filter(x => x.extraItemId === multiExtras.extraItemId);
                   })
                   if (tempSelectMutiItem.length > 0) {
@@ -212,16 +217,23 @@ export class MenuItemsComponent implements OnInit, OnChanges {
                     checkPush = true;
                   }
                 } else {
-                  checkPush = true;
+                  if ((typeof itemsMenuExtra1.selectedMultiItem === 'undefined' || itemsMenuExtra1.selectedMultiItem.length === 0)
+                    && (typeof element.selectedMultiItem === 'undefined' || element.selectedMultiItem.length === 0)) {
+                    checkPush = false;
+                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
+                  } else {
+                    checkPush = true;
+                  }
                 }
               });
-            } else if (checkPush === false && itemsMenuExtra.extraItemType === 1) {
+            } else if (checkPush === false && itemsMenuExtra1.extraItemType === 1) {
               tempType.forEach(element => {
-                if ((itemsMenuExtra.selectedExtraItem != null && element.selectedExtraItem != null) && itemsMenuExtra.selectedExtraItem.extraItemId === element.selectedExtraItem.extraItemId) {
+                if ((itemsMenuExtra1.selectedExtraItem != null && element.selectedExtraItem != null)
+                  && itemsMenuExtra1.selectedExtraItem.extraItemId === element.selectedExtraItem.extraItemId) {
                   checkPush = false;
                   indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
                 } else {
-                  if (itemsMenuExtra.selectedExtraItem === null && element.selectedExtraItem === null) {
+                  if (itemsMenuExtra1.selectedExtraItem === null && element.selectedExtraItem === null) {
                     checkPush = false;
                     indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
                   } else {
