@@ -91,49 +91,25 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     }
   }
 
-  // onSelectItem = (item: RestaurantMenuItemModel) => {
-  //   if (this.restaurantDetailModel.restaurantClosed == true) {
-  //     item.isSelected = false;
-  //     this.isResClose = true;
-  //     return;
-  //   }
-
-  //   this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
-  //   if (!this.selectedMenuItems) {
-  //     this.selectedMenuItems = new OrderItem();
-  //     this.selectedMenuItems.orderItemsRequest = [];
-  //   }
-  //   if (item.isSelected) {
-  //     if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-  //       && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
-  //       this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-  //     }
-  //   } else {
-  //     let itemsSelected = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-  //       && this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
-
-  //     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest
-  //       && this.selectedMenuItems.orderItemsRequest.map(m => {
-  //         m.menuExraItems && m.menuExraItems.map(i => {
-  //           i.extraitems && i.extraitems.map(e => { e.isSelected = false })
-  //         })
-  //       });
-  //     if (itemsSelected) {
-  //       this.selectedMenuItems.orderItemsRequest = itemsSelected;
-  //     }
-  //   }
-  //   this.selectedMenuItems.restaurantId = this.restaurantId;
-  //   this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
-  //   this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
-  //   this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
-  //   this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
-  //   this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
-  // }
   onShowButtonPlus = (item: RestaurantMenuItemModel) => {
     item.isShowButton = false;
     item.isShowExtraItem = false;
     item.isShowButtonArrow = false;
   }
+
+  onConvertMenuItem = (item: RestaurantMenuItemModel) => {
+    item.menuExraItems.forEach(menuItems => {
+      if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem !== null) {
+        menuItems.extraitems = [];
+        menuItems.extraitems.push(menuItems.selectedExtraItem);
+      }else if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length > 0) {
+        menuItems.extraitems = [];
+        menuItems.extraitems = menuItems.selectedMultiItem;
+      }
+    })
+    return item;
+  }
+
   onSelectItem = (item: RestaurantMenuItemModel) => {
     if (typeof item.menuExraItems != 'undefined') {
       item.isShowButtonArrow = true;
@@ -174,11 +150,14 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
   }
 
-  onSelectItemExtra = (item: RestaurantMenuItemModel) => {
+  onSelectItemExtra = (items: RestaurantMenuItemModel) => {
     if (this.restaurantDetailModel.restaurantClosed == true) {
       this.isResClose = true;
       return;
     }
+
+    let item: RestaurantMenuItemModel;
+    item = this.onConvertMenuItem(items);
 
     this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
