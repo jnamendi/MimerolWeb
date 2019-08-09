@@ -425,6 +425,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.voucherService.getPromotionByCode(this.orderModel.promotionCode, this.orderModel.restaurantId).subscribe(res => {
       let voucher = <PromotionModel>{ ...res.content };
       this.child.onCalculateTotalPrices(voucher.value);
+      this.onBuildPaymentWiths();
       this.clientState.isBusy = false;
       this.isError = false;
     }, (err: ApiError) => {
@@ -432,8 +433,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isError = true;
       this.clientState.isBusy = false;
     });
-
-
   }
 
   onGoBack = () => {

@@ -152,7 +152,7 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onGetTotalItemPrice = (): number => {
-    return this.totalItemsPrice;
+    return this.selectedMenuItems.totalPrice;
   }
 
   onCloseConfirm = (isConfirm: boolean) => {
