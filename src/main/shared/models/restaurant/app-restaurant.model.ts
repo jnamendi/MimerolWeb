@@ -34,7 +34,7 @@ export class AppRestaurantModel extends BaseModel {
     sortOrder: number;
     imageUrl?: string;
     desc: string;
-    estDeliveryTime: string;
+    estTime: string;
     city: string;
     categoryIds: Array<RestaurantCategory>;
     restaurantClosed?: boolean;

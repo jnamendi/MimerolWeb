@@ -58,7 +58,7 @@ export class RestaurantMenuExtraItemModel {
     extraItemType: ExtraItemType;
     name: string;
     extraitems: Array<ExtraItem>;
-    selectedExtraItem: MenuExtraItem;
+    selectedExtraItem: ExtraItem;
     selectedMultiItem: Array<ExtraItem>;
     constructor() {
         this.selectedExtraItem = null;
