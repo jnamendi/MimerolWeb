@@ -326,7 +326,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         if (!isValid || this.isSearchAddressError) {
             this.errorIsValid = true;
             return;
-        }else {
+        } else {
             this.errorIsValid = false;
         }
 
@@ -361,6 +361,18 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
                         }
                     }
                 }
+            }
+        }
+
+        for (let i = 0; i < this.restaurantModel.restaurantWorkTimeModels.length; i++) {
+            if (this.restaurantModel.restaurantWorkTimeModels[i].list.length > 1) {
+                for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels[i].list.length; j++) {
+                    if (this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime == "" || this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime == null) {
+                        this.restaurantModel.restaurantWorkTimeModels[i].list.splice(j, 1);
+                    }
+                }
+            } else if (this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime == "" || this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime == null) {
+                this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
             }
         }
 
