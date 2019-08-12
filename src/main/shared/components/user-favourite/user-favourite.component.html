@@ -6,12 +6,14 @@
             <div class="col-md-9">
                 <div class="user-right">
                     <h2 [innerHTML]="'Components.MyAccount.TxtFavourite' | translate"></h2>
-                    <p *ngIf="favouriteModel && favouriteModel.length == 0" [innerHTML]="'Components.MyAccount.TxtFavouriteEmpty' | translate"></p>
+                    <p *ngIf="favouriteModel && favouriteModel.length == 0"
+                        [innerHTML]="'Components.MyAccount.TxtFavouriteEmpty' | translate"></p>
                     <div *ngIf="favouriteModel && favouriteModel.length > 0" class="favourite-box">
                         <div *ngFor="let favourite of favouriteModel" class="favourite-wrapper">
                             <div class="favourite-picture">
                                 <a href="/menu/{{favourite.restaurantId}}">
-                                    <img class="logo" src="{{favourite.imageUrl =='' ? 'assets/images/logo.png' : clientState.BaseUrl + favourite.imageUrl}}"
+                                    <img class="logo"
+                                        src="{{favourite.imageUrl =='' ? 'assets/images/logo.png' : clientState.BaseUrl + favourite.imageUrl}}"
                                         alt="{{favourite.restaurantName}}" />
                                 </a>
                             </div>
@@ -20,7 +22,9 @@
                                     <a href="/menu/{{favourite.restaurantId}}">{{favourite.restaurantName}}</a>
                                 </h2>
                                 <div class="restaurant-rating">
-                                    <p-rating class="rating" [ngModel]="favourite && favourite.rating" readonly="true" stars="5" [cancel]="false"></p-rating>
+                                    <div class="rating" [style.width]="(favourite.rating * 100)/5 + '%'"></div>
+                                    <!-- <p-rating class="rating" [ngModel]="favourite && favourite.rating" readonly="true"
+                                        stars="5" [cancel]="false"></p-rating> -->
                                     <span>({{favourite.numOfReview}})</span>
                                 </div>
                                 <div class="address">
