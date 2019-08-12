@@ -11,6 +11,7 @@ import { ApiError } from '../../../services/api-response/api-response';
 import { Configs } from '../../../common/configs/configs';
 import { ClientState } from '../../../state';
 import { equal } from 'assert';
+import { min } from 'rxjs/operator/min';
 
 @Component({
   selector: 'menu-items',
@@ -80,6 +81,11 @@ export class MenuItemsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.menuItemModels = this.menuItems.filter(item => item.menuId == this.selectedMenuId);
+    this.menuItemModels.forEach(mim => {
+      if (typeof mim.menuExraItems != 'undefined' ) {
+        mim.menuExraItems.sort((a,b)=>a.extraItemType - b.extraItemType);
+      }
+    });
     this.menuItemModels.map(m => {
       m.menuExraItems && m.menuExraItems.map(e => { return e.selectedExtraItem = null; })
     });
