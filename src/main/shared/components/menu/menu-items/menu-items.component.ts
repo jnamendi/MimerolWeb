@@ -98,19 +98,6 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     item.isShowButtonArrow = false;
   }
 
-  onConvertMenuItem = (item: RestaurantMenuItemModel) => {
-    item.menuExraItems.forEach(menuItems => {
-      if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem !== null) {
-        menuItems.extraitems = [];
-        menuItems.extraitems.push(menuItems.selectedExtraItem);
-      } else if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length > 0) {
-        menuItems.extraitems = [];
-        menuItems.extraitems = menuItems.selectedMultiItem;
-      }
-    })
-    return item;
-  }
-
   onSelectItem = (item: RestaurantMenuItemModel) => {
     if (typeof item.menuExraItems != 'undefined') {
       item.isShowButtonArrow = true;
@@ -151,14 +138,18 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
   }
 
-  onSelectItemExtra = (items: RestaurantMenuItemModel) => {
+  onSelectItemExtra = (item: RestaurantMenuItemModel) => {
     if (this.restaurantDetailModel.restaurantClosed == true) {
       this.isResClose = true;
       return;
     }
 
-    let item: RestaurantMenuItemModel;
-    item = this.onConvertMenuItem(items);
+    for (let i = 0; i < item.menuExraItems.length; i++) {
+      if (item.menuExraItems[i].extraItemType === 2 && (typeof item.menuExraItems[i].selectedMultiItem === 'undefined')) {
+        item.menuExraItems[i].selectedMultiItem = [];
+        break;
+      }
+    }
 
     this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
@@ -171,65 +162,14 @@ export class MenuItemsComponent implements OnInit, OnChanges {
       && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
       this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
     } else {
-      let checkPush = false;
-      let indexTemp = 0;
-      let shopingBagMenuItem = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
-      if (shopingBagMenuItem != null) {
-        shopingBagMenuItem.forEach(shopingBagMenuExtraItem => {
-          item.menuExraItems.forEach(itemsMenuExtra1 => {
-            let tempType = shopingBagMenuExtraItem.menuExraItems.filter(x => x.extraItemType === itemsMenuExtra1.extraItemType);
-            if (itemsMenuExtra1.extraItemType === 2) {
-              tempType.forEach(element => {
-                let tempSelectMutiItem;
-                if ((typeof itemsMenuExtra1.selectedMultiItem !== 'undefined') && (typeof element.selectedMultiItem !== 'undefined')
-                  && itemsMenuExtra1.selectedMultiItem.length === element.selectedMultiItem.length
-                  && itemsMenuExtra1.selectedMultiItem.length > 0
-                  && element.selectedMultiItem.length > 0) {
-                  itemsMenuExtra1.selectedMultiItem.forEach(multiExtras => {
-                    tempSelectMutiItem = element.selectedMultiItem.filter(x => x.extraItemId === multiExtras.extraItemId);
-                  })
-                  if (tempSelectMutiItem.length > 0) {
-                    checkPush = false;
-                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                  } else {
-                    checkPush = true;
-                  }
-                } else {
-                  if ((typeof itemsMenuExtra1.selectedMultiItem === 'undefined' || itemsMenuExtra1.selectedMultiItem.length === 0)
-                    && (typeof element.selectedMultiItem === 'undefined' || element.selectedMultiItem.length === 0)) {
-                    checkPush = false;
-                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                  } else {
-                    checkPush = true;
-                  }
-                }
-              });
-            } else if (checkPush === false && itemsMenuExtra1.extraItemType === 1) {
-              tempType.forEach(element => {
-                if ((itemsMenuExtra1.selectedExtraItem != null && element.selectedExtraItem != null)
-                  && itemsMenuExtra1.selectedExtraItem.extraItemId === element.selectedExtraItem.extraItemId) {
-                  checkPush = false;
-                  indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                } else {
-                  if (itemsMenuExtra1.selectedExtraItem === null && element.selectedExtraItem === null) {
-                    checkPush = false;
-                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                  } else {
-                    checkPush = true;
-                  }
-                }
-              });
-            }
-          });
-        })
-      } else {
-        checkPush = true;
-      }
-
-      if (checkPush === true) {
-        this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-      } else {
-        this.selectedMenuItems.orderItemsRequest[indexTemp].quantity++;
+      let spItems = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
+      for (let i = 0; i < spItems.length; i++) {
+        if (this.onCheckMenuExtraItems(item, spItems[i])) {
+          spItems[i].quantity++;
+          break;
+        } else if (i === spItems.length - 1){
+          this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
+        }
       }
     }
 
@@ -253,6 +193,36 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     })
   }
 
+  onCheckMenuExtraItems = (item: RestaurantMenuItemModel, shopingBagItems: RestaurantMenuItemModel) => {
+    let itemSpType1 = shopingBagItems.menuExraItems.filter(spt1 => spt1.extraItemType === 1);
+    let itemType1 = item.menuExraItems.filter(it1 => it1.extraItemType === 1);
+    let itemSpType2 = shopingBagItems.menuExraItems.filter(spt2 => spt2.extraItemType === 2);
+    let itemType2 = item.menuExraItems.filter(it2 => it2.extraItemType === 2);
+    let checkEquals: boolean;
+
+    //Check item single choice
+    if (itemSpType1[0].selectedExtraItem != null && itemType1[0].selectedExtraItem != null
+      && itemSpType1[0].selectedExtraItem.extraItemId !== itemType1[0].selectedExtraItem.extraItemId) {
+      return checkEquals = false;
+    } else if ((itemSpType1[0].selectedExtraItem != null && itemType1[0].selectedExtraItem == null) || (itemSpType1[0].selectedExtraItem == null && itemType1[0].selectedExtraItem != null)) {
+      return checkEquals = false;
+    }
+
+    //Check item multi choice
+    if (itemSpType2[0].selectedMultiItem.length > 0 && itemType2[0].selectedMultiItem.length > 0
+      && itemSpType2[0].selectedMultiItem.length === itemType2[0].selectedMultiItem.length) {
+      for (let i = 0; i < itemSpType2[0].selectedMultiItem.length; i++) {
+        if (itemSpType2[0].selectedMultiItem[i].extraItemId !== itemType2[0].selectedMultiItem[i].extraItemId) {
+          return checkEquals = false;
+        }
+      }
+    } else if (itemSpType2[0].selectedMultiItem.length > itemType2[0].selectedMultiItem.length || itemSpType2[0].selectedMultiItem.length < itemType2[0].selectedMultiItem.length) {
+      return checkEquals = false;
+    }
+
+    return checkEquals = true;
+  }
+
   onEmitSelectedMenuItem = (totalItems: number) => {
     this.itemInBags.emit(totalItems);
   }
@@ -270,24 +240,6 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     }
     return;
   }
-
-  // onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
-  //   if (extraItem.selectedExtraItem == null) {
-  //     extraItem.extraitems.map(i => {
-  //       if (i != null) {
-  //         return i.isSelected = false
-  //       }
-  //     });
-  //   } else {
-  //     extraItem.selectedExtraItem.isSelected = true;
-  //     extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
-  //       if (i != null) {
-  //         return i.isSelected = false
-  //       }
-  //     });
-  //   }
-
-  // }
 
   onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
     if (extraItem.selectedExtraItem == null) {
