@@ -53,15 +53,22 @@ export class ShoppingBagsComponent implements OnInit {
 
   onConvertMenuItem = (selectedMenuItems: OrderItem) => {
     selectedMenuItems.orderItemsRequest.forEach(smi => {
-      smi.menuExraItems.forEach(menuItems => {
-        if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem !== null) {
-          menuItems.extraitems = [];
-          menuItems.extraitems.push(menuItems.selectedExtraItem);
-        } else if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length > 0) {
-          menuItems.extraitems = [];
-          menuItems.extraitems = menuItems.selectedMultiItem;
-        }
-      });
+      if (typeof smi.menuExraItems !== 'undefined') {
+        smi.menuExraItems.forEach(menuItems => {
+          if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem !== null) {
+            menuItems.extraitems = [];
+            menuItems.extraitems.push(menuItems.selectedExtraItem);
+          } else if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem === null) {
+            menuItems.extraitems = [];
+          }
+          if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length > 0) {
+            menuItems.extraitems = [];
+            menuItems.extraitems = menuItems.selectedMultiItem;
+          } else if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length === 0) {
+            menuItems.extraitems = [];
+          }
+        });
+      }
     });
     return selectedMenuItems;
   }

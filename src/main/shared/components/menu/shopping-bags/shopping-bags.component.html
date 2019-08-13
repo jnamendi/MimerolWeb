@@ -26,7 +26,8 @@
                                             <ng-container>
                                                 <span style="font-style: italic">{{combo.selectedExtraItem.name}}
                                                     ({{combo.selectedExtraItem.price}})</span>
-                                                <span *ngIf="item.menuExraItems[1].selectedMultiItem.length > 0">,</span>
+                                                <span
+                                                    *ngIf="item.menuExraItems[1].selectedMultiItem.length > 0">,</span>
                                             </ng-container>
                                         </span>
                                         <span *ngIf="combo.extraItemType == 2 && combo.selectedMultiItem">
@@ -36,7 +37,7 @@
                                                 <span style="font-style: italic">{{comboItems.name}}
                                                     ({{comboItems.price}})</span>
                                                 <span
-                                                    *ngIf="combo.selectedMultiItem.length - 1 > j || combo.selectedMultiItem.length == 1">,</span>
+                                                    *ngIf="combo.selectedMultiItem.length - 1 > j">,</span>
                                                 <span *ngIf="combo.selectedMultiItem.length - 1 === j">.</span>
                                             </ng-container>
                                         </span>
