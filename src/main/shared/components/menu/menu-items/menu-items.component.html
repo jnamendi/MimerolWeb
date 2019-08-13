@@ -59,7 +59,7 @@
                                     <option [ngValue]="null" selected
                                         [innerHTML]="'Components.Order.SelectOneExtraItem' | translate"></option>
                                     <option *ngFor="let extItem of extraItem.extraitems" [ngValue]="extItem">
-                                        {{extItem.name}}(+${{extItem.priceRate}})</option>
+                                        {{extItem.name}}(+{{item.symbolLeft}}{{extItem.priceRate}})</option>
                                 </select>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             class="item multiple_choice">
                             <div *ngFor="let extItem of extraItem.extraitems; let i = index" class="col-xs-6">
                                 <div class="extra-item-checkbox">
-                                    <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+${{extItem.priceRate}})"
+                                    <p-checkbox name="extItem{{i}}" label="{{extItem.name}} (+{{item.symbolLeft}}{{extItem.priceRate}})"
                                         [(ngModel)]="extItem.isSelected" binary="true"
                                         (onChange)="onSelectExtraItem(extraItem, extItem)"></p-checkbox>
                                 </div>
