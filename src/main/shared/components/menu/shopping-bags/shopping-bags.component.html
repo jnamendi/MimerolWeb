@@ -20,6 +20,30 @@
                             </div>
                             <div class="info_ads">
                                 <a>{{item.menuItemName}}</a>
+                                <div *ngIf="item.menuExraItems" style="font-size: 12px;">
+                                    <ng-container *ngFor="let combo of item.menuExraItems; let i = index">
+                                        <span *ngIf="combo.extraItemType == 1 && combo.selectedExtraItem != null">
+                                            <ng-container>
+                                                <span style="font-style: italic">{{combo.selectedExtraItem.name}}
+                                                    ({{combo.selectedExtraItem.price}})</span>
+                                                <span *ngFor="let combo2 of item.menuExraItems">
+                                                    <span
+                                                        *ngIf="combo2.selectedMultiItem && combo2.selectedMultiItem.length > 0">,</span>
+                                                </span>
+                                            </ng-container>
+                                        </span>
+                                        <span *ngIf="combo.extraItemType == 2 && combo.selectedMultiItem">
+                                            <ng-container
+                                                *ngFor="let comboItems of combo.selectedMultiItem; let j = index">
+                                                <!-- <span *ngIf="combo.selectedMultiItem.length > 0"> </span> -->
+                                                <span style="font-style: italic">{{comboItems.name}}
+                                                    ({{comboItems.price}})</span>
+                                                <span *ngIf="combo.selectedMultiItem.length - 1 > j">,</span>
+                                                <span *ngIf="combo.selectedMultiItem.length - 1 === j">.</span>
+                                            </ng-container>
+                                        </span>
+                                    </ng-container>
+                                </div>
                                 <div class="quantity">
                                     <div class="quantity-container">
                                         <input name="qty{{i}}" class="qty" maxlength="4"

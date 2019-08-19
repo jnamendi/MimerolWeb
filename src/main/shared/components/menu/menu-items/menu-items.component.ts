@@ -10,6 +10,8 @@ import { AppRestaurantModel } from '../../../models/restaurant/app-restaurant.mo
 import { ApiError } from '../../../services/api-response/api-response';
 import { Configs } from '../../../common/configs/configs';
 import { ClientState } from '../../../state';
+import { equal } from 'assert';
+import { min } from 'rxjs/operator/min';
 
 @Component({
   selector: 'menu-items',
@@ -79,6 +81,11 @@ export class MenuItemsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.menuItemModels = this.menuItems.filter(item => item.menuId == this.selectedMenuId);
+    this.menuItemModels.forEach(mim => {
+      if (typeof mim.menuExraItems != 'undefined') {
+        mim.menuExraItems.sort((a, b) => a.extraItemType - b.extraItemType);
+      }
+    });
     this.menuItemModels.map(m => {
       m.menuExraItems && m.menuExraItems.map(e => { return e.selectedExtraItem = null; })
     });
@@ -91,49 +98,12 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     }
   }
 
-  // onSelectItem = (item: RestaurantMenuItemModel) => {
-  //   if (this.restaurantDetailModel.restaurantClosed == true) {
-  //     item.isSelected = false;
-  //     this.isResClose = true;
-  //     return;
-  //   }
-
-  //   this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
-  //   if (!this.selectedMenuItems) {
-  //     this.selectedMenuItems = new OrderItem();
-  //     this.selectedMenuItems.orderItemsRequest = [];
-  //   }
-  //   if (item.isSelected) {
-  //     if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-  //       && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
-  //       this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-  //     }
-  //   } else {
-  //     let itemsSelected = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length >= 0
-  //       && this.selectedMenuItems.orderItemsRequest.filter(i => i.menuItemId != item.menuItemId);
-
-  //     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest
-  //       && this.selectedMenuItems.orderItemsRequest.map(m => {
-  //         m.menuExraItems && m.menuExraItems.map(i => {
-  //           i.extraitems && i.extraitems.map(e => { e.isSelected = false })
-  //         })
-  //       });
-  //     if (itemsSelected) {
-  //       this.selectedMenuItems.orderItemsRequest = itemsSelected;
-  //     }
-  //   }
-  //   this.selectedMenuItems.restaurantId = this.restaurantId;
-  //   this.selectedMenuItems.deliveryCost = this.restaurantDetailModel.deliveryCost;
-  //   this.selectedMenuItems.resOpenTime = this.restaurantDetailModel.openTime;
-  //   this.selectedMenuItems.resCloseTime = this.restaurantDetailModel.closeTime;
-  //   this.storageService.onSetToken(StorageKey.ItemsInBag + `__${this.restaurantId}`, JwtTokenHelper.CreateSigningToken(this.selectedMenuItems));
-  //   this.onEmitSelectedMenuItem(this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest.length >= 0 && this.selectedMenuItems.orderItemsRequest.length);
-  // }
   onShowButtonPlus = (item: RestaurantMenuItemModel) => {
     item.isShowButton = false;
     item.isShowExtraItem = false;
     item.isShowButtonArrow = false;
   }
+
   onSelectItem = (item: RestaurantMenuItemModel) => {
     if (typeof item.menuExraItems != 'undefined') {
       item.isShowButtonArrow = true;
@@ -180,6 +150,13 @@ export class MenuItemsComponent implements OnInit, OnChanges {
       return;
     }
 
+    for (let i = 0; i < item.menuExraItems.length; i++) {
+      if (item.menuExraItems[i].extraItemType === 2 && (typeof item.menuExraItems[i].selectedMultiItem === 'undefined')) {
+        item.menuExraItems[i].selectedMultiItem = [];
+        break;
+      }
+    }
+
     this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
 
     if (!this.selectedMenuItems) {
@@ -191,55 +168,14 @@ export class MenuItemsComponent implements OnInit, OnChanges {
       && !this.selectedMenuItems.orderItemsRequest.some(i => i.menuItemId == item.menuItemId)) {
       this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
     } else {
-      let checkPush = false;
-      let indexTemp = 0;
-      let shopingBagMenuItem = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
-      if (shopingBagMenuItem != null) {
-        shopingBagMenuItem.forEach(shopingBagMenuExtraItem => {
-          item.menuExraItems.forEach(itemsMenuExtra => {
-            let tempType = shopingBagMenuExtraItem.menuExraItems.filter(x => x.extraItemType === itemsMenuExtra.extraItemType);
-            if (itemsMenuExtra.extraItemType === 2) {
-              tempType.forEach(element => {
-                let tempSelectMutiItem;
-                if (itemsMenuExtra.selectedMultiItem.length === element.selectedMultiItem.length && (itemsMenuExtra.selectedMultiItem.length > 0 && element.selectedMultiItem.length > 0)) {
-                  itemsMenuExtra.selectedMultiItem.forEach(multiExtras => {
-                    tempSelectMutiItem = element.selectedMultiItem.filter(x => x.extraItemId === multiExtras.extraItemId);
-                  })
-                  if (tempSelectMutiItem.length > 0) {
-                    checkPush = false;
-                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                  } else {
-                    checkPush = true;
-                  }
-                } else {
-                  checkPush = true;
-                }
-              });
-            } else if (checkPush === false && itemsMenuExtra.extraItemType === 1) {
-              tempType.forEach(element => {
-                if ((itemsMenuExtra.selectedExtraItem != null && element.selectedExtraItem != null) && itemsMenuExtra.selectedExtraItem.extraItemId === element.selectedExtraItem.extraItemId) {
-                  checkPush = false;
-                  indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                } else {
-                  if (itemsMenuExtra.selectedExtraItem === null && element.selectedExtraItem === null) {
-                    checkPush = false;
-                    indexTemp = shopingBagMenuItem.findIndex(e => e.menuItemId === item.menuItemId);
-                  } else {
-                    checkPush = true;
-                  }
-                }
-              });
-            }
-          });
-        })
-      } else {
-        checkPush = true;
-      }
-
-      if (checkPush === true) {
-        this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
-      } else {
-        this.selectedMenuItems.orderItemsRequest[indexTemp].quantity++;
+      let spItems = this.selectedMenuItems.orderItemsRequest.filter(x => x.menuItemId === item.menuItemId);
+      for (let i = 0; i < spItems.length; i++) {
+        if (this.onCheckMenuExtraItems(item, spItems[i])) {
+          spItems[i].quantity++;
+          break;
+        } else if (i === spItems.length - 1) {
+          this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
+        }
       }
     }
 
@@ -263,6 +199,40 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     })
   }
 
+  onCheckMenuExtraItems = (item: RestaurantMenuItemModel, shopingBagItems: RestaurantMenuItemModel) => {
+    let itemSpType1 = shopingBagItems.menuExraItems.filter(spt1 => spt1.extraItemType === 1);
+    let itemType1 = item.menuExraItems.filter(it1 => it1.extraItemType === 1);
+    let itemSpType2 = shopingBagItems.menuExraItems.filter(spt2 => spt2.extraItemType === 2);
+    let itemType2 = item.menuExraItems.filter(it2 => it2.extraItemType === 2);
+    let checkEquals: boolean;
+
+    //Check item single choice
+    for (let i = 0; i < itemSpType1.length; i++) {
+      if (itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem != null && itemType1[i].selectedExtraItem != null
+        && itemSpType1[i].selectedExtraItem.extraItemId !== itemType1[i].selectedExtraItem.extraItemId) {
+        return checkEquals = false;
+      } else if ((itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem != null && itemType1[i].selectedExtraItem == null) || (itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem == null && itemType1[i].selectedExtraItem != null)) {
+        return checkEquals = false;
+      }
+    }
+
+    //Check item multi choice
+    for (let i = 0; i < itemSpType2.length; i++) {
+      if (itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length > 0 && itemType2[i].selectedMultiItem.length > 0
+        && itemSpType2[i].selectedMultiItem.length === itemType2[i].selectedMultiItem.length) {
+        for (let j = 0; j < itemSpType2[i].selectedMultiItem.length; j++) {
+          if (itemSpType2[i].selectedMultiItem[j].extraItemId !== itemType2[i].selectedMultiItem[j].extraItemId) {
+            return checkEquals = false;
+          }
+        }
+      } else if ((itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length > itemType2[i].selectedMultiItem.length) || (itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length < itemType2[i].selectedMultiItem.length)) {
+        return checkEquals = false;
+      }
+    }
+
+    return checkEquals = true;
+  }
+
   onEmitSelectedMenuItem = (totalItems: number) => {
     this.itemInBags.emit(totalItems);
   }
@@ -280,24 +250,6 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     }
     return;
   }
-
-  // onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
-  //   if (extraItem.selectedExtraItem == null) {
-  //     extraItem.extraitems.map(i => {
-  //       if (i != null) {
-  //         return i.isSelected = false
-  //       }
-  //     });
-  //   } else {
-  //     extraItem.selectedExtraItem.isSelected = true;
-  //     extraItem.extraitems.filter(x => x.extraItemId != extraItem.selectedExtraItem.extraItemId).map(i => {
-  //       if (i != null) {
-  //         return i.isSelected = false
-  //       }
-  //     });
-  //   }
-
-  // }
 
   onSelectSingleExtraItem = (menuItem: RestaurantMenuItemModel, extraItem: RestaurantMenuExtraItemModel) => {
     if (extraItem.selectedExtraItem == null) {

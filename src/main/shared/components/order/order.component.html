@@ -91,7 +91,7 @@
                                                     componentRestrictions: { country: currentCountryCode}
                                                     }" (setAddress)="setAddress($event)"
                                         (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
-                                        id="autocomplete" ng2-google-place-autocomplete />
+                                        id="autocomplete" ng2-google-place-autocomplete placeholder="{{'Commons.Texts.EnterLocation' | translate}}"/>
                                     <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                     <div *ngIf="address.invalid && (address.touched || f.submitted)" class="error">
                                         <div *ngIf="address.errors?.required"

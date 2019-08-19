@@ -211,7 +211,10 @@
             "SuccessCodePromotion": "The promotional code has been applied",
             "ErrorIsValid": "An error has occurred, please check the fields entered!",
             "WorkingTime": "Working Time",
-            "YourOrder": "Your order"
+            "YourOrder": "Your order",
+            "GuestPay": "Guest pay",
+            "Refunds": "Refunds",
+            "EnterLocation": "Enter a location"
         },
         "Links": {
             "Title": "Links",

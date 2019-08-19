@@ -139,10 +139,10 @@
             "LatestComments": "Últimos comentarios",
             "SingleChoice": "Elección simple",
             "InProgress": "En progreso",
-            "Delivered": "Entregado",
+            "Deliveried": "Entregado",
             "Rejected": "Rechazado",
             "Canceled": "Cancelado",
-            "Complete": "Completar",
+            "Complete": "Completado",
             "Approve": "Aprobar",
             "Unknown": "Desconocido",
             "SelectRestaurant": "Seleccione un restaurante",
@@ -211,7 +211,10 @@
             "SuccessCodePromotion": "Se ha aplicado el código promocional",
             "ErrorIsValid": "Se ha producido un error, comprueba los campos ingresados!",
             "WorkingTime": "Tiempo de trabajo",
-            "YourOrder": "Su pedido"
+            "YourOrder": "Su pedido",
+            "GuestPay": "Pago del cliente",
+            "Refunds": "Vuelto",
+            "EnterLocation": "Ingrese una ubicación"
         },
         "Links": {
             "Title": "Enlaces",

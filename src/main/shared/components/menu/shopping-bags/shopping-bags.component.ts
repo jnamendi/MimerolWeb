@@ -42,13 +42,37 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
+    this.selectedMenuItems = this.onConvertMenuItem(JwtTokenHelper.GetItemsInBag(this.restaurantId));
     if (!this.selectedMenuItems) {
       this.selectedMenuItems = new OrderItem();
     }
     this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
     this.onCalculatePrice();
     this.onGetRestaurantDetails();
+  }
+
+  onConvertMenuItem = (selectedMenuItems: OrderItem) => {
+    if (selectedMenuItems && selectedMenuItems.orderItemsRequest) {
+      selectedMenuItems.orderItemsRequest.forEach(smi => {
+        if (typeof smi.menuExraItems !== 'undefined') {
+          smi.menuExraItems.forEach(menuItems => {
+            if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem !== null) {
+              menuItems.extraitems = [];
+              menuItems.extraitems.push(menuItems.selectedExtraItem);
+            } else if (menuItems.extraItemType === 1 && menuItems.selectedExtraItem === null) {
+              menuItems.extraitems = [];
+            }
+            if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length > 0) {
+              menuItems.extraitems = [];
+              menuItems.extraitems = menuItems.selectedMultiItem;
+            } else if (menuItems.extraItemType === 2 && menuItems.selectedMultiItem.length === 0) {
+              menuItems.extraitems = [];
+            }
+          });
+        }
+      });
+    }
+    return selectedMenuItems;
   }
 
   onGetRestaurantDetails = () => {
@@ -152,7 +176,7 @@ export class ShoppingBagsComponent implements OnInit {
   }
 
   onGetTotalItemPrice = (): number => {
-    return this.totalItemsPrice;
+    return this.selectedMenuItems.totalPrice;
   }
 
   onCloseConfirm = (isConfirm: boolean) => {

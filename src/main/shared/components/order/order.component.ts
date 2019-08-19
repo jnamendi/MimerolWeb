@@ -112,14 +112,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    let timeRanges = this.coreService.range(1, 93).map(i => {
-      return this.coreService.convertMinuteToTime(i * 15);
-    });
+    // let timeRanges = this.coreService.range(1, 93).map(i => {
+    //   return this.coreService.convertMinuteToTime(i * 15);
+    // });
 
-    this.deliveryTimes = timeRanges.filter(t => {
-      return this.coreService.compareTimeGreaterThanCurrent(t);
-    });
-
+    // this.deliveryTimes = timeRanges.filter(t => {
+    //   return this.coreService.compareTimeGreaterThanCurrent(t);
+    // });
     this.onGetCities();
     this.onGetRestaurantDetails();
   }
@@ -130,10 +129,70 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
       this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
         this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+        this.onCaculatorDeliveryTime(this.restaurantModel);
         this.clientState.isBusy = false;
       }, (err) => {
         this.clientState.isBusy = false;
       });
+    }
+  }
+
+  onCaculatorDeliveryTime = (resModel: AppRestaurantModel) => {
+    let d = new Date();
+    let day = d.getDay();
+    let hourCurrent = d.getHours();
+    let minutesCurrent = d.getMinutes();
+    let deliveryTimeRestaurant = parseInt(resModel.estTime);
+    for (let i = 0; i < resModel.restaurantWorkTimeModels[day - 1].list.length; i++) {
+      if (resModel.restaurantWorkTimeModels[day - 1].list[i].openTime != null && resModel.restaurantWorkTimeModels[day - 1].list[i].closeTime != null) {
+        let oTimes = resModel.restaurantWorkTimeModels[day - 1].list[i].openTime.split(":");
+        let oH = parseInt(oTimes[0]);
+        let oM = parseInt(oTimes[1]);
+
+        let cTimes = resModel.restaurantWorkTimeModels[day - 1].list[i].closeTime.split(":");
+        let cH = parseInt(cTimes[0]);
+        let cM = parseInt(cTimes[1]);
+
+        if (hourCurrent > oH) {
+          let totalCount = parseInt(((cH * 60 + cM + deliveryTimeRestaurant) / 15).toString());
+          let totalIndexCount = parseInt(((hourCurrent * 60 + minutesCurrent) / 15 + 1).toString());
+          while (totalIndexCount <= totalCount) {
+            let h = parseInt(((totalIndexCount * 15) / 60).toString());
+            let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
+            let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
+            let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
+            let temp = ((h1.concat(":")).concat(m1));
+            this.deliveryTimes.push(temp);
+            totalIndexCount++;
+          }
+        } else if (hourCurrent < oH) {
+          let totalCount = ((cH * 60 + cM + deliveryTimeRestaurant) / 15);
+          let totalIndexCount = (oH * 60 + oM) / 15 + 1;
+          while (totalIndexCount <= totalCount) {
+            let h = parseInt(((totalIndexCount * 15) / 60).toString());
+            let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
+            let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
+            let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
+            let temp = ((h1.concat(":")).concat(m1));
+            this.deliveryTimes.push(temp);
+            totalIndexCount++;
+          }
+        } else {
+          let totalCount = ((cH * 60 + cM + deliveryTimeRestaurant) / 15);
+          if (oH < cH) {
+            let totalIndexCount = (oH * 60 + oM) / 15 + 1;
+            while (totalIndexCount <= totalCount) {
+              let h = parseInt(((totalIndexCount * 15) / 60).toString());
+              let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
+              let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
+              let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
+              let temp = ((h1.concat(":")).concat(m1));
+              this.deliveryTimes.push(temp);
+              totalIndexCount++;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -366,6 +425,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.voucherService.getPromotionByCode(this.orderModel.promotionCode, this.orderModel.restaurantId).subscribe(res => {
       let voucher = <PromotionModel>{ ...res.content };
       this.child.onCalculateTotalPrices(voucher.value);
+      this.onBuildPaymentWiths();
       this.clientState.isBusy = false;
       this.isError = false;
     }, (err: ApiError) => {
@@ -373,8 +433,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isError = true;
       this.clientState.isBusy = false;
     });
-
-
   }
 
   onGoBack = () => {
