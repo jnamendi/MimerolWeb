@@ -74,13 +74,13 @@
                             <td>{{orderItem.menuItemName}}
                                 <div *ngIf="orderItem.menuExraItems" style="font-size: 12px;">
                                     <ng-container *ngFor="let combo of orderItem.menuExraItems; let i = index">
-                                        <span *ngIf="combo.extraItemType == 1 && combo.extraitems">
+                                        <span *ngIf="combo.extraItemType == 1 && combo.extraitems && combo.extraitems.length > 0">
                                             <ng-container>
                                                 <span style="font-style: italic">{{combo.extraitems[0].name}} ({{combo.extraitems[0].price}})</span>
-                                                <span *ngIf="combo.extraitems.length > 0">,</span>
+                                                <span *ngIf="combo.length > 0 && combo.extraitems.length > 0">,</span>
                                             </ng-container>
                                         </span>
-                                        <span *ngIf="combo.extraItemType == 2 && combo.extraitems">
+                                        <span *ngIf="combo.extraItemType == 2 && combo.extraitems && combo.extraitems.length > 0">
                                             <ng-container *ngFor="let comboItems of combo.extraitems; let j = index">
                                                 <span *ngIf="combo.extraitems.length > 0"> </span>
                                                 <span style="font-style: italic">{{comboItems.name}} ({{comboItems.price}})</span>
