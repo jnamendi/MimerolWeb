@@ -82,8 +82,8 @@ export class MenuItemsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.menuItemModels = this.menuItems.filter(item => item.menuId == this.selectedMenuId);
     this.menuItemModels.forEach(mim => {
-      if (typeof mim.menuExraItems != 'undefined' ) {
-        mim.menuExraItems.sort((a,b)=>a.extraItemType - b.extraItemType);
+      if (typeof mim.menuExraItems != 'undefined') {
+        mim.menuExraItems.sort((a, b) => a.extraItemType - b.extraItemType);
       }
     });
     this.menuItemModels.map(m => {
@@ -173,7 +173,7 @@ export class MenuItemsComponent implements OnInit, OnChanges {
         if (this.onCheckMenuExtraItems(item, spItems[i])) {
           spItems[i].quantity++;
           break;
-        } else if (i === spItems.length - 1){
+        } else if (i === spItems.length - 1) {
           this.selectedMenuItems.orderItemsRequest.push({ ...item, quantity: 1 });
         }
       }
@@ -207,23 +207,27 @@ export class MenuItemsComponent implements OnInit, OnChanges {
     let checkEquals: boolean;
 
     //Check item single choice
-    if (itemSpType1[0].selectedExtraItem != null && itemType1[0].selectedExtraItem != null
-      && itemSpType1[0].selectedExtraItem.extraItemId !== itemType1[0].selectedExtraItem.extraItemId) {
-      return checkEquals = false;
-    } else if ((itemSpType1[0].selectedExtraItem != null && itemType1[0].selectedExtraItem == null) || (itemSpType1[0].selectedExtraItem == null && itemType1[0].selectedExtraItem != null)) {
-      return checkEquals = false;
+    for (let i = 0; i < itemSpType1.length; i++) {
+      if (itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem != null && itemType1[i].selectedExtraItem != null
+        && itemSpType1[i].selectedExtraItem.extraItemId !== itemType1[i].selectedExtraItem.extraItemId) {
+        return checkEquals = false;
+      } else if ((itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem != null && itemType1[i].selectedExtraItem == null) || (itemSpType1.length > 0 && itemSpType1[i].selectedExtraItem == null && itemType1[i].selectedExtraItem != null)) {
+        return checkEquals = false;
+      }
     }
 
     //Check item multi choice
-    if (itemSpType2[0].selectedMultiItem.length > 0 && itemType2[0].selectedMultiItem.length > 0
-      && itemSpType2[0].selectedMultiItem.length === itemType2[0].selectedMultiItem.length) {
-      for (let i = 0; i < itemSpType2[0].selectedMultiItem.length; i++) {
-        if (itemSpType2[0].selectedMultiItem[i].extraItemId !== itemType2[0].selectedMultiItem[i].extraItemId) {
-          return checkEquals = false;
+    for (let i = 0; i < itemSpType2.length; i++) {
+      if (itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length > 0 && itemType2[i].selectedMultiItem.length > 0
+        && itemSpType2[i].selectedMultiItem.length === itemType2[i].selectedMultiItem.length) {
+        for (let j = 0; j < itemSpType2[i].selectedMultiItem.length; j++) {
+          if (itemSpType2[i].selectedMultiItem[j].extraItemId !== itemType2[i].selectedMultiItem[j].extraItemId) {
+            return checkEquals = false;
+          }
         }
+      } else if ((itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length > itemType2[i].selectedMultiItem.length) || (itemSpType2.length > 0 && itemSpType2[i].selectedMultiItem.length < itemType2[i].selectedMultiItem.length)) {
+        return checkEquals = false;
       }
-    } else if (itemSpType2[0].selectedMultiItem.length > itemType2[0].selectedMultiItem.length || itemSpType2[0].selectedMultiItem.length < itemType2[0].selectedMultiItem.length) {
-      return checkEquals = false;
     }
 
     return checkEquals = true;
