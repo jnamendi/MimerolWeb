@@ -213,7 +213,8 @@
             "WorkingTime": "Tiempo de trabajo",
             "YourOrder": "Su pedido",
             "GuestPay": "Pago del cliente",
-            "Refunds": "Vuelto"
+            "Refunds": "Vuelto",
+            "EnterLocation": "Ingrese una ubicación"
         },
         "Links": {
             "Title": "Enlaces",

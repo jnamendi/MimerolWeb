@@ -213,7 +213,8 @@
             "WorkingTime": "Working Time",
             "YourOrder": "Your order",
             "GuestPay": "Guest pay",
-            "Refunds": "Refunds"
+            "Refunds": "Refunds",
+            "EnterLocation": "Enter a location"
         },
         "Links": {
             "Title": "Links",
