@@ -16,18 +16,48 @@
                     <h2 class="restaurant-name">
                         {{adminOrderModel && adminOrderModel.restaurantName}}
                     </h2>
-                    <p>
-                        <i>#{{adminOrderModel && adminOrderModel.orderCode}}</i>
-                    </p>
+
+                    <p><i>#{{orderCode}}</i></p>
+
                     <p>{{adminOrderModel && adminOrderModel.totalPrice}} {{currencySymbol}}</p>
-                    <p>{{adminOrderModel && adminOrderModel.orderDate | date: 'dd-MM-yyyy'}}
+
+                    <p *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].infoName">
+                        <span [innerHTML]="'Commons.Texts.Name' | translate"></span>
+                        <span> : {{adminOrderModel && adminOrderModel.orderInfos[0].infoName}}</span>
+                    </p>
+
+                    <p *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].infoEmail">
+                        <span [innerHTML]="'Commons.Texts.Email' | translate"></span>
+                        <span> : {{adminOrderModel && adminOrderModel.orderInfos[0].infoEmail}}</span>
+                    </p>
+
+                    <p
+                        *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].infoNumber">
+                        <span [innerHTML]="'Commons.Texts.Phone' | translate"></span>
+                        <span> : {{adminOrderModel && adminOrderModel.orderInfos[0].infoNumber}}</span>
+                    </p>
+
+                    <p *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].remark">
+                        <span [innerHTML]="'Commons.Texts.Remarks' | translate"></span>
+                        <span> : {{adminOrderModel && adminOrderModel.orderInfos[0].remark}}</span>
+                    </p>
+
+                    <p>
+                        <span *ngIf="adminOrderModel && adminOrderModel.orderDate">
+                            {{adminOrderModel && adminOrderModel.orderDate | date: 'dd-MM-yyyy'}}</span>
                         <span [innerHTML]="'Components.Order.At' | translate"></span>
-                        {{adminOrderModel && adminOrderModel.orderDate | date: 'HH:mm'}} -
+                        <span
+                            *ngIf="adminOrderModel && adminOrderModel.orderDate">{{adminOrderModel && adminOrderModel.orderDate | date: 'HH:mm'}}
+                            - </span>
                         <span [innerHTML]="'Components.Order.DeliveredTo' | translate"></span>
                         <span
-                            *ngIf="adminOrderModel.orderInfos && adminOrderModel.orderInfos[0]">{{adminOrderModel && adminOrderModel.orderInfos[0].address}},
-                            {{adminOrderModel && adminOrderModel.orderInfos[0].district}},
-                            {{adminOrderModel && adminOrderModel.orderInfos[0].city}}</span>
+                            *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].address">{{adminOrderModel && adminOrderModel.orderInfos[0].address}},</span>
+                        <span
+                            *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].district">{{adminOrderModel && adminOrderModel.orderInfos[0].district}},</span>
+                        <span
+                            *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].city">{{adminOrderModel && adminOrderModel.orderInfos[0].city}}</span>
+                        <span
+                            *ngIf="adminOrderModel && adminOrderModel.orderInfos && adminOrderModel.orderInfos[0].addressDescription">({{adminOrderModel && adminOrderModel.orderInfos[0].addressDescription}})</span>
                     </p>
                 </div>
             </div>
@@ -37,12 +67,36 @@
                 <b>Your order</b>
             </h4>
             <div class="order-details-content">
-                <table border="0" cellspacing="0" cellpadding="0">
+                <table cellspacing="0" cellpadding="0">
                     <tbody>
-                        <tr *ngFor="let orderItem of adminOrderModel.orderLineitems">
+                        <tr *ngFor="let orderItem of adminOrderModel.orderLineItems">
                             <td>{{orderItem.quantity}}x</td>
-                            <td>{{orderItem.menuItemName}}</td>
-                            <td>{{orderItem.total}} {{currencySymbol}}</td>
+                            <td>{{orderItem.menuItemName}}
+                                <div *ngIf="orderItem.menuExraItems" style="font-size: 12px;">
+                                    <ng-container *ngFor="let combo of orderItem.menuExraItems; let i = index">
+                                        <span
+                                            *ngIf="combo.extraItemType == 1 && combo.extraitems && combo.extraitems.length > 0">
+                                            <ng-container>
+                                                <span style="font-style: italic">{{combo.extraitems[0].name}}
+                                                    ({{combo.extraitems[0].price}})</span>
+                                                <span *ngIf="combo.length > 0 && combo.extraitems.length > 0">,</span>
+                                            </ng-container>
+                                        </span>
+                                        <span
+                                            *ngIf="combo.extraItemType == 2 && combo.extraitems && combo.extraitems.length > 0">
+                                            <ng-container *ngFor="let comboItems of combo.extraitems; let j = index">
+                                                <span *ngIf="combo.extraitems.length > 0"> </span>
+                                                <span style="font-style: italic">{{comboItems.name}}
+                                                    ({{comboItems.price}})</span>
+                                                <span
+                                                    *ngIf="combo.extraitems.length - 1 > j || combo.extraitems.length == 1">,</span>
+                                                <span *ngIf="combo.extraitems.length - 1 === j">.</span>
+                                            </ng-container>
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td>{{orderItem.totalPrice}} {{currencySymbol}}</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -60,7 +114,17 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td class="payment-method">Payment method:</td>
+                            <td class="delivery-costs">{{'Commons.Texts.GuestPay' | translate}}:</td>
+                            <td>{{adminOrderModel.paymentWith}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="delivery-costs">{{'Commons.Texts.Refunds' | translate}}:</td>
+                            <td>{{adminOrderModel.paymentWith - adminOrderModel.totalPrice}} {{currencySymbol}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="payment-method">{{'Commons.Texts.PaymentMethods' | translate}}:</td>
                             <td>{{paymentMethod[adminOrderModel.paymentType]}}</td>
                         </tr>
                     </tbody>
