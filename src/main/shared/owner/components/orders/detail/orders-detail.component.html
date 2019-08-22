@@ -74,19 +74,25 @@
                             <td>{{orderItem.menuItemName}}
                                 <div *ngIf="orderItem.menuExraItems" style="font-size: 12px;">
                                     <ng-container *ngFor="let combo of orderItem.menuExraItems; let i = index">
-                                        <span *ngIf="combo.extraItemType == 1 && combo.extraitems && combo.extraitems.length > 0">
+                                        <span
+                                            *ngIf="combo.extraItemType == 1 && combo.extraitems && combo.extraitems.length > 0">
                                             <ng-container>
-                                                <span style="font-style: italic">{{combo.extraitems[0].name}} ({{combo.extraitems[0].price}})</span>
-                                                <span *ngIf="combo.length > 0 && combo.extraitems.length > 0">,</span>
+                                                <span style="font-style: italic">{{combo.extraitems[0].name}}
+                                                    ({{combo.extraitems[0].price}})</span>
+                                                <span
+                                                    *ngIf="i == 0 && (orderItem.menuExraItems.length < 2 || (orderItem.menuExraItems.length > 1 && orderItem.menuExraItems[1].extraitems.length == 0))">.</span>
                                             </ng-container>
                                         </span>
-                                        <span *ngIf="combo.extraItemType == 2 && combo.extraitems && combo.extraitems.length > 0">
+                                        <span
+                                            *ngIf="combo.extraItemType == 2 && combo.extraitems && combo.extraitems.length > 0">
                                             <ng-container *ngFor="let comboItems of combo.extraitems; let j = index">
-                                                <span *ngIf="combo.extraitems.length > 0"> </span>
-                                                <span style="font-style: italic">{{comboItems.name}} ({{comboItems.price}})</span>
                                                 <span
-                                                    *ngIf="combo.extraitems.length - 1 > j || combo.extraitems.length == 1">,</span>
-                                                <span *ngIf="combo.extraitems.length - 1 === j">.</span>
+                                                    *ngIf="i == 1 && j < 1 && orderItem.menuExraItems[0].extraitems.length > 0">,</span>
+                                                <span *ngIf="combo.extraitems.length > 0"> </span>
+                                                <span style="font-style: italic">{{comboItems.name}}
+                                                    ({{comboItems.price}})</span>
+                                                <span *ngIf="combo.extraitems.length - 1 > j">,</span>
+                                                <span *ngIf="combo.extraitems.length - 1 == j">.</span>
                                             </ng-container>
                                         </span>
                                     </ng-container>
