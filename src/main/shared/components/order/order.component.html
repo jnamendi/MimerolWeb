@@ -183,7 +183,7 @@
                                         <span class="title_note"
                                             [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
                                     </label>
-                                    <label class="radio">
+                                    <!-- <label class="radio">
                                         <input type="radio" [value]="2" name="paymentType"
                                             [(ngModel)]="orderModel.paymentType">
                                         <span></span>
@@ -204,7 +204,7 @@
                                         <p>
                                             <img src="assets/images/icon/credit_cards_color.svg" alt="">
                                         </p>
-                                    </label>
+                                    </label> -->
                                     <div *ngIf="orderModel.paymentType == 1 && orderModel.paymentWith"
                                         class="form-input" style="margin-top: 15px; margin-bottom: 0">
                                         <select name="paymentWith" inputFocus [(ngModel)]="orderModel.paymentWith"
