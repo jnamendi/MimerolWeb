@@ -216,7 +216,8 @@
 
                                     <!-- Open - Close time -->
                                     <div class="separator-dashed"></div>
-                                    <h2 class="separator-dashed-tilte" [innerHTML]="'Commons.Texts.WorkingTime' | translate"></h2>
+                                    <h2 class="separator-dashed-tilte"
+                                        [innerHTML]="'Commons.Texts.WorkingTime' | translate"></h2>
                                     <div class="separator-dashed"></div>
 
                                     <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let j = index"
@@ -306,7 +307,12 @@
                                         <div class="col-md-8">
                                             <input type="tel" class="form-control" name="phone1"
                                                 [(ngModel)]="restaurantModel && restaurantModel.phone1"
-                                                #phone1="ngModel" />
+                                                #phone1="ngModel" required />
+                                            <div *ngIf="phone1.invalid && (phone1.dirty || phone1.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="phone1.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -316,7 +322,12 @@
                                         <div class="col-md-8">
                                             <input type="tel" class="form-control" name="phone2"
                                                 [(ngModel)]="restaurantModel && restaurantModel.phone2"
-                                                #phone2="ngModel" />
+                                                #phone2="ngModel" required />
+                                            <div *ngIf="phone2.invalid && (phone2.dirty || phone2.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="phone2.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -468,7 +479,8 @@
                                                 </div>
                                             </div> -->
                             </div>
-                            <div *ngIf="errorIsValid" class="error" [innerHTML]="'Commons.Texts.ErrorIsValid' | translate"></div> 
+                            <div *ngIf="errorIsValid" class="error"
+                                [innerHTML]="'Commons.Texts.ErrorIsValid' | translate"></div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-default btn-primary" [disabled]="clientState.isBusy"
