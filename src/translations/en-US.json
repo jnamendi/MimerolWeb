@@ -214,7 +214,8 @@
             "YourOrder": "Your order",
             "GuestPay": "Guest pay",
             "Refunds": "Refunds",
-            "EnterLocation": "Enter a location"
+            "EnterLocation": "Enter a location",
+            "EnterReason": "Enter a reason (max 500 characters)..."
         },
         "Links": {
             "Title": "Links",

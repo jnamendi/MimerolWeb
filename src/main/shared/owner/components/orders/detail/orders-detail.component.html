@@ -137,10 +137,12 @@
         </div>
         <form (ngSubmit)="onUpdateOrder(f)" #f="ngForm" novalidate>
             <div class="order-status">
-                <h4>
-                    <b>Status</b>
-                </h4>
                 <div class="row">
+                    <div class="col-md-2">
+                        <h4>
+                            <b>Status</b>
+                        </h4>
+                    </div>
                     <div class="col-md-6">
                         <select name="status" class="form-control" [(ngModel)]="ownerOrderModel.status"
                             #status="ngModel" required>
@@ -154,6 +156,24 @@
                             <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate">
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div *ngIf="ownerOrderModel.status == 4 || ownerOrderModel.status == 5" class="row">
+                    <div class="col-md-2">
+                        <h4>
+                            <b>Reason</b>
+                        </h4>
+                    </div>
+                    <div *ngIf="ownerOrderModel.status == 4" class="col-md-6">
+                        <textarea name="reasonReject" id="reasonReject" class="form-control" cols="40" rows="5" maxlength="500"
+                            placeholder="{{'Commons.Texts.EnterReason' | translate}}" [(ngModel)]="ownerOrderModel.reasonReject"
+                            #reasonReject="ngModel"></textarea>
+                    </div>
+                    <div *ngIf="ownerOrderModel.status == 5" class="col-md-6">
+                        <textarea name="reasonCancel" id="reasonCancel" class="form-control" cols="40" rows="5" maxlength="500"
+                            placeholder="{{'Commons.Texts.EnterReason' | translate}}" [(ngModel)]="ownerOrderModel.reasonCancel"
+                            #reasonCancel="ngModel"></textarea>
                     </div>
                 </div>
             </div>
