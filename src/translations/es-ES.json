@@ -214,7 +214,8 @@
             "YourOrder": "Su pedido",
             "GuestPay": "Pago del cliente",
             "Refunds": "Vuelto",
-            "EnterLocation": "Ingrese una ubicación"
+            "EnterLocation": "Ingrese una ubicación",
+            "EnterReason": "Ingrese un motivo (máximo 500 caracteres)..."
         },
         "Links": {
             "Title": "Enlaces",
