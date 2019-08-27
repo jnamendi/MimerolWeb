@@ -2,6 +2,7 @@ import { BaseModel } from '../base.model';
 import { LanguageList, Language, FieldTranslation } from '../langvm.model';
 import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
+import { CityDistricsModel } from '../../models/city/city-districs.model';
 
 export class RestaurantAdminModel extends BaseModel {
     forEach: any;
@@ -36,6 +37,8 @@ export class RestaurantAdminModel extends BaseModel {
     estDeliveryTime?: number;
     file?: File;
     addressDesc: string;
+    workArea: number[];
+    cityIds: number[];
 }
 
 export class WorkTimeList {

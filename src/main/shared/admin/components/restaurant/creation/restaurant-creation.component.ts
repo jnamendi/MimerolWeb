@@ -24,6 +24,7 @@ import { Subscription } from '../../../../../../../node_modules/rxjs';
 import { CityService, DistrictService } from '../../../../services';
 import { CityModel } from '../../../../models/city/city.model';
 import { DistrictModel } from '../../../../models/district/district.model';
+import { CityDistricsModel } from '../../../../models/city/city-district.model';
 import { weekdays } from 'moment';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
@@ -62,6 +63,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private currentAddress: string;
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+    private districtCityModel: DistrictModel[] = [];
+    private districtCityModelTemp: DistrictModel[] = [];
 
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private checkOpenLesserClose: boolean = false;
@@ -166,6 +169,41 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             this.message = err.message;
             this.isError = true;
         });
+    }
+
+    onGetListDistrictByCity = (cityIds: number[]) => {
+        this.districtCityModel = [];
+        cityIds.map(i => {
+            this.districtService.onGetDistrictByCity(i).subscribe(res => {
+                this.districtCityModel = res.content ? <DistrictModel[]>[...res.content] : [];
+            }, (err: ApiError) => {
+                this.message = err.message;
+                this.isError = true;
+            });
+        });
+
+        // cityIds.map(item => {
+        //     this.cityDistricsModel.push(...this.cityDistricsModelTemp.filter(x => x.cityId == item));
+        //     if (this.cityDistricsModel.length > 0) {
+        //         this.cityDistricsModel.map(i => {
+        //             if (i.cityId == item) {
+        //                 // this.districtCityModel = [];
+        //                 this.onGetDistrictByCity(item);
+        //                 if (typeof i.districs === 'undefined') {
+        //                     i.districs = [];
+        //                     i.districs = this.districtCityModel;
+        //                 } else {
+        //                     i.districs = this.districtCityModel;
+        //                 }
+
+        //             }
+        //         })
+        //     }
+        // })
+    }
+
+    onAddDeliveryCity = (cityIds: number[]) => {
+        this.restaurantModel.cityIds.push(cityIds[0]);
     }
 
     onChangeAddress = () => {

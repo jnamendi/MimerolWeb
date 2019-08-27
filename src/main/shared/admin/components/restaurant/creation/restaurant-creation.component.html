@@ -218,29 +218,33 @@
                                     <div class="row form-group">
                                         <label class="col-md-4">Delivery city</label>
                                         <div class="col-md-8">
-                                            <ng-select name="deliveryCity" [multiple]="true"
+                                            <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
+                                                bindLabel="name" [multiple]="true" [(ngModel)]="restaurantModel.cityIds"
+                                                #deliveryCity="ngModel"
+                                                (change)="onGetListDistrictByCity(restaurantModel.cityIds)"
                                                 placeholder="Select delivery city">
                                             </ng-select>
                                         </div>
+
+                                        <!-- <div class="col-md-4" *ngFor="let item of cityDistricsModel; let i = index;">
+                                            <div>
+                                                <ng-select name="deliveryDistrics" [items]="districtCityModel"
+                                                    bindValue="districtId" bindLabel="name" [multiple]="true"
+                                                    [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
+                                                    placeholder="Select delivery district">
+                                                </ng-select>
+                                            </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="row form-group">
                                         <label class="col-md-4">Delivery districs</label>
                                         <div class="col-md-8">
-                                            <div class="row">
-                                                <label class="col-md-2">City</label>
-                                                <div class="col-md-7">
-                                                    <ng-select name="deliveryDistrics" [multiple]="true"
-                                                        placeholder="Select delivery districs">
-                                                    </ng-select>
-                                                </div>
-                                                <div class="action col-md-3">
-                                                    <button type="button" style="background: gray"
-                                                        class="btn btn-default">+</button>
-                                                    <button type="button" style="background: gray"
-                                                        class="btn btn-default">-</button>
-                                                </div>
-                                            </div>
+                                            <ng-select name="deliveryDistrics" [items]="districtCityModel"
+                                                bindValue="districtId" bindLabel="name"
+                                                [(ngModel)]="restaurantModel.workArea" [multiple]="true"
+                                                placeholder="Select delivery districs">
+                                            </ng-select>
                                         </div>
                                     </div>
 
@@ -336,7 +340,7 @@
                                             [innerHTML]="'Commons.Texts.Phone1' | translate"></label>
                                         <div class="col-md-8">
                                             <input type="tel" class="form-control" name="phone1"
-                                                [(ngModel)]="restaurantModel.phone1" #phone1="ngModel" required/>
+                                                [(ngModel)]="restaurantModel.phone1" #phone1="ngModel" required />
                                             <div *ngIf="phone1.invalid && (phone1.dirty || phone1.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="phone1.errors?.required"
@@ -350,7 +354,7 @@
                                             [innerHTML]="'Commons.Texts.Phone2' | translate"></label>
                                         <div class="col-md-8">
                                             <input type="tel" class="form-control" name="phone2"
-                                                [(ngModel)]="restaurantModel.phone2" #phone2="ngModel" required/>
+                                                [(ngModel)]="restaurantModel.phone2" #phone2="ngModel" required />
                                             <div *ngIf="phone2.invalid && (phone2.dirty || phone2.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="phone2.errors?.required"

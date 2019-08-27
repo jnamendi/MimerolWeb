@@ -156,6 +156,7 @@ export class ApiUrl {
 
     // City
     public static CityGetAll = ApiUrl.BaseUrl + "api/city/getAll";
+    public static CityGetById = ApiUrl.BaseUrl + "api/city/getById";
 
     // District
     public static DistrictGetByCity = ApiUrl.BaseUrl + "api/district/get-district-by-city";
