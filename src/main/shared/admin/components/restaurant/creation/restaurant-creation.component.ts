@@ -178,8 +178,11 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
     onGetDistrictByCityMultiple = (id: number) => {
         this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
-            this.multipleDistrictCityModels = res.content ? <DistrictModel[]>[...res.content] : [];
-            // this.restaurantModel.districtId = null;
+            if (res.content == null) {
+                this.multipleDistrictCityModels = [];
+            } else {
+                this.multipleDistrictCityModels = <DistrictModel[]>[...res.content];
+            }
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
@@ -192,20 +195,11 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             if (this.cityMultipleDistrictsModel.length > 0) {
                 this.cityMultipleDistrictsModel.map(items => {
                     if (items.cityId === idsCitys) {
-                        this.onGetDistrictByCity(idsCitys);
-                        if (typeof items.districs === 'undefined') {
-                            items.districs = [];
-                            items.districs = this.multipleDistrictCityModels;
-                        } else {
-                            items.districs = this.multipleDistrictCityModels;
-                        }
-
+                        this.onGetDistrictByCityMultiple(idsCitys);
                     }
                 })
             }
         })
-        console.log(this.cityMultipleDistrictsModel);
-        console.log(this.multipleDistrictCityModels);
     }
 
     onChangeAddress = () => {

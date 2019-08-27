@@ -221,32 +221,22 @@
                                             <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
                                                 bindLabel="name" [multiple]="true" [(ngModel)]="restaurantModel.cityIds"
                                                 #deliveryCity="ngModel"
-                                                (onChange)="onGetListDistrictByCity(restaurantModel.cityIds)"
+                                                (change)="onGetListDistrictByCity(restaurantModel.cityIds)"
                                                 placeholder="Select delivery city">
                                             </ng-select>
                                         </div>
-
-                                        <!-- <div class="col-md-4" *ngFor="let item of cityDistricsModel; let i = index;">
-                                            <div>
-                                                <ng-select name="deliveryDistrics" [items]="districtCityModel"
-                                                    bindValue="districtId" bindLabel="name" [multiple]="true"
-                                                    [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                    placeholder="Select delivery district">
-                                                </ng-select>
-                                            </div>
-                                        </div> -->
                                     </div>
 
-                                    <!-- <div class="row form-group">
-                                        <label class="col-md-4">Delivery districs</label>
+                                    <div class="row form-group">
+                                        <label class="col-md-4"></label>
                                         <div class="col-md-8">
-                                            <ng-select name="deliveryDistrics" [items]="districtCityModel"
-                                                bindValue="districtId" bindLabel="name"
-                                                [(ngModel)]="restaurantModel.workArea" [multiple]="true"
-                                                placeholder="Select delivery districs">
+                                            <ng-select name="deliveryDistrics" [items]="multipleDistrictCityModels"
+                                                bindValue="districtId" bindLabel="name" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
+                                                placeholder="Select delivery district">
                                             </ng-select>
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                     <!-- End -->
 
