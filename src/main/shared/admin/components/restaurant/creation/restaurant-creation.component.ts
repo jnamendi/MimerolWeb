@@ -61,10 +61,14 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private isInvalidAddress: boolean;
     private validateAddressTimeout: any;
     private currentAddress: string;
+
     private cityModels: CityModel[] = [];
+    private cityModelsTemp: CityModel[] = [];
+    private cityMultipleDistrictsModel: CityDistricsModel[] = [];
+
     private districtModels: DistrictModel[] = [];
-    private districtCityModel: DistrictModel[] = [];
-    private districtCityModelTemp: DistrictModel[] = [];
+    private multipleDistrictCityModels: DistrictModel[] = [];
+    private multipleDistrictCityModelsTemp: DistrictModel[] = [];
 
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private checkOpenLesserClose: boolean = false;
@@ -155,6 +159,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     onGetCities = () => {
         this.cityService.onGetCities().subscribe(res => {
             this.cityModels = res.content && res.content.data ? <CityModel[]>[...res.content.data] : [];
+            this.cityModelsTemp = res.content && res.content.data ? <CityModel[]>[...res.content.data] : [];
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
@@ -171,39 +176,36 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    onGetListDistrictByCity = (cityIds: number[]) => {
-        this.districtCityModel = [];
-        cityIds.map(i => {
-            this.districtService.onGetDistrictByCity(i).subscribe(res => {
-                this.districtCityModel = res.content ? <DistrictModel[]>[...res.content] : [];
-            }, (err: ApiError) => {
-                this.message = err.message;
-                this.isError = true;
-            });
+    onGetDistrictByCityMultiple = (id: number) => {
+        this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
+            this.multipleDistrictCityModels = res.content ? <DistrictModel[]>[...res.content] : [];
+            // this.restaurantModel.districtId = null;
+        }, (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
         });
-
-        // cityIds.map(item => {
-        //     this.cityDistricsModel.push(...this.cityDistricsModelTemp.filter(x => x.cityId == item));
-        //     if (this.cityDistricsModel.length > 0) {
-        //         this.cityDistricsModel.map(i => {
-        //             if (i.cityId == item) {
-        //                 // this.districtCityModel = [];
-        //                 this.onGetDistrictByCity(item);
-        //                 if (typeof i.districs === 'undefined') {
-        //                     i.districs = [];
-        //                     i.districs = this.districtCityModel;
-        //                 } else {
-        //                     i.districs = this.districtCityModel;
-        //                 }
-
-        //             }
-        //         })
-        //     }
-        // })
     }
 
-    onAddDeliveryCity = (cityIds: number[]) => {
-        this.restaurantModel.cityIds.push(cityIds[0]);
+    onGetListDistrictByCity = (cityIds: number[]) => {
+        cityIds.map(idsCitys => {
+            this.cityMultipleDistrictsModel.push(...this.cityModelsTemp.filter(x => x.cityId === idsCitys));
+            if (this.cityMultipleDistrictsModel.length > 0) {
+                this.cityMultipleDistrictsModel.map(items => {
+                    if (items.cityId === idsCitys) {
+                        this.onGetDistrictByCity(idsCitys);
+                        if (typeof items.districs === 'undefined') {
+                            items.districs = [];
+                            items.districs = this.multipleDistrictCityModels;
+                        } else {
+                            items.districs = this.multipleDistrictCityModels;
+                        }
+
+                    }
+                })
+            }
+        })
+        console.log(this.cityMultipleDistrictsModel);
+        console.log(this.multipleDistrictCityModels);
     }
 
     onChangeAddress = () => {

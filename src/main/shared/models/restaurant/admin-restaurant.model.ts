@@ -38,7 +38,7 @@ export class RestaurantAdminModel extends BaseModel {
     file?: File;
     addressDesc: string;
     workArea: number[];
-    cityIds: number[];
+    cityIds?: number[];
 }
 
 export class WorkTimeList {

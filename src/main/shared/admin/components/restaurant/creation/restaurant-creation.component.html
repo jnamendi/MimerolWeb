@@ -221,7 +221,7 @@
                                             <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
                                                 bindLabel="name" [multiple]="true" [(ngModel)]="restaurantModel.cityIds"
                                                 #deliveryCity="ngModel"
-                                                (change)="onGetListDistrictByCity(restaurantModel.cityIds)"
+                                                (onChange)="onGetListDistrictByCity(restaurantModel.cityIds)"
                                                 placeholder="Select delivery city">
                                             </ng-select>
                                         </div>
@@ -237,7 +237,7 @@
                                         </div> -->
                                     </div>
 
-                                    <div class="row form-group">
+                                    <!-- <div class="row form-group">
                                         <label class="col-md-4">Delivery districs</label>
                                         <div class="col-md-8">
                                             <ng-select name="deliveryDistrics" [items]="districtCityModel"
@@ -246,7 +246,7 @@
                                                 placeholder="Select delivery districs">
                                             </ng-select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- End -->
 
