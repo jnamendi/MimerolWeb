@@ -166,14 +166,24 @@
                         </h4>
                     </div>
                     <div *ngIf="ownerOrderModel.status == 4" class="col-md-6">
-                        <textarea name="reasonReject" id="reasonReject" class="form-control" cols="40" rows="5" maxlength="500"
-                            placeholder="{{'Commons.Texts.EnterReason' | translate}}" [(ngModel)]="ownerOrderModel.reasonReject"
-                            #reasonReject="ngModel"></textarea>
+                        <textarea name="reasonReject" id="reasonReject" class="form-control" cols="40" rows="5"
+                            maxlength="500" placeholder="{{'Commons.Texts.EnterReason' | translate}}"
+                            [(ngModel)]="ownerOrderModel.reasonReject" #reasonReject="ngModel"></textarea>
+                        <div *ngIf="reasonReject.invalid && (reasonReject.dirty || reasonReject.touched || f.submitted)"
+                            class="error">
+                            <div *ngIf="reasonReject.errors?.required"
+                                [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                        </div>
                     </div>
                     <div *ngIf="ownerOrderModel.status == 5" class="col-md-6">
-                        <textarea name="reasonCancel" id="reasonCancel" class="form-control" cols="40" rows="5" maxlength="500"
-                            placeholder="{{'Commons.Texts.EnterReason' | translate}}" [(ngModel)]="ownerOrderModel.reasonCancel"
-                            #reasonCancel="ngModel"></textarea>
+                        <textarea name="reasonCancel" id="reasonCancel" class="form-control" cols="40" rows="5"
+                            maxlength="500" placeholder="{{'Commons.Texts.EnterReason' | translate}}"
+                            [(ngModel)]="ownerOrderModel.reasonCancel" #reasonCancel="ngModel"></textarea>
+                        <div *ngIf="reasonCancel.invalid && (reasonCancel.dirty || reasonCancel.touched || f.submitted)"
+                            class="error">
+                            <div *ngIf="reasonCancel.errors?.required"
+                                [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                        </div>
                     </div>
                 </div>
             </div>
