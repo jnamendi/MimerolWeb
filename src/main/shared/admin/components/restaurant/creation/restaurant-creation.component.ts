@@ -23,9 +23,11 @@ import { MapsAPILoader, AgmMap } from '../../../../../../../node_modules/@agm/co
 import { Subscription } from '../../../../../../../node_modules/rxjs';
 import { CityService, DistrictService } from '../../../../services';
 import { CityModel } from '../../../../models/city/city.model';
-import { DistrictModel } from '../../../../models/district/district.model';
+import { DistrictModel, DeliveryDistrictModel } from '../../../../models/district/district.model';
+import { DeliveryCityModel } from '../../../../models/city/city-district.model';
 import { weekdays } from 'moment';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { async } from '@angular/core/testing';
 
 @Component({
     selector: 'restaurant-creation',
@@ -60,8 +62,14 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private isInvalidAddress: boolean;
     private validateAddressTimeout: any;
     private currentAddress: string;
+
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+
+    private deliveryCityModelsTemp: CityModel[] = [];
+    private multipleDeliveryDistrictModels: DistrictModel[] = [];
+    private deliveryCitiesModel: DeliveryCityModel[] = [];
+    private deliveryDistrictModel: DeliveryDistrictModel[] = [];
 
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private checkOpenLesserClose: boolean = false;
@@ -107,6 +115,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
         this.onGetCities();
         this.onAutoCreateRestaurantWorkTimeId();
+        this.deliveryCitiesModel.push(<DeliveryCityModel>{
+            cityId: 0
+        })
     }
 
     ngAfterViewInit(): void {
@@ -152,6 +163,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     onGetCities = () => {
         this.cityService.onGetCities().subscribe(res => {
             this.cityModels = res.content && res.content.data ? <CityModel[]>[...res.content.data] : [];
+            this.deliveryCityModelsTemp = res.content && res.content.data ? <CityModel[]>[...res.content.data] : [];
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
@@ -161,12 +173,113 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     onGetDistrictByCity = (cityId: number) => {
         this.districtService.onGetDistrictByCity(cityId).subscribe(res => {
             this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+            this.multipleDeliveryDistrictModels = res.content ? <DistrictModel[]>[...res.content] : [];
             this.restaurantModel.districtId = null;
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
         });
     }
+
+    // onGetDeliveryDistrictByCityMultiple = (id: number, districs: DeliveryDistrictModel[]) => {
+    //     // this.districtService.onGetDistrictByCityMultiple(id).subscribe({
+    //     //     error: err => {
+    //     //         this.message = err.message;
+    //     //         this.isError = true;
+    //     //     },
+    //     //     complete: (res) => {
+    //     //         if (res.content == null) {
+    //     //             this.multipleDeliveryDistrictModels = [];
+    //     //         } else {
+    //     //             this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
+    //     //         }
+    //     //     },
+    //     // });
+
+    //     this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
+    //         if (res.content == null) {
+    //             this.multipleDeliveryDistrictModels = [];
+    //         } else {
+    //             this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
+    //             this.multipleDeliveryDistrictModels.map(element => {
+    //                 let t = new DeliveryDistrictModel();
+    //                 t.cityId = id;
+    //                 t.code = element.code;
+    //                 t.districtId = element.districtId;
+    //                 t.status = element.status;
+    //                 t.name = element.name;
+    //                 districs.push(t);
+    //             });
+
+    //         }
+    //     }, (err: ApiError) => {
+    //         this.message = err.message;
+    //         this.isError = true;
+    //     });
+    //     return districs;
+
+    //     // this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
+    //     //     if (res.content == null) {
+    //     //         this.multipleDeliveryDistrictModels = [];
+    //     //     } else {
+    //     //         this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
+    //     //     }
+    //     //     this.multipleDeliveryDistrictModels.map(element => {
+    //     //         let t = new DeliveryDistrictModel();
+    //     //         t.cityId = id;
+    //     //         t.code = element.code;
+    //     //         t.districtId = element.districtId;
+    //     //         t.status = element.status;
+    //     //         t.name = element.name;
+    //     //         districs.push(t);
+    //     //     });
+    //     //     return districs;
+    //     // }
+    // }
+
+    // onGetListDistrictByCity = (cityIds: number) => {
+    //     this.deliveryCitiesModel.map(items => {
+    //         if (items.cityId === cityIds) {
+    //             let index = this.deliveryCitiesModel.findIndex(x => x.cityId === cityIds);
+    //             this.deliveryCitiesModel.splice(index, 1);
+    //             this.deliveryCitiesModel.push(...this.deliveryCityModelsTemp.filter(x => x.cityId === cityIds));
+    //         } else {
+    //             this.deliveryCitiesModel.splice(-1, 1);
+    //             this.deliveryCitiesModel.push(...this.deliveryCityModelsTemp.filter(x => x.cityId === cityIds));
+    //         }
+    //     })
+
+    //     this.deliveryCitiesModel.map(items => {
+    //         if (items.cityId === cityIds) {
+    //             items.districs = [];
+    //             items.districs = this.onGetDeliveryDistrictByCityMultiple(items.cityId, items.districs);
+
+    //             // this.multipleDeliveryDistrictModels.map(element => {
+    //             //     let t = new DeliveryDistrictModel();
+    //             //     t.cityId = items.cityId;
+    //             //     t.code = element.code;
+    //             //     t.districtId = element.districtId;
+    //             //     t.status = element.status;
+    //             //     t.name = element.name;
+    //             //     items.districs.push(t);
+    //             // });
+    //         }
+    //     })
+    //     // console.log(cityIds);
+    //     // console.log(this.multipleDeliveryDistrictModels);
+    //     // console.log(this.deliveryCitiesModel);
+    // }
+
+    // onAddCity = () => {
+    //     this.deliveryCitiesModel.push(<DeliveryCityModel>{
+    //         cityId: 0
+    //     })
+    // }
+
+    // onRemoveCity = (idCity: number) => {
+    //     let index = this.deliveryCitiesModel.findIndex(x => x.cityId === idCity);
+    //     this.deliveryCitiesModel && this.deliveryCitiesModel.splice(index, 1);
+    // }
 
     onChangeAddress = () => {
         this.restaurantModel.latitude = null;

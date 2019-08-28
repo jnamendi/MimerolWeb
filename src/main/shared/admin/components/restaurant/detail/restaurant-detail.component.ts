@@ -62,6 +62,8 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
 
+    private multipleDeliveryDistrictModels: DistrictModel[] = [];
+
     private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
     private errorIsValid: boolean = false;
@@ -182,6 +184,7 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     onGetDistrictByCity = (cityId: number, isFirstLoad: boolean = false) => {
         this.districtService.onGetDistrictByCity(cityId).subscribe(res => {
             this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+            this.multipleDeliveryDistrictModels = res.content ? <DistrictModel[]>[...res.content] : [];
             this.restaurantModel.districtId = !isFirstLoad ? null : this.restaurantModel.districtId;
         }, (err: ApiError) => {
             this.message = err.message;

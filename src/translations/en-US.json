@@ -215,7 +215,8 @@
             "GuestPay": "Guest pay",
             "Refunds": "Refunds",
             "EnterLocation": "Enter a location",
-            "EnterReason": "Enter a reason (max 500 characters)..."
+            "EnterReason": "Enter a reason (max 500 characters)...",
+            "DeliveryDistrict": "Delivery district <span class='error'>*</span>"
         },
         "Links": {
             "Title": "Links",
