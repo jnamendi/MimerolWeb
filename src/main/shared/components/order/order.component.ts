@@ -119,8 +119,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     // this.deliveryTimes = timeRanges.filter(t => {
     //   return this.coreService.compareTimeGreaterThanCurrent(t);
     // });
-    this.onGetCities();
+    this.onGetCities(this.restaurantId);
     this.onGetRestaurantDetails();
+    
   }
 
   onGetRestaurantDetails = () => {
@@ -217,17 +218,17 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
-  onGetCities = () => {
-    this.cityService.onGetCities().subscribe(res => {
-      this.cityModels = res.content && res.content.data ? <CityModel[]>[...res.content.data] : [];
+  onGetCities = (restaurantId: number) => {
+    this.cityService.onGetByRestaurantId(restaurantId).subscribe(res => {
+      this.cityModels = res.content && res.content ? <CityModel[]>[...res.content] : [];
     }, (err: ApiError) => {
       this.message = err.message;
       this.isError = true;
     });
   }
 
-  onGetDistrictByCity = (cityId: number) => {
-    this.districtService.onGetDistrictByCity(cityId).subscribe(res => {
+  onGetDistrictByCity = (restaurantId: number, cityId: number) => {
+    this.districtService.onDistrictGetByRestaurantCity(restaurantId, cityId).subscribe(res => {
       this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
       this.orderModel.districtId = null;
     }, (err: ApiError) => {

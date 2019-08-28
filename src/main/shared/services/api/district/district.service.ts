@@ -8,6 +8,7 @@ import { ApiListResponse } from '../../api-response/api-response';
 export interface DistrictInterface {
     onGetDistrictByCity(cityId: number): Observable<ApiListResponse>;
     onGetDistrictByCityMultiple(cityId: number): Observable<ApiListResponse>;
+    onDistrictGetByRestaurantCity(restaurantId: number, cityId: number): Observable<ApiListResponse>;
 }
 
 @Injectable()
@@ -23,5 +24,8 @@ export class DistrictService implements DistrictInterface {
     }
     onGetDistrictByCityMultiple(cityId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.DistrictGetByCity + "/" + cityId, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+    onDistrictGetByRestaurantCity(restaurantId: number, cityId: number): Observable<ApiListResponse> {
+        return this.http.HttpGet(ApiUrl.DistrictGetByRestaurantCity + "/" + restaurantId + "/" + cityId, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }
