@@ -46,7 +46,7 @@
                                             <ng-select name="categoryName" [items]="categoryAdminModels"
                                                 bindValue="categoryId" bindLabel="categoryName" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.categoryIds" #categoryName="ngModel"
-                                                placeholder="Select category name">
+                                                placeholder="Select category name" required>
                                             </ng-select>
 
                                             <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched || f.submitted)"
@@ -64,7 +64,7 @@
                                             <ng-select name="userName" [items]="userAdminModels" bindValue="userId"
                                                 bindLabel="userName" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.userIds" #userName="ngModel"
-                                                placeholder="Select category name">
+                                                placeholder="Select category name" required>
                                             </ng-select>
                                             <div *ngIf="userName.invalid && (userName.dirty || userName.touched || f.submitted)"
                                                 class="error">
@@ -159,13 +159,21 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <select name="city" inputFocus [(ngModel)]="restaurantModel.cityId"
+
+                                            <ng-select name="city" [items]="cityModels" bindValue="cityId"
+                                                bindLabel="name" [multiple]="false"
+                                                (change)="onGetDistrictByCity(restaurantModel.cityId)"
+                                                [(ngModel)]="restaurantModel.cityId" #city="ngModel"
+                                                placeholder="Select city" required>
+                                            </ng-select>
+
+                                            <!-- <select name="city" inputFocus [(ngModel)]="restaurantModel.cityId"
                                                 (change)="onGetDistrictByCity(restaurantModel.cityId)" #city="ngModel"
                                                 class="form-control" required>
                                                 <option [ngValue]="null" disabled>Select city</option>
                                                 <option *ngFor="let item of cityModels" [value]="item.cityId">
                                                     {{item.name}}</option>
-                                            </select>
+                                            </select> -->
                                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="city.errors?.required"
@@ -178,15 +186,37 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                         <div class="col-md-8">
-                                            <select name="district" inputFocus [(ngModel)]="restaurantModel.districtId"
+                                            <ng-select name="district" [items]="districtModels" bindValue="districtId"
+                                                bindLabel="name" [multiple]="false"
+                                                [(ngModel)]="restaurantModel.districtId" #district="ngModel"
+                                                placeholder="Select district" required>
+                                            </ng-select>
+                                            <!-- <select name="district" inputFocus [(ngModel)]="restaurantModel.districtId"
                                                 #district="ngModel" class="form-control" required>
                                                 <option [ngValue]="null" disabled>Select district</option>
                                                 <option *ngFor="let item of districtModels" [value]="item.districtId">
                                                     {{item.name}}</option>
-                                            </select>
+                                            </select> -->
                                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="district.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></label>
+                                        <div class="col-md-8">
+                                            <ng-select name="deliveryDistrics" [items]="multipleDeliveryDistrictModels"
+                                                bindValue="districtId" bindLabel="name" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
+                                                placeholder="Select delivery district" required>
+                                            </ng-select>
+                                            <div *ngIf="deliveryDistrics.invalid && (deliveryDistrics.dirty || deliveryDistrics.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="deliveryDistrics.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
@@ -215,38 +245,42 @@
                                     </div>
 
                                     <!-- Delivery districs -->
-                                    <div class="separator-dashed"></div>
+                                    <!-- <div class="separator-dashed"></div>
                                     <h2 class="separator-dashed-tilte">Delivery districs</h2>
-                                    <div class="separator-dashed"></div>
+                                    <div class="separator-dashed"></div> -->
 
-                                    <div class="row form-group">
+                                    <!-- <div *ngFor="let itemCity of cityMultipleDistrictsModel; let i = index;"> -->
+
+                                    <!-- <div class="row form-group">
                                         <label class="col-md-4">Delivery city</label>
                                         <div class="col-md-8">
-                                            <ng-select name="deliveryCity" [multiple]="true"
+                                            <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
+                                                bindLabel="name" [multiple]="false"
+                                                [(ngModel)]="restaurantModel.cityIds" #deliveryCity="ngModel"
+                                                (change)="onGetDistrictByCityMultiple(restaurantModel.cityIds)"
                                                 placeholder="Select delivery city">
                                             </ng-select>
-                                        </div>
-                                    </div>
+                                        </div> -->
+                                    <!-- <div class="action col-md-2">
+                                                <button type="button" (click)="onAddCity()" style="background: gray"
+                                                    class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveCity(itemCity.cityId)" style="background: gray"
+                                                    class="btn btn-default" *ngIf="i > 0">-</button>
+                                            </div> -->
+                                    <!-- </div> -->
 
-                                    <div class="row form-group">
+                                    <!-- <div class="row form-group">
                                         <label class="col-md-4">Delivery districs</label>
                                         <div class="col-md-8">
-                                            <div class="row">
-                                                <label class="col-md-2">City</label>
-                                                <div class="col-md-7">
-                                                    <ng-select name="deliveryDistrics" [multiple]="true"
-                                                        placeholder="Select delivery districs">
-                                                    </ng-select>
-                                                </div>
-                                                <div class="action col-md-3">
-                                                    <button type="button" style="background: gray"
-                                                        class="btn btn-default">+</button>
-                                                    <button type="button" style="background: gray"
-                                                        class="btn btn-default">-</button>
-                                                </div>
-                                            </div>
+                                            <ng-select name="deliveryDistrics" [items]="multipleDistrictCityModels"
+                                                bindValue="districtId" bindLabel="name" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.workArea[0].districs"
+                                                #deliveryDistrics="ngModel" placeholder="Select delivery district">
+                                            </ng-select>
                                         </div>
-                                    </div>
+                                    </div> -->
+
+                                    <!-- </div> -->
 
                                     <!-- End -->
 

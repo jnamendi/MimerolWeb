@@ -1,7 +1,7 @@
 import { BaseModel } from '../base.model';
-import { District2Model } from '../district/district.model';
+import { DeliveryDistrictModel } from '../district/district.model';
 
-export class CityDistricsModel extends BaseModel {
+export class DeliveryCityModel extends BaseModel {
     constructor() {
         super();
     }
@@ -9,11 +9,11 @@ export class CityDistricsModel extends BaseModel {
     code: string;
     name: string;
     status: number;
-    country: CountryModel;
-    districs?: Array<District2Model>;
+    country: DeliveryCountryModel;
+    districs?: Array<DeliveryDistrictModel>;
 }
 
-export class CountryModel {
+export class DeliveryCountryModel {
     code: string;
     countryId: number;
     name: string;

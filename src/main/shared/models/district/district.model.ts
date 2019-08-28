@@ -12,7 +12,7 @@ export class DistrictModel extends BaseModel {
     status: number;
 }
 
-export class District2Model extends BaseModel {
+export class DeliveryDistrictModel extends BaseModel {
     constructor() {
         super();
     }
