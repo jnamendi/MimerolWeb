@@ -1,5 +1,5 @@
 import { BaseModel } from '../base.model';
-import { DistrictModel } from '../district/district.model';
+import { District2Model } from '../district/district.model';
 
 export class CityDistricsModel extends BaseModel {
     constructor() {
@@ -10,7 +10,7 @@ export class CityDistricsModel extends BaseModel {
     name: string;
     status: number;
     country: CountryModel;
-    districs?: Array<DistrictModel> = [];
+    districs?: Array<District2Model>;
 }
 
 export class CountryModel {

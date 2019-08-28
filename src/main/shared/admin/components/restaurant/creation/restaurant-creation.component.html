@@ -215,28 +215,38 @@
                                     <h2 class="separator-dashed-tilte">Delivery districs</h2>
                                     <div class="separator-dashed"></div>
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4">Delivery city</label>
-                                        <div class="col-md-8">
-                                            <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
-                                                bindLabel="name" [multiple]="true" [(ngModel)]="restaurantModel.cityIds"
-                                                #deliveryCity="ngModel"
-                                                (change)="onGetListDistrictByCity(restaurantModel.cityIds)"
-                                                placeholder="Select delivery city">
-                                            </ng-select>
-                                        </div>
-                                    </div>
+                                    <!-- <div *ngFor="let itemCity of cityMultipleDistrictsModel; let i = index;"> -->
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4"></label>
-                                        <div class="col-md-8">
-                                            <ng-select name="deliveryDistrics" [items]="multipleDistrictCityModels"
-                                                bindValue="districtId" bindLabel="name" [multiple]="true"
-                                                [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                placeholder="Select delivery district">
-                                            </ng-select>
+                                        <div class="row form-group">
+                                            <label class="col-md-4">Delivery city</label>
+                                            <div class="col-md-8">
+                                                <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
+                                                    bindLabel="name" [multiple]="false"
+                                                    [(ngModel)]="restaurantModel.cityIds" #deliveryCity="ngModel"
+                                                    (change)="onGetDistrictByCityMultiple(restaurantModel.cityIds)"
+                                                    placeholder="Select delivery city">
+                                                </ng-select>
+                                            </div>
+                                            <!-- <div class="action col-md-2">
+                                                <button type="button" (click)="onAddCity()" style="background: gray"
+                                                    class="btn btn-default">+</button>
+                                                <button type="button" (click)="onRemoveCity(itemCity.cityId)" style="background: gray"
+                                                    class="btn btn-default" *ngIf="i > 0">-</button>
+                                            </div> -->
                                         </div>
-                                    </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-md-4">Delivery districs</label>
+                                            <div class="col-md-8">
+                                                <ng-select name="deliveryDistrics" [items]="multipleDistrictCityModels"
+                                                    bindValue="districtId" bindLabel="name" [multiple]="true"
+                                                    [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
+                                                    placeholder="Select delivery district">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+                                    <!-- </div> -->
 
                                     <!-- End -->
 
