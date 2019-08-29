@@ -3,6 +3,8 @@ export class AdminOrderModel {
     orderCode?: string;
     orderId?: number;
     status?: number;
+    reasonReject?: string;
+    reasonCancel?: string;
 }
 
 export enum AdminOrderStatus {

@@ -4,7 +4,7 @@ import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
 import { CityDistricsModel } from '../../models/city/city-districs.model';
 
-export class RestaurantAdminModel extends BaseModel {
+export class DetailRestaurantAdminModel extends BaseModel {
     forEach: any;
     constructor() {
         super();

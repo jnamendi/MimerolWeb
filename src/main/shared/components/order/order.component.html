@@ -91,7 +91,8 @@
                                                     componentRestrictions: { country: currentCountryCode}
                                                     }" (setAddress)="setAddress($event)"
                                         (district)='onGetDistrict($event)' (adr_address)='onGetAddress($event)'
-                                        id="autocomplete" ng2-google-place-autocomplete placeholder="{{'Commons.Texts.EnterLocation' | translate}}"/>
+                                        id="autocomplete" ng2-google-place-autocomplete
+                                        placeholder="{{'Commons.Texts.EnterLocation' | translate}}" />
                                     <label [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                     <div *ngIf="address.invalid && (address.touched || f.submitted)" class="error">
                                         <div *ngIf="address.errors?.required"
@@ -115,13 +116,20 @@
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <select name="city" inputFocus [(ngModel)]="orderModel.cityId"
-                                                (change)="onGetDistrictByCity(orderModel.cityId)" #city="ngModel"
-                                                class="form-control"
-                                                [required]="!orderModel.userId || !orderModel.addressId">
-                                                <option [ngValue]="null" disabled>Select city</option>
-                                                <option *ngFor="let item of cityModels" [value]="item.cityId">
+                                                (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)" #city="ngModel"
+                                                class="form-control">
+                                                <!-- <option [ngValue]="null" disabled>Select city</option> -->
+                                                <option *ngFor="let item of cityModels; let i = index;" [value]="item.cityId" [selected]="i==0">
                                                     {{item.name}}</option>
                                             </select>
+
+                                            <!-- <ng-select class="form-control" name="city" [items]="cityModels"
+                                                bindValue="cityId" bindLabel="name" [multiple]="false"
+                                                [(ngModel)]="orderModel.cityId" #city="ngModel"
+                                                placeholder="Select city" (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)"
+                                                [required]="!orderModel.userId || !orderModel.addressId">
+                                            </ng-select> -->
+
                                             <label [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
                                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
                                                 class="error">
@@ -140,6 +148,14 @@
                                                 <option *ngFor="let item of districtModels" [value]="item.districtId">
                                                     {{item.name}}</option>
                                             </select>
+
+                                            <!-- <ng-select class="form-control" name="district" [items]="districtModels"
+                                                bindValue="districtId" bindLabel="name" [multiple]="false"
+                                                [(ngModel)]="orderModel.districtId" #district="ngModel"
+                                                placeholder="Select district"
+                                                [required]="!orderModel.userId || !orderModel.addressId">
+                                            </ng-select> -->
+
                                             <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
                                                 class="error">

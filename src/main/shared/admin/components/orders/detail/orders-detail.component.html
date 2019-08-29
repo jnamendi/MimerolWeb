@@ -135,15 +135,16 @@
         </div>
         <form (ngSubmit)="onUpdateOrder(f)" #f="ngForm" novalidate>
             <div class="order-status">
-                <h4>
-                    <b>Status</b>
-                </h4>
                 <div class="row">
+                    <div class="col-md-2">
+                        <h4>
+                            <b>Status</b>
+                        </h4>
+                    </div>
                     <div class="col-md-6">
                         <select name="status" class="form-control" [(ngModel)]="adminOrderModel.status"
                             #status="ngModel" required>
                             <option value="1" [innerHTML]="'Commons.Texts.New' | translate"></option>
-                            <option value="2" [innerHTML]="'Commons.Texts.InProgress' | translate"></option>
                             <option value="3" [innerHTML]="'Commons.Texts.Deliveried' | translate"></option>
                             <option value="4" [innerHTML]="'Commons.Texts.Rejected' | translate"></option>
                             <option value="5" [innerHTML]="'Commons.Texts.Canceled' | translate"></option>
@@ -152,6 +153,34 @@
                         <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
                             <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate">
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="adminOrderModel.status == 4 || adminOrderModel.status == 5" class="row">
+                    <div class="col-md-2">
+                        <h4>
+                            <b>Reason</b>
+                        </h4>
+                    </div>
+                    <div *ngIf="adminOrderModel.status == 4" class="col-md-6">
+                        <textarea name="reasonReject" id="reasonReject" class="form-control" cols="40" rows="5"
+                            maxlength="500" placeholder="{{'Commons.Texts.EnterReason' | translate}}"
+                            [(ngModel)]="adminOrderModel.reasonReject" #reasonReject="ngModel" required></textarea>
+                        <div *ngIf="reasonReject.invalid && (reasonReject.dirty || reasonReject.touched || f.submitted)"
+                            class="error">
+                            <div *ngIf="reasonReject.errors?.required"
+                                [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                        </div>
+                    </div>
+                    <div *ngIf="adminOrderModel.status == 5" class="col-md-6">
+                        <textarea name="reasonCancel" id="reasonCancel" class="form-control" cols="40" rows="5"
+                            maxlength="500" placeholder="{{'Commons.Texts.EnterReason' | translate}}"
+                            [(ngModel)]="adminOrderModel.reasonCancel" #reasonCancel="ngModel" required></textarea>
+                        <div *ngIf="reasonCancel.invalid && (reasonCancel.dirty || reasonCancel.touched || f.submitted)"
+                            class="error">
+                            <div *ngIf="reasonCancel.errors?.required"
+                                [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                         </div>
                     </div>
                 </div>
