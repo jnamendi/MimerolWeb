@@ -117,10 +117,9 @@
                                         <div class="form-input">
                                             <select name="city" inputFocus [(ngModel)]="orderModel.cityId"
                                                 (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)" #city="ngModel"
-                                                class="form-control"
-                                                [required]="!orderModel.userId || !orderModel.addressId">
-                                                <option [ngValue]="null" disabled>Select city</option>
-                                                <option *ngFor="let item of cityModels" [value]="item.cityId">
+                                                class="form-control">
+                                                <!-- <option [ngValue]="null" disabled>Select city</option> -->
+                                                <option *ngFor="let item of cityModels; let i = index;" [value]="item.cityId" [selected]="i==0">
                                                     {{item.name}}</option>
                                             </select>
 
