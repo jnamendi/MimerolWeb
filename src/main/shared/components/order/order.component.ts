@@ -120,6 +120,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     //   return this.coreService.compareTimeGreaterThanCurrent(t);
     // });
     this.onGetCities(this.restaurantId);
+    
     this.onGetRestaurantDetails();
     
   }
@@ -221,6 +222,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onGetCities = (restaurantId: number) => {
     this.cityService.onGetByRestaurantId(restaurantId).subscribe(res => {
       this.cityModels = res.content && res.content ? <CityModel[]>[...res.content] : [];
+
+      this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
     }, (err: ApiError) => {
       this.message = err.message;
       this.isError = true;
