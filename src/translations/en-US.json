@@ -216,7 +216,8 @@
             "Refunds": "Refunds",
             "EnterLocation": "Enter a location",
             "EnterReason": "Enter a reason (max 500 characters)...",
-            "DeliveryDistrict": "Delivery district <span class='error'>*</span>"
+            "DeliveryDistrict": "Delivery district <span class='error'>*</span>",
+            "Confirmed": "Confirmed"
         },
         "Links": {
             "Title": "Links",
