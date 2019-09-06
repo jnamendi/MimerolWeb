@@ -147,10 +147,10 @@
                         <select name="status" class="form-control" [(ngModel)]="ownerOrderModel.status"
                             #status="ngModel" required>
                             <option value="1" [innerHTML]="'Commons.Texts.New' | translate"></option>
+                            <option value="2" [innerHTML]="'Commons.Texts.Confirmed' | translate"></option>
                             <option value="3" [innerHTML]="'Commons.Texts.Deliveried' | translate"></option>
                             <option value="4" [innerHTML]="'Commons.Texts.Rejected' | translate"></option>
                             <option value="5" [innerHTML]="'Commons.Texts.Canceled' | translate"></option>
-                            <option value="7" [innerHTML]="'Commons.Texts.Complete' | translate"></option>
                         </select>
                         <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
                             <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate">

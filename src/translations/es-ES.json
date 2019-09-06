@@ -216,7 +216,8 @@
             "Refunds": "Vuelto",
             "EnterLocation": "Ingrese una ubicación",
             "EnterReason": "Ingrese un motivo (máximo 500 caracteres)...",
-            "DeliveryDistrict": "Distrito de entrega <span class='error'>*</span>"
+            "DeliveryDistrict": "Distrito de entrega <span class='error'>*</span>",
+            "Confirmed": "Confirmado"
         },
         "Links": {
             "Title": "Enlaces",
