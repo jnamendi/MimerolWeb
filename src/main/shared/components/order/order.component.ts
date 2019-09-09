@@ -504,7 +504,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onCalculateTotalPrices = (discountValue: number = 0) => {
     this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
-      this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
+      //this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
+      this.totalItemsPrice = Math.ceil(this.totalSubItemsPrice - (this.totalSubItemsPrice * (discountValue / 100))) + (this.selectedMenuItems.deliveryCost || 0);
       this.selectedMenuItems.discount = discountValue;
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;

@@ -317,7 +317,14 @@
         },
         "ContactUs": {
             "SendContactSuccess": "<h2>¡Mensaje enviado correctamente!</h2> <p>¡Gracias por tu mensaje! Un miembro o nuestro personal se pondrá en contacto con usted lo antes posible</p>",
-            "ContactTypeRequired": "Porque tengo un <span class='error'>*</span>"
+            "ContactTypeRequired": "Porque tengo un <span class='error'>*</span>",
+            "Question": "Pregunta",
+            "Suggestion": "Sugerencia",
+            "Complaint": "Queja",
+            "HowCanWeHelpYou": "Como podemos ayudarte?",
+            "Contact": "Contacto",
+            "ContentContact": "Si tiene una pregunta urgente sobre un pedido que realizó en Mimerol.com, le recomendamos que se comunique directamente con el restaurante. Puede encontrar el número del restaurante en el correo electrónico de confirmación que le enviamos. Para asuntos menos urgentes y preguntas generales, complete el siguiente formulario. El servicio al cliente está disponible los 7 días de la semana, de 07:30 a.m. a 11:00 p.m.",
+            "SendContact": "Enviar contacto"
         },
         "MyAccount": {
             "TxtMyAccount": "Mi cuenta",
