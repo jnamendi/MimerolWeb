@@ -24,8 +24,8 @@
                                             <label [innerHTML]="'Components.ContactUs.ContactTypeRequired' | translate"></label>
                                             <select name="contactType" class="form-control" required [(ngModel)]="contactModel.contactType" #contactType="ngModel">
                                                 <option value="Question" [innerHTML]="'Components.ContactUs.Question' | translate"></option>
-                                                <option value="Suggestion" [innerHTML]="'Components.ContactUs.Suggestion' | translate">Suggestion</option>
-                                                <option value="Complaint" [innerHTML]="'Components.ContactUs.Complaint' | translate">Complaint</option>
+                                                <option value="Suggestion" [innerHTML]="'Components.ContactUs.Suggestion' | translate"></option>
+                                                <option value="Complaint" [innerHTML]="'Components.ContactUs.Complaint' | translate"></option>
                                             </select>
                                             <div *ngIf="contactType.invalid && (contactType.dirty || contactType.touched || f.submitted)" class="error">
                                                 <div *ngIf="contactType.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
@@ -69,7 +69,7 @@
                                         </div>
                                         <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="'Commons.HttpStatus.' + createContactStatusError | translate"></div>
                                         <div *ngIf="isCreateContactSuccess" class="success" [innerHTML]="'Components.ContactUs.SendContactSuccess' | translate"></div>
-                                        <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary">Send contact</button>
+                                        <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary">{{'Components.ContactUs.SendContact' | translate}}</button>
                                     </div>
                                 </form>
 

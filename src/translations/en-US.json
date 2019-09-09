@@ -323,7 +323,8 @@
             "Complaint": "Complaint",
             "HowCanWeHelpYou": "How can we help you?",
             "Contact": "Contact",
-            "ContentContact": "If you have an urgent question concerning an order you placed on Mimerol.com, we advise you to directly contact the restaurant. You can find the number of the restaurant in the confirmation e-mail we sent you. For less urgent matters and general questions, please fill out the form below. Customer Service is available 7 days a week, from 07:30am to 11:00pm."
+            "ContentContact": "If you have an urgent question concerning an order you placed on Mimerol.com, we advise you to directly contact the restaurant. You can find the number of the restaurant in the confirmation e-mail we sent you. For less urgent matters and general questions, please fill out the form below. Customer Service is available 7 days a week, from 07:30am to 11:00pm.",
+            "SendContact": "Send contact"
         },
         "MyAccount": {
             "TxtMyAccount": "My account",
