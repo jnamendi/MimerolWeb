@@ -23,10 +23,15 @@
     <div *ngIf="menuItemModels && menuItemModels.length > 0" class="item-wrapper">
         <div class="fp_inner_box" data-scroll-index="0" *ngFor="let item of menuItemModels; let i = index">
             <div class="menu_item">
+                <div *ngIf="!item.available || item.outOfStock" class="closed">
+                    <span *ngIf="!item.available" [innerHTML]="'Commons.Texts.NotAvailable' | translate"></span>
+                    <span *ngIf="item.available && item.outOfStock" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></span>
+                </div>
                 <!-- <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
                     [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)"> -->
-                <label class="text" for="{{i}}"
+                <label class="text" style="position: relative;z-index: 0;" for="{{i}}"
                     [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
+                    
                     <div class="menu_image">
                         <div class="img_ads">
                             <div class="box_img">
@@ -43,7 +48,7 @@
                     </h3>
                     <div class="menu_description">{{item.desc}}</div>
                 </label>
-                <button *ngIf="!item.isShowButton" type="button" class="btn_additem" (click)="onSelectItem(item)" name="butonAdd">{{spainCurrency.symbol}}{{item.priceOriginal.toLocaleString()}} | <i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button *ngIf="!item.isShowButton" [disabled]="(!item.available || item.outOfStock)" type="button" class="btn_additem" (click)="onSelectItem(item)" name="butonAdd">{{spainCurrency.symbol}}{{item.priceOriginal.toLocaleString()}} | <i class="fa fa-plus" aria-hidden="true"></i></button>
                 <button *ngIf="item.isShowButtonArrow" type="button" class="btn_additem arrow-up" (click)="onShowButtonPlus(item)"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
             </div>
             <div *ngIf="item.menuExraItems && item.menuExraItems.length > 0 && item.isShowExtraItem" class="menu_extraitems">
