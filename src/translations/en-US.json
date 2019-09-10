@@ -220,7 +220,8 @@
             "Confirmed": "Confirmed",
             "AvailableAt": "Available at",
             "OutOfStock": "Out of stock",
-            "NotAvailable": "Not available"
+            "NotAvailable": "Not available",
+            "Delivered": "Delivered"
         },
         "Links": {
             "Title": "Links",

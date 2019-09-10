@@ -72,8 +72,10 @@
                                         <span>{{item && item.totalPrice}} {{currencySymbol}}</span>
                                     </td>
                                     <td class="text-center">
+                                        <!-- <span
+                                            [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span> -->
                                         <span
-                                            [ngClass]="styleClass(item && item.status)">{{ownerOrderStatus[item && item.status]}}</span>
+                                            [ngClass]="styleClass(item && item.status)">{{'Commons.Texts.' + ownerOrderStatus[item && item.status] | translate}}</span>
                                     </td>
                                 </tr>
                             </tbody>
