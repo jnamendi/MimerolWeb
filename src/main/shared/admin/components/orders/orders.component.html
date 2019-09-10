@@ -73,7 +73,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span
-                                            [ngClass]="styleClass(item && item.status)">{{adminOrderStatus[item && item.status]}}</span>
+                                            [ngClass]="styleClass(item && item.status)">{{'Commons.Texts.' + adminOrderStatus[item && item.status] | translate}}</span>
                                     </td>
                                 </tr>
                             </tbody>
