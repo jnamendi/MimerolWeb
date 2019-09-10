@@ -1,4 +1,5 @@
 @import "~styles/variables.scss";
+
 .admin-main-content {
     .box-primary {
         .box-body {
@@ -12,4 +13,25 @@
             }
         }
     }
+}
+
+.weekDays-selector input {
+    display: none !important;
+}
+
+.weekDays-selector input[type=checkbox]+label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #eceaea;
+    height: 34px;
+    width: 23%;
+    margin-right: 7px;
+    line-height: 34px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.weekDays-selector input[type=checkbox]:checked+label {
+    background: #ff8800;
+    color: #ffffff;
 }

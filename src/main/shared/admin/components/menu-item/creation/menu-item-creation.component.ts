@@ -50,16 +50,23 @@ export class AdminMenuItemCreationComponent {
                 return <Language>{ ...lang };
             });
             this.adminMenuItem = <AdminMenuItem>{
-                file: null,
-                isCombo: false,
-                menuId: null,
-                restaurantId: null,
-                price: 0,
-                languageLst: this.languageSupported.map(lang => {
-                    return AdminMenuItemModule.initAdminMenuItemTranslator(lang);
-                }),
-                menuExtraLst: [
-                ]
+              file: null,
+              isCombo: false,
+              menuId: null,
+              restaurantId: null,
+              price: 0,
+              availableMonday: true,
+              availableTuesday: true,
+              availableWednesday: true,
+              availableThursday: true,
+              availableFriday: true,
+              availableSaturday: false,
+              availableSunday: false,
+              outOfStock: false,
+              languageLst: this.languageSupported.map(lang => {
+                return AdminMenuItemModule.initAdminMenuItemTranslator(lang);
+              }),
+              menuExtraLst: []
             };
             this.clientState.isBusy = false;
         }, (err: ApiError) => {

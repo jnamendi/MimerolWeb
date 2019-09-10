@@ -217,7 +217,10 @@
             "EnterLocation": "Ingrese una ubicación",
             "EnterReason": "Ingrese un motivo (máximo 500 caracteres)...",
             "DeliveryDistrict": "Distrito de entrega <span class='error'>*</span>",
-            "Confirmed": "Confirmado"
+            "Confirmed": "Confirmado",
+            "AvailableAt": "Disponible en",
+            "OutOfStock": "Agotado",
+            "NotAvailable": "No disponible"
         },
         "Links": {
             "Title": "Enlaces",

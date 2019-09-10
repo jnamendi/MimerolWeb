@@ -217,7 +217,10 @@
             "EnterLocation": "Enter a location",
             "EnterReason": "Enter a reason (max 500 characters)...",
             "DeliveryDistrict": "Delivery district <span class='error'>*</span>",
-            "Confirmed": "Confirmed"
+            "Confirmed": "Confirmed",
+            "AvailableAt": "Available at",
+            "OutOfStock": "Out of stock",
+            "NotAvailable": "Not available"
         },
         "Links": {
             "Title": "Links",
