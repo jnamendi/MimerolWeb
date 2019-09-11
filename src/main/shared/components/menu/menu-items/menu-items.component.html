@@ -3,16 +3,16 @@
     <div class="promotion-item">
         <span class="icon-discount icon-discount-code"></span>
         <div class="title">
-            <span class="bold">Sale</span>
-            <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].value}}%</span> - Insert code:
+            <span class="bold">{{'Commons.Texts.Sale' | translate}}</span>
+            <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].value}}%</span> - {{'Commons.Texts.InsertCode' | translate}}
             <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].code}}</span>
         </div>
         <p>
-            End time:
+            {{'Commons.Texts.EndTime' | translate}}
             <span class="bold">{{restaurantDetailModel.promotionLineItems[0].endDate | date: 'dd-MM-yyyy'}}</span>
         </p>
         <p class="min-order">
-            Min order:
+            {{'Commons.Texts.MinOrder' | translate}}:
             <span class="bold">{{restaurantDetailModel.promotionLineItems[0].minOrder}} C$</span>
         </p>
     </div>
