@@ -135,7 +135,11 @@
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></label>
                                 <div class="col-md-6">
-                                    <input type="checkbox" name="outOfStock" id="outOfStock" [(ngModel)]="ownerMenuItem.outOfStock"> Yes
+                                    <label class="switch">
+                                        <input type="checkbox" class="primary" name="outOfStock" id="outOfStock"
+                                        [(ngModel)]="ownerMenuItem.outOfStock">
+                                        <span class="slider"></span>
+                                    </label>
                                 </div>
                             </div>
 

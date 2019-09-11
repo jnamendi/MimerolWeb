@@ -221,7 +221,10 @@
             "AvailableAt": "Disponible en",
             "OutOfStock": "Agotado",
             "NotAvailable": "No disponible",
-            "Delivered": "Entregado"
+            "Delivered": "Entregado",
+            "Sale": "Venta",
+            "InsertCode": "Insertar codigo:",
+            "EndTime": "Hora de finalización:"
         },
         "Links": {
             "Title": "Enlaces",
