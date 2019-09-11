@@ -146,8 +146,8 @@
                             <div class="row form-group">
                                 <label class="col-md-2"></label>
                                 <div class="col-md-10">
-                                    <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddSingleChoice' | translate"></button>
-                                    <button type="button" (click)="onAddMoreExtraItem(2)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddMutipleChoice' | translate"></button>
+                                    <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #ff7d26" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddSingleChoice' | translate"></button>
+                                    <button type="button" (click)="onAddMoreExtraItem(2)" style="background-color: #ff7d26" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddMutipleChoice' | translate"></button>
                                 </div>
                             </div>
                             <div *ngFor="let extra of ownerMenuItem.menuExtraLst; let i = index" class="menu-extra-item">
@@ -277,7 +277,7 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="submit" class="btn btn-default btn-primary" style="background: #ff7d26" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
                             <button type="button" class="btn btn-default btn-danger" (click)="onDeleteMenuItem()" [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
                             <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
                         </div>

@@ -2,6 +2,8 @@
 
 .owner-main-content {
     .box-primary {
+        border-top-color: #ff7d26;
+
         .box-body {
             .preview-img {
                 img {
@@ -29,11 +31,13 @@
     line-height: 34px;
     text-align: center;
     cursor: pointer;
+    font-weight: normal;
 }
 
 .weekDays-selector input[type=checkbox]:checked+label {
-    background: #ff8800;
+    background: #ff7d26;
     color: #ffffff;
+    font-weight: normal;
 }
 
 /* The switch - the box around the slider */
@@ -77,11 +81,11 @@
 }
 
 input.primary:checked+.slider {
-    background-color: #ff8800;
+    background-color: #ff7d26;
 }
 
 input:focus+.slider {
-    box-shadow: 0 0 1px #ff8800;
+    box-shadow: 0 0 1px #ff7d26;
 }
 
 input:checked+.slider:before {
