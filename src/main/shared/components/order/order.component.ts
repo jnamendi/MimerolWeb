@@ -1,32 +1,51 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StorageService, I18nService, CoreService } from '../../core';
-import { JwtTokenHelper } from '../../common';
-import { OrderItem, RestaurantMenuItemModel } from '../../models/restaurant-menu/restaurant-menu.model';
-import { OrderModel, OrderResponseModel } from '../../models/order/order.model';
-import { Subscription } from 'rxjs';
-import { StorageKey } from '../../services/storage-key/storage-key';
-import { UserResponseModel } from '../../models';
-import { AppAuthService, OrderService, VoucherService, CityService, DistrictService, AddressService } from '../../services';
-import { Configs } from '../../common/configs/configs';
-import { ClientState } from '../../state';
-import { ApiError } from '../../services/api-response/api-response';
-import { ShoppingBagsComponent } from '../menu/shopping-bags/shopping-bags.component';
-import { VoucherModel, PromotionModel } from '../../models/voucher/voucher.model';
-import { CityModel } from '../../models/city/city.model';
-import { DistrictModel } from '../../models/district/district.model';
-import { AddressModel } from '../../models/address/address.model';
-import { Address } from 'ng2-google-place-autocomplete/src/app/ng2-google-place.classes';
-import { RestaurantAppService } from '../../services/api/restaurant/app-restaurant.service';
-import { AppRestaurantModel } from '../../models/restaurant/app-restaurant.model';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewChecked,
+  ChangeDetectorRef
+} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { StorageService, I18nService, CoreService } from "../../core";
+import { JwtTokenHelper } from "../../common";
+import {
+  OrderItem,
+  RestaurantMenuItemModel
+} from "../../models/restaurant-menu/restaurant-menu.model";
+import { OrderModel, OrderResponseModel } from "../../models/order/order.model";
+import { Subscription } from "rxjs";
+import { StorageKey } from "../../services/storage-key/storage-key";
+import { UserResponseModel } from "../../models";
+import {
+  AppAuthService,
+  OrderService,
+  VoucherService,
+  CityService,
+  DistrictService,
+  AddressService
+} from "../../services";
+import { Configs } from "../../common/configs/configs";
+import { ClientState } from "../../state";
+import { ApiError } from "../../services/api-response/api-response";
+import { ShoppingBagsComponent } from "../menu/shopping-bags/shopping-bags.component";
+import {
+  VoucherModel,
+  PromotionModel
+} from "../../models/voucher/voucher.model";
+import { CityModel } from "../../models/city/city.model";
+import { DistrictModel } from "../../models/district/district.model";
+import { AddressModel } from "../../models/address/address.model";
+import { Address } from "ng2-google-place-autocomplete/src/app/ng2-google-place.classes";
+import { RestaurantAppService } from "../../services/api/restaurant/app-restaurant.service";
+import { AppRestaurantModel } from "../../models/restaurant/app-restaurant.model";
 
 @Component({
-  selector: 'page-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: "page-order",
+  templateUrl: "./order.component.html",
+  styleUrls: ["./order.component.scss"]
 })
 export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
-
   private selectedMenuItems: OrderItem = new OrderItem();
   private orderModel: OrderModel = new OrderModel();
   private userInfo: UserResponseModel = new UserResponseModel();
@@ -47,11 +66,11 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private isResClose: boolean;
   private isFailApplyCodePromotion: boolean;
   private isSuccessApplyCodePromotion: boolean;
-  private paymentWiths = []
+  private paymentWiths = [];
 
   private city: string;
   private district: string;
-  private googleAddress: string = '';
+  private googleAddress: string = "";
   private placeTimeout: any;
   private currentCountryCode: string;
   private currencySymbol: string = Configs.SpainCurrency.symbol;
@@ -75,21 +94,29 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private cdRef: ChangeDetectorRef,
     private i18nService: I18nService,
     private coreService: CoreService,
-    private appRestaurantService: RestaurantAppService,
+    private appRestaurantService: RestaurantAppService
   ) {
     this.sub = this.route.params.subscribe(params => {
-      this.restaurantId = +params['restaurantId'];
+      this.restaurantId = +params["restaurantId"];
       if (this.restaurantId <= 0) {
-        this.router.navigate(['']);
+        this.router.navigate([""]);
       }
     });
 
     //--- Get menu items
     this.selectedMenuItems = JwtTokenHelper.GetItemsInBag(this.restaurantId);
-    if (this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0) {
-      this.router.navigate(['child']);
+    if (
+      this.selectedMenuItems &&
+      this.selectedMenuItems.orderItemsRequest &&
+      this.selectedMenuItems.orderItemsRequest.length <= 0
+    ) {
+      this.router.navigate(["child"]);
     }
-    this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.map(item => this.onCalculateItemPrice(item));
+    this.selectedMenuItems &&
+      this.selectedMenuItems.orderItemsRequest &&
+      this.selectedMenuItems.orderItemsRequest.map(item =>
+        this.onCalculateItemPrice(item)
+      );
     this.onCalculatePrice();
 
     this.orderModel.restaurantId = this.selectedMenuItems.restaurantId;
@@ -120,24 +147,30 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     //   return this.coreService.compareTimeGreaterThanCurrent(t);
     // });
     this.onGetCities(this.restaurantId);
-    
+
     this.onGetRestaurantDetails();
-    
   }
 
   onGetRestaurantDetails = () => {
     if (this.restaurantId && this.restaurantId != 0) {
       this.clientState.isBusy = true;
-      let languageCode = this.i18nService.language.split('-')[0].toLocaleLowerCase();
-      this.appRestaurantService.getRestaurantDetails(this.restaurantId, languageCode).subscribe(res => {
-        this.restaurantModel = <AppRestaurantModel>{ ...res.content };
-        this.onCaculatorDeliveryTime(this.restaurantModel);
-        this.clientState.isBusy = false;
-      }, (err) => {
-        this.clientState.isBusy = false;
-      });
+      let languageCode = this.i18nService.language
+        .split("-")[0]
+        .toLocaleLowerCase();
+      this.appRestaurantService
+        .getRestaurantDetails(this.restaurantId, languageCode)
+        .subscribe(
+          res => {
+            this.restaurantModel = <AppRestaurantModel>{ ...res.content };
+            this.onCaculatorDeliveryTime(this.restaurantModel);
+            this.clientState.isBusy = false;
+          },
+          err => {
+            this.clientState.isBusy = false;
+          }
+        );
     }
-  }
+  };
 
   onCaculatorDeliveryTime = (resModel: AppRestaurantModel) => {
     let d = new Date();
@@ -145,50 +178,65 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     let hourCurrent = d.getHours();
     let minutesCurrent = d.getMinutes();
     let deliveryTimeRestaurant = parseInt(resModel.estTime);
-    for (let i = 0; i < resModel.restaurantWorkTimeModels[day - 1].list.length; i++) {
-      if (resModel.restaurantWorkTimeModels[day - 1].list[i].openTime != null && resModel.restaurantWorkTimeModels[day - 1].list[i].closeTime != null) {
-        let oTimes = resModel.restaurantWorkTimeModels[day - 1].list[i].openTime.split(":");
+    for (
+      let i = 0;
+      i < resModel.restaurantWorkTimeModels[day - 1].list.length;
+      i++
+    ) {
+      if (
+        resModel.restaurantWorkTimeModels[day - 1].list[i].openTime != null &&
+        resModel.restaurantWorkTimeModels[day - 1].list[i].closeTime != null
+      ) {
+        let oTimes = resModel.restaurantWorkTimeModels[day - 1].list[
+          i
+        ].openTime.split(":");
         let oH = parseInt(oTimes[0]);
         let oM = parseInt(oTimes[1]);
 
-        let cTimes = resModel.restaurantWorkTimeModels[day - 1].list[i].closeTime.split(":");
+        let cTimes = resModel.restaurantWorkTimeModels[day - 1].list[
+          i
+        ].closeTime.split(":");
         let cH = parseInt(cTimes[0]);
         let cM = parseInt(cTimes[1]);
 
         if (hourCurrent > oH) {
-          let totalCount = parseInt(((cH * 60 + cM + deliveryTimeRestaurant) / 15).toString());
-          let totalIndexCount = parseInt(((hourCurrent * 60 + minutesCurrent) / 15 + 1).toString());
+          let totalCount = parseInt(
+            ((cH * 60 + cM + deliveryTimeRestaurant) / 15).toString()
+          );
+          let totalIndexCount = parseInt(
+            ((hourCurrent * 60 + minutesCurrent) / 15 + 1).toString()
+          );
           while (totalIndexCount <= totalCount) {
             let h = parseInt(((totalIndexCount * 15) / 60).toString());
-            let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
-            let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
-            let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
-            let temp = ((h1.concat(":")).concat(m1));
+            let m = parseInt((totalIndexCount * 15 - h * 60).toString());
+            let h1 = h < 10 ? "0".concat(h.toString()) : h.toString();
+            let m1 = m < 10 ? "0".concat(m.toString()) : m.toString();
+            let temp = h1.concat(":").concat(m1);
             this.deliveryTimes.push(temp);
             totalIndexCount++;
           }
         } else if (hourCurrent < oH) {
-          let totalCount = ((cH * 60 + cM + deliveryTimeRestaurant) / 15);
+          let totalCount = (cH * 60 + cM + deliveryTimeRestaurant) / 15;
           let totalIndexCount = (oH * 60 + oM) / 15 + 1;
           while (totalIndexCount <= totalCount) {
             let h = parseInt(((totalIndexCount * 15) / 60).toString());
-            let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
-            let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
-            let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
-            let temp = ((h1.concat(":")).concat(m1));
+            let m = parseInt((totalIndexCount * 15 - h * 60).toString());
+            let h1 = h < 10 ? "0".concat(h.toString()) : h.toString();
+            let m1 = m < 10 ? "0".concat(m.toString()) : m.toString();
+            let temp = h1.concat(":").concat(m1);
             this.deliveryTimes.push(temp);
             totalIndexCount++;
           }
         } else {
-          let totalCount = ((cH * 60 + cM + deliveryTimeRestaurant) / 15);
+          let totalCount = (cH * 60 + cM + deliveryTimeRestaurant) / 15;
           if (oH < cH) {
             let totalIndexCount = (oH * 60 + oM) / 15 + 1;
             while (totalIndexCount <= totalCount) {
               let h = parseInt(((totalIndexCount * 15) / 60).toString());
-              let m = parseInt(((totalIndexCount * 15) - h * 60).toString());
-              let h1 = h < 10 ? '0'.concat(h.toString()) : h.toString();
-              let m1 = m < 10 ? '0'.concat(m.toString()) : m.toString();
-              let temp = ((h1.concat(":")).concat(m1));
+              let m = parseInt((totalIndexCount * 15 - h * 60).toString());
+              let h1 = h < 10 ? "0".concat(h.toString()) : h.toString();
+              let m1 = m < 10 ? "0".concat(m.toString()) : m.toString();
+              let temp = h1.concat(":").concat(m1);
               this.deliveryTimes.push(temp);
               totalIndexCount++;
             }
@@ -196,7 +244,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     }
-  }
+  };
 
   ngAfterViewChecked(): void {
     if (!this.paymentWiths.length) {
@@ -206,48 +254,62 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onGetAddressForCurrentUser = () => {
-    this.addressService.onGetByUser(this.orderModel.userId).subscribe(res => {
-      if (res.content == null) {
-        this.userAddressModels == [];
-      } else {
-        this.userAddressModels = [...res.content.data];
+    this.addressService.onGetByUser(this.orderModel.userId).subscribe(
+      res => {
+        if (res.content == null) {
+          this.userAddressModels == [];
+        } else {
+          this.userAddressModels = [...res.content.data];
+        }
+      },
+      (err: ApiError) => {
+        if (err.status == 8) {
+          this.userAddressModels = [];
+        }
       }
-    }, (err: ApiError) => {
-      if (err.status == 8) {
-        this.userAddressModels = [];
-      }
-    });
-  }
+    );
+  };
 
   onGetCities = (restaurantId: number) => {
-    this.cityService.onGetByRestaurantId(restaurantId).subscribe(res => {
-      this.cityModels = res.content && res.content ? <CityModel[]>[...res.content] : [];
+    this.cityService.onGetByRestaurantId(restaurantId).subscribe(
+      res => {
+        this.cityModels =
+          res.content && res.content ? <CityModel[]>[...res.content] : [];
 
-      this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
-    }, (err: ApiError) => {
-      this.message = err.message;
-      this.isError = true;
-    });
-  }
+        this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
+      },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
 
   onGetDistrictByCity = (restaurantId: number, cityId: number) => {
-    this.districtService.onDistrictGetByRestaurantCity(restaurantId, cityId).subscribe(res => {
-      this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
-      this.orderModel.districtId = null;
-    }, (err: ApiError) => {
-      this.message = err.message;
-      this.isError = true;
-    });
-  }
+    this.districtService
+      .onDistrictGetByRestaurantCity(restaurantId, cityId)
+      .subscribe(
+        res => {
+          this.districtModels = res.content
+            ? <DistrictModel[]>[...res.content]
+            : [];
+          this.orderModel.districtId = null;
+        },
+        (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+        }
+      );
+  };
 
   onGetItemsInBag = (totalItems: number) => {
     this.totalItemsInBag = totalItems;
     this.onBuildPaymentWiths();
-  }
+  };
 
   onGetTotalItemPrice = (): number => {
     return this.child.onGetTotalItemPrice();
-  }
+  };
 
   //#region --- Payment withs
   predictOrderPay = (totalPrice: number) => {
@@ -257,32 +319,33 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     let newPay = totalPrice - redundant;
     let hundreds = Math.floor(newPay / 100);
     let tens = Math.floor((newPay % 100) / 10);
-    let ones = (Math.floor(newPay % 100) % 10);
+    let ones = Math.floor(newPay % 100) % 10;
 
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
-    arrOnes.forEach(function (item) {
-      result.add(hundreds * 100 + tens * 10 + item + redundant);
+    arrOnes.forEach(function(item) {
+      var temp = hundreds * 100 + tens * 10 + item + redundant;
+      if (temp >= totalPrice) result.add(temp);
     });
 
     //calculate for tens
     if (ones !== 0) tens++;
     let arrTens = this.detectPredictMatrix(tens, false);
-    arrTens.forEach(function (item) {
+    arrTens.forEach(function(item) {
       result.add(hundreds * 100 + item * 10 + redundant);
     });
 
     // calculate for hundred
     if (tens !== 0) hundreds++;
     let arrHundreds = this.detectPredictMatrix(hundreds, false);
-    arrHundreds.forEach(function (item) {
+    arrHundreds.forEach(function(item) {
       result.add(item * 100 + redundant);
     });
 
     if (500 < newPay) result.add(1000 + redundant);
 
     return result;
-  }
+  };
 
   detectPredictMatrix = (x, isUnit) => {
     let arr = [];
@@ -310,28 +373,28 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (isUnit) {
           arr.push(5);
         } else {
-          arr.push(5, 6)
+          arr.push(5, 6);
         }
         break;
       case 6:
         if (isUnit) {
-          arr.push(6)
+          arr.push(6);
         } else {
-          arr.push(6, 7)
+          arr.push(6, 7);
         }
         break;
       case 7:
         if (isUnit) {
-          arr.push(7)
+          arr.push(7);
         } else {
-          arr.push(7, 8)
+          arr.push(7, 8);
         }
         break;
       case 8:
         if (isUnit) {
-          arr.push(8)
+          arr.push(8);
         } else {
-          arr.push(8, 9)
+          arr.push(8, 9);
         }
         break;
       case 9:
@@ -339,7 +402,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         break;
     }
     return arr;
-  }
+  };
 
   onBuildPaymentWiths = () => {
     var totalPrice = this.onGetTotalItemPrice();
@@ -350,7 +413,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     this.paymentWiths = [0];
     this.orderModel.paymentWith = 0;
-  }
+  };
   //#endregion
 
   onSubmitOrder = (isValid: boolean) => {
@@ -361,9 +424,17 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     //--- Check total bags
-    if (this.totalItemsInBag > 0 && this.selectedMenuItems.totalSubPrice < this.restaurantModel.minPrice || this.totalItemsInBag <= 0) {
+    if (
+      (this.totalItemsInBag > 0 &&
+        this.selectedMenuItems.totalSubPrice < this.restaurantModel.minPrice) ||
+      this.totalItemsInBag <= 0
+    ) {
       let shoppingBags = document.getElementById("shoppingBags");
-      shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
+      shoppingBags.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
       return;
     }
 
@@ -371,47 +442,68 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!isValid) {
       let isErrors = document.getElementsByClassName("error");
       let error = isErrors[0];
-      error.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
+      error.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
       return;
     }
 
     //--- Check order empty
-    if (!this.selectedMenuItems || this.selectedMenuItems
-      && this.selectedMenuItems.orderItemsRequest && this.selectedMenuItems.orderItemsRequest.length <= 0 || this.selectedMenuItems.totalPrice <= 0) {
+    if (
+      !this.selectedMenuItems ||
+      (this.selectedMenuItems &&
+        this.selectedMenuItems.orderItemsRequest &&
+        this.selectedMenuItems.orderItemsRequest.length <= 0) ||
+      this.selectedMenuItems.totalPrice <= 0
+    ) {
       this.isEmptyOrder = true;
       return;
     }
 
     let orderInfo = <OrderModel>{
       ...this.orderModel,
-      languageCode: this.i18nService.language.split('-')[0].toLocaleLowerCase(),
+      languageCode: this.i18nService.language.split("-")[0].toLocaleLowerCase(),
       symbolLeft: Configs.SpainCurrency.symbol,
       currencyCode: Configs.SpainCurrency.code,
       deliveryCost: this.selectedMenuItems.deliveryCost,
-      restaurantId: this.selectedMenuItems && this.selectedMenuItems.restaurantId,
+      restaurantId:
+        this.selectedMenuItems && this.selectedMenuItems.restaurantId,
       address: this.googleAddress,
       orderItem: this.child.onGetShoppingBag(),
       discount: this.child.onGetShoppingBag().discount
     };
     this.clientState.isBusy = true;
-    this.orderService.onPaymentOrder(orderInfo).subscribe(res => {
-      let orderResponseModel = <OrderResponseModel>res.content;
-      if (orderResponseModel) {
-        this.storageService.onRemoveToken(`${StorageKey.ItemsInBag}__${this.restaurantId}`);
+    this.orderService.onPaymentOrder(orderInfo).subscribe(
+      res => {
+        let orderResponseModel = <OrderResponseModel>res.content;
+        if (orderResponseModel) {
+          this.storageService.onRemoveToken(
+            `${StorageKey.ItemsInBag}__${this.restaurantId}`
+          );
+          this.clientState.isBusy = false;
+          this.router.navigate(["order-checkout", orderResponseModel.orderId], {
+            queryParams: { orderCode: orderResponseModel.invoiceCode }
+          });
+        }
+      },
+      (err: ApiError) => {
         this.clientState.isBusy = false;
-        this.router.navigate(['order-checkout', orderResponseModel.orderId], { queryParams: { orderCode: orderResponseModel.invoiceCode } });
       }
-    }, (err: ApiError) => {
-      this.clientState.isBusy = false;
-    });
-  }
+    );
+  };
 
   onApplyPromotion = (isValid: boolean) => {
     if (!isValid) {
       return;
     }
 
-    if (this.restaurantModel.promotionLineItems.length > 0 && this.child.totalSubItemsPrice < this.restaurantModel.promotionLineItems[0].minOrder) {
+    if (
+      this.restaurantModel.promotionLineItems.length > 0 &&
+      this.child.totalSubItemsPrice <
+        this.restaurantModel.promotionLineItems[0].minOrder
+    ) {
       this.isFailApplyCodePromotion = true;
       this.isSuccessApplyCodePromotion = false;
       return;
@@ -419,67 +511,86 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isSuccessApplyCodePromotion = true;
       this.isFailApplyCodePromotion = false;
       let shoppingBags = document.getElementById("shoppingBags");
-      shoppingBags.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
+      shoppingBags.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
       setTimeout(() => {
         this.isSuccessApplyCodePromotion = false;
       }, 2000);
     }
 
     this.clientState.isBusy = true;
-    this.voucherService.getPromotionByCode(this.orderModel.promotionCode, this.orderModel.restaurantId).subscribe(res => {
-      let voucher = <PromotionModel>{ ...res.content };
-      this.child.onCalculateTotalPrices(voucher.value);
-      this.onBuildPaymentWiths();
-      this.clientState.isBusy = false;
-      this.isError = false;
-    }, (err: ApiError) => {
-      this.message = err.message;
-      this.isError = true;
-      this.clientState.isBusy = false;
-    });
-  }
+    this.voucherService
+      .getPromotionByCode(
+        this.orderModel.promotionCode,
+        this.orderModel.restaurantId
+      )
+      .subscribe(
+        res => {
+          let voucher = <PromotionModel>{ ...res.content };
+          this.child.onCalculateTotalPrices(voucher.value);
+          this.onBuildPaymentWiths();
+          this.clientState.isBusy = false;
+          this.isError = false;
+        },
+        (err: ApiError) => {
+          this.message = err.message;
+          this.isError = true;
+          this.clientState.isBusy = false;
+        }
+      );
+  };
 
   onGoBack = () => {
-    window.history.back()
-  }
+    window.history.back();
+  };
 
   onNavigateToLogin = (isConfirm: boolean) => {
     if (isConfirm) {
-      this.router.navigate(['login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
+      this.router.navigate(["login"], {
+        queryParams: { returnUrl: this.router.routerState.snapshot.url }
+      });
     }
-  }
+  };
 
   onCloseConfirm = (isConfirm: boolean) => {
     this.isEmptyOrder = false;
     this.isResClose = false;
-  }
+  };
 
   setAddress = (place: Address) => {
     if (this.placeTimeout) {
       clearTimeout(this.placeTimeout);
-    };
-    this.placeTimeout = setTimeout(() => { }, 300);
-  }
+    }
+    this.placeTimeout = setTimeout(() => {}, 300);
+  };
 
   onGetDistrict = (district: string) => {
     this.district = district;
-  }
+  };
 
   onGetCity = (city: string) => {
     this.city = city;
-  }
+  };
 
   onGetAddress = (address: string) => {
-    this.googleAddress = address.replace(new RegExp(/(<([^>]+)>)/ig), '');
-  }
+    this.googleAddress = address.replace(new RegExp(/(<([^>]+)>)/gi), "");
+  };
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
   onCalculateItemPrice = (item: RestaurantMenuItemModel) => {
-    item.totalPrice = item && item.priceRate * item.quantity || 0;
-    if (item.menuExraItems && item.menuExraItems.some(i => i.extraitems && i.extraitems.some(m => m.isSelected))) {
+    item.totalPrice = (item && item.priceRate * item.quantity) || 0;
+    if (
+      item.menuExraItems &&
+      item.menuExraItems.some(
+        i => i.extraitems && i.extraitems.some(m => m.isSelected)
+      )
+    ) {
       item.menuExraItems.map(i => {
         i.extraitems.map(m => {
           if (m.isSelected) {
@@ -488,26 +599,39 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
       });
     }
-  }
+  };
 
   onCalculatePrice = () => {
     // Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateVAT(), this.onCalculateTotalPrices()]);
-    Promise.all([this.onCalculateSubTotalPrice(), this.onCalculateTotalPrices()]);
-  }
+    Promise.all([
+      this.onCalculateSubTotalPrice(),
+      this.onCalculateTotalPrices()
+    ]);
+  };
 
   onCalculateSubTotalPrice = () => {
-    this.totalSubItemsPrice = this.selectedMenuItems && this.selectedMenuItems.orderItemsRequest &&
-      this.selectedMenuItems.orderItemsRequest.reduce((prev, next) => prev + next.totalPrice, 0) || 0;
+    this.totalSubItemsPrice =
+      (this.selectedMenuItems &&
+        this.selectedMenuItems.orderItemsRequest &&
+        this.selectedMenuItems.orderItemsRequest.reduce(
+          (prev, next) => prev + next.totalPrice,
+          0
+        )) ||
+      0;
     this.selectedMenuItems.totalSubPrice = this.totalSubItemsPrice;
-  }
+  };
 
   onCalculateTotalPrices = (discountValue: number = 0) => {
-    this.totalItemsPrice = (this.totalSubItemsPrice) + (this.selectedMenuItems.deliveryCost || 0);
+    this.totalItemsPrice =
+      this.totalSubItemsPrice + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
       //this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
-      this.totalItemsPrice = Math.ceil(this.totalSubItemsPrice - (this.totalSubItemsPrice * (discountValue / 100))) + (this.selectedMenuItems.deliveryCost || 0);
+      this.totalItemsPrice =
+        this.totalSubItemsPrice -
+        this.totalSubItemsPrice * (discountValue / 100) +
+        (this.selectedMenuItems.deliveryCost || 0);
       this.selectedMenuItems.discount = discountValue;
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
-  }
+  };
 }
