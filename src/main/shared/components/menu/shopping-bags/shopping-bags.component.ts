@@ -227,10 +227,13 @@ export class ShoppingBagsComponent implements OnInit {
       this.totalSubItemsPrice + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
       //this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
-      this.totalItemsPrice =
-        this.totalSubItemsPrice -
-        this.totalSubItemsPrice * (discountValue / 100) +
-        (this.selectedMenuItems.deliveryCost || 0);
+      this.totalItemsPrice = parseFloat(
+        (
+          this.totalSubItemsPrice -
+          this.totalSubItemsPrice * (discountValue / 100) +
+          (this.selectedMenuItems.deliveryCost || 0)
+        ).toFixed(2)
+      );
       this.selectedMenuItems.discount = discountValue;
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;

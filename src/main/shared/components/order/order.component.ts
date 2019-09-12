@@ -324,7 +324,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
     arrOnes.forEach(function(item) {
-      var temp = hundreds * 100 + tens * 10 + item + redundant;
+      var temp = parseFloat(
+        (hundreds * 100 + tens * 10 + item + redundant).toFixed(2)
+      );
       if (temp >= totalPrice) result.add(temp);
     });
 
@@ -626,10 +628,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.totalSubItemsPrice + (this.selectedMenuItems.deliveryCost || 0);
     if (discountValue > 0) {
       //this.totalItemsPrice = Math.ceil(this.totalItemsPrice - (this.totalItemsPrice * (discountValue / 100)));
-      this.totalItemsPrice =
-        this.totalSubItemsPrice -
-        this.totalSubItemsPrice * (discountValue / 100) +
-        (this.selectedMenuItems.deliveryCost || 0);
+      this.totalItemsPrice = parseFloat(
+        (
+          this.totalSubItemsPrice -
+          this.totalSubItemsPrice * (discountValue / 100) +
+          (this.selectedMenuItems.deliveryCost || 0)
+        ).toFixed(2)
+      );
       this.selectedMenuItems.discount = discountValue;
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
