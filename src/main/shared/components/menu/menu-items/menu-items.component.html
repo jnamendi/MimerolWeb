@@ -23,16 +23,16 @@
     <div *ngIf="menuItemModels && menuItemModels.length > 0" class="item-wrapper">
         <div class="fp_inner_box" data-scroll-index="0" *ngFor="let item of menuItemModels; let i = index">
             <div class="menu_item">
-                <div *ngIf="!item.available || item.outOfStock" class="closed">
-                    <span *ngIf="!item.available" [innerHTML]="'Commons.Texts.NotAvailable' | translate"></span>
-                    <span *ngIf="item.available && item.outOfStock" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></span>
-                </div>
                 <!-- <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
                     [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)"> -->
                 <label class="text" style="position: relative;z-index: 0;" for="{{i}}"
                     [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
                     
                     <div class="menu_image">
+                        <div *ngIf="!item.available || item.outOfStock" class="closed">
+                            <span *ngIf="!item.available" [innerHTML]="'Commons.Texts.NotAvailable' | translate"></span>
+                            <span *ngIf="item.available && item.outOfStock" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></span>
+                        </div>
                         <div class="img_ads">
                             <div class="box_img">
                                 <a class="active">
