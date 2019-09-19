@@ -1,19 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  NgZone,
-  AfterViewInit,
-  ChangeDetectorRef
-} from "@angular/core";
-import {
-  RestaurantAdminModel,
-  RestaurantModule,
-  RestaurantStatus,
-  RestaurantWorkTimeModels,
-  WorkTimeList
-} from "../../../../models/restaurant/admin-restaurant.model";
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from "@angular/core";
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from "../../../../models/restaurant/admin-restaurant.model";
 import { ClientState } from "../../../../state";
 import { Language } from "../../../../models/langvm.model";
 import { ApiError } from "../../../../services/api-response/api-response";
@@ -32,17 +18,11 @@ import { IpInfo } from "../../../../models/ipinfo/ipinfo.model";
 import { StorageKey } from "../../../../services/storage-key/storage-key";
 import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-helper";
 import { LatLongModel } from "../../../../models/google/country-latlong.model";
-import {
-  MapsAPILoader,
-  AgmMap
-} from "../../../../../../../node_modules/@agm/core";
+import { MapsAPILoader, AgmMap } from "../../../../../../../node_modules/@agm/core";
 import { Subscription } from "../../../../../../../node_modules/rxjs";
 import { CityService, DistrictService } from "../../../../services";
 import { CityModel } from "../../../../models/city/city.model";
-import {
-  DistrictModel,
-  DeliveryDistrictModel
-} from "../../../../models/district/district.model";
+import { DistrictModel, DeliveryDistrictModel } from "../../../../models/district/district.model";
 import { DeliveryCityModel } from "../../../../models/city/city-district.model";
 import { weekdays } from "moment";
 import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
@@ -100,6 +80,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   @ViewChild("searchControl") searchElementRef: ElementRef;
   @ViewChild("agmMap") agmMap: AgmMap;
+
+  @ViewChild('latitude') latitudeElement: ElementRef;
+  @ViewChild('longitude') longitudeElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -376,22 +359,11 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     };
   };
 
-  onGetAddressFromLatLng = (lat: number, lng: number, isLatPress) => {
-    if (
-      this.isSearchAuto &&
-      this.restaurantModel.latitude &&
-      this.restaurantModel.longitude
-    ) {
-      if (isLatPress) {
-        this.restaurantModel.longitude = null;
-        lng = this.restaurantModel.longitude;
-      } else {
-        this.restaurantModel.latitude = null;
-        lat = this.restaurantModel.latitude;
-      }
+  onGetAddressFromLatLng = (lat: number, lng: number) => {
+    if (this.restaurantModel.latitude && this.restaurantModel.longitude) {
       this.restaurantModel.address = "";
-      this.isSearchAuto = false;
     }
+
     if (!lat || !lng) {
       return;
     }
@@ -399,6 +371,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     if (this.addTimeout) {
       clearTimeout(this.addTimeout);
     }
+
     let geocoder = new google.maps.Geocoder();
     let latlng = new google.maps.LatLng(+lat, +lng);
     let request = { location: latlng };
@@ -406,40 +379,45 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.addTimeout = setTimeout(() => {
       this.isSearchAddress = true;
       this.clientState.isBusy = true;
-      this.isSearchAddressError = false;
+      this.latitudeElement.nativeElement.focus();
+
       geocoder.geocode(request, (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
           let result = results[0];
+
           if (result != null) {
             if (this.validateAddressTimeout) {
               clearTimeout(this.validateAddressTimeout);
             }
+
             this.latitude = result.geometry.location.lat();
             this.longitude = result.geometry.location.lng();
-            this.restaurantModel.latitude = this.latitude;
-            this.restaurantModel.longitude = this.longitude;
+
             this.currentPosition = <LatLongModel>{
               lat: this.latitude,
               lng: this.longitude
             };
+
             this.restaurantModel.address = result.formatted_address;
+            this.googleAddressLine1 = result.formatted_address;
             this.currentAddress = this.restaurantModel.address;
+
             this.isSearchAddress = false;
-            this.isSearchAddressError = false;
             this.clientState.isBusy = false;
             this.isSearchAddressError = false;
+            this.longitudeElement.nativeElement.focus();
           } else {
-            this.isSearchAddress = false;
             this.isSearchAddressError = true;
+            this.isSearchAddress = false;
             this.clientState.isBusy = false;
           }
         } else {
-          this.isSearchAddress = false;
           this.isSearchAddressError = true;
+          this.isSearchAddress = false;
           this.clientState.isBusy = false;
         }
       });
-    }, 2000);
+    }, 500);
   };
 
   onInitRestaurant = () => {

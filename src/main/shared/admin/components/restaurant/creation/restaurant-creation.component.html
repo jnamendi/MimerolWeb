@@ -109,6 +109,31 @@
 
                                     <div class="row form-group">
                                         <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
+                                        <div class="col-md-4">
+                                            <input type="number" [readonly]="isSearchAddress" #latitude
+                                                class="form-control" name="latitude"
+                                                [(ngModel)]="restaurantModel && restaurantModel.latitude" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
+                                        <div class="col-md-4">
+                                            <input type="number" [readonly]="isSearchAddress" #longitude
+                                                class="form-control" name="longitude"
+                                                [(ngModel)]="restaurantModel && restaurantModel.longitude" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a class="btn btn-default btn-success"
+                                                [innerHTML]="'Commons.Buttons.SearchAddress' | translate"
+                                                (click)="onGetAddressFromLatLng(restaurantModel.latitude, restaurantModel.longitude)"></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
                                             <!-- <input type="text" class="form-control" name="addressLine1" [(ngModel)]="restaurantModel.address" #addressLine1="ngModel" required [options]="{
@@ -224,26 +249,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
-                                                name="latitude" [(ngModel)]="restaurantModel.latitude"
-                                                (keyup)="onGetAddressFromLatLng($event.target.value, restaurantModel.longitude, true)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
-                                                name="longitude" [(ngModel)]="restaurantModel.longitude"
-                                                (keyup)="onGetAddressFromLatLng(restaurantModel.latitude, $event.target.value, false)" />
-                                        </div>
-                                    </div>
-
                                     <!-- Delivery districs -->
                                     <!-- <div class="separator-dashed"></div>
                                     <h2 class="separator-dashed-tilte">Delivery districs</h2>
@@ -298,8 +303,7 @@
                                             <label *ngIf="i > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" atp-time-picker comparison="lesser"
-                                                    [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
+                                                <input type="time" atp-time-picker name="{{j}}{{i}}open"
                                                     id="{{j}}{{i}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
@@ -310,8 +314,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" atp-time-picker comparison="greater"
-                                                    [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
+                                                <input type="time" atp-time-picker name="{{j}}{{i}}close"
                                                     id="{{j}}{{i}}close" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
