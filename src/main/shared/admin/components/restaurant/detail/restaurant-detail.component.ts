@@ -277,45 +277,43 @@ export class AdminRestaurantDetailComponent
     let latlng = new google.maps.LatLng(+lat, +lng);
     let request = { location: latlng };
 
-    this.addTimeout = setTimeout(() => {
-      this.isSearchAddress = true;
-      this.clientState.isBusy = true;
-      geocoder.geocode(request, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK) {
-          let result = results[0];
-          let rsltAdrComponent = result.address_components;
-          let resultLength = rsltAdrComponent.length;
-          if (result != null) {
-            if (this.validateAddressTimeout) {
-              clearTimeout(this.validateAddressTimeout);
-            }
-            this.latitude = result.geometry.location.lat();
-            this.longitude = result.geometry.location.lng();
-            this.restaurantModel.latitude = this.latitude;
-            this.restaurantModel.longitude = this.longitude;
-            this.currentPosition = <LatLongModel>{
-              lat: this.latitude,
-              lng: this.longitude
-            };
-            this.restaurantModel.address = result.formatted_address;
-            this.currentAddress = this.restaurantModel.address;
+        this.addTimeout = setTimeout(() => {
+            this.isSearchAddress = true;
+            this.clientState.isBusy = true;
+            geocoder.geocode(request, (results, status) => {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    let result = results[0];
+                    let rsltAdrComponent = result.address_components;
+                    
+                    if (result != null) {
+                        if (this.validateAddressTimeout) {
+                            clearTimeout(this.validateAddressTimeout);
+                        }
+                        this.latitude = result.geometry.location.lat();
+                        this.longitude = result.geometry.location.lng();
+                        this.restaurantModel.latitude = this.latitude;
+                        this.restaurantModel.longitude = this.longitude;
+                        this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
+                        this.restaurantModel.address = result.formatted_address;
+                        this.googleAddressLine1 = result.formatted_address;
+                        this.currentAddress = this.restaurantModel.address;
 
-            this.isSearchAddress = false;
-            this.clientState.isBusy = false;
-            this.isSearchAddressError = false;
-          } else {
-            this.isSearchAddressError = true;
-            this.isSearchAddress = false;
-            this.clientState.isBusy = false;
-          }
-        } else {
-          this.isSearchAddressError = true;
-          this.isSearchAddress = false;
-          this.clientState.isBusy = false;
-        }
-      });
-    }, 2000);
-  };
+                        this.isSearchAddress = false;
+                        this.clientState.isBusy = false;
+                        this.isSearchAddressError = false;
+                    } else {
+                        this.isSearchAddressError = true;
+                        this.isSearchAddress = false;
+                        this.clientState.isBusy = false;
+                    }
+                } else {
+                    this.isSearchAddressError = true;
+                    this.isSearchAddress = false;
+                    this.clientState.isBusy = false;
+                }
+            });
+        }, 2000);
+    }
 
   onGetRestaurant = (restaurantId: number) => {
     this.clientState.isBusy = true;
@@ -453,13 +451,13 @@ export class AdminRestaurantDetailComponent
     }
   }
 
-  onUpdateRestaurant = (isValid: boolean) => {
-    if (!isValid) {
-      this.errorIsValid = true;
-      return;
-    } else {
-      this.errorIsValid = false;
-    }
+    onUpdateRestaurant = (isValid: boolean) => {
+        if (!isValid) {
+            this.errorIsValid = true;
+            return;
+        } else {
+            this.errorIsValid = false;
+        }
 
     for (
       let i = 0;
