@@ -298,8 +298,7 @@
                                             <label *ngIf="i > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" atp-time-picker comparison="lesser"
-                                                    [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
+                                                <input type="time" atp-time-picker name="{{j}}{{i}}open"
                                                     id="{{j}}{{i}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
@@ -310,8 +309,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" atp-time-picker comparison="greater"
-                                                    [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
+                                                <input type="time" atp-time-picker name="{{j}}{{i}}close"
                                                     id="{{j}}{{i}}close" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
