@@ -85,3 +85,10 @@
 .dialog-footer {
     padding: 10px !important;
 }
+
+.dialog-container .dialog-wrapper {
+    border-bottom: 4px solid #3c8dbc;
+    .dialog-header {
+        background-color: #3c8dbc;
+    }
+}

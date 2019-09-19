@@ -192,14 +192,14 @@
                         padding: 6px 12px;
                         margin-left: -1px;
                         line-height: 1.42857143;
-                        color: #337ab7;
+                        color: #ff7d26;
                         text-decoration: none;
                         background-color: #fff;
                         border: 1px solid #ddd;
                         border-radius: 0;
                         &:hover {
                             z-index: 2;
-                            color: #23527c !important;
+                            color: #ff7d26 !important;
                             background-color: #eee !important;
                             border-color: #ddd !important;
                             background: none;
@@ -211,8 +211,8 @@
                             z-index: 3;
                             color: #fff !important;
                             cursor: default;
-                            background-color: #337ab7 !important;
-                            border-color: #337ab7 !important;
+                            background-color: #ff7d26 !important;
+                            border-color: #ff7d26 !important;
                             background: none;
                             border-radius: 0;
                         }
@@ -302,7 +302,7 @@
                     border-top-color: #c0c0c0;
                 }
                 >li.ui-state-active {
-                    border-top-color: #3c8dbc;
+                    border-top-color: #ff7d26;
                 }
             }
             .ui-tabview-panels {

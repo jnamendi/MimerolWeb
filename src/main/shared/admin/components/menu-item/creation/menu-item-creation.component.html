@@ -99,6 +99,52 @@
                             </div>
 
                             <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.AvailableAt' | translate"></label>
+                                <div class="col-md-6">
+                                    <div class="weekDays-selector">
+                                        <input type="checkbox" id="availableMonday" name="availableMonday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableMonday" />
+                                        <label for="availableMonday" [innerHTML]="'Commons.Texts.MON' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableTuesday" name="availableTuesday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableTuesday" />
+                                        <label for="availableTuesday" [innerHTML]="'Commons.Texts.TUE' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableWednesday" name="availableWednesday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableWednesday" />
+                                        <label for="availableWednesday" [innerHTML]="'Commons.Texts.WED' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableThursday" name="availableThursday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableThursday" />
+                                        <label for="availableThursday" [innerHTML]="'Commons.Texts.THU' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableFriday" name="availableFriday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableFriday" />
+                                        <label for="availableFriday" [innerHTML]="'Commons.Texts.FRI' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableSaturday" name="availableSaturday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableSaturday" />
+                                        <label for="availableSaturday" [innerHTML]="'Commons.Texts.SAT' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableSunday" name="availableSunday" class="weekday"
+                                            [(ngModel)]="adminMenuItem.availableSunday" />
+                                        <label for="availableSunday" [innerHTML]="'Commons.Texts.SUN' | translate"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></label>
+                                <div class="col-md-6">
+                                    <label class="switch">
+                                        <input type="checkbox" class="primary" name="outOfStock" id="outOfStock"
+                                        [(ngModel)]="adminMenuItem.outOfStock">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
                                 <label class="col-md-2"></label>
                                 <div class="col-md-10">
                                     <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Admin.MenuItem.AddSingleChoice' | translate"></button>

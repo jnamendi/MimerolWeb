@@ -99,10 +99,56 @@
                             </div>
 
                             <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.AvailableAt' | translate"></label>
+                                <div class="col-md-6">
+                                    <div class="weekDays-selector">
+                                        <input type="checkbox" id="availableMonday" name="availableMonday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableMonday" />
+                                        <label for="availableMonday" [innerHTML]="'Commons.Texts.MON' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableTuesday" name="availableTuesday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableTuesday" />
+                                        <label for="availableTuesday" [innerHTML]="'Commons.Texts.TUE' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableWednesday" name="availableWednesday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableWednesday" />
+                                        <label for="availableWednesday" [innerHTML]="'Commons.Texts.WED' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableThursday" name="availableThursday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableThursday" />
+                                        <label for="availableThursday" [innerHTML]="'Commons.Texts.THU' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableFriday" name="availableFriday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableFriday" />
+                                        <label for="availableFriday" [innerHTML]="'Commons.Texts.FRI' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableSaturday" name="availableSaturday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableSaturday" />
+                                        <label for="availableSaturday" [innerHTML]="'Commons.Texts.SAT' | translate"></label>
+                            
+                                        <input type="checkbox" id="availableSunday" name="availableSunday" class="weekday"
+                                            [(ngModel)]="ownerMenuItem.availableSunday" />
+                                        <label for="availableSunday" [innerHTML]="'Commons.Texts.SUN' | translate"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></label>
+                                <div class="col-md-6">
+                                    <label class="switch">
+                                        <input type="checkbox" class="primary" name="outOfStock" id="outOfStock"
+                                        [(ngModel)]="ownerMenuItem.outOfStock">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
                                 <label class="col-md-2"></label>
                                 <div class="col-md-10">
-                                    <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddSingleChoice' | translate"></button>
-                                    <button type="button" (click)="onAddMoreExtraItem(2)" style="background-color: #3c8dbc" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddMutipleChoice' | translate"></button>
+                                    <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #ff7d26" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddSingleChoice' | translate"></button>
+                                    <button type="button" (click)="onAddMoreExtraItem(2)" style="background-color: #ff7d26" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddMutipleChoice' | translate"></button>
                                 </div>
                             </div>
                             <div *ngFor="let extra of ownerMenuItem.menuExtraLst; let i = index" class="menu-extra-item">
@@ -232,7 +278,7 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="submit" class="btn btn-default btn-primary" style="background: #ff7d26;" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
                             <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
                         </div>
                     </form>

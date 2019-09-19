@@ -3,16 +3,16 @@
     <div class="promotion-item">
         <span class="icon-discount icon-discount-code"></span>
         <div class="title">
-            <span class="bold">Sale</span>
-            <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].value}}%</span> - Insert code:
+            <span class="bold">{{'Commons.Texts.Sale' | translate}}</span>
+            <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].value}}%</span> - {{'Commons.Texts.InsertCode' | translate}}
             <span class="txt-red bold">{{restaurantDetailModel.promotionLineItems[0].code}}</span>
         </div>
         <p>
-            End time:
+            {{'Commons.Texts.EndTime' | translate}}
             <span class="bold">{{restaurantDetailModel.promotionLineItems[0].endDate | date: 'dd-MM-yyyy'}}</span>
         </p>
         <p class="min-order">
-            Min order:
+            {{'Commons.Texts.MinOrder' | translate}}:
             <span class="bold">{{restaurantDetailModel.promotionLineItems[0].minOrder}} C$</span>
         </p>
     </div>
@@ -25,9 +25,14 @@
             <div class="menu_item">
                 <!-- <input class="magic-checkbox" type="checkbox" name="layout{{i}}" id="{{i}}"
                     [(ngModel)]="item.isSelected" (ngModelChange)="onSelectItem(item)"> -->
-                <label class="text" for="{{i}}"
+                <label class="text" style="position: relative;z-index: 0;" for="{{i}}"
                     [ngClass]="{'restaurant-closed': restaurantDetailModel.restaurantClosed==true}">
+                    
                     <div class="menu_image">
+                        <div *ngIf="!item.available || item.outOfStock" class="closed">
+                            <span *ngIf="!item.available" [innerHTML]="'Commons.Texts.NotAvailable' | translate"></span>
+                            <span *ngIf="item.available && item.outOfStock" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></span>
+                        </div>
                         <div class="img_ads">
                             <div class="box_img">
                                 <a class="active">
@@ -43,7 +48,7 @@
                     </h3>
                     <div class="menu_description">{{item.desc}}</div>
                 </label>
-                <button *ngIf="!item.isShowButton" type="button" class="btn_additem" (click)="onSelectItem(item)" name="butonAdd">{{spainCurrency.symbol}}{{item.priceOriginal.toLocaleString()}} | <i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button *ngIf="!item.isShowButton" [disabled]="(!item.available || item.outOfStock)" type="button" class="btn_additem" (click)="onSelectItem(item)" name="butonAdd">{{spainCurrency.symbol}}{{item.priceOriginal.toLocaleString()}} | <i class="fa fa-plus" aria-hidden="true"></i></button>
                 <button *ngIf="item.isShowButtonArrow" type="button" class="btn_additem arrow-up" (click)="onShowButtonPlus(item)"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
             </div>
             <div *ngIf="item.menuExraItems && item.menuExraItems.length > 0 && item.isShowExtraItem" class="menu_extraitems">
