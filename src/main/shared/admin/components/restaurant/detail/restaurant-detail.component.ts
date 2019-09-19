@@ -95,6 +95,9 @@ export class AdminRestaurantDetailComponent
   @ViewChild("searchControl") searchElementRef: ElementRef;
   @ViewChild("agmMap") agmMap: AgmMap;
 
+  @ViewChild('latitude') latitudeElement: ElementRef;
+  @ViewChild('longitude') longitudeElement: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -151,7 +154,7 @@ export class AdminRestaurantDetailComponent
     this.onGetAllCategorySortByName();
     this.onGetAllUserSortByName();
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.getPosition, err => {});
+      navigator.geolocation.getCurrentPosition(this.getPosition, err => { });
     }
     this.onGetCities();
   }
@@ -250,23 +253,11 @@ export class AdminRestaurantDetailComponent
     );
   };
 
-  onGetAddressFromLatLng = (lat: number, lng: number, isLatPress) => {
-    if (
-      (this.isFirstLoad || this.isSearchAuto) &&
-      this.restaurantModel.latitude &&
-      this.restaurantModel.longitude
-    ) {
-      if (isLatPress) {
-        this.restaurantModel.longitude = null;
-        lng = this.restaurantModel.longitude;
-      } else {
-        this.restaurantModel.latitude = null;
-        lat = this.restaurantModel.latitude;
-      }
+  onGetAddressFromLatLng = (lat: number, lng: number) => {
+    if (this.restaurantModel.latitude && this.restaurantModel.longitude) {
       this.restaurantModel.address = "";
-      this.isSearchAuto = false;
-      this.isFirstLoad = false;
     }
+
     if (!lat || !lng) {
       return;
     }
@@ -274,6 +265,7 @@ export class AdminRestaurantDetailComponent
     if (this.addTimeout) {
       clearTimeout(this.addTimeout);
     }
+
     let geocoder = new google.maps.Geocoder();
     let latlng = new google.maps.LatLng(+lat, +lng);
     let request = { location: latlng };
@@ -281,23 +273,25 @@ export class AdminRestaurantDetailComponent
     this.addTimeout = setTimeout(() => {
       this.isSearchAddress = true;
       this.clientState.isBusy = true;
+      this.latitudeElement.nativeElement.focus();
+
       geocoder.geocode(request, (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
           let result = results[0];
-          let rsltAdrComponent = result.address_components;
 
           if (result != null) {
             if (this.validateAddressTimeout) {
               clearTimeout(this.validateAddressTimeout);
             }
+
             this.latitude = result.geometry.location.lat();
             this.longitude = result.geometry.location.lng();
-            this.restaurantModel.latitude = this.latitude;
-            this.restaurantModel.longitude = this.longitude;
+
             this.currentPosition = <LatLongModel>{
               lat: this.latitude,
               lng: this.longitude
             };
+
             this.restaurantModel.address = result.formatted_address;
             this.googleAddressLine1 = result.formatted_address;
             this.currentAddress = this.restaurantModel.address;
@@ -305,6 +299,7 @@ export class AdminRestaurantDetailComponent
             this.isSearchAddress = false;
             this.clientState.isBusy = false;
             this.isSearchAddressError = false;
+            this.longitudeElement.nativeElement.focus();
           } else {
             this.isSearchAddressError = true;
             this.isSearchAddress = false;
@@ -316,7 +311,7 @@ export class AdminRestaurantDetailComponent
           this.clientState.isBusy = false;
         }
       });
-    }, 2000);
+    }, 500);
   };
 
   onGetRestaurant = (restaurantId: number) => {
@@ -456,6 +451,13 @@ export class AdminRestaurantDetailComponent
   }
 
   onUpdateRestaurant = (isValid: boolean) => {
+    if (!isValid) {
+      this.errorIsValid = true;
+      return;
+    } else {
+      this.errorIsValid = false;
+    }
+
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -469,7 +471,7 @@ export class AdminRestaurantDetailComponent
         ) {
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime != ""
           ) {
@@ -481,7 +483,7 @@ export class AdminRestaurantDetailComponent
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime == ""
           ) {
@@ -493,7 +495,7 @@ export class AdminRestaurantDetailComponent
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime != ""
           ) {
@@ -578,29 +580,22 @@ export class AdminRestaurantDetailComponent
         ) {
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              "" ||
+            "" ||
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              null
+            null
           ) {
             this.restaurantModel.restaurantWorkTimeModels[i].list.splice(j, 1);
           }
         }
       } else if (
         this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-          "" ||
+        "" ||
         this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-          null
+        null
       ) {
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
-
-    // if (!isValid) {
-    //   this.errorIsValid = true;
-    //   return;
-    // } else {
-    //   this.errorIsValid = false;
-    // }
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,
@@ -637,7 +632,7 @@ export class AdminRestaurantDetailComponent
       });
   };
 
-  setAddressLine1 = (place: Address) => {};
+  setAddressLine1 = (place: Address) => { };
 
   onGetDistrictLine1 = (district: string) => {
     this.restaurantModel.district = district;
@@ -677,10 +672,10 @@ export class AdminRestaurantDetailComponent
         else if (i == 6) day = "SUN";
         this.restaurantModel.restaurantWorkTimeModels.push(<
           RestaurantWorkTimeModels
-        >{
-          weekDay: day,
-          list: []
-        });
+          >{
+            weekDay: day,
+            list: []
+          });
         for (
           let j = 0;
           j < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -691,11 +686,11 @@ export class AdminRestaurantDetailComponent
           ) {
             this.restaurantModel.restaurantWorkTimeModels[j].list.push(<
               WorkTimeList
-            >{
-              openTime: "",
-              closeTime: "",
-              idRestaurantWork: j
-            });
+              >{
+                openTime: "",
+                closeTime: "",
+                idRestaurantWork: j
+              });
           }
         }
       }
@@ -708,11 +703,11 @@ export class AdminRestaurantDetailComponent
         if (this.restaurantModel.restaurantWorkTimeModels[i].list.length == 0) {
           this.restaurantModel.restaurantWorkTimeModels[i].list.push(<
             WorkTimeList
-          >{
-            openTime: "",
-            closeTime: "",
-            idRestaurantWork: i
-          });
+            >{
+              openTime: "",
+              closeTime: "",
+              idRestaurantWork: i
+            });
         }
       }
     }

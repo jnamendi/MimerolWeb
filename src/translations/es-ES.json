@@ -6,7 +6,8 @@
             "Cancel": "<i class='fa fa-ban' aria-hidden='true'></i> Cancelar",
             "Delete": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Borrar",
             "ResetPassword": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Restablecer la contraseña",
-            "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Guardar y crear nuevo"
+            "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Guardar y crear nuevo",
+            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Buscar dirección"
         },
         "Texts": {
             "AvailableOn": "Disponible en el",

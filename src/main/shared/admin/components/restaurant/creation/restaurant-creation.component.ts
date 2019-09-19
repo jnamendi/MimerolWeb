@@ -518,6 +518,13 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit = (isValid: boolean) => {
+    if (!isValid) {
+      this.errorIsValid = true;
+      return;
+    } else {
+      this.errorIsValid = false;
+    }
+
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -531,7 +538,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         ) {
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime != ""
           ) {
@@ -543,7 +550,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime == ""
           ) {
@@ -555,7 +562,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime != ""
           ) {
@@ -640,29 +647,22 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         ) {
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              "" ||
+            "" ||
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              null
+            null
           ) {
             this.restaurantModel.restaurantWorkTimeModels[i].list.splice(j, 1);
           }
         }
       } else if (
         this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-          "" ||
+        "" ||
         this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-          null
+        null
       ) {
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
-
-    // if (!isValid) {
-    //   this.errorIsValid = true;
-    //   return;
-    // } else {
-    //   this.errorIsValid = false;
-    // }
 
     this.clientState.isBusy = true;
     let newRestaurant = <RestaurantAdminModel>{
@@ -681,7 +681,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     });
   };
 
-  setAddressLine1 = (place: Address) => {};
+  setAddressLine1 = (place: Address) => { };
 
   onGetDistrictLine1 = (district: string) => {
     this.restaurantModel.district = district;
@@ -717,10 +717,10 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         else if (i == 6) day = "SUN";
         this.restaurantModel.restaurantWorkTimeModels.push(<
           RestaurantWorkTimeModels
-        >{
-          weekDay: day,
-          list: []
-        });
+          >{
+            weekDay: day,
+            list: []
+          });
         for (
           let j = 0;
           j < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -731,11 +731,11 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
           ) {
             this.restaurantModel.restaurantWorkTimeModels[j].list.push(<
               WorkTimeList
-            >{
-              openTime: "",
-              closeTime: "",
-              idRestaurantWork: j
-            });
+              >{
+                openTime: "",
+                closeTime: "",
+                idRestaurantWork: j
+              });
           }
         }
       }
