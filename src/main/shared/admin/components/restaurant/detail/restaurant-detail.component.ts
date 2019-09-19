@@ -223,7 +223,7 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
                 if (status == google.maps.GeocoderStatus.OK) {
                     let result = results[0];
                     let rsltAdrComponent = result.address_components;
-                    let resultLength = rsltAdrComponent.length;
+                    
                     if (result != null) {
                         if (this.validateAddressTimeout) {
                             clearTimeout(this.validateAddressTimeout);
@@ -234,12 +234,12 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
                         this.restaurantModel.longitude = this.longitude;
                         this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
                         this.restaurantModel.address = result.formatted_address;
+                        this.googleAddressLine1 = result.formatted_address;
                         this.currentAddress = this.restaurantModel.address;
 
                         this.isSearchAddress = false;
                         this.clientState.isBusy = false;
                         this.isSearchAddressError = false;
-
                     } else {
                         this.isSearchAddressError = true;
                         this.isSearchAddress = false;
@@ -368,11 +368,10 @@ export class AdminRestaurantDetailComponent implements OnInit, AfterViewInit, On
     }
 
     onUpdateRestaurant = (isValid: boolean) => {
-
         if (!isValid) {
             this.errorIsValid = true;
             return;
-        }else {
+        } else {
             this.errorIsValid = false;
         }
 
