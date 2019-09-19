@@ -1,33 +1,52 @@
-
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from '../../../../models/restaurant/admin-restaurant.model';
-import { ClientState } from '../../../../state';
-import { Language } from '../../../../models/langvm.model';
-import { ApiError } from '../../../../services/api-response/api-response';
-import { Address } from 'cluster';
-import { CategoryAdminModel } from '../../../../models/category/admin-category.model';
-import { Router } from '@angular/router';
-import { LanguageService } from '../../../../services/api/language/language.service';
-import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
-import { CategoryAdminService } from '../../../../services/api/category/admin-category.service';
-import { UserAdminService } from '../../../../services/api/user/admin-user.service';
-import { UserAdminModel } from '../../../../models/user/admin-user.model';
-import { I18nService } from '../../../../core/i18n.service';
-import { GoogleApiService } from '../../../../services/google-api/google-api.service';
-import { StorageService } from '../../../../core/storage.service';
-import { IpInfo } from '../../../../models/ipinfo/ipinfo.model';
-import { StorageKey } from '../../../../services/storage-key/storage-key';
-import { JwtTokenHelper } from '../../../../common/jwt-token-helper/jwt-token-helper';
-import { LatLongModel } from '../../../../models/google/country-latlong.model';
-import { MapsAPILoader, AgmMap } from '../../../../../../../node_modules/@agm/core';
-import { Subscription } from '../../../../../../../node_modules/rxjs';
-import { CityService, DistrictService } from '../../../../services';
-import { CityModel } from '../../../../models/city/city.model';
-import { DistrictModel, DeliveryDistrictModel } from '../../../../models/district/district.model';
-import { DeliveryCityModel } from '../../../../models/city/city-district.model';
-import { weekdays } from 'moment';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
-import { async } from '@angular/core/testing';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+  AfterViewInit,
+  ChangeDetectorRef
+} from "@angular/core";
+import {
+  RestaurantAdminModel,
+  RestaurantModule,
+  RestaurantStatus,
+  RestaurantWorkTimeModels,
+  WorkTimeList
+} from "../../../../models/restaurant/admin-restaurant.model";
+import { ClientState } from "../../../../state";
+import { Language } from "../../../../models/langvm.model";
+import { ApiError } from "../../../../services/api-response/api-response";
+import { Address } from "cluster";
+import { CategoryAdminModel } from "../../../../models/category/admin-category.model";
+import { Router } from "@angular/router";
+import { LanguageService } from "../../../../services/api/language/language.service";
+import { RestaurantAdminService } from "../../../../services/api/restaurant/admin-restaurant.service";
+import { CategoryAdminService } from "../../../../services/api/category/admin-category.service";
+import { UserAdminService } from "../../../../services/api/user/admin-user.service";
+import { UserAdminModel } from "../../../../models/user/admin-user.model";
+import { I18nService } from "../../../../core/i18n.service";
+import { GoogleApiService } from "../../../../services/google-api/google-api.service";
+import { StorageService } from "../../../../core/storage.service";
+import { IpInfo } from "../../../../models/ipinfo/ipinfo.model";
+import { StorageKey } from "../../../../services/storage-key/storage-key";
+import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-helper";
+import { LatLongModel } from "../../../../models/google/country-latlong.model";
+import {
+  MapsAPILoader,
+  AgmMap
+} from "../../../../../../../node_modules/@agm/core";
+import { Subscription } from "../../../../../../../node_modules/rxjs";
+import { CityService, DistrictService } from "../../../../services";
+import { CityModel } from "../../../../models/city/city.model";
+import {
+  DistrictModel,
+  DeliveryDistrictModel
+} from "../../../../models/district/district.model";
+import { DeliveryCityModel } from "../../../../models/city/city-district.model";
+import { weekdays } from "moment";
+import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
+import { async } from "@angular/core/testing";
 import { AmazingTimePickerService } from "amazing-time-picker";
 
 @Component({
@@ -73,7 +92,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private checkOpenLesserClose: boolean = false;
-  private checkOpenOrCloseIsNull: boolean = false;
+  private checkOpenTimeIsNull: boolean = false;
+  private checkCloseTimeIsNull: boolean = false;
   private errorIsValid: boolean = false;
   private x: number;
   private y: number;
@@ -498,13 +518,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit = (isValid: boolean) => {
-    if (!isValid || this.isSearchAddressError) {
-      this.errorIsValid = true;
-      return;
-    } else {
-      this.errorIsValid = false;
-    }
-
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -517,20 +530,28 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
           j++
         ) {
           if (
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime == "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime != "") ||
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime != "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime == "")
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime != ""
           ) {
-            this.checkOpenOrCloseIsNull = true;
+            this.checkOpenTimeIsNull = true;
             this.x = i;
             this.y = j;
             return;
-          } else this.checkOpenOrCloseIsNull = false;
+          } else this.checkOpenTimeIsNull = false;
+
+          if (
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime == ""
+          ) {
+            this.checkCloseTimeIsNull = true;
+            this.x = i;
+            this.y = j;
+            return;
+          } else this.checkCloseTimeIsNull = false;
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
@@ -550,16 +571,17 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -568,6 +590,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
               this.checkOpenLesserClose = false;
             }
           }
+
           if (j > 0) {
             let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
               j
@@ -581,16 +604,17 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -632,6 +656,13 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
+
+    // if (!isValid) {
+    //   this.errorIsValid = true;
+    //   return;
+    // } else {
+    //   this.errorIsValid = false;
+    // }
 
     this.clientState.isBusy = true;
     let newRestaurant = <RestaurantAdminModel>{

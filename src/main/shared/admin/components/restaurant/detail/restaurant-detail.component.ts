@@ -87,7 +87,8 @@ export class AdminRestaurantDetailComponent
   private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private errorIsValid: boolean = false;
   private checkOpenLesserClose: boolean = false;
-  private checkOpenOrCloseIsNull: boolean = false;
+  private checkOpenTimeIsNull: boolean = false;
+  private checkCloseTimeIsNull: boolean = false;
   private x: number;
   private y: number;
 
@@ -455,13 +456,6 @@ export class AdminRestaurantDetailComponent
   }
 
   onUpdateRestaurant = (isValid: boolean) => {
-    if (!isValid) {
-      this.errorIsValid = true;
-      return;
-    } else {
-      this.errorIsValid = false;
-    }
-
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -474,20 +468,28 @@ export class AdminRestaurantDetailComponent
           j++
         ) {
           if (
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime == "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime != "") ||
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime != "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime == "")
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime != ""
           ) {
-            this.checkOpenOrCloseIsNull = true;
+            this.checkOpenTimeIsNull = true;
             this.x = i;
             this.y = j;
             return;
-          } else this.checkOpenOrCloseIsNull = false;
+          } else this.checkOpenTimeIsNull = false;
+
+          if (
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime == ""
+          ) {
+            this.checkCloseTimeIsNull = true;
+            this.x = i;
+            this.y = j;
+            return;
+          } else this.checkCloseTimeIsNull = false;
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
@@ -507,16 +509,17 @@ export class AdminRestaurantDetailComponent
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -539,16 +542,17 @@ export class AdminRestaurantDetailComponent
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -590,6 +594,13 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
+
+    // if (!isValid) {
+    //   this.errorIsValid = true;
+    //   return;
+    // } else {
+    //   this.errorIsValid = false;
+    // }
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,
