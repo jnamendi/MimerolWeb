@@ -241,7 +241,7 @@
                                                     id="{{j}}{{i}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
-                                                <div *ngIf="(checkOpenLesserClose == true || checkOpenOrCloseIsNull == true) && x == j && y == i"
+                                                <div *ngIf="(checkOpenLesserClose == true || checkOpenTimeIsNull == true) && x == j && y == i"
                                                     class="error"
                                                     [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
                                                 </div>
@@ -257,6 +257,10 @@
                                                     <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
                                                         [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
                                                     </div>
+                                                </div>
+                                                <div class="error"
+                                                    *ngIf="checkCloseTimeIsNull == true && x == j && y == i"
+                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
                                                 </div>
                                             </div>
                                             <!-- Button add and remove open close time -->
