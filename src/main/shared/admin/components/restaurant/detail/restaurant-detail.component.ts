@@ -451,6 +451,13 @@ export class AdminRestaurantDetailComponent
   }
 
   onUpdateRestaurant = (isValid: boolean) => {
+    if (!isValid) {
+      this.errorIsValid = true;
+      return;
+    } else {
+      this.errorIsValid = false;
+    }
+
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -464,7 +471,7 @@ export class AdminRestaurantDetailComponent
         ) {
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime != ""
           ) {
@@ -476,7 +483,7 @@ export class AdminRestaurantDetailComponent
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-              "" &&
+            "" &&
             this.restaurantModel.restaurantWorkTimeModels[i].list[j]
               .closeTime == ""
           ) {
@@ -589,13 +596,6 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
-
-    // if (!isValid) {
-    //   this.errorIsValid = true;
-    //   return;
-    // } else {
-    //   this.errorIsValid = false;
-    // }
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,
