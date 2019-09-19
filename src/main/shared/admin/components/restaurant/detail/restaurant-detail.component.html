@@ -101,6 +101,31 @@
 
                                     <div class="row form-group">
                                         <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
+                                        <div class="col-md-4">
+                                            <input type="number" [readonly]="isSearchAddress" #latitude class="form-control"
+                                                name="latitude"
+                                                [(ngModel)]="restaurantModel && restaurantModel.latitude" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4"
+                                            [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
+                                        <div class="col-md-4">
+                                            <input type="number" [readonly]="isSearchAddress" #longitude class="form-control"
+                                                name="longitude"
+                                                [(ngModel)]="restaurantModel && restaurantModel.longitude" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a class="btn btn-default btn-success"
+                                                [innerHTML]="'Commons.Buttons.SearchAddress' | translate"
+                                                (click)="onGetAddressFromLatLng(restaurantModel.latitude, restaurantModel.longitude)"></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.AddressRequired' | translate"></label>
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" name="addressLine1"
@@ -197,28 +222,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.Latitude' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
-                                                name="latitude"
-                                                [(ngModel)]="restaurantModel && restaurantModel.latitude"
-                                                (keyup)="onGetAddressFromLatLng($event.target.value, restaurantModel.longitude, true)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.Longtitude' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="number" [readonly]="isSearchAddress" class="form-control"
-                                                name="longitude"
-                                                [(ngModel)]="restaurantModel && restaurantModel.longitude"
-                                                (keyup)="onGetAddressFromLatLng(restaurantModel.latitude, $event.target.value, false)" />
-                                        </div>
-                                    </div>
-
                                     <!-- Open - Close time -->
                                     <div class="separator-dashed"></div>
                                     <h2 class="separator-dashed-tilte"
@@ -273,42 +276,6 @@
 
                                     <div class="separator-dashed"></div>
                                     <!-- End -->
-
-                                    <!-- <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.OpenTimeRequired' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="time" comparison="lesser" timeComparison="closeTime"
-                                                atp-time-picker name="openTime" class="form-control"
-                                                [(ngModel)]="restaurantModel && restaurantModel.openTime"
-                                                #openTime="ngModel" required />
-                                            <div *ngIf="openTime.invalid && (openTime.dirty || openTime.touched || f.submitted)"
-                                                class="error">
-                                                <div *ngIf="openTime.errors?.required"
-                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
-                                                <div *ngIf="openTime.errors?.timeInValid"
-                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.CloseTimeRequired' | translate"></label>
-                                        <div class="col-md-8">
-                                            <input type="time" comparison="greater" timeComparison="openTime"
-                                                atp-time-picker name="closeTime" class="form-control"
-                                                [(ngModel)]="restaurantModel && restaurantModel.closeTime"
-                                                #closeTime="ngModel" required />
-                                            <div *ngIf="closeTime.invalid && (closeTime.dirty || closeTime.touched || f.submitted)"
-                                                class="error">
-                                                <div *ngIf="closeTime.errors?.required"
-                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
-                                                <div *ngIf="closeTime.errors?.timeInValid"
-                                                    [innerHTML]="'Commons.Error.ErrorCloseTime' | translate"></div>
-                                            </div>
-                                        </div>
-                                    </div> -->
 
                                     <div class="row form-group">
                                         <label class="col-md-4"
@@ -429,64 +396,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label for="formGroupExampleInput">Free Ship</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Don't care</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Free ship</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">20.000 or less than</label>
-                                                    </div>
-                                                </div>
-            
-                                                <div class="form-group">
-                                                    <label for="formGroupExampleInput">Minimum order</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Don't care</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Less than 100</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Less than 200</label>
-                                                    </div>
-                                                </div>
-            
-                                                <div class="form-group">
-                                                    <label for="formGroupExampleInput">Promotion</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">10%</label>
-                                                    </div>
-                                                </div>
-            
-                                                <div class="form-group">
-                                                    <label for="formGroupExampleInput">Payments</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Cash</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Visa Card</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" selected value="">Paypal</label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                             </div>
                             <div *ngIf="errorIsValid" class="error"
                                 [innerHTML]="'Commons.Texts.ErrorIsValid' | translate"></div>

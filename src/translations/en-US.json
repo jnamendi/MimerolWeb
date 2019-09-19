@@ -6,7 +6,8 @@
             "Cancel": "<i class='fa fa-ban' aria-hidden='true'></i> Cancel",
             "Delete": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Delete",
             "ResetPassword": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Reset password",
-            "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Save and create new"
+            "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Save and create new",
+            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Search Address"
         },
         "Texts": {
             "AvailableOn": "Available on the",
