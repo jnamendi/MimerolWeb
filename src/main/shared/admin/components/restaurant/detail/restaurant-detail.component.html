@@ -233,21 +233,21 @@
                                             <label *ngIf="i > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" atp-time-picker comparison="lesser"
+                                                <input type="time" comparison="lesser"
                                                     [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
-                                                    id="{{j}}{{i}}open" class="form-control"
+                                                    id="{{j}}{{i}}open" class="form-control" (click)="onOpenTimePicker(j, i, 0)"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
-                                                <div *ngIf="checkOpenLesserClose == true && x == j && y == i"
+                                                <div *ngIf="(checkOpenLesserClose == true || checkOpenOrCloseIsNull == true) && x == j && y == i"
                                                     class="error"
                                                     [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" atp-time-picker comparison="greater"
+                                                <input type="time" comparison="greater"
                                                     [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
-                                                    id="{{j}}{{i}}close" class="form-control"
+                                                    id="{{j}}{{i}}close" class="form-control" (click)="onOpenTimePicker(j, i, 1)"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
                                                 <div *ngIf="menuExtraItemNameClose.touched" class="error">
