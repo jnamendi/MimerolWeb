@@ -722,17 +722,21 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     menuExtra && menuExtra.splice(index, 1);
   };
 
-  onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      if (timeStatus == 0)
-        this.restaurantModel.restaurantWorkTimeModels[x].list[
-          y
-        ].openTime = time;
-      else
-        this.restaurantModel.restaurantWorkTimeModels[x].list[
-          y
-        ].closeTime = time;
-    });
+  // onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
+  //   const amazingTimePicker = this.atp.open();
+  //   amazingTimePicker.afterClose().subscribe(time => {
+  //     if (timeStatus == 0)
+  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
+  //         y
+  //       ].openTime = time;
+  //     else
+  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
+  //         y
+  //       ].closeTime = time;
+  //   });
+  // };
+  onRevertTime = (x: number, y: number) => {
+    this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
+    this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";
   };
 }

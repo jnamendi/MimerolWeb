@@ -298,10 +298,11 @@
                                             <label *ngIf="i > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" comparison="lesser"
+                                                <input type="time" atp-time-picker comparison="lesser"
                                                     [timeComparison]="extra.closeTime" name="{{j}}{{i}}open"
-                                                    id="{{j}}{{i}}open" class="form-control" (click)="onOpenTimePicker(j, i, 0)"
-                                                    [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
+                                                    id="{{j}}{{i}}open" class="form-control"
+                                                    [(ngModel)]="extra.openTime"
+                                                    #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
                                                 <div *ngIf="checkOpenLesserClose == true && x == j && y == i"
                                                     class="error"
@@ -310,10 +311,11 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" comparison="greater"
+                                                <input type="time" atp-time-picker comparison="greater"
                                                     [timeComparison]="extra.openTime" name="{{j}}{{i}}close"
-                                                    id="{{j}}{{i}}close" class="form-control" (click)="onOpenTimePicker(j, i, 1)"
-                                                    [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
+                                                    id="{{j}}{{i}}close" class="form-control"
+                                                    [(ngModel)]="extra.closeTime"
+                                                    #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
                                                 <div *ngIf="menuExtraItemNameClose.touched" class="error">
                                                     <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
@@ -328,6 +330,10 @@
                                                 <button type="button" (click)="onRemoveExtraItem(val.list)"
                                                     style="background: gray" class="btn btn-default"
                                                     *ngIf="i > 0">-</button>
+                                                <button type="button" (click)="onRevertTime(j, i)"
+                                                    style="background: gray;padding: 6px 9px;" class="btn btn-default"
+                                                    *ngIf="i == 0">
+                                                    <i class="fa fa-undo" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </div>
