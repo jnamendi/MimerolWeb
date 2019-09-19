@@ -87,7 +87,8 @@ export class AdminRestaurantDetailComponent
   private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private errorIsValid: boolean = false;
   private checkOpenLesserClose: boolean = false;
-  private checkOpenOrCloseIsNull: boolean = false;
+  private checkOpenTimeIsNull: boolean = false;
+  private checkCloseTimeIsNull: boolean = false;
   private x: number;
   private y: number;
 
@@ -277,43 +278,46 @@ export class AdminRestaurantDetailComponent
     let latlng = new google.maps.LatLng(+lat, +lng);
     let request = { location: latlng };
 
-        this.addTimeout = setTimeout(() => {
-            this.isSearchAddress = true;
-            this.clientState.isBusy = true;
-            geocoder.geocode(request, (results, status) => {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    let result = results[0];
-                    let rsltAdrComponent = result.address_components;
-                    
-                    if (result != null) {
-                        if (this.validateAddressTimeout) {
-                            clearTimeout(this.validateAddressTimeout);
-                        }
-                        this.latitude = result.geometry.location.lat();
-                        this.longitude = result.geometry.location.lng();
-                        this.restaurantModel.latitude = this.latitude;
-                        this.restaurantModel.longitude = this.longitude;
-                        this.currentPosition = <LatLongModel>{ lat: this.latitude, lng: this.longitude };
-                        this.restaurantModel.address = result.formatted_address;
-                        this.googleAddressLine1 = result.formatted_address;
-                        this.currentAddress = this.restaurantModel.address;
+    this.addTimeout = setTimeout(() => {
+      this.isSearchAddress = true;
+      this.clientState.isBusy = true;
+      geocoder.geocode(request, (results, status) => {
+        if (status == google.maps.GeocoderStatus.OK) {
+          let result = results[0];
+          let rsltAdrComponent = result.address_components;
 
-                        this.isSearchAddress = false;
-                        this.clientState.isBusy = false;
-                        this.isSearchAddressError = false;
-                    } else {
-                        this.isSearchAddressError = true;
-                        this.isSearchAddress = false;
-                        this.clientState.isBusy = false;
-                    }
-                } else {
-                    this.isSearchAddressError = true;
-                    this.isSearchAddress = false;
-                    this.clientState.isBusy = false;
-                }
-            });
-        }, 2000);
-    }
+          if (result != null) {
+            if (this.validateAddressTimeout) {
+              clearTimeout(this.validateAddressTimeout);
+            }
+            this.latitude = result.geometry.location.lat();
+            this.longitude = result.geometry.location.lng();
+            this.restaurantModel.latitude = this.latitude;
+            this.restaurantModel.longitude = this.longitude;
+            this.currentPosition = <LatLongModel>{
+              lat: this.latitude,
+              lng: this.longitude
+            };
+            this.restaurantModel.address = result.formatted_address;
+            this.googleAddressLine1 = result.formatted_address;
+            this.currentAddress = this.restaurantModel.address;
+
+            this.isSearchAddress = false;
+            this.clientState.isBusy = false;
+            this.isSearchAddressError = false;
+          } else {
+            this.isSearchAddressError = true;
+            this.isSearchAddress = false;
+            this.clientState.isBusy = false;
+          }
+        } else {
+          this.isSearchAddressError = true;
+          this.isSearchAddress = false;
+          this.clientState.isBusy = false;
+        }
+      });
+    }, 2000);
+  };
 
   onGetRestaurant = (restaurantId: number) => {
     this.clientState.isBusy = true;
@@ -451,14 +455,7 @@ export class AdminRestaurantDetailComponent
     }
   }
 
-    onUpdateRestaurant = (isValid: boolean) => {
-        if (!isValid) {
-            this.errorIsValid = true;
-            return;
-        } else {
-            this.errorIsValid = false;
-        }
-
+  onUpdateRestaurant = (isValid: boolean) => {
     for (
       let i = 0;
       i < this.restaurantModel.restaurantWorkTimeModels.length;
@@ -471,20 +468,28 @@ export class AdminRestaurantDetailComponent
           j++
         ) {
           if (
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime == "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime != "") ||
-            (this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .openTime != "" &&
-              this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-                .closeTime == "")
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime != ""
           ) {
-            this.checkOpenOrCloseIsNull = true;
+            this.checkOpenTimeIsNull = true;
             this.x = i;
             this.y = j;
             return;
-          } else this.checkOpenOrCloseIsNull = false;
+          } else this.checkOpenTimeIsNull = false;
+
+          if (
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
+              "" &&
+            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
+              .closeTime == ""
+          ) {
+            this.checkCloseTimeIsNull = true;
+            this.x = i;
+            this.y = j;
+            return;
+          } else this.checkCloseTimeIsNull = false;
 
           if (
             this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
@@ -504,16 +509,17 @@ export class AdminRestaurantDetailComponent
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -536,16 +542,17 @@ export class AdminRestaurantDetailComponent
             let eH = parseFloat(eTimes[0]);
             let eM = parseFloat(eTimes[1]);
 
-            if (vH <= eH) {
+            if (vH == eH && vM == eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
               return;
-            } else {
-              this.checkOpenLesserClose = false;
-            }
-
-            if (vH == eH && vM <= eM) {
+            } else if (vH < eH) {
+              this.checkOpenLesserClose = true;
+              this.x = i;
+              this.y = j;
+              return;
+            } else if (vH == eH && vM <= eM) {
               this.checkOpenLesserClose = true;
               this.x = i;
               this.y = j;
@@ -587,6 +594,13 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
       }
     }
+
+    // if (!isValid) {
+    //   this.errorIsValid = true;
+    //   return;
+    // } else {
+    //   this.errorIsValid = false;
+    // }
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,
@@ -715,17 +729,21 @@ export class AdminRestaurantDetailComponent
     menuExtra && menuExtra.splice(index, 1);
   };
 
-  onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      if (timeStatus == 0)
-        this.restaurantModel.restaurantWorkTimeModels[x].list[
-          y
-        ].openTime = time;
-      else
-        this.restaurantModel.restaurantWorkTimeModels[x].list[
-          y
-        ].closeTime = time;
-    });
+  // onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
+  //   const amazingTimePicker = this.atp.open();
+  //   amazingTimePicker.afterClose().subscribe(time => {
+  //     if (timeStatus == 0)
+  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
+  //         y
+  //       ].openTime = time;
+  //     else
+  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
+  //         y
+  //       ].closeTime = time;
+  //   });
+  // };
+  onRevertTime = (x: number, y: number) => {
+    this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
+    this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";
   };
 }
