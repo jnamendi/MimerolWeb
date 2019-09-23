@@ -291,41 +291,44 @@
 
                                     <!-- Open - Close time -->
                                     <div class="separator-dashed"></div>
-                                    <h2 class="separator-dashed-tilte"
+                                    <h2 id="workingTimes" class="separator-dashed-tilte"
                                         [innerHTML]="'Commons.Texts.WorkingTime' | translate"></h2>
                                     <div class="separator-dashed"></div>
 
-                                    <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let j = index"
+                                    <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let indexDate = index"
                                         class="menu-extra-item">
-                                        <div *ngFor="let extra of val.list; let i = index" class="row form-group">
-                                            <label *ngIf="i == 0" class="col-md-4"
+                                        <div *ngFor="let extra of val.list; let indexTimeOfDate = index" class="row form-group">
+                                            <label *ngIf="indexTimeOfDate == 0" class="col-md-4"
                                                 [innerHTML]="'Commons.Texts.' + val.weekDay | translate"></label>
-                                            <label *ngIf="i > 0" class="col-md-4"></label>
+                                            <label *ngIf="indexTimeOfDate > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" atp-time-picker name="{{j}}{{i}}open"
-                                                    id="{{j}}{{i}}open" class="form-control"
+                                                <input type="time" atp-time-picker name="{{indexDate}}{{indexTimeOfDate}}open"
+                                                    id="{{indexDate}}{{indexTimeOfDate}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
-                                                <div *ngIf="(checkOpenLesserClose == true || checkOpenTimeIsNull == true) && x == j && y == i"
+                                                <div *ngIf="checkOpenTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    class="error"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                </div>
+                                                <div *ngIf="checkOpenGreaterClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
                                                     class="error"
                                                     [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" atp-time-picker name="{{j}}{{i}}close"
-                                                    id="{{j}}{{i}}close" class="form-control"
+                                                <input type="time" atp-time-picker name="{{indexDate}}{{indexTimeOfDate}}close"
+                                                    id="{{indexDate}}{{indexTimeOfDate}}close" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
-                                                <div *ngIf="menuExtraItemNameClose.touched" class="error">
-                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
-                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
-                                                    </div>
-                                                </div>
                                                 <div class="error"
-                                                    *ngIf="checkCloseTimeIsNull == true && x == j && y == i"
-                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
+                                                    *ngIf="checkCloseTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                </div>
+                                                <div *ngIf="checkOpenLesserClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    class="error"
+                                                    [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
                                                 </div>
                                             </div>
                                             <!-- Button add and remove open close time -->
@@ -334,10 +337,10 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(val.list)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="i > 0">-</button>
-                                                <button type="button" (click)="onRevertTime(j, i)"
+                                                    *ngIf="indexTimeOfDate > 0">-</button>
+                                                <button type="button" (click)="onRevertTime(indexDate, indexTimeOfDate)"
                                                     style="background: gray;padding: 6px 9px;" class="btn btn-default"
-                                                    *ngIf="i == 0">
+                                                    *ngIf="indexTimeOfDate == 0">
                                                     <i class="fa fa-undo" aria-hidden="true"></i></button>
                                             </div>
                                         </div>

@@ -87,16 +87,17 @@ export class AdminRestaurantDetailComponent
   private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private errorIsValid: boolean = false;
   private checkOpenLesserClose: boolean = false;
+  private checkOpenGreaterClose: boolean = false;
   private checkOpenTimeIsNull: boolean = false;
   private checkCloseTimeIsNull: boolean = false;
-  private x: number;
-  private y: number;
+  private datePosition: number;
+  private positionTimeOfDate: number;
 
   @ViewChild("searchControl") searchElementRef: ElementRef;
   @ViewChild("agmMap") agmMap: AgmMap;
 
-  @ViewChild('latitude') latitudeElement: ElementRef;
-  @ViewChild('longitude') longitudeElement: ElementRef;
+  @ViewChild("latitude") latitudeElement: ElementRef;
+  @ViewChild("longitude") longitudeElement: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -450,6 +451,28 @@ export class AdminRestaurantDetailComponent
     }
   }
 
+  onValidateWorkingTime = (openTime: string, closeTime: string) => {
+    let openTimeTemp = openTime.split(":");
+    let openHour = parseFloat(openTimeTemp[0]);
+    let openMinute = parseFloat(openTimeTemp[1]);
+    let closeTimeTemp = closeTime.split(":");
+    let closeHour = parseFloat(closeTimeTemp[0]);
+    let closeMinute = parseFloat(closeTimeTemp[1]);
+
+    if (closeHour == openHour && closeMinute == openMinute) return true;
+    else if (closeHour < openHour) return true;
+    else if (closeHour == openHour && closeMinute <= openMinute) return true;
+    return false;
+  }
+
+  onScrollIntoViewValidate = (id: HTMLElement) => {
+      id.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+  }
+
   onUpdateRestaurant = (isValid: boolean) => {
     if (!isValid) {
       this.errorIsValid = true;
@@ -458,144 +481,60 @@ export class AdminRestaurantDetailComponent
       this.errorIsValid = false;
     }
 
-    for (
-      let i = 0;
-      i < this.restaurantModel.restaurantWorkTimeModels.length;
-      i++
-    ) {
-      if (this.restaurantModel.restaurantWorkTimeModels[i].list.length != 0) {
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels[i].list.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime != ""
-          ) {
+    for (let indexDate = 0; indexDate < this.restaurantModel.restaurantWorkTimeModels.length; indexDate++) {
+      if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list.length != 0) {
+        for (let indexTimeOfDate = 0; indexTimeOfDate < this.restaurantModel.restaurantWorkTimeModels[indexDate].list.length; indexTimeOfDate++) {
+          this.checkOpenGreaterClose = false;
+          this.checkOpenLesserClose = false;
+          this.checkCloseTimeIsNull = false;
+          this.checkOpenTimeIsNull = false;
+          if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime == ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime != "") {
             this.checkOpenTimeIsNull = true;
-            this.x = i;
-            this.y = j;
+            this.datePosition = indexDate;
+            this.positionTimeOfDate = indexTimeOfDate;
+            this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
             return;
-          } else this.checkOpenTimeIsNull = false;
-
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime == ""
-          ) {
+          } else if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime != ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime == "") {
             this.checkCloseTimeIsNull = true;
-            this.x = i;
-            this.y = j;
+            this.datePosition = indexDate;
+            this.positionTimeOfDate = indexTimeOfDate;
+            this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
             return;
-          } else this.checkCloseTimeIsNull = false;
-
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime != ""
-          ) {
-            let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].closeTime.split(":");
-            let vH = parseFloat(vTimes[0]);
-            let vM = parseFloat(vTimes[1]);
-
-            let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].openTime.split(":");
-            let eH = parseFloat(eTimes[0]);
-            let eM = parseFloat(eTimes[1]);
-
-            if (vH == eH && vM == eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
+          } else if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime != ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime != "") {
+            this.checkOpenLesserClose = this.onValidateWorkingTime(this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime,
+              this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime);
+            if (this.checkOpenLesserClose) {
+              this.datePosition = indexDate;
+              this.positionTimeOfDate = indexTimeOfDate;
+              this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
               return;
-            } else if (vH < eH) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH == eH && vM <= eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else {
-              this.checkOpenLesserClose = false;
             }
-          }
-
-          if (j > 0) {
-            let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].openTime.split(":");
-            let vH = parseFloat(vTimes[0]);
-            let vM = parseFloat(vTimes[1]);
-
-            let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j - 1
-            ].closeTime.split(":");
-            let eH = parseFloat(eTimes[0]);
-            let eM = parseFloat(eTimes[1]);
-
-            if (vH == eH && vM == eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH < eH) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH == eH && vM <= eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else {
-              this.checkOpenLesserClose = false;
+            if (indexTimeOfDate > 0) {
+              this.checkOpenGreaterClose = this.onValidateWorkingTime(this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate - 1].closeTime,
+                this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime);
+              if (this.checkOpenGreaterClose) {
+                this.datePosition = indexDate;
+                this.positionTimeOfDate = indexTimeOfDate;
+                this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
+                return;
+              }
             }
           }
         }
       }
     }
 
-    for (
-      let i = 0;
-      i < this.restaurantModel.restaurantWorkTimeModels.length;
-      i++
-    ) {
-      if (this.restaurantModel.restaurantWorkTimeModels[i].list.length > 1) {
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels[i].list.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            "" ||
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            null
-          ) {
-            this.restaurantModel.restaurantWorkTimeModels[i].list.splice(j, 1);
-          }
-        }
-      } else if (
-        this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-        "" ||
-        this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-        null
-      ) {
-        this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
+    this.restaurantModel.restaurantWorkTimeModels.map((workTime, indexWorkTime) => {
+      workTime.list.map((items, indexItems) => {
+        if (items.openTime == "") workTime.list.splice(indexItems, 1);
+      })
+      if (workTime.list.length == 0) {
+        this.restaurantModel.restaurantWorkTimeModels.splice(indexWorkTime, 1);
       }
-    }
+    });
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,
@@ -660,8 +599,7 @@ export class AdminRestaurantDetailComponent
 
   onAutoCreateOpenClose = () => {
     if (this.restaurantModel.restaurantWorkTimeModels.length == 0) {
-      let max = 7,
-        day = "";
+      let max = 7, day = "";
       for (let i = 0; i < max; i++) {
         if (i == 0) day = "MON";
         else if (i == 1) day = "TUE";
@@ -670,44 +608,29 @@ export class AdminRestaurantDetailComponent
         else if (i == 4) day = "FRI";
         else if (i == 5) day = "SAT";
         else if (i == 6) day = "SUN";
-        this.restaurantModel.restaurantWorkTimeModels.push(<
-          RestaurantWorkTimeModels
-          >{
-            weekDay: day,
-            list: []
-          });
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0
-          ) {
-            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<
-              WorkTimeList
-              >{
-                openTime: "",
-                closeTime: "",
-                idRestaurantWork: j
-              });
+        this.restaurantModel.restaurantWorkTimeModels.push(<RestaurantWorkTimeModels>{
+          weekDay: day,
+          list: []
+        });
+        for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels.length; j++) {
+          if (this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0) {
+            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<WorkTimeList>{
+              openTime: "",
+              closeTime: "",
+              idRestaurantWork: j
+            });
           }
         }
       }
     } else {
-      for (
-        let i = 0;
-        i < this.restaurantModel.restaurantWorkTimeModels.length;
-        i++
+      for (let i = 0; i < this.restaurantModel.restaurantWorkTimeModels.length; i++
       ) {
         if (this.restaurantModel.restaurantWorkTimeModels[i].list.length == 0) {
-          this.restaurantModel.restaurantWorkTimeModels[i].list.push(<
-            WorkTimeList
-            >{
-              openTime: "",
-              closeTime: "",
-              idRestaurantWork: i
-            });
+          this.restaurantModel.restaurantWorkTimeModels[i].list.push(<WorkTimeList>{
+            openTime: "",
+            closeTime: "",
+            idRestaurantWork: i
+          });
         }
       }
     }
@@ -715,7 +638,9 @@ export class AdminRestaurantDetailComponent
 
   onAddMoreExtraItem = (val: WorkTimeList[], ex: WorkTimeList) => {
     val.push(<WorkTimeList>{
-      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1
+      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1,
+      openTime: "",
+      closeTime: ""
     });
   };
 
