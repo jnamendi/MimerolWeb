@@ -105,7 +105,8 @@
             "NumberRequired": "Number <span class='error'>*</span>",
             "CompanyName": "Company name",
             "CityRequired": "City <span class='error'>*</span>",
-            "DistrictRequired": "District <span class='error'>*</span>",
+            "DistrictRequired": "Area <span class='error'>*</span>",
+            "Zone": "Zone <span class='error'>*</span>",
             "TimeRequired": "Time <span class='error'>*</span>",
             "Remarks": "Remarks",
             "CashPayment": "Cash payment",
@@ -225,7 +226,11 @@
             "Delivered": "Delivered",
             "Sale": "Sale",
             "InsertCode": "Insert code:",
-            "EndTime": "End time:"
+            "EndTime": "End time:",
+            "SelectCity": "Select city",
+            "SelectArea": "Select area",
+            "SelectZone": "Select zone",
+            "SelectDeliveryDistrict": "Select delivery district"
         },
         "Links": {
             "Title": "Links",

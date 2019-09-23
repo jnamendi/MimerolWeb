@@ -1,40 +1,21 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  AfterViewChecked,
-  ChangeDetectorRef
-} from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { StorageService, I18nService, CoreService } from "../../core";
 import { JwtTokenHelper } from "../../common";
-import {
-  OrderItem,
-  RestaurantMenuItemModel
-} from "../../models/restaurant-menu/restaurant-menu.model";
+import { OrderItem, RestaurantMenuItemModel } from "../../models/restaurant-menu/restaurant-menu.model";
 import { OrderModel, OrderResponseModel } from "../../models/order/order.model";
 import { Subscription } from "rxjs";
 import { StorageKey } from "../../services/storage-key/storage-key";
 import { UserResponseModel } from "../../models";
-import {
-  AppAuthService,
-  OrderService,
-  VoucherService,
-  CityService,
-  DistrictService,
-  AddressService
-} from "../../services";
+import { AppAuthService, OrderService, VoucherService, CityService, DistrictService, ZoneService, AddressService } from "../../services";
 import { Configs } from "../../common/configs/configs";
 import { ClientState } from "../../state";
 import { ApiError } from "../../services/api-response/api-response";
 import { ShoppingBagsComponent } from "../menu/shopping-bags/shopping-bags.component";
-import {
-  VoucherModel,
-  PromotionModel
-} from "../../models/voucher/voucher.model";
+import { VoucherModel, PromotionModel } from "../../models/voucher/voucher.model";
 import { CityModel } from "../../models/city/city.model";
 import { DistrictModel } from "../../models/district/district.model";
+import { ZoneModel } from "../../models/zone/zone.model";
 import { AddressModel } from "../../models/address/address.model";
 import { Address } from "ng2-google-place-autocomplete/src/app/ng2-google-place.classes";
 import { RestaurantAppService } from "../../services/api/restaurant/app-restaurant.service";
@@ -54,6 +35,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private districtModels: DistrictModel[] = [];
   private userAddressModels: AddressModel[] = [];
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
+  private zoneModels: ZoneModel[] = [];
 
   private sub: Subscription;
   private totalItemsInBag: number;
@@ -90,6 +72,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private voucherService: VoucherService,
     private cityService: CityService,
     private districtService: DistrictService,
+    private zoneService: ZoneService,
     private addressService: AddressService,
     private cdRef: ChangeDetectorRef,
     private i18nService: I18nService,
@@ -302,6 +285,17 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       );
   };
 
+  onGetZoneByDistrict = (districtId: number) => {
+    this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+    },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
+
   onGetItemsInBag = (totalItems: number) => {
     this.totalItemsInBag = totalItems;
     this.onBuildPaymentWiths();
@@ -323,7 +317,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
-    arrOnes.forEach(function(item) {
+    arrOnes.forEach(function (item) {
       var temp = parseFloat(
         (hundreds * 100 + tens * 10 + item + redundant).toFixed(2)
       );
@@ -333,14 +327,14 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     //calculate for tens
     if (ones !== 0) tens++;
     let arrTens = this.detectPredictMatrix(tens, false);
-    arrTens.forEach(function(item) {
+    arrTens.forEach(function (item) {
       result.add(hundreds * 100 + item * 10 + redundant);
     });
 
     // calculate for hundred
     if (tens !== 0) hundreds++;
     let arrHundreds = this.detectPredictMatrix(hundreds, false);
-    arrHundreds.forEach(function(item) {
+    arrHundreds.forEach(function (item) {
       result.add(item * 100 + redundant);
     });
 
@@ -504,7 +498,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (
       this.restaurantModel.promotionLineItems.length > 0 &&
       this.child.totalSubItemsPrice <
-        this.restaurantModel.promotionLineItems[0].minOrder
+      this.restaurantModel.promotionLineItems[0].minOrder
     ) {
       this.isFailApplyCodePromotion = true;
       this.isSuccessApplyCodePromotion = false;
@@ -566,7 +560,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.placeTimeout) {
       clearTimeout(this.placeTimeout);
     }
-    this.placeTimeout = setTimeout(() => {}, 300);
+    this.placeTimeout = setTimeout(() => { }, 300);
   };
 
   onGetDistrict = (district: string) => {
