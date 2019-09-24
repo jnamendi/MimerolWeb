@@ -90,7 +90,7 @@
                                                 readonly="true"></p-rating> -->
 
                                             <div class="rating-box">
-                                                <div class="rating" [style.width]="(item.rating * 100)/5 + '%'" ></div>
+                                                <div class="rating" [style.width]="(item.rating * 100)/5 + '%'"></div>
                                             </div>
                                         </div>
                                         <div class="reviews-actions">{{item.numOfReview}} reviews </div>
@@ -103,9 +103,11 @@
                                             <span>Delivery time:</span>{{item.estDeliveryTime}}
                                             {{ "Commons.Texts.Minutes" | translate }}</p>
                                         <p>
-                                            <span>Price from:</span> {{item.symbolLeft +' '+ item.minPrice}}</p>
+                                            <span>Price from:</span>{{item.symbolLeft +' '+ item.minPrice}}</p>
                                         <p>
-                                            <span>Address:</span> {{item.address}}</p>
+                                            <span>Address:</span> <label style="font-weight: unset;margin-bottom: 0;max-width: 0;display: unset;"
+                                                *ngIf="item.zone">{{item.zone + ', '}}</label>{{item.district + ', '}}{{item.city}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

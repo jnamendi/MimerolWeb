@@ -24,6 +24,7 @@ import {
     VoucherService,
     CityService,
     DistrictService,
+    ZoneService,
     //--Admin
     CategoryAdminService,
     MenuAdminService,
@@ -81,6 +82,7 @@ export const SharedServices = [
     VoucherService,
     CityService,
     DistrictService,
+    ZoneService,
     //---Admin
     CategoryAdminService,
     MenuAdminService,

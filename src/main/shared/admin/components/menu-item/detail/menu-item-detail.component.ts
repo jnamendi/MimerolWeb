@@ -89,6 +89,8 @@ export class AdminMenuItemDetailComponent {
                 }),
             };
 
+            if (this.adminMenuItem.priority == null) this.adminMenuItem.priority = 0;
+
             this.onGetMenuByRestaurantId(this.adminMenuItem.restaurantId);
 
             this.adminMenuItem.menuExtraLst = this.adminMenuItem.menuExtraLst && this.adminMenuItem.menuExtraLst.map(m => {

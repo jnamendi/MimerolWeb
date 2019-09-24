@@ -163,4 +163,8 @@ export class ApiUrl {
     public static DistrictGetByCity = ApiUrl.BaseUrl + "api/district/get-district-by-city";
     public static DistrictGetByRestaurantCity = ApiUrl.BaseUrl + "api/district/get-district-by-restaurant-city";
 
+    //Zone
+    public static ZoneGetAll = ApiUrl.BaseUrl + "api/zone/getAll";
+    public static ZoneGetByDistrictId = ApiUrl.BaseUrl + "api/zone/getByDistrict"
+
 }

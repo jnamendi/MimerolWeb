@@ -144,6 +144,14 @@
                             </div>
 
                             <div class="row form-group">
+                                <label class="col-md-2" [innerHTML]="'Commons.Texts.Prioity' | translate"></label>
+                                <div class="col-md-6">
+                                    <input type="number" value="{{ownerMenuItem.prioity || 0}}" class="form-control"
+                                        [(ngModel)]="ownerMenuItem.prioity" name="prioity" #prioity="ngModel" />
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
                                 <label class="col-md-2"></label>
                                 <div class="col-md-10">
                                     <button type="button" (click)="onAddMoreExtraItem(1)" style="background-color: #ff7d26" class="btn btn-default" [innerHTML]="'Owner.MenuItem.AddSingleChoice' | translate"></button>

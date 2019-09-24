@@ -105,7 +105,8 @@
             "NumberRequired": "Número <span class='error'>*</span>",
             "CompanyName": "Nombre de empresa",
             "CityRequired": "Ciudad <span class='error'>*</span>",
-            "DistrictRequired": "Distrito <span class='error'>*</span>",
+            "DistrictRequired": "Área <span class='error'>*</span>",
+            "Zone": "Zona <span class='error'>*</span>",
             "TimeRequired": "Hora <span class='error'>*</span>",
             "Remarks": "Observaciones",
             "CashPayment": "Pago en efectivo",
@@ -225,7 +226,12 @@
             "Delivered": "Entregado",
             "Sale": "Venta",
             "InsertCode": "Insertar codigo:",
-            "EndTime": "Hora de finalización:"
+            "EndTime": "Hora de finalización:",
+            "SelectCity": "Ciudad selecta",
+            "SelectArea": "Área selecta",
+            "SelectZone": "Zona selecta",
+            "SelectDeliveryDistrict": "Distrito de entrega selecta",
+            "Prioity": "Prioridad"
         },
         "Links": {
             "Title": "Enlaces",

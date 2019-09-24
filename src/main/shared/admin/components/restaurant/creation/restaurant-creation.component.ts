@@ -20,13 +20,11 @@ import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-he
 import { LatLongModel } from "../../../../models/google/country-latlong.model";
 import { MapsAPILoader, AgmMap } from "../../../../../../../node_modules/@agm/core";
 import { Subscription } from "../../../../../../../node_modules/rxjs";
-import { CityService, DistrictService } from "../../../../services";
+import { CityService, DistrictService, ZoneService } from "../../../../services";
 import { CityModel } from "../../../../models/city/city.model";
 import { DistrictModel, DeliveryDistrictModel } from "../../../../models/district/district.model";
 import { DeliveryCityModel } from "../../../../models/city/city-district.model";
-import { weekdays } from "moment";
-import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
-import { async } from "@angular/core/testing";
+import { ZoneModel } from "../../../../models/zone/zone.model";
 import { AmazingTimePickerService } from "amazing-time-picker";
 
 @Component({
@@ -64,6 +62,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
+  private zoneModels: ZoneModel[] = [];
 
   private deliveryCityModelsTemp: CityModel[] = [];
   private multipleDeliveryDistrictModels: DistrictModel[] = [];
@@ -99,6 +98,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private ngZone: NgZone,
     private cityService: CityService,
     private districtService: DistrictService,
+    private zoneService: ZoneService,
     private cdRef: ChangeDetectorRef,
     private atp: AmazingTimePickerService
   ) {
@@ -216,6 +216,17 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
           : [];
         this.restaurantModel.districtId = null;
       },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
+
+  onGetZoneByDistrict = (districtId: number) => {
+    this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+    },
       (err: ApiError) => {
         this.message = err.message;
         this.isError = true;
@@ -411,11 +422,11 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   }
 
   onScrollIntoViewValidate = (id: HTMLElement) => {
-      id.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest"
-      });
+    id.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
   }
 
   onSubmit = (isValid: boolean) => {
@@ -472,14 +483,14 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.restaurantModel.restaurantWorkTimeModels.map((workTime, indexWorkTime) => {
-      workTime.list.map((items, indexItems) => {
-        if (items.openTime == "") workTime.list.splice(indexItems, 1);
-      })
-      if (workTime.list.length == 0) {
+    for (let indexWorkTime = this.restaurantModel.restaurantWorkTimeModels.length - 1; indexWorkTime >= 0; indexWorkTime--) {
+      for (let indexItems = this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.length - 1; indexItems >= 0; indexItems--) {
+        if (this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list[indexItems].openTime == "") this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.splice(indexItems, 1);
+      }
+      if (this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.length == 0) {
         this.restaurantModel.restaurantWorkTimeModels.splice(indexWorkTime, 1);
       }
-    });
+    }
 
     this.clientState.isBusy = true;
     let newRestaurant = <RestaurantAdminModel>{
@@ -532,27 +543,17 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         else if (i == 4) day = "FRI";
         else if (i == 5) day = "SAT";
         else if (i == 6) day = "SUN";
-        this.restaurantModel.restaurantWorkTimeModels.push(<
-          RestaurantWorkTimeModels
-          >{
-            weekDay: day,
-            list: []
-          });
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0
-          ) {
-            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<
-              WorkTimeList
-              >{
-                openTime: "",
-                closeTime: "",
-                idRestaurantWork: j
-              });
+        this.restaurantModel.restaurantWorkTimeModels.push(<RestaurantWorkTimeModels>{
+          weekDay: day,
+          list: []
+        });
+        for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels.length; j++) {
+          if (this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0) {
+            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<WorkTimeList>{
+              openTime: "",
+              closeTime: "",
+              idRestaurantWork: j
+            });
           }
         }
       }
@@ -561,7 +562,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   onAddMoreExtraItem = (val: WorkTimeList[], ex: WorkTimeList) => {
     val.push(<WorkTimeList>{
-      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1
+      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1,
+      openTime: "",
+      closeTime: ""
     });
   };
 

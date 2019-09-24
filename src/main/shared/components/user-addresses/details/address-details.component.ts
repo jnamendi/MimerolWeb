@@ -11,8 +11,9 @@ import { StorageService } from '../../../core/storage.service';
 import { JwtTokenHelper } from '../../../common/jwt-token-helper/jwt-token-helper';
 import { UserResponseModel } from '../../../models/user/user.model';
 import { LatLongModel } from '../../../models/google/country-latlong.model';
-import { CityService, DistrictService } from '../../../services';
+import { CityService, DistrictService, ZoneService } from '../../../services';
 import { CityModel } from '../../../models/city/city.model';
+import { ZoneModel } from "../../../models/zone/zone.model";
 import { DistrictModel } from '../../../models/district/district.model';
 
 @Component({
@@ -39,6 +40,7 @@ export class AddressDetailsComponent implements OnInit {
     private errorTimeout: any;
     private cityModels: CityModel[] = [];
     private districtModels: DistrictModel[] = [];
+    private zoneModels: ZoneModel[] = [];
     constructor(
         private clientState: ClientState,
         private addressService: AddressService,
@@ -47,6 +49,7 @@ export class AddressDetailsComponent implements OnInit {
         private storageService: StorageService,
         private cityService: CityService,
         private districtService: DistrictService,
+        private zoneService: ZoneService,
         private cdRef: ChangeDetectorRef,
     ) {
         this.currentUser = JwtTokenHelper.GetUserInfo();
@@ -88,11 +91,23 @@ export class AddressDetailsComponent implements OnInit {
         this.districtService.onGetDistrictByCity(cityId).subscribe(res => {
             this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
             this.addressModel.districtId = !isFirstLoad ? null : this.addressModel.districtId;
+            this.onGetZoneByDistrict(this.addressModel.districtId);
         }, (err: ApiError) => {
             this.error = err;
             this.isError = true;
         });
     }
+
+    onGetZoneByDistrict = (districtId: number) => {
+        this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+            this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+        },
+            (err: ApiError) => {
+                this.error = err;
+                this.isError = true;
+            }
+        );
+    };
 
     onClose = (isSuccess: boolean) => {
         this.onSuccess.emit(isSuccess);

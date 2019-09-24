@@ -19,6 +19,8 @@ export class OrderModel {
     cityName?: string;
     districtId: number;
     districtName?: string;
+    zone?: string;
+    zoneId?: number;
     time: string;
     remarks?: string;
     paymentType: PaymentType;
