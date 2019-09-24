@@ -69,6 +69,7 @@ export class OwnerMenuItemCreationComponent {
               }),
               menuExtraLst: []
             };
+            if (this.ownerMenuItem.priority == null) this.ownerMenuItem.priority = 0;
             this.clientState.isBusy = false;
         }, (err: ApiError) => {
             this.message = err.message;

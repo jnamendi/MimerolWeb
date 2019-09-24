@@ -90,6 +90,8 @@ export class OwnerMenuItemDetailComponent {
                 }),
             };
 
+            if (this.ownerMenuItem.priority == null) this.ownerMenuItem.priority = 0;
+
             this.onGetMenuByRestaurantId(this.ownerMenuItem.restaurantId);
 
             this.ownerMenuItem.menuExtraLst = this.ownerMenuItem.menuExtraLst && this.ownerMenuItem.menuExtraLst.map(m => {

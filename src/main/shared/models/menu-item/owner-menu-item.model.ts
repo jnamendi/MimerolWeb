@@ -22,7 +22,7 @@ export class OwnerMenuItem extends BaseModel {
   availableSaturday: boolean;
   availableSunday: boolean;
   outOfStock: boolean;
-  prioity?: number;
+  priority: number;
 }
 
 export class OwnerMenuExtra {
