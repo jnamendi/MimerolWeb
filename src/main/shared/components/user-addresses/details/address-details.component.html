@@ -76,12 +76,17 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
-                            <select name="city" inputFocus [(ngModel)]="addressModel.cityId"
+                            <!-- <select name="city" inputFocus [(ngModel)]="addressModel.cityId"
                                 (change)="onGetDistrictByCity(addressModel.cityId)" #city="ngModel" class="form-control"
                                 required>
                                 <option [ngValue]="null" disabled>Select city</option>
                                 <option *ngFor="let item of cityModels" [value]="item.cityId">{{item.name}}</option>
-                            </select>
+                            </select> -->
+                            <ng-select name="city" [items]="cityModels" bindValue="cityId" bindLabel="name"
+                                [multiple]="false" (change)="onGetDistrictByCity(addressModel.cityId)"
+                                [(ngModel)]="addressModel.cityId" #city="ngModel"
+                                placeholder="{{'Commons.Texts.SelectCity' | translate}}" required>
+                            </ng-select>
                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)" class="error">
                                 <div *ngIf="city.errors?.required"
                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
@@ -92,13 +97,18 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
-                            <select name="district" inputFocus [(ngModel)]="addressModel.districtId"
+                            <!-- <select name="district" inputFocus [(ngModel)]="addressModel.districtId"
                                 (change)="onGetZoneByDistrict(addressModel.districtId)" #district="ngModel"
                                 class="form-control" required>
                                 <option [ngValue]="null" disabled>Select district</option>
                                 <option *ngFor="let item of districtModels" [value]="item.districtId">{{item.name}}
                                 </option>
-                            </select>
+                            </select> -->
+                            <ng-select name="district" [items]="districtModels" bindValue="districtId" bindLabel="name"
+                                [multiple]="false" (change)="onGetZoneByDistrict(addressModel.districtId)"
+                                [(ngModel)]="addressModel.districtId" #district="ngModel"
+                                placeholder="{{'Commons.Texts.SelectArea' | translate}}" required>
+                            </ng-select>
                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
                                 class="error">
                                 <div *ngIf="district.errors?.required"
@@ -110,11 +120,15 @@
                     <div class="col-xs-12 col-sm-6" *ngIf="addressModel.districtId">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.Zone' | translate"></label>
-                            <select name="zone" inputFocus [(ngModel)]="addressModel.zone" #zone="ngModel"
+                            <!-- <select name="zone" inputFocus [(ngModel)]="addressModel.zone" #zone="ngModel"
                                 class="form-control" required>
                                 <option [ngValue]="undefined" disabled>Select zone</option>
                                 <option *ngFor="let item of zoneModels" [value]="item.zoneId">{{item.name}}</option>
-                            </select>
+                            </select> -->
+                            <ng-select name="zone" [items]="zoneModels" bindValue="zoneId" bindLabel="name"
+                                [multiple]="false" [(ngModel)]="addressModel.zone" #zone="ngModel"
+                                placeholder="{{'Commons.Texts.SelectZone' | translate}}" required>
+                            </ng-select>
                             <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)" class="error">
                                 <div *ngIf="zone.errors?.required"
                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>

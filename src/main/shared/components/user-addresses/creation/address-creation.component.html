@@ -10,24 +10,28 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.Name' | translate"></label>
-                            <input type="text" class="form-control" name="fullName" [(ngModel)]="currentUser.fullName" readonly />
+                            <input type="text" class="form-control" name="fullName" [(ngModel)]="currentUser.fullName"
+                                readonly />
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.Email' | translate"></label>
-                            <input type="text" class="form-control" name="email" [(ngModel)]="currentUser.email" readonly />
+                            <input type="text" class="form-control" name="email" [(ngModel)]="currentUser.email"
+                                readonly />
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.PhoneRequired' | translate"></label>
-                            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="addressModel.phoneNumber" #phoneNumber="ngModel"
-                                required />
-                            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched || f.submitted)" class="error">
-                                <div *ngIf="phoneNumber.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                            <input type="text" class="form-control" name="phoneNumber"
+                                [(ngModel)]="addressModel.phoneNumber" #phoneNumber="ngModel" required />
+                            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched || f.submitted)"
+                                class="error">
+                                <div *ngIf="phoneNumber.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>
@@ -35,18 +39,22 @@
                     <div class="col-xs-12">
                         <div *ngIf="!!currentCountryCode" class="form-group">
                             <label [innerHTML]="'Components.MyAccount.TxtAddresses' | translate"></label>
-                            <input type="text" class="form-control" name="address" autocomplete="off" [(ngModel)]="addressModel.address" #address="ngModel"
-                                required [options]="{
+                            <input type="text" class="form-control" name="address" autocomplete="off"
+                                [(ngModel)]="addressModel.address" #address="ngModel" required [options]="{
                                     types: ['address'],
                                 componentRestrictions: { country: currentCountryCode}
-                                }" (setAddress)="setAddress($event)" (street_number)='street_number=$event' (street)='street=$event'
-                                (city)='onGetCity($event)' (state)='state=$event' (district)='onGetDistrict($event)' (country)='country=$event'
-                                (postal_code)='postal_code=$event' (lat)='lat=$event' (lng)='lng=$event' (adr_address)='onGetAddress($event)'
-                                (name)='name=$event' (place_id)='place_id=$event' (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event'
-                                (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event' (CountryCodes)='CountryCodes=$event'
-                                id="autocomplete" ng2-google-place-autocomplete />
-                            <div *ngIf="address.invalid && (address.dirty || address.touched || f.submitted)" class="error">
-                                <div *ngIf="address.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                }" (setAddress)="setAddress($event)" (street_number)='street_number=$event'
+                                (street)='street=$event' (city)='onGetCity($event)' (state)='state=$event'
+                                (district)='onGetDistrict($event)' (country)='country=$event'
+                                (postal_code)='postal_code=$event' (lat)='lat=$event' (lng)='lng=$event'
+                                (adr_address)='onGetAddress($event)' (name)='name=$event' (place_id)='place_id=$event'
+                                (types)='types=$event' (url)='url=$event' (utc_offset)='utc_offset=$event'
+                                (vicinity)='vicinity=$event' (photos)='photos=$event' (airport)='airport=$event'
+                                (CountryCodes)='CountryCodes=$event' id="autocomplete" ng2-google-place-autocomplete />
+                            <div *ngIf="address.invalid && (address.dirty || address.touched || f.submitted)"
+                                class="error">
+                                <div *ngIf="address.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>
@@ -54,10 +62,13 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.AddressDescRequired' | translate"></label>
-                            <textarea name="addressDesc" class="form-control" inputFocus [(ngModel)]="addressModel.addressDesc" inputFocus rows="5" required
+                            <textarea name="addressDesc" class="form-control" inputFocus
+                                [(ngModel)]="addressModel.addressDesc" inputFocus rows="5" required
                                 #addressDesc="ngModel"></textarea>
-                            <div *ngIf="addressDesc.invalid && (addressDesc.dirty || addressDesc.touched || f.submitted)" class="error">
-                                <div *ngIf="addressDesc.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                            <div *ngIf="addressDesc.invalid && (addressDesc.dirty || addressDesc.touched || f.submitted)"
+                                class="error">
+                                <div *ngIf="addressDesc.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>
@@ -65,13 +76,19 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
-                            <select name="city" inputFocus [(ngModel)]="addressModel.cityId" (change)="onGetDistrictByCity(addressModel.cityId)" #city="ngModel"
+                            <!-- <select name="city" inputFocus [(ngModel)]="addressModel.cityId" (change)="onGetDistrictByCity(addressModel.cityId)" #city="ngModel"
                                 class="form-control" required>
                                 <option [ngValue]="null" disabled>Select city</option>
                                 <option *ngFor="let item of cityModels" [value]="item.cityId">{{item.name}}</option>
-                            </select>
+                            </select> -->
+                            <ng-select name="city" [items]="cityModels" bindValue="cityId" bindLabel="name"
+                                [multiple]="false" (change)="onGetDistrictByCity(addressModel.cityId)"
+                                [(ngModel)]="addressModel.cityId" #city="ngModel"
+                                placeholder="{{'Commons.Texts.SelectCity' | translate}}" required>
+                            </ng-select>
                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)" class="error">
-                                <div *ngIf="city.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                <div *ngIf="city.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>
@@ -79,13 +96,22 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
-                            <select name="district" inputFocus [(ngModel)]="addressModel.districtId" 
-                            (change)="onGetZoneByDistrict(addressModel.districtId)" #district="ngModel" class="form-control" required>
+                            <!-- <select name="district" inputFocus [(ngModel)]="addressModel.districtId"
+                                (change)="onGetZoneByDistrict(addressModel.districtId)" #district="ngModel"
+                                class="form-control" required>
                                 <option [ngValue]="null" disabled>Select district</option>
-                                <option *ngFor="let item of districtModels" [value]="item.districtId">{{item.name}}</option>
-                            </select>
-                            <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)" class="error">
-                                <div *ngIf="district.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                <option *ngFor="let item of districtModels" [value]="item.districtId">{{item.name}}
+                                </option>
+                            </select> -->
+                            <ng-select name="district" [items]="districtModels" bindValue="districtId" bindLabel="name"
+                                [multiple]="false" (change)="onGetZoneByDistrict(addressModel.districtId)"
+                                [(ngModel)]="addressModel.districtId" #district="ngModel"
+                                placeholder="{{'Commons.Texts.SelectArea' | translate}}" required>
+                            </ng-select>
+                            <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
+                                class="error">
+                                <div *ngIf="district.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>
@@ -93,11 +119,15 @@
                     <div class="col-xs-12 col-sm-6" *ngIf="addressModel.districtId">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.Zone' | translate"></label>
-                            <select name="zone" inputFocus [(ngModel)]="addressModel.zoneId" #zone="ngModel"
+                            <!-- <select name="zone" inputFocus [(ngModel)]="addressModel.zoneId" #zone="ngModel"
                                 class="form-control" required>
                                 <option [ngValue]="undefined" disabled>Select zone</option>
                                 <option *ngFor="let item of zoneModels" [value]="item.name">{{item.name}}</option>
-                            </select>
+                            </select> -->
+                            <ng-select name="zone" [items]="zoneModels" bindValue="zoneId" bindLabel="name"
+                                [multiple]="false" [(ngModel)]="addressModel.zone" #zone="ngModel"
+                                placeholder="{{'Commons.Texts.SelectZone' | translate}}" required>
+                            </ng-select>
                             <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)" class="error">
                                 <div *ngIf="zone.errors?.required"
                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
@@ -112,7 +142,8 @@
                 </div>
             </div>
             <div class="dialog-footer">
-                <button type="submit" class="btn btn-default btn-primary" [disabled]="isProgressing" [innerHTML]="'Components.MyAccount.TxtAddAddresses' | translate">Add address
+                <button type="submit" class="btn btn-default btn-primary" [disabled]="isProgressing"
+                    [innerHTML]="'Components.MyAccount.TxtAddAddresses' | translate">Add address
                 </button>
             </div>
         </form>
