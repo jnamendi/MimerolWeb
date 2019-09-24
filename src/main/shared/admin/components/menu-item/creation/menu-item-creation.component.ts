@@ -165,6 +165,7 @@ export class AdminMenuItemCreationComponent {
                         menuExtraLst: [
                         ]
                     };
+                    if (this.adminMenuItem.priority == null) this.adminMenuItem.priority = 0;
                     this.clientState.isBusy = false;
                 });
             },

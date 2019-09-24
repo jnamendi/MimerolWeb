@@ -6,6 +6,8 @@ export class AddressModel {
     cityId?: number;
     districtId?: number;
     district: string;
+    zone?: number;
+    // zone?: string;
     ward: string;
     address: string;
     phoneNumber: string;

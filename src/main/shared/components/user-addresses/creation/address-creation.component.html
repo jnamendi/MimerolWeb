@@ -79,12 +79,28 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
-                            <select name="district" inputFocus [(ngModel)]="addressModel.districtId" #district="ngModel" class="form-control" required>
+                            <select name="district" inputFocus [(ngModel)]="addressModel.districtId" 
+                            (change)="onGetZoneByDistrict(addressModel.districtId)" #district="ngModel" class="form-control" required>
                                 <option [ngValue]="null" disabled>Select district</option>
                                 <option *ngFor="let item of districtModels" [value]="item.districtId">{{item.name}}</option>
                             </select>
                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)" class="error">
                                 <div *ngIf="district.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6" *ngIf="addressModel.districtId">
+                        <div class="form-group">
+                            <label [innerHTML]="'Commons.Texts.Zone' | translate"></label>
+                            <select name="zone" inputFocus [(ngModel)]="addressModel.zoneId" #zone="ngModel"
+                                class="form-control" required>
+                                <option [ngValue]="undefined" disabled>Select zone</option>
+                                <option *ngFor="let item of zoneModels" [value]="item.name">{{item.name}}</option>
+                            </select>
+                            <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)" class="error">
+                                <div *ngIf="zone.errors?.required"
+                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                             </div>
                         </div>
                     </div>

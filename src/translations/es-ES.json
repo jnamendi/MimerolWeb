@@ -230,7 +230,8 @@
             "SelectCity": "Ciudad selecta",
             "SelectArea": "Área selecta",
             "SelectZone": "Zona selecta",
-            "SelectDeliveryDistrict": "Distrito de entrega selecta"
+            "SelectDeliveryDistrict": "Distrito de entrega selecta",
+            "Prioity": "Prioridad"
         },
         "Links": {
             "Title": "Enlaces",

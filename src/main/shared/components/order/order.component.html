@@ -156,7 +156,7 @@
                                             <select name="zone" inputFocus [(ngModel)]="orderModel.zoneId"
                                                 #zone="ngModel" class="form-control"
                                                 [required]="!orderModel.userId || !orderModel.addressId">
-                                                <option [ngValue]="null" disabled>Select zone</option>
+                                                <option [ngValue]="undefined" disabled>Select zone</option>
                                                 <option *ngFor="let item of zoneModels" [value]="item.zoneId">
                                                     {{item.name}}</option>
                                             </select>

@@ -22,6 +22,7 @@ export class AdminMenuItem extends BaseModel {
   availableSaturday: boolean;
   availableSunday: boolean;
   outOfStock: boolean;
+  priority: number;
 }
 
 export class AdminMenuExtra {

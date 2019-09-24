@@ -230,7 +230,8 @@
             "SelectCity": "Select city",
             "SelectArea": "Select area",
             "SelectZone": "Select zone",
-            "SelectDeliveryDistrict": "Select delivery district"
+            "SelectDeliveryDistrict": "Select delivery district",
+            "Prioity": "Prioity"
         },
         "Links": {
             "Title": "Links",
