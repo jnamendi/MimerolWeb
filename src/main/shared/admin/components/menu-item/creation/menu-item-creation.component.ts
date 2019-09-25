@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Language } from '../../../../models/langvm.model';
 import { ClientState } from '../../../../state';
-import { ApiError } from '../../../../services/api-response/api-response';
+import { ApiError, PagingModel } from '../../../../services/api-response/api-response';
 import { MenuAdminService } from '../../../../services/api/menu/admin-menu.service';
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
@@ -26,6 +26,11 @@ export class AdminMenuItemCreationComponent {
     private isError: boolean;
     private adminMenuItem: AdminMenuItem = new AdminMenuItem();
     private imgUrl: string;
+
+    private adminMenuItemTemp: AdminMenuItem[] = [];
+    private checkMenuItemNameEquals: boolean = false;
+
+    private paginModel: PagingModel;
 
     constructor(
         private router: Router,
@@ -75,6 +80,40 @@ export class AdminMenuItemCreationComponent {
             this.clientState.isBusy = false;
         });
     }
+
+    onGetMenuItemsById = (menuId: number) => {
+        this.clientState.isBusy = true;
+        this.menuItemAdminService.getMenuItemsByMenuId(0, 0, menuId).subscribe(res => {
+            if (res.content == null) {
+                this.paginModel = { ...res.content };
+            } else {
+                this.paginModel = { ...res.content };
+            }
+            this.adminMenuItem.priority = this.paginModel.totalCount + 1;
+            this.adminMenuItemTemp = this.paginModel.data;
+            this.clientState.isBusy = false;
+        }, (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
+        });
+    }
+
+    // onValidateMenuItemName = (languageCode: string, itemName: string) => {
+    //     this.adminMenuItemTemp.map(itemsLg => {
+    //         itemsLg.languageLst.map(items => {
+    //             if (items.code == languageCode) {
+
+    //                     if (items.contentDef[0].code == "menu_item_name" && content.value == itemName) {
+    //                         this.checkMenuItemNameEquals = true;
+    //                         return;
+    //                     }
+    //                     else this.checkMenuItemNameEquals = false;
+    //                 })
+    //             }
+    //         })
+    //     })
+    // }
 
     onGetAllRestaurantSortByName = () => {
         this.restaurantAdminService.getAllRestaurantSortByName().subscribe(res => {

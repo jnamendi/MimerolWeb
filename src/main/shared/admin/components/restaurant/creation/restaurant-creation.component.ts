@@ -20,13 +20,11 @@ import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-he
 import { LatLongModel } from "../../../../models/google/country-latlong.model";
 import { MapsAPILoader, AgmMap } from "../../../../../../../node_modules/@agm/core";
 import { Subscription } from "../../../../../../../node_modules/rxjs";
-import { CityService, DistrictService } from "../../../../services";
+import { CityService, DistrictService, ZoneService } from "../../../../services";
 import { CityModel } from "../../../../models/city/city.model";
 import { DistrictModel, DeliveryDistrictModel } from "../../../../models/district/district.model";
 import { DeliveryCityModel } from "../../../../models/city/city-district.model";
-import { weekdays } from "moment";
-import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
-import { async } from "@angular/core/testing";
+import { ZoneModel } from "../../../../models/zone/zone.model";
 import { AmazingTimePickerService } from "amazing-time-picker";
 
 @Component({
@@ -64,6 +62,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
+  private zoneModels: ZoneModel[] = [];
 
   private deliveryCityModelsTemp: CityModel[] = [];
   private multipleDeliveryDistrictModels: DistrictModel[] = [];
@@ -71,18 +70,19 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   private deliveryDistrictModel: DeliveryDistrictModel[] = [];
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
+  private errorIsValid: boolean = false;
   private checkOpenLesserClose: boolean = false;
+  private checkOpenGreaterClose: boolean = false;
   private checkOpenTimeIsNull: boolean = false;
   private checkCloseTimeIsNull: boolean = false;
-  private errorIsValid: boolean = false;
-  private x: number;
-  private y: number;
+  private datePosition: number;
+  private positionTimeOfDate: number;
 
   @ViewChild("searchControl") searchElementRef: ElementRef;
   @ViewChild("agmMap") agmMap: AgmMap;
 
-  @ViewChild('latitude') latitudeElement: ElementRef;
-  @ViewChild('longitude') longitudeElement: ElementRef;
+  @ViewChild("latitude") latitudeElement: ElementRef;
+  @ViewChild("longitude") longitudeElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -98,6 +98,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private ngZone: NgZone,
     private cityService: CityService,
     private districtService: DistrictService,
+    private zoneService: ZoneService,
     private cdRef: ChangeDetectorRef,
     private atp: AmazingTimePickerService
   ) {
@@ -222,105 +223,16 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     );
   };
 
-  // onGetDeliveryDistrictByCityMultiple = (id: number, districs: DeliveryDistrictModel[]) => {
-  //     // this.districtService.onGetDistrictByCityMultiple(id).subscribe({
-  //     //     error: err => {
-  //     //         this.message = err.message;
-  //     //         this.isError = true;
-  //     //     },
-  //     //     complete: (res) => {
-  //     //         if (res.content == null) {
-  //     //             this.multipleDeliveryDistrictModels = [];
-  //     //         } else {
-  //     //             this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
-  //     //         }
-  //     //     },
-  //     // });
-
-  //     this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
-  //         if (res.content == null) {
-  //             this.multipleDeliveryDistrictModels = [];
-  //         } else {
-  //             this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
-  //             this.multipleDeliveryDistrictModels.map(element => {
-  //                 let t = new DeliveryDistrictModel();
-  //                 t.cityId = id;
-  //                 t.code = element.code;
-  //                 t.districtId = element.districtId;
-  //                 t.status = element.status;
-  //                 t.name = element.name;
-  //                 districs.push(t);
-  //             });
-
-  //         }
-  //     }, (err: ApiError) => {
-  //         this.message = err.message;
-  //         this.isError = true;
-  //     });
-  //     return districs;
-
-  //     // this.districtService.onGetDistrictByCityMultiple(id).subscribe(res => {
-  //     //     if (res.content == null) {
-  //     //         this.multipleDeliveryDistrictModels = [];
-  //     //     } else {
-  //     //         this.multipleDeliveryDistrictModels = <DistrictModel[]>[...res.content];
-  //     //     }
-  //     //     this.multipleDeliveryDistrictModels.map(element => {
-  //     //         let t = new DeliveryDistrictModel();
-  //     //         t.cityId = id;
-  //     //         t.code = element.code;
-  //     //         t.districtId = element.districtId;
-  //     //         t.status = element.status;
-  //     //         t.name = element.name;
-  //     //         districs.push(t);
-  //     //     });
-  //     //     return districs;
-  //     // }
-  // }
-
-  // onGetListDistrictByCity = (cityIds: number) => {
-  //     this.deliveryCitiesModel.map(items => {
-  //         if (items.cityId === cityIds) {
-  //             let index = this.deliveryCitiesModel.findIndex(x => x.cityId === cityIds);
-  //             this.deliveryCitiesModel.splice(index, 1);
-  //             this.deliveryCitiesModel.push(...this.deliveryCityModelsTemp.filter(x => x.cityId === cityIds));
-  //         } else {
-  //             this.deliveryCitiesModel.splice(-1, 1);
-  //             this.deliveryCitiesModel.push(...this.deliveryCityModelsTemp.filter(x => x.cityId === cityIds));
-  //         }
-  //     })
-
-  //     this.deliveryCitiesModel.map(items => {
-  //         if (items.cityId === cityIds) {
-  //             items.districs = [];
-  //             items.districs = this.onGetDeliveryDistrictByCityMultiple(items.cityId, items.districs);
-
-  //             // this.multipleDeliveryDistrictModels.map(element => {
-  //             //     let t = new DeliveryDistrictModel();
-  //             //     t.cityId = items.cityId;
-  //             //     t.code = element.code;
-  //             //     t.districtId = element.districtId;
-  //             //     t.status = element.status;
-  //             //     t.name = element.name;
-  //             //     items.districs.push(t);
-  //             // });
-  //         }
-  //     })
-  //     // console.log(cityIds);
-  //     // console.log(this.multipleDeliveryDistrictModels);
-  //     // console.log(this.deliveryCitiesModel);
-  // }
-
-  // onAddCity = () => {
-  //     this.deliveryCitiesModel.push(<DeliveryCityModel>{
-  //         cityId: 0
-  //     })
-  // }
-
-  // onRemoveCity = (idCity: number) => {
-  //     let index = this.deliveryCitiesModel.findIndex(x => x.cityId === idCity);
-  //     this.deliveryCitiesModel && this.deliveryCitiesModel.splice(index, 1);
-  // }
+  onGetZoneByDistrict = (districtId: number) => {
+    this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+    },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
 
   onChangeAddress = () => {
     this.restaurantModel.latitude = null;
@@ -495,6 +407,28 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onValidateWorkingTime = (openTime: string, closeTime: string) => {
+    let openTimeTemp = openTime.split(":");
+    let openHour = parseFloat(openTimeTemp[0]);
+    let openMinute = parseFloat(openTimeTemp[1]);
+    let closeTimeTemp = closeTime.split(":");
+    let closeHour = parseFloat(closeTimeTemp[0]);
+    let closeMinute = parseFloat(closeTimeTemp[1]);
+
+    if (closeHour == openHour && closeMinute == openMinute) return true;
+    else if (closeHour < openHour) return true;
+    else if (closeHour == openHour && closeMinute <= openMinute) return true;
+    return false;
+  }
+
+  onScrollIntoViewValidate = (id: HTMLElement) => {
+    id.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
+  }
+
   onSubmit = (isValid: boolean) => {
     if (!isValid) {
       this.errorIsValid = true;
@@ -503,142 +437,58 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
       this.errorIsValid = false;
     }
 
-    for (
-      let i = 0;
-      i < this.restaurantModel.restaurantWorkTimeModels.length;
-      i++
-    ) {
-      if (this.restaurantModel.restaurantWorkTimeModels[i].list.length != 0) {
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels[i].list.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime != ""
-          ) {
+    for (let indexDate = 0; indexDate < this.restaurantModel.restaurantWorkTimeModels.length; indexDate++) {
+      if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list.length != 0) {
+        for (let indexTimeOfDate = 0; indexTimeOfDate < this.restaurantModel.restaurantWorkTimeModels[indexDate].list.length; indexTimeOfDate++) {
+          this.checkOpenGreaterClose = false;
+          this.checkOpenLesserClose = false;
+          this.checkCloseTimeIsNull = false;
+          this.checkOpenTimeIsNull = false;
+          if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime == ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime != "") {
             this.checkOpenTimeIsNull = true;
-            this.x = i;
-            this.y = j;
+            this.datePosition = indexDate;
+            this.positionTimeOfDate = indexTimeOfDate;
+            this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
             return;
-          } else this.checkOpenTimeIsNull = false;
-
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime == ""
-          ) {
+          } else if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime != ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime == "") {
             this.checkCloseTimeIsNull = true;
-            this.x = i;
-            this.y = j;
+            this.datePosition = indexDate;
+            this.positionTimeOfDate = indexTimeOfDate;
+            this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
             return;
-          } else this.checkCloseTimeIsNull = false;
-
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime !=
-            "" &&
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j]
-              .closeTime != ""
-          ) {
-            let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].closeTime.split(":");
-            let vH = parseFloat(vTimes[0]);
-            let vM = parseFloat(vTimes[1]);
-
-            let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].openTime.split(":");
-            let eH = parseFloat(eTimes[0]);
-            let eM = parseFloat(eTimes[1]);
-
-            if (vH == eH && vM == eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
+          } else if (this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime != ""
+            && this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime != "") {
+            this.checkOpenLesserClose = this.onValidateWorkingTime(this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime,
+              this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].closeTime);
+            if (this.checkOpenLesserClose) {
+              this.datePosition = indexDate;
+              this.positionTimeOfDate = indexTimeOfDate;
+              this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
               return;
-            } else if (vH < eH) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH == eH && vM <= eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else {
-              this.checkOpenLesserClose = false;
             }
-          }
-
-          if (j > 0) {
-            let vTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j
-            ].openTime.split(":");
-            let vH = parseFloat(vTimes[0]);
-            let vM = parseFloat(vTimes[1]);
-
-            let eTimes = this.restaurantModel.restaurantWorkTimeModels[i].list[
-              j - 1
-            ].closeTime.split(":");
-            let eH = parseFloat(eTimes[0]);
-            let eM = parseFloat(eTimes[1]);
-
-            if (vH == eH && vM == eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH < eH) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else if (vH == eH && vM <= eM) {
-              this.checkOpenLesserClose = true;
-              this.x = i;
-              this.y = j;
-              return;
-            } else {
-              this.checkOpenLesserClose = false;
+            if (indexTimeOfDate > 0) {
+              this.checkOpenGreaterClose = this.onValidateWorkingTime(this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate - 1].closeTime,
+                this.restaurantModel.restaurantWorkTimeModels[indexDate].list[indexTimeOfDate].openTime);
+              if (this.checkOpenGreaterClose) {
+                this.datePosition = indexDate;
+                this.positionTimeOfDate = indexTimeOfDate;
+                this.onScrollIntoViewValidate(document.getElementById("workingTimes"));
+                return;
+              }
             }
           }
         }
       }
     }
 
-    for (
-      let i = 0;
-      i < this.restaurantModel.restaurantWorkTimeModels.length;
-      i++
-    ) {
-      if (this.restaurantModel.restaurantWorkTimeModels[i].list.length > 1) {
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels[i].list.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            "" ||
-            this.restaurantModel.restaurantWorkTimeModels[i].list[j].openTime ==
-            null
-          ) {
-            this.restaurantModel.restaurantWorkTimeModels[i].list.splice(j, 1);
-          }
-        }
-      } else if (
-        this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-        "" ||
-        this.restaurantModel.restaurantWorkTimeModels[i].list[0].openTime ==
-        null
-      ) {
-        this.restaurantModel.restaurantWorkTimeModels.splice(i, 1);
+    for (let indexWorkTime = this.restaurantModel.restaurantWorkTimeModels.length - 1; indexWorkTime >= 0; indexWorkTime--) {
+      for (let indexItems = this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.length - 1; indexItems >= 0; indexItems--) {
+        if (this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list[indexItems].openTime == "") this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.splice(indexItems, 1);
+      }
+      if (this.restaurantModel.restaurantWorkTimeModels[indexWorkTime].list.length == 0) {
+        this.restaurantModel.restaurantWorkTimeModels.splice(indexWorkTime, 1);
       }
     }
 
@@ -693,27 +543,17 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         else if (i == 4) day = "FRI";
         else if (i == 5) day = "SAT";
         else if (i == 6) day = "SUN";
-        this.restaurantModel.restaurantWorkTimeModels.push(<
-          RestaurantWorkTimeModels
-          >{
-            weekDay: day,
-            list: []
-          });
-        for (
-          let j = 0;
-          j < this.restaurantModel.restaurantWorkTimeModels.length;
-          j++
-        ) {
-          if (
-            this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0
-          ) {
-            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<
-              WorkTimeList
-              >{
-                openTime: "",
-                closeTime: "",
-                idRestaurantWork: j
-              });
+        this.restaurantModel.restaurantWorkTimeModels.push(<RestaurantWorkTimeModels>{
+          weekDay: day,
+          list: []
+        });
+        for (let j = 0; j < this.restaurantModel.restaurantWorkTimeModels.length; j++) {
+          if (this.restaurantModel.restaurantWorkTimeModels[j].list.length == 0) {
+            this.restaurantModel.restaurantWorkTimeModels[j].list.push(<WorkTimeList>{
+              openTime: "",
+              closeTime: "",
+              idRestaurantWork: j
+            });
           }
         }
       }
@@ -722,7 +562,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
 
   onAddMoreExtraItem = (val: WorkTimeList[], ex: WorkTimeList) => {
     val.push(<WorkTimeList>{
-      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1
+      idRestaurantWork: Math.max.apply(Math, ex.idRestaurantWork) + 1,
+      openTime: "",
+      closeTime: ""
     });
   };
 

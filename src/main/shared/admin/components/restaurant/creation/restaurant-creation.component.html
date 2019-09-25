@@ -182,22 +182,12 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
                                         <div class="col-md-8">
-
                                             <ng-select name="city" [items]="cityModels" bindValue="cityId"
                                                 bindLabel="name" [multiple]="false"
                                                 (change)="onGetDistrictByCity(restaurantModel.cityId)"
                                                 [(ngModel)]="restaurantModel.cityId" #city="ngModel"
-                                                placeholder="Select city" required>
+                                                placeholder="{{'Commons.Texts.SelectCity' | translate}}" required>
                                             </ng-select>
-
-                                            <!-- <select name="city" inputFocus [(ngModel)]="restaurantModel.cityId"
-                                                (change)="onGetDistrictByCity(restaurantModel.cityId)" #city="ngModel"
-                                                class="form-control" required>
-                                                <option [ngValue]="null" disabled>Select city</option>
-                                                <option *ngFor="let item of cityModels" [value]="item.cityId">
-                                                    {{item.name}}</option>
-                                            </select> -->
-
                                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="city.errors?.required"
@@ -210,23 +200,29 @@
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                         <div class="col-md-8">
-
                                             <ng-select name="district" [items]="districtModels" bindValue="districtId"
-                                                bindLabel="name" [multiple]="false"
+                                                bindLabel="name" [multiple]="false" (change)="onGetZoneByDistrict(restaurantModel.districtId)"
                                                 [(ngModel)]="restaurantModel.districtId" #district="ngModel"
-                                                placeholder="Select district" required>
+                                                placeholder="{{'Commons.Texts.SelectArea' | translate}}" required>
                                             </ng-select>
-
-                                            <!-- <select name="district" inputFocus [(ngModel)]="restaurantModel.districtId"
-                                                #district="ngModel" class="form-control" required>
-                                                <option [ngValue]="null" disabled>Select district</option>
-                                                <option *ngFor="let item of districtModels" [value]="item.districtId">
-                                                    {{item.name}}</option>
-                                            </select> -->
-
                                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="district.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-md-4" [innerHTML]="'Commons.Texts.Zone' | translate"></label>
+                                        <div class="col-md-8">
+                                            <ng-select name="zone" [items]="zoneModels" bindValue="zoneId"
+                                                bindLabel="name" [multiple]="false" [(ngModel)]="restaurantModel.zoneId"
+                                                #zone="ngModel" placeholder="{{'Commons.Texts.SelectZone' | translate}}" required>
+                                            </ng-select>
+                                            <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="zone.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
@@ -239,7 +235,7 @@
                                             <ng-select name="deliveryDistrics" [items]="multipleDeliveryDistrictModels"
                                                 bindValue="districtId" bindLabel="name" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                placeholder="Select delivery district" required>
+                                                placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}" required>
                                             </ng-select>
                                             <div *ngIf="deliveryDistrics.invalid && (deliveryDistrics.dirty || deliveryDistrics.touched || f.submitted)"
                                                 class="error">
@@ -249,83 +245,48 @@
                                         </div>
                                     </div>
 
-                                    <!-- Delivery districs -->
-                                    <!-- <div class="separator-dashed"></div>
-                                    <h2 class="separator-dashed-tilte">Delivery districs</h2>
-                                    <div class="separator-dashed"></div> -->
-
-                                    <!-- <div *ngFor="let itemCity of deliveryCitiesModel; let i = index;"> -->
-
-                                    <!-- <div class="row form-group">
-                                            <label class="col-md-4">Delivery city</label>
-                                            <div class="col-md-6">
-                                                <ng-select name="deliveryCity" [items]="cityModels" bindValue="cityId"
-                                                    bindLabel="name" [multiple]="false"
-                                                    [(ngModel)]="restaurantModel.cityIds" #deliveryCity="ngModel"
-                                                    (change)="onGetListDistrictByCity(restaurantModel.cityIds)"
-                                                    placeholder="Select delivery city">
-                                                </ng-select>
-                                            </div> -->
-                                    <!-- <div class="action col-md-2">
-                                                <button type="button" (click)="onAddCity()" style="background: gray"
-                                                    class="btn btn-default">+</button>
-                                                <button type="button" (click)="onRemoveCity(itemCity.cityId)" style="background: gray"
-                                                    class="btn btn-default" *ngIf="i > 0">-</button>
-                                            </div> -->
-                                    <!-- </div> -->
-
-                                    <!-- <div class="row form-group">
-                                            <label class="col-md-4"></label>
-                                            <div class="col-md-8">
-                                                <ng-select name="deliveryDistrics" [items]="multipleDeliveryDistrictModels"
-                                                    bindValue="districtId" bindLabel="name" [multiple]="true"
-                                                    [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                    placeholder="Select delivery district">
-                                                </ng-select>
-                                            </div>
-                                        </div> -->
-
-                                    <!-- </div> -->
-
-                                    <!-- End -->
-
                                     <!-- Open - Close time -->
                                     <div class="separator-dashed"></div>
-                                    <h2 class="separator-dashed-tilte"
+                                    <h2 id="workingTimes" class="separator-dashed-tilte"
                                         [innerHTML]="'Commons.Texts.WorkingTime' | translate"></h2>
                                     <div class="separator-dashed"></div>
 
-                                    <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let j = index"
+                                    <div *ngFor="let val of restaurantModel.restaurantWorkTimeModels; let indexDate = index"
                                         class="menu-extra-item">
-                                        <div *ngFor="let extra of val.list; let i = index" class="row form-group">
-                                            <label *ngIf="i == 0" class="col-md-4"
+                                        <div *ngFor="let extra of val.list; let indexTimeOfDate = index"
+                                            class="row form-group">
+                                            <label *ngIf="indexTimeOfDate == 0" class="col-md-4"
                                                 [innerHTML]="'Commons.Texts.' + val.weekDay | translate"></label>
-                                            <label *ngIf="i > 0" class="col-md-4"></label>
+                                            <label *ngIf="indexTimeOfDate > 0" class="col-md-4"></label>
                                             <div class="col-md-3">
                                                 <!-- Input open time -->
-                                                <input type="time" atp-time-picker name="{{j}}{{i}}open"
-                                                    id="{{j}}{{i}}open" class="form-control"
+                                                <input type="time" atp-time-picker
+                                                    name="{{indexDate}}{{indexTimeOfDate}}open"
+                                                    id="{{indexDate}}{{indexTimeOfDate}}open" class="form-control"
                                                     [(ngModel)]="extra.openTime" #menuExtraItemNameOpen="ngModel" />
                                                 <!-- Required open time -->
-                                                <div *ngIf="(checkOpenLesserClose == true || checkOpenTimeIsNull == true) && x == j && y == i"
+                                                <div *ngIf="checkOpenTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    class="error" [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                </div>
+                                                <div *ngIf="checkOpenGreaterClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
                                                     class="error"
                                                     [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <!-- Input close time -->
-                                                <input type="time" atp-time-picker name="{{j}}{{i}}close"
-                                                    id="{{j}}{{i}}close" class="form-control"
+                                                <input type="time" atp-time-picker
+                                                    name="{{indexDate}}{{indexTimeOfDate}}close"
+                                                    id="{{indexDate}}{{indexTimeOfDate}}close" class="form-control"
                                                     [(ngModel)]="extra.closeTime" #menuExtraItemNameClose="ngModel" />
                                                 <!-- Required close time -->
-                                                <div *ngIf="menuExtraItemNameClose.touched" class="error">
-                                                    <div *ngIf="menuExtraItemNameClose.errors?.timeInValid"
-                                                        [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
-                                                    </div>
-                                                </div>
                                                 <div class="error"
-                                                    *ngIf="checkCloseTimeIsNull == true && x == j && y == i"
-                                                    [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
+                                                    *ngIf="checkCloseTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                </div>
+                                                <div *ngIf="checkOpenLesserClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                                    class="error"
+                                                    [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
                                                 </div>
                                             </div>
                                             <!-- Button add and remove open close time -->
@@ -334,10 +295,10 @@
                                                     style="background: gray" class="btn btn-default">+</button>
                                                 <button type="button" (click)="onRemoveExtraItem(val.list)"
                                                     style="background: gray" class="btn btn-default"
-                                                    *ngIf="i > 0">-</button>
-                                                <button type="button" (click)="onRevertTime(j, i)"
+                                                    *ngIf="indexTimeOfDate > 0">-</button>
+                                                <button type="button" (click)="onRevertTime(indexDate, indexTimeOfDate)"
                                                     style="background: gray;padding: 6px 9px;" class="btn btn-default"
-                                                    *ngIf="i == 0">
+                                                    *ngIf="indexTimeOfDate == 0">
                                                     <i class="fa fa-undo" aria-hidden="true"></i></button>
                                             </div>
                                         </div>

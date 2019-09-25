@@ -116,20 +116,13 @@
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <select name="city" inputFocus [(ngModel)]="orderModel.cityId"
-                                                (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)" #city="ngModel"
-                                                class="form-control">
+                                                (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)"
+                                                #city="ngModel" class="form-control">
                                                 <!-- <option [ngValue]="null" disabled>Select city</option> -->
-                                                <option *ngFor="let item of cityModels; let i = index;" [value]="item.cityId" [selected]="i==0">
+                                                <option *ngFor="let item of cityModels; let i = index;"
+                                                    [value]="item.cityId" [selected]="i==0">
                                                     {{item.name}}</option>
                                             </select>
-
-                                            <!-- <ng-select class="form-control" name="city" [items]="cityModels"
-                                                bindValue="cityId" bindLabel="name" [multiple]="false"
-                                                [(ngModel)]="orderModel.cityId" #city="ngModel"
-                                                placeholder="Select city" (change)="onGetDistrictByCity(restaurantId, orderModel.cityId)"
-                                                [required]="!orderModel.userId || !orderModel.addressId">
-                                            </ng-select> -->
-
                                             <label [innerHTML]="'Commons.Texts.CityRequired' | translate"></label>
                                             <div *ngIf="city.invalid && (city.dirty || city.touched || f.submitted)"
                                                 class="error">
@@ -143,23 +136,34 @@
                                         <div class="form-input">
                                             <select name="district" inputFocus [(ngModel)]="orderModel.districtId"
                                                 #district="ngModel" class="form-control"
+                                                (change)="onGetZoneByDistrict(orderModel.districtId)"
                                                 [required]="!orderModel.userId || !orderModel.addressId">
                                                 <option [ngValue]="null" disabled>Select district</option>
                                                 <option *ngFor="let item of districtModels" [value]="item.districtId">
                                                     {{item.name}}</option>
                                             </select>
-
-                                            <!-- <ng-select class="form-control" name="district" [items]="districtModels"
-                                                bindValue="districtId" bindLabel="name" [multiple]="false"
-                                                [(ngModel)]="orderModel.districtId" #district="ngModel"
-                                                placeholder="Select district"
-                                                [required]="!orderModel.userId || !orderModel.addressId">
-                                            </ng-select> -->
-
                                             <label [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                             <div *ngIf="district.invalid && (district.dirty || district.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="district.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6" *ngIf="orderModel.districtId != null">
+                                        <div class="form-input">
+                                            <select name="zone" inputFocus [(ngModel)]="orderModel.zoneId"
+                                                #zone="ngModel" class="form-control"
+                                                [required]="!orderModel.userId || !orderModel.addressId">
+                                                <option [ngValue]="undefined" disabled>Select zone</option>
+                                                <option *ngFor="let item of zoneModels" [value]="item.zoneId">
+                                                    {{item.name}}</option>
+                                            </select>
+                                            <label [innerHTML]="'Commons.Texts.Zone' | translate"></label>
+                                            <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="zone.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>

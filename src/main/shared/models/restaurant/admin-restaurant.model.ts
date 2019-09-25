@@ -19,6 +19,8 @@ export class RestaurantAdminModel extends BaseModel {
     address?: string;
     districtId: number;
     district?: string;
+    zoneId?: number;
+    zone?: string;
     cityId: number;
     city?: string;
     status?: RestaurantStatus;
