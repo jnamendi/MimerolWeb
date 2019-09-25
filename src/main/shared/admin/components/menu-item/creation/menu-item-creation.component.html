@@ -65,6 +65,7 @@
                                                     <div *ngIf="menuItemDescription.invalid && (menuItemDescription.dirty || menuItemDescription.touched || f.submitted)" class="error">
                                                         <div *ngIf="menuItemDescription.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
                                                         <div *ngIf="menuItemDescription.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                        <!-- <div *ngIf="checkMenuItemNameEquals" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div> -->
                                                     </div>
                                                 </div>
                                             </div>
