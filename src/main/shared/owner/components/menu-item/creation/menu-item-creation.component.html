@@ -33,7 +33,7 @@
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.MenuRequired' | translate"></label>
                                 <div class="col-md-6">
-                                    <select name="menu" class="form-control" [(ngModel)]="ownerMenuItem.menuId" #menu="ngModel" required>
+                                    <select name="menu" class="form-control" [(ngModel)]="ownerMenuItem.menuId" #menu="ngModel" (change)="onGetMenuItemsById(ownerMenuItem.menuId)" required>
                                         <option [ngValue]="null" disabled [innerHTML]="'Commons.Texts.SelectMenu' | translate"></option>
                                         <option *ngFor="let item of menuOwnerModels; let i = index;" value="{{item.menuId}}">{{item.menuName}}</option>
                                     </select>
