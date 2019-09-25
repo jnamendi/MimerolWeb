@@ -113,6 +113,7 @@ export class AddressCreationComponent implements OnInit {
         if (!form.valid) {
             return;
         }
+        this.isError = false;
         let newAddress = <AddressModel>{ ...this.addressModel, userId: this.currentUser.userId, district: this.district, city: this.city, address: this.googleAddress };
         this.isProgressing = true;
         this.addressService.onCreateAddress(newAddress).subscribe(res => {
