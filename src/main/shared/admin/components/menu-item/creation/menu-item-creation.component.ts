@@ -27,6 +27,9 @@ export class AdminMenuItemCreationComponent {
     private adminMenuItem: AdminMenuItem = new AdminMenuItem();
     private imgUrl: string;
 
+    private adminMenuItemTemp: AdminMenuItem[] = [];
+    private checkMenuItemNameEquals: boolean = false;
+
     private paginModel: PagingModel;
 
     constructor(
@@ -86,7 +89,8 @@ export class AdminMenuItemCreationComponent {
             } else {
                 this.paginModel = { ...res.content };
             }
-            this.adminMenuItem.priority = this.paginModel.totalCount;
+            this.adminMenuItem.priority = this.paginModel.totalCount + 1;
+            this.adminMenuItemTemp = this.paginModel.data;
             this.clientState.isBusy = false;
         }, (err: ApiError) => {
             this.message = err.message;
@@ -94,6 +98,22 @@ export class AdminMenuItemCreationComponent {
             this.clientState.isBusy = false;
         });
     }
+
+    // onValidateMenuItemName = (languageCode: string, itemName: string) => {
+    //     this.adminMenuItemTemp.map(itemsLg => {
+    //         itemsLg.languageLst.map(items => {
+    //             if (items.code == languageCode) {
+
+    //                     if (items.contentDef[0].code == "menu_item_name" && content.value == itemName) {
+    //                         this.checkMenuItemNameEquals = true;
+    //                         return;
+    //                     }
+    //                     else this.checkMenuItemNameEquals = false;
+    //                 })
+    //             }
+    //         })
+    //     })
+    // }
 
     onGetAllRestaurantSortByName = () => {
         this.restaurantAdminService.getAllRestaurantSortByName().subscribe(res => {
