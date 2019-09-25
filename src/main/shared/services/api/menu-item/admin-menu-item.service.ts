@@ -13,6 +13,7 @@ export interface MenuItemAdminInterface {
     deleteManyMenuItem(menuItemIds: number[]): Observable<ApiResponse>;
     getMenuItem(menuId: number): Observable<ApiResponse>;
     getMenuItems(pageIndex?: number, pageSize?: number, languageCode?: string): Observable<ApiResponsePaging>;
+    getMenuItemsByMenuId(pageIndex?: number, pageSize?: number, menuId?: number): Observable<ApiResponsePaging>;
 }
 
 @Injectable()
@@ -53,6 +54,16 @@ export class MenuItemAdminService implements MenuItemAdminInterface {
         var query = new URLSearchParams();
         if (!!languageCode) {
             query.set('languageCode', languageCode)
+        }
+
+        let queryString = `/${pageIndex}/${pageSize}${!!query ? '?' + query : ''}`;
+        return this.http.HttpGet(`${ApiUrl.MenuItemGetList}${queryString || ''}`, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+
+    getMenuItemsByMenuId(pageIndex?: number, pageSize?: number, menuId?: number): Observable<ApiResponsePaging> {
+        var query = new URLSearchParams();
+        if (!!menuId) {
+            query.set('menuId', menuId.toString())
         }
 
         let queryString = `/${pageIndex}/${pageSize}${!!query ? '?' + query : ''}`;
