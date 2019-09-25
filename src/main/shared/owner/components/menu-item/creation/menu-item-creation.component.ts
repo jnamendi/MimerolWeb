@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Language } from '../../../../models/langvm.model';
 import { ClientState } from '../../../../state';
-import { ApiError } from '../../../../services/api-response/api-response';
+import { ApiError, PagingModel } from '../../../../services/api-response/api-response';
 import { MenuOwnerService } from '../../../../services/api/menu/owner-menu.service';
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantOwnerService } from '../../../../services/api/restaurant/owner-restaurant.service';
@@ -27,6 +27,7 @@ export class OwnerMenuItemCreationComponent {
     private isError: boolean;
     private ownerMenuItem: OwnerMenuItem = new OwnerMenuItem();
     private imgUrl: string;
+    private paginModel: PagingModel;
 
     constructor(
         private router: Router,
@@ -89,6 +90,23 @@ export class OwnerMenuItemCreationComponent {
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
+        });
+    }
+
+    onGetMenuItemsById = (menuId: number) => {
+        this.clientState.isBusy = true;
+        this.menuItemOwnerService.getMenuItemsByMenuId(0, 0, menuId).subscribe(res => {
+            if (res.content == null) {
+                this.paginModel = { ...res.content };
+            } else {
+                this.paginModel = { ...res.content };
+            }
+            this.ownerMenuItem.priority = this.paginModel.totalCount + 1;
+            this.clientState.isBusy = false;
+        }, (err: ApiError) => {
+            this.message = err.message;
+            this.isError = true;
+            this.clientState.isBusy = false;
         });
     }
 

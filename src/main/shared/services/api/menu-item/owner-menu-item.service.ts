@@ -15,6 +15,7 @@ export interface MenuItemOwnerInterface {
     getMenuItem(menuId: number): Observable<ApiResponse>;
     getMenuItems(pageIndex?: number, pageSize?: number, search?: string, languageCode?: string): Observable<ApiResponsePaging>;
     getMenuItemByOwner(pageIndex?: number, pageSize?: number, languageCode?: string, userId?: number): Observable<ApiResponsePaging>;
+    getMenuItemsByMenuId(pageIndex?: number, pageSize?: number, menuId?: number): Observable<ApiResponsePaging>;
 }
 
 @Injectable()
@@ -74,5 +75,15 @@ export class MenuItemOwnerService implements MenuItemOwnerInterface {
         }
         let queryString = `/${pageIndex}/${pageSize}${!!query ? '?' + query : ''}`;
         return this.http.HttpGet(`${ApiUrl.MenuItemGetByOwner}${queryString || ''}`, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+
+    getMenuItemsByMenuId(pageIndex?: number, pageSize?: number, menuId?: number): Observable<ApiResponsePaging> {
+        var query = new URLSearchParams();
+        if (!!menuId) {
+            query.set('menuId', menuId.toString())
+        }
+
+        let queryString = `/${pageIndex}/${pageSize}${!!query ? '?' + query : ''}`;
+        return this.http.HttpGet(`${ApiUrl.MenuItemGetList}${queryString || ''}`, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }

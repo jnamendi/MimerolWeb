@@ -9,6 +9,7 @@ export class OwnerMenuItem extends BaseModel {
   languageLst: Array<LanguageList>;
   menuExtraLst: Array<OwnerMenuExtra>;
   menuId?: number;
+  priority: number;
   imageUrl: string;
   price: number;
   status?: number;
