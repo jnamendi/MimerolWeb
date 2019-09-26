@@ -110,7 +110,7 @@
             "TimeRequired": "Hora <span class='error'>*</span>",
             "Remarks": "Observaciones",
             "CashPayment": "Pago en efectivo",
-            "CreditCard": "Tarjeta de crédito",
+            "CreditCard": "Tarjeta de crédito/débito a la entrega",
             "VoucherCode": "Código de cupón",
             "Apply": "Aplicar",
             "Back": "Volver",
@@ -231,7 +231,8 @@
             "SelectArea": "Área selecta",
             "SelectZone": "Zona selecta",
             "SelectDeliveryDistrict": "Distrito de entrega selecta",
-            "Prioity": "Prioridad"
+            "Prioity": "Prioridad",
+            "SelectPaymentMethod": "Seleccione forma de pago"
         },
         "Links": {
             "Title": "Enlaces",
@@ -369,7 +370,7 @@
             "Promotion": "5. Promoción",
             "VoucherTitle": "¿Tienes un cupón o cupón?",
             "PromotionTitle": "Ingrese el código de promoción",
-            "OrderTitle": "Elija el monto con que cuenta para pagar",
+            "OrderTitle": "Se le pedirá que proporcione su tarjeta en el momento de la entrega y se utilizará en un punto de venta inalámbrico para procesar el pago.",
             "PayPalTitle": "Será redirigido al pago seguro de PayPal (SSL).",
             "TxtOrderEmpty": "No has ordenado nada todavía.",
             "At": "a",

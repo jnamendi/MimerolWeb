@@ -195,13 +195,26 @@
 
                                 <h2 [innerHTML]="'Components.Order.PaymentInfo' | translate"></h2>
                                 <div class="box_delivery">
-                                    <label class="radio">
-                                        <input type="radio" [value]="1" name="paymentType"
-                                            [(ngModel)]="orderModel.paymentType">
-                                        <span></span>
-                                        <span [innerHTML]="'Commons.Texts.CashPayment' | translate"></span>
-                                        <span class="title_note"
-                                            [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
+                                    <label class="radio" *ngFor="let item of restaurantModel.paymentProviderLst">
+                                        <ng-container *ngIf="item.paymentProviderId == 1">
+                                            <input type="radio" [value]="1" name="paymentType"
+                                                [(ngModel)]="orderModel.paymentType">
+                                            <span></span>
+                                            <span [innerHTML]="'Commons.Texts.CashPayment' | translate"></span>
+                                            <span class="title_note"
+                                                [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.paymentProviderId == 4">
+                                            <input type="radio" [value]="4" name="paymentType"
+                                                [(ngModel)]="orderModel.paymentType">
+                                            <span></span>
+                                            <span [innerHTML]="'Commons.Texts.CreditCard' | translate"></span>
+                                            <span class="title_note"
+                                                [innerHTML]="'Components.Order.OrderTitle' | translate"></span>
+                                            <p>
+                                                <img src="assets/images/icon/credit_cards_color.svg" alt="">
+                                            </p>
+                                        </ng-container>
                                     </label>
                                     <!-- <label class="radio">
                                         <input type="radio" [value]="2" name="paymentType"
@@ -213,8 +226,8 @@
                                         <p class="img_option_paypal">
                                             <img src="assets\images\icon\paypal.png">
                                         </p>
-                                    </label>
-                                    <label class="radio">
+                                    </label> -->
+                                    <!-- <label class="radio">
                                         <input type="radio" [value]="3" name="paymentType"
                                             [(ngModel)]="orderModel.paymentType">
                                         <span></span>

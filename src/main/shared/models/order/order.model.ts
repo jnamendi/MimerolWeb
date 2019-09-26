@@ -1,4 +1,5 @@
 import { OrderItem } from '../restaurant-menu/restaurant-menu.model';
+import { PaymentModel } from "../../../shared/models/payment/payment.model";
 
 export class OrderModel {
     constructor() {
@@ -24,6 +25,7 @@ export class OrderModel {
     time: string;
     remarks?: string;
     paymentType: PaymentType;
+    paymentProviderLst?: PaymentModel[];
     orderItem: OrderItem;
     userId?: number;
     languageCode: string;

@@ -2,7 +2,7 @@ import { BaseModel } from '../base.model';
 import { LanguageList, Language, FieldTranslation } from '../langvm.model';
 import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
-import { CityDistricsModel } from '../../models/city/city-districs.model';
+import { PaymentModel } from "../../../shared/models/payment/payment.model";
 
 export class RestaurantAdminModel extends BaseModel {
     forEach: any;
@@ -29,7 +29,8 @@ export class RestaurantAdminModel extends BaseModel {
     openTime?: string;
     closeTime?: string;
     restaurantWorkTimeModels?: Array<RestaurantWorkTimeModels> = [];
-    paymentProviderLst?: any;
+    paymentProviderLst?: PaymentModel[];
+    paymentProviderLstId?: number[];
     mediaId?: number;
     languageLst?: LanguageList[];
     phone1?: string;

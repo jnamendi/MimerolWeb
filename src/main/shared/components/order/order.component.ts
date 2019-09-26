@@ -147,6 +147,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.restaurantModel = <AppRestaurantModel>{ ...res.content };
             this.onCaculatorDeliveryTime(this.restaurantModel);
             this.clientState.isBusy = false;
+            this.restaurantModel.paymentProviderLst.sort((a, b) => a.paymentProviderId - b.paymentProviderId);
           },
           err => {
             this.clientState.isBusy = false;

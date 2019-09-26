@@ -1,5 +1,5 @@
 export class ApiUrl {
-    static BaseUrl = "https://bmbsoft.com.vn:8090/";
+    static BaseUrl = "https://bmbsoft.com.vn:8440/ofodev/";
 
     // IP APi
     public static IPApi = "https://ipinfo.io/json";
@@ -167,4 +167,6 @@ export class ApiUrl {
     public static ZoneGetAll = ApiUrl.BaseUrl + "api/zone/getAll";
     public static ZoneGetByDistrictId = ApiUrl.BaseUrl + "api/zone/getByDistrict"
 
+    //Payment
+    public static PaymentGetAll = ApiUrl.BaseUrl + "api/PaymentProvider/getAll";
 }

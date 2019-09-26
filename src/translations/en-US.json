@@ -110,7 +110,7 @@
             "TimeRequired": "Time <span class='error'>*</span>",
             "Remarks": "Remarks",
             "CashPayment": "Cash payment",
-            "CreditCard": "Credit card",
+            "CreditCard": "Credit/debit Card on delivery",
             "VoucherCode": "Voucher code",
             "Apply": "Apply",
             "Back": "Back",
@@ -231,7 +231,8 @@
             "SelectArea": "Select area",
             "SelectZone": "Select zone",
             "SelectDeliveryDistrict": "Select delivery district",
-            "Prioity": "Prioity"
+            "Prioity": "Prioity",
+            "SelectPaymentMethod": "Select payment method"
         },
         "Links": {
             "Title": "Links",
@@ -369,7 +370,7 @@
             "Promotion": "5. Promotion",
             "VoucherTitle": "Do you have a voucher or coupon?",
             "PromotionTitle": "Enter promotion code",
-            "OrderTitle": "You will be redirected to the secure (SSL) pages of Visa. Here you will be able to complete the Visa payment for your order.",
+            "OrderTitle": "You will be asked to provide your card on delivery and it will be used in a wirelles POS to process the payment.",
             "PayPalTitle": "You will be redirected to PayPal's secure payment (SSL).",
             "TxtOrderEmpty": "You have not ordered anything yet.",
             "At": "at",

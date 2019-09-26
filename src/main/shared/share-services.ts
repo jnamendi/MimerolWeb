@@ -25,6 +25,7 @@ import {
     CityService,
     DistrictService,
     ZoneService,
+    PaymentService,
     //--Admin
     CategoryAdminService,
     MenuAdminService,
@@ -83,6 +84,7 @@ export const SharedServices = [
     CityService,
     DistrictService,
     ZoneService,
+    PaymentService,
     //---Admin
     CategoryAdminService,
     MenuAdminService,
