@@ -88,6 +88,7 @@ export interface PaymentInfo {
 
 export enum PaymentType {
     Cash = 1,
-    Paypal = 2,
-    CreditCard = 3
+    Visa = 2,
+    Paypal = 3,
+    CreditCard = 4
 }
