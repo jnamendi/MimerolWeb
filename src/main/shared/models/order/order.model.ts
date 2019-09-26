@@ -1,9 +1,8 @@
 import { OrderItem } from '../restaurant-menu/restaurant-menu.model';
-import { PaymentModel } from "../../../shared/models/payment/payment.model";
 
 export class OrderModel {
     constructor() {
-        this.paymentType = PaymentType.Cash;
+        this.paymentType = PaymentType.CashPayment;
         this.cityId = null;
         this.districtId = null;
         this.addressId = null;
@@ -25,7 +24,6 @@ export class OrderModel {
     time: string;
     remarks?: string;
     paymentType: PaymentType;
-    paymentProviderLst?: PaymentModel[];
     orderItem: OrderItem;
     userId?: number;
     languageCode: string;
@@ -87,7 +85,7 @@ export interface PaymentInfo {
 }
 
 export enum PaymentType {
-    Cash = 1,
+    CashPayment = 1,
     Visa = 2,
     Paypal = 3,
     CreditCard = 4
