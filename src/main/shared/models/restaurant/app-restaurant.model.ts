@@ -1,5 +1,6 @@
 import { BaseModel } from '../base.model';
 import { AttributeGroupType } from '../attribute/attribute.model';
+import { PaymentModel } from "../../../shared/models/payment/payment.model";
 
 export class AppRestaurantSearch {
     restaurants: Array<AppRestaurantModel>;
@@ -20,7 +21,8 @@ export class AppRestaurantModel extends BaseModel {
     closeTime: string;
     restaurantWorkTimeModels?: Array<RestaurantWorkTimeModel> = [];
     phone1: string;
-    promotionLineItems : Array<AppPromotionModels>;
+    promotionLineItems: Array<AppPromotionModels>;
+    paymentProviderLst?: PaymentModel[];
     shipArea: string;
     rating: number;
     numOfReview: number;

@@ -167,4 +167,6 @@ export class ApiUrl {
     public static ZoneGetAll = ApiUrl.BaseUrl + "api/zone/getAll";
     public static ZoneGetByDistrictId = ApiUrl.BaseUrl + "api/zone/getByDistrict"
 
+    //Payment
+    public static PaymentGetAll = ApiUrl.BaseUrl + "api/PaymentProvider/getAll";
 }

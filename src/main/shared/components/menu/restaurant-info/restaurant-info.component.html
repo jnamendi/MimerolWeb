@@ -70,8 +70,9 @@
         </p>
 
         <div class="info-tab-section">
-            <div class="info-pay-methods">
-                <img src="assets/icons/ic_cash_payment.png" alt="cash_payment">
+            <div class="info-pay-methods" *ngFor="let item of restaurantModel.paymentProviderLst">
+                <img *ngIf="item.paymentProviderId == 1" src="assets/icons/ic_cash_payment.png" alt="cash_payment">
+                <img *ngIf="item.paymentProviderId == 4" src="assets/icons/ic_credit_card.png" alt="credit_card">
             </div>
         </div>
     </div>
