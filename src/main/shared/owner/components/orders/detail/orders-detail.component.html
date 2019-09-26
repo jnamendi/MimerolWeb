@@ -129,7 +129,7 @@
                             <td class="payment-method">
                                 <span [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></span> :
                             </td>
-                            <td>{{paymentMethod[ownerOrderModel.paymentType]}}</td>
+                            <td>{{'Commons.Texts.' + paymentMethod[ownerOrderModel.paymentType] | translate}}</td>
                         </tr>
                     </tbody>
                 </table>
