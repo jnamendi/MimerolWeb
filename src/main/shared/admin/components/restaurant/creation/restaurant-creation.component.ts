@@ -20,11 +20,12 @@ import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-he
 import { LatLongModel } from "../../../../models/google/country-latlong.model";
 import { MapsAPILoader, AgmMap } from "../../../../../../../node_modules/@agm/core";
 import { Subscription } from "../../../../../../../node_modules/rxjs";
-import { CityService, DistrictService, ZoneService } from "../../../../services";
+import { CityService, DistrictService, ZoneService, PaymentService } from "../../../../services";
 import { CityModel } from "../../../../models/city/city.model";
 import { DistrictModel, DeliveryDistrictModel } from "../../../../models/district/district.model";
 import { DeliveryCityModel } from "../../../../models/city/city-district.model";
 import { ZoneModel } from "../../../../models/zone/zone.model";
+import { PaymentModel } from "../../../../models/payment/payment.model";
 import { AmazingTimePickerService } from "amazing-time-picker";
 
 @Component({
@@ -63,6 +64,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
   private zoneModels: ZoneModel[] = [];
+  private paymentModels: PaymentModel[] = [];
 
   private deliveryCityModelsTemp: CityModel[] = [];
   private multipleDeliveryDistrictModels: DistrictModel[] = [];
@@ -99,6 +101,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     private cityService: CityService,
     private districtService: DistrictService,
     private zoneService: ZoneService,
+    private paymentService: PaymentService,
     private cdRef: ChangeDetectorRef,
     private atp: AmazingTimePickerService
   ) {
@@ -133,6 +136,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.deliveryCitiesModel.push(<DeliveryCityModel>{
       cityId: 0
     });
+    this.onGetPayment();
+    this.restaurantModel.paymentProviderLstId = [];
   }
 
   ngAfterViewInit(): void {
@@ -186,6 +191,21 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     });
   }
 
+  onGetPayment = () => {
+    this.paymentService.onGetAllPayment().subscribe(
+      res => {
+        this.paymentModels =
+          res.content && res.content
+            ? <PaymentModel[]>[...res.content]
+            : [];
+      },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
+
   onGetCities = () => {
     this.cityService.onGetCities().subscribe(
       res => {
@@ -233,6 +253,14 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
       }
     );
   };
+
+  onConvertPayment = (paymentProviderLstTemp: number[]) => {
+    this.restaurantModel.paymentProviderLst = [];
+    paymentProviderLstTemp.map(id => {
+      let temp = this.paymentModels.filter(x => x.paymentProviderId == id);
+      if (temp != null) this.restaurantModel.paymentProviderLst.push(...temp);
+    })
+  }
 
   onChangeAddress = () => {
     this.restaurantModel.latitude = null;
@@ -491,6 +519,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.restaurantModel.restaurantWorkTimeModels.splice(indexWorkTime, 1);
       }
     }
+
+    this.onConvertPayment(this.restaurantModel.paymentProviderLstId);
 
     this.clientState.isBusy = true;
     let newRestaurant = <RestaurantAdminModel>{

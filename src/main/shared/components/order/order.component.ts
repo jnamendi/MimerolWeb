@@ -103,7 +103,6 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.onCalculatePrice();
 
     this.orderModel.restaurantId = this.selectedMenuItems.restaurantId;
-    this.orderModel.paymentType = 1;
     this.currentCountryCode = JwtTokenHelper.countryCode;
 
     //--- Check authen
@@ -147,6 +146,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.restaurantModel = <AppRestaurantModel>{ ...res.content };
             this.onCaculatorDeliveryTime(this.restaurantModel);
             this.clientState.isBusy = false;
+            this.restaurantModel.paymentProviderLst.sort((a, b) => a.paymentProviderId - b.paymentProviderId);
+            this.orderModel.paymentType = this.restaurantModel.paymentProviderLst[0].paymentProviderId;
           },
           err => {
             this.clientState.isBusy = false;
@@ -456,6 +457,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     ) {
       this.isEmptyOrder = true;
       return;
+    }
+
+    if (this.orderModel.paymentType != 1) {
+      this.orderModel.paymentWith = this.paymentWiths[0];
     }
 
     let orderInfo = <OrderModel>{

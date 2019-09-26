@@ -417,6 +417,23 @@
                                     </div>
 
                                     <div class="row form-group">
+                                            <label class="col-md-4"
+                                                [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></label>
+                                            <div class="col-md-8">
+                                                <ng-select name="payment" [items]="paymentModels"
+                                                    bindValue="paymentProviderId" bindLabel="name" [multiple]="true"
+                                                    [(ngModel)]="restaurantModel.paymentProviderLstId" #payment="ngModel"
+                                                    placeholder="{{'Commons.Texts.SelectPaymentMethod' | translate}}" required>
+                                                </ng-select>
+                                                <div *ngIf="payment.invalid && (payment.dirty || payment.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="payment.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <div class="row form-group">
                                         <label class="col-md-4"
                                             [innerHTML]="'Commons.Texts.Status' | translate"></label>
                                         <div class="col-md-8">

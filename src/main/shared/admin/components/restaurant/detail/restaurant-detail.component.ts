@@ -20,10 +20,11 @@ import { StorageKey } from "../../../../services/storage-key/storage-key";
 import { JwtTokenHelper } from "../../../../common/jwt-token-helper/jwt-token-helper";
 import { Subscription } from "../../../../../../../node_modules/rxjs";
 import { AgmMap, MapsAPILoader } from "../../../../../../../node_modules/@agm/core";
-import { CityService, DistrictService, ZoneService } from "../../../../services";
+import { CityService, DistrictService, ZoneService, PaymentService } from "../../../../services";
 import { CityModel } from "../../../../models/city/city.model";
 import { DistrictModel } from "../../../../models/district/district.model";
 import { ZoneModel } from "../../../../models/zone/zone.model";
+import { PaymentModel } from "../../../../models/payment/payment.model";
 import { AmazingTimePickerService } from "amazing-time-picker";
 
 @Component({
@@ -65,6 +66,7 @@ export class AdminRestaurantDetailComponent
   private cityModels: CityModel[] = [];
   private districtModels: DistrictModel[] = [];
   private zoneModels: ZoneModel[] = [];
+  private paymentModels: PaymentModel[] = [];
 
   private multipleDeliveryDistrictModels: DistrictModel[] = [];
 
@@ -100,6 +102,7 @@ export class AdminRestaurantDetailComponent
     private cityService: CityService,
     private districtService: DistrictService,
     private zoneService: ZoneService,
+    private paymentService: PaymentService,
     private cdRef: ChangeDetectorRef,
     private atp: AmazingTimePickerService
   ) {
@@ -144,6 +147,7 @@ export class AdminRestaurantDetailComponent
       navigator.geolocation.getCurrentPosition(this.getPosition, err => { });
     }
     this.onGetCities();
+    this.onGetPayment();
   }
 
   ngAfterViewInit(): void {
@@ -203,6 +207,21 @@ export class AdminRestaurantDetailComponent
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
+  };
+
+  onGetPayment = () => {
+    this.paymentService.onGetAllPayment().subscribe(
+      res => {
+        this.paymentModels =
+          res.content && res.content
+            ? <PaymentModel[]>[...res.content]
+            : [];
+      },
+      (err: ApiError) => {
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
   };
 
   onGetCities = () => {
@@ -313,6 +332,21 @@ export class AdminRestaurantDetailComponent
     }, 500);
   };
 
+  onGetListPayment = (paymentProviderLst: PaymentModel[]) => {
+    this.restaurantModel.paymentProviderLstId = [];
+    paymentProviderLst.map(item => {
+      this.restaurantModel.paymentProviderLstId.push(item.paymentProviderId);
+    })
+  }
+
+  onConvertPayment = (paymentProviderLstTemp: number[]) => {
+    this.restaurantModel.paymentProviderLst = [];
+    paymentProviderLstTemp.map(id => {
+      let temp = this.paymentModels.filter(x => x.paymentProviderId == id);
+      if (temp != null) this.restaurantModel.paymentProviderLst.push(...temp);
+    })
+  }
+
   onGetRestaurant = (restaurantId: number) => {
     this.clientState.isBusy = true;
     let languageCode = this.i18nService.language
@@ -347,9 +381,8 @@ export class AdminRestaurantDetailComponent
             lat: this.latitude,
             lng: this.longitude
           };
-
           this.clientState.isBusy = false;
-
+          this.onGetListPayment(this.restaurantModel.paymentProviderLst);
           this.onAutoCreateOpenClose();
         },
         (err: ApiError) => {
@@ -533,6 +566,8 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.restaurantWorkTimeModels.splice(indexWorkTime, 1);
       }
     }
+
+    this.onConvertPayment(this.restaurantModel.paymentProviderLstId);
 
     let newRestaurant = <RestaurantAdminModel>{
       ...this.restaurantModel,

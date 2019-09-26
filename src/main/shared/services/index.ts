@@ -23,6 +23,7 @@ export { VoucherService } from './api/voucher/voucher.service';
 export { CityService } from './api/city/city.service';
 export { DistrictService } from './api/district/district.service';
 export { ZoneService } from './api/zone/zone.service';
+export { PaymentService } from './api/payment/payment.service';
 
 //---Admin
 export { LanguageService, LanguageCode } from './api/language/language.service';
