@@ -42,6 +42,12 @@ export class RestaurantAdminModel extends BaseModel {
     addressDesc: string;
     workArea: number[];
     cityIds?: number;
+    deliveryArea: Array<DeliveryArea> = [];
+}
+
+export class DeliveryArea {
+    deliveryAreaId: number;
+    deliveryZoneId: number[];
 }
 
 export class WorkTimeList {

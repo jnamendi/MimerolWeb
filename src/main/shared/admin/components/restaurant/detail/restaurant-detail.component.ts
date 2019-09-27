@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
-import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels, WorkTimeList } from "../../../../models/restaurant/admin-restaurant.model";
+import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels, WorkTimeList, DeliveryArea } from "../../../../models/restaurant/admin-restaurant.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Language } from "../../../../models/langvm.model";
 import { ClientState } from "../../../../state";
@@ -148,6 +148,11 @@ export class AdminRestaurantDetailComponent
     }
     this.onGetCities();
     this.onGetPayment();
+    this.restaurantModel.deliveryArea = [];
+    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
+      deliveryAreaId: 164,
+      deliveryZoneId: []
+    })
   }
 
   ngAfterViewInit(): void {
@@ -240,6 +245,7 @@ export class AdminRestaurantDetailComponent
   };
 
   onGetDistrictByCity = (cityId: number, isFirstLoad: boolean = false) => {
+    this.clientState.isBusy = true;
     this.districtService.onGetDistrictByCity(cityId).subscribe(
       res => {
         this.districtModels = res.content
@@ -251,9 +257,10 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.districtId = !isFirstLoad
           ? null
           : this.restaurantModel.districtId;
-        this.onGetZoneByDistrict(this.restaurantModel.districtId);
+        this.clientState.isBusy = false;
       },
       (err: ApiError) => {
+        this.clientState.isBusy = false;
         this.message = err.message;
         this.isError = true;
       }
@@ -261,10 +268,13 @@ export class AdminRestaurantDetailComponent
   };
 
   onGetZoneByDistrict = (districtId: number) => {
+    this.clientState.isBusy = true;
     this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.clientState.isBusy = false;
     },
       (err: ApiError) => {
+        this.clientState.isBusy = false;
         this.message = err.message;
         this.isError = true;
       }
