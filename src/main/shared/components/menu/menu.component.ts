@@ -33,6 +33,8 @@ export class MenuComponent implements OnInit, OnChanges, OnDestroy {
   private isShowMobileMenu: boolean;
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
 
+  private isShowMenuItems: boolean = true;
+
   @ViewChild(MenuItemsComponent) menuChild;
 
   constructor(
@@ -102,6 +104,11 @@ export class MenuComponent implements OnInit, OnChanges, OnDestroy {
     let selectedMenu = this.restaurantMenu.mennu.find(menu => menu.menuId == menuId);
     this.selectedMenuName = selectedMenu && selectedMenu.menuName || '';
     this.isShowMobileMenu = false;
+    this.isShowMenuItems = true;
+  }
+
+  onShowInfoRestaurant = () => {
+    this.isShowMenuItems = false;
   }
 
   onGetItemsInBag = (totalItems: number) => {

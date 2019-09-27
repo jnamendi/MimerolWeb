@@ -380,13 +380,14 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></label>
+                                        <label class="col-md-4">{{'Commons.Texts.PaymentMethods' | translate}} <span
+                                                class='error'>*</span></label>
                                         <div class="col-md-8">
                                             <ng-select name="payment" [items]="paymentModels"
                                                 bindValue="paymentProviderId" bindLabel="name" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.paymentProviderLstId" #payment="ngModel"
-                                                placeholder="{{'Commons.Texts.SelectPaymentMethod' | translate}}" required>
+                                                placeholder="{{'Commons.Texts.SelectPaymentMethod' | translate}}"
+                                                required>
                                             </ng-select>
                                             <div *ngIf="payment.invalid && (payment.dirty || payment.touched || f.submitted)"
                                                 class="error">
