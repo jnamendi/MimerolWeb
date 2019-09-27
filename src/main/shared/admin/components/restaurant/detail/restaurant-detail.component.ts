@@ -148,11 +148,6 @@ export class AdminRestaurantDetailComponent
     }
     this.onGetCities();
     this.onGetPayment();
-    this.restaurantModel.deliveryArea = [];
-    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
-      deliveryAreaId: 164,
-      deliveryZoneId: []
-    })
   }
 
   ngAfterViewInit(): void {
@@ -393,6 +388,7 @@ export class AdminRestaurantDetailComponent
           if (this.restaurantModel.paymentProviderLst.length > 0) this.onGetListPayment(this.restaurantModel.paymentProviderLst);
           else this.restaurantModel.paymentProviderLstId.push(1);
           this.onAutoCreateOpenClose();
+          this.restaurantModel.deliveryArea = [{deliveryAreaId: 164, deliveryZoneId: []}];
           this.clientState.isBusy = false;
         },
         (err: ApiError) => {

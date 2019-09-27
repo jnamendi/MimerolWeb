@@ -227,13 +227,13 @@
                                         [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></h2>
                                     <div class="separator-dashed"></div>
 
-                                    <div *ngFor="let item of restaurantModel.deliveryArea; let i = index">
+                                    <div *ngFor="let feild of restaurantModel.deliveryArea; let i = index">
                                         <div class="row form-group">
                                             <label class="col-md-4">Area</label>
                                             <div class="col-md-5">
                                                 <ng-select name="{i}area" [items]="multipleDeliveryDistrictModels"
                                                     bindValue="districtId" bindLabel="name" [multiple]="false"
-                                                    [(ngModel)]="item.deliveryAreaId" #area="ngModel"
+                                                    [(ngModel)]="feild.deliveryAreaId" #area="ngModel"
                                                     placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
                                                     required>
                                                 </ng-select>
@@ -258,10 +258,14 @@
                                             <label class="col-md-4">Zone</label>
                                             <div class="col-md-8">
                                                 <ng-select name="{i}zone" [items]="zoneModels" bindValue="zoneId"
-                                                    bindLabel="name" [multiple]="true"
-                                                    (click)="onGetZoneByDistrict(item.deliveryAreaId)"
-                                                    [(ngModel)]="item.deliveryZoneId" #zone="ngModel"
+                                                    bindLabel="name" [multiple]="true" groupBy="gender" [selectableGroup]="true"
+                                                    [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                    (click)="onGetZoneByDistrict(feild.deliveryAreaId)"
+                                                    [(ngModel)]="feild.deliveryZoneId" #zone="ngModel"
                                                     placeholder="{{'Commons.Texts.SelectZone' | translate}}" required>
+                                                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> All
+                                                    </ng-template>
                                                 </ng-select>
                                                 <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
                                                     class="error">
