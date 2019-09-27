@@ -9,11 +9,18 @@ import { RestaurantMenuModel } from '../../../models/menu/app-menu.model';
 export class RestaurantMenuComponent {
   @Input() restaurantId: number;
   @Input() menu: RestaurantMenuModel[] = [];
+  @Input() selectedMenuId: number;
   @Output() selectedMenu: EventEmitter<number> = new EventEmitter();
   private showMenuItem = true;
+  private onSelectedMenu: number;
+
+  ngOnInit(): void {
+    this.onSelectedMenu = this.selectedMenuId;
+  }
 
   onSelectMenu = (menuId: number) => {
     this.selectedMenu.emit(menuId);
+    this.onSelectedMenu = menuId;
   };
 
   onToggleCategory = (category: RestaurantMenuModel) => {

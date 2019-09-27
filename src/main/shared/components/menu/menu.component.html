@@ -45,20 +45,20 @@
                     <!-- Blueprint header -->
                     <div class="col-sm-3 mobile_none">
                         <restaurant-menu *ngIf="restaurantId && restaurantMenu && restaurantMenu.mennu"
-                            [restaurantId]="restaurantId" [menu]="restaurantMenu.mennu"
+                            [restaurantId]="restaurantId" [menu]="restaurantMenu.mennu" [selectedMenuId]="selectedMenuId"
                             (selectedMenu)="onSelectMenu($event)"></restaurant-menu>
                     </div>
 
                     <div class="col-sm-8">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#home"
+                                <li [ngClass]="{active: isShowMenuItems}"><a data-toggle="tab" href="#home"
                                         [innerHTML]="'Commons.Texts.Menu' | translate"></a></li>
-                                <li><a data-toggle="tab" href="#restaurantInfo"
+                                <li [ngClass]="{active: !isShowMenuItems}" (click)="onShowInfoRestaurant()"><a data-toggle="tab" href="#restaurantInfo"
                                         [innerHTML]="'Commons.Texts.Info' | translate"></a></li>
                             </ul>
                             <div class="tab-content">
-                                <div id="home" class="tab-pane fade in active">
+                                <div id="home" class="tab-pane fade in" [ngClass]="{active: isShowMenuItems}">
                                     <div class="content">
                                         <menu-items
                                             *ngIf="restaurantId && selectedMenuId && restaurantMenu && restaurantMenu.menuItems"
@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
 
-                                <div id="restaurantInfo" class="tab-pane fade">
+                                <div id="restaurantInfo" class="tab-pane fade in" [ngClass]="{active: !isShowMenuItems}">
                                     <restaurant-info [restaurantId]="restaurantId"></restaurant-info>
                                 </div>
                             </div>

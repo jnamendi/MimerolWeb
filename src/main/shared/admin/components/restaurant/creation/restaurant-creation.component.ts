@@ -138,6 +138,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     });
     this.onGetPayment();
     this.restaurantModel.paymentProviderLstId = [];
+    this.restaurantModel.paymentProviderLstId.push(1);
   }
 
   ngAfterViewInit(): void {

@@ -201,7 +201,8 @@
                                             [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                         <div class="col-md-8">
                                             <ng-select name="district" [items]="districtModels" bindValue="districtId"
-                                                bindLabel="name" [multiple]="false" (change)="onGetZoneByDistrict(restaurantModel.districtId)"
+                                                bindLabel="name" [multiple]="false"
+                                                (change)="onGetZoneByDistrict(restaurantModel.districtId)"
                                                 [(ngModel)]="restaurantModel.districtId" #district="ngModel"
                                                 placeholder="{{'Commons.Texts.SelectArea' | translate}}" required>
                                             </ng-select>
@@ -218,7 +219,8 @@
                                         <div class="col-md-8">
                                             <ng-select name="zone" [items]="zoneModels" bindValue="zoneId"
                                                 bindLabel="name" [multiple]="false" [(ngModel)]="restaurantModel.zoneId"
-                                                #zone="ngModel" placeholder="{{'Commons.Texts.SelectZone' | translate}}" required>
+                                                #zone="ngModel" placeholder="{{'Commons.Texts.SelectZone' | translate}}"
+                                                required>
                                             </ng-select>
                                             <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
                                                 class="error">
@@ -235,7 +237,8 @@
                                             <ng-select name="deliveryDistrics" [items]="multipleDeliveryDistrictModels"
                                                 bindValue="districtId" bindLabel="name" [multiple]="true"
                                                 [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}" required>
+                                                placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
+                                                required>
                                             </ng-select>
                                             <div *ngIf="deliveryDistrics.invalid && (deliveryDistrics.dirty || deliveryDistrics.touched || f.submitted)"
                                                 class="error">
@@ -417,21 +420,22 @@
                                     </div>
 
                                     <div class="row form-group">
-                                            <label class="col-md-4"
-                                                [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></label>
-                                            <div class="col-md-8">
-                                                <ng-select name="payment" [items]="paymentModels"
-                                                    bindValue="paymentProviderId" bindLabel="name" [multiple]="true"
-                                                    [(ngModel)]="restaurantModel.paymentProviderLstId" #payment="ngModel"
-                                                    placeholder="{{'Commons.Texts.SelectPaymentMethod' | translate}}" required>
-                                                </ng-select>
-                                                <div *ngIf="payment.invalid && (payment.dirty || payment.touched || f.submitted)"
-                                                    class="error">
-                                                    <div *ngIf="payment.errors?.required"
-                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
-                                                </div>
+                                        <label class="col-md-4">{{'Commons.Texts.PaymentMethods' | translate}} <span
+                                                class='error'>*</span></label>
+                                        <div class="col-md-8">
+                                            <ng-select name="payment" [items]="paymentModels"
+                                                bindValue="paymentProviderId" bindLabel="name" [multiple]="true"
+                                                [(ngModel)]="restaurantModel.paymentProviderLstId" #payment="ngModel"
+                                                placeholder="{{'Commons.Texts.SelectPaymentMethod' | translate}}"
+                                                required>
+                                            </ng-select>
+                                            <div *ngIf="payment.invalid && (payment.dirty || payment.touched || f.submitted)"
+                                                class="error">
+                                                <div *ngIf="payment.errors?.required"
+                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
                                         </div>
+                                    </div>
 
                                     <div class="row form-group">
                                         <label class="col-md-4"

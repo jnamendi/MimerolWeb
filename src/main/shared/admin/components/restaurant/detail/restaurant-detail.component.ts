@@ -333,14 +333,12 @@ export class AdminRestaurantDetailComponent
   };
 
   onGetListPayment = (paymentProviderLst: PaymentModel[]) => {
-    this.restaurantModel.paymentProviderLstId = [];
     paymentProviderLst.map(item => {
       this.restaurantModel.paymentProviderLstId.push(item.paymentProviderId);
     })
   }
 
   onConvertPayment = (paymentProviderLstTemp: number[]) => {
-    this.restaurantModel.paymentProviderLst = [];
     paymentProviderLstTemp.map(id => {
       let temp = this.paymentModels.filter(x => x.paymentProviderId == id);
       if (temp != null) this.restaurantModel.paymentProviderLst.push(...temp);
@@ -381,9 +379,11 @@ export class AdminRestaurantDetailComponent
             lat: this.latitude,
             lng: this.longitude
           };
-          this.clientState.isBusy = false;
-          this.onGetListPayment(this.restaurantModel.paymentProviderLst);
+          this.restaurantModel.paymentProviderLstId = [];
+          if (this.restaurantModel.paymentProviderLst.length > 0) this.onGetListPayment(this.restaurantModel.paymentProviderLst);
+          else this.restaurantModel.paymentProviderLstId.push(1);
           this.onAutoCreateOpenClose();
+          this.clientState.isBusy = false;
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -567,6 +567,7 @@ export class AdminRestaurantDetailComponent
       }
     }
 
+    this.restaurantModel.paymentProviderLst = [];
     this.onConvertPayment(this.restaurantModel.paymentProviderLstId);
 
     let newRestaurant = <RestaurantAdminModel>{
@@ -681,19 +682,6 @@ export class AdminRestaurantDetailComponent
     menuExtra && menuExtra.splice(index, 1);
   };
 
-  // onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
-  //   const amazingTimePicker = this.atp.open();
-  //   amazingTimePicker.afterClose().subscribe(time => {
-  //     if (timeStatus == 0)
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].openTime = time;
-  //     else
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].closeTime = time;
-  //   });
-  // };
   onRevertTime = (x: number, y: number) => {
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";

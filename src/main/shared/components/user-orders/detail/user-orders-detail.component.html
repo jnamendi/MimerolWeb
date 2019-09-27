@@ -37,7 +37,7 @@
             <div class="order-details-content">
                 <table border="0" cellspacing="0" cellpadding="0">
                     <tbody>
-                        <tr *ngFor="let orderItem of orderModel.orderLineitems">
+                        <tr *ngFor="let orderItem of orderModel.orderLineItems">
                             <td>{{orderItem.quantity}}x</td>
                             <td>{{orderItem.menuItemName}}</td>
                             <td>{{orderItem.total}} {{currencySymbol}}</td>
