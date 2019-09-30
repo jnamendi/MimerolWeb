@@ -240,9 +240,10 @@
                                             <label class="col-md-4"
                                                 [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
                                             <div class="col-md-6">
-                                                <ng-select name="{{i}}area" [items]="multipleDeliveryDistrictModels"
+                                                <ng-select name="{{i}}area" [items]="delyveryDistrictModels"
                                                     bindValue="districtId" bindLabel="name" [multiple]="false"
-                                                    [(ngModel)]="feild.deliveryAreaId" #area="ngModel"
+                                                    (click)="onRemoveDistrict()" [(ngModel)]="feild.deliveryAreaId"
+                                                    #area="ngModel"
                                                     placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
                                                     required>
                                                 </ng-select>

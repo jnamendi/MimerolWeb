@@ -68,7 +68,7 @@ export class AdminRestaurantDetailComponent
   private zoneModels: ZoneModel[] = [];
   private paymentModels: PaymentModel[] = [];
 
-  private multipleDeliveryDistrictModels: DistrictModel[] = [];
+  private delyveryDistrictModels: DistrictModel[] = [];
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
@@ -247,12 +247,10 @@ export class AdminRestaurantDetailComponent
         this.districtModels = res.content
           ? <DistrictModel[]>[...res.content]
           : [];
-        this.multipleDeliveryDistrictModels = res.content
-          ? <DistrictModel[]>[...res.content]
-          : [];
         this.restaurantModel.districtId = !isFirstLoad
           ? null
           : this.restaurantModel.districtId;
+        this.delyveryDistrictModels = this.districtModels;
         this.clientState.isBusy = false;
       },
       (err: ApiError) => {
@@ -262,6 +260,13 @@ export class AdminRestaurantDetailComponent
       }
     );
   };
+
+  onRemoveDistrict = () => {
+    this.delyveryDistrictModels = this.districtModels;
+    this.restaurantModel.deliveryArea.map(item => {
+      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
+    });
+  }
 
   onGetAllZone = () => {
     this.clientState.isBusy = true;

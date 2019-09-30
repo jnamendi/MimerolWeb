@@ -69,7 +69,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   private deliveryCityModelsTemp: CityModel[] = [];
   private multipleDeliveryDistrictModels: DistrictModel[] = [];
   private deliveryCitiesModel: DeliveryCityModel[] = [];
-  private deliveryDistrictModel: DeliveryDistrictModel[] = [];
+  private delyveryDistrictModels: DistrictModel[] = [];
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private errorIsValid: boolean = false;
@@ -255,6 +255,13 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
       }
     );
   };
+
+  onRemoveDistrict = () => {
+    this.delyveryDistrictModels = this.districtModels;
+    this.restaurantModel.deliveryArea.map(item => {
+      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
+    });
+  }
 
   onConvertPayment = (paymentProviderLstTemp: number[]) => {
     this.restaurantModel.paymentProviderLst = [];
