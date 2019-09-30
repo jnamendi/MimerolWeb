@@ -3,6 +3,7 @@ import { LanguageList, Language, FieldTranslation } from '../langvm.model';
 import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
 import { PaymentModel } from "../../../shared/models/payment/payment.model";
+import { ZoneModel } from "../../../shared/models/zone/zone.model";
 
 export class RestaurantAdminModel extends BaseModel {
     forEach: any;

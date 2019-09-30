@@ -5,4 +5,9 @@ export class ZoneModel extends BaseModel {
     }
     zoneId?: number;
     name?: string;
+    district?: District;
+}
+
+export class District {
+    name?: string;
 }

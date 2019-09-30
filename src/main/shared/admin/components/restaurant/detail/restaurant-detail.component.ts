@@ -147,6 +147,7 @@ export class AdminRestaurantDetailComponent
       navigator.geolocation.getCurrentPosition(this.getPosition, err => { });
     }
     this.onGetCities();
+    this.onGetAllZone();
     this.onGetPayment();
   }
 
@@ -254,6 +255,20 @@ export class AdminRestaurantDetailComponent
           : this.restaurantModel.districtId;
         this.clientState.isBusy = false;
       },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
+
+  onGetAllZone = () => {
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZones().subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.clientState.isBusy = false;
+    },
       (err: ApiError) => {
         this.clientState.isBusy = false;
         this.message = err.message;
@@ -388,7 +403,9 @@ export class AdminRestaurantDetailComponent
           if (this.restaurantModel.paymentProviderLst.length > 0) this.onGetListPayment(this.restaurantModel.paymentProviderLst);
           else this.restaurantModel.paymentProviderLstId.push(1);
           this.onAutoCreateOpenClose();
-          this.restaurantModel.deliveryArea = [{deliveryAreaId: 164, deliveryZoneId: []}];
+          if (this.restaurantModel.deliveryArea.length <= 0) {
+            this.restaurantModel.deliveryArea = [{deliveryAreaId: 0, deliveryZoneId: []}];
+          }
           this.clientState.isBusy = false;
         },
         (err: ApiError) => {
@@ -688,8 +705,39 @@ export class AdminRestaurantDetailComponent
     menuExtra && menuExtra.splice(index, 1);
   };
 
+  onAddDeliveryArea = () => {
+    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
+      deliveryAreaId: 0,
+      deliveryZoneId: []
+    });
+  };
+
+  onRemoveDeliveryArea = (deliveryAreaLst: DeliveryArea) => {
+    let index = this.restaurantModel.deliveryArea.findIndex(e => e == deliveryAreaLst);
+    this.restaurantModel.deliveryArea && this.restaurantModel.deliveryArea.splice(index, 1);
+  };
+
   onRevertTime = (x: number, y: number) => {
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";
   };
+
+  onChooseAllZone = (id: number, index: number) => {
+    if (id == null) return;
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZoneByDistrict(id).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.restaurantModel.deliveryArea[index].deliveryZoneId = [];
+      this.zoneModels.map(items => {
+        this.restaurantModel.deliveryArea[index].deliveryZoneId.push(items.zoneId);
+      })
+      this.clientState.isBusy = false;
+    },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  }
 }

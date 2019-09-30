@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from "@angular/core";
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from "../../../../models/restaurant/admin-restaurant.model";
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList, DeliveryArea } from "../../../../models/restaurant/admin-restaurant.model";
 import { ClientState } from "../../../../state";
 import { Language } from "../../../../models/langvm.model";
 import { ApiError } from "../../../../services/api-response/api-response";
@@ -139,6 +139,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.onGetPayment();
     this.restaurantModel.paymentProviderLstId = [];
     this.restaurantModel.paymentProviderLstId.push(1);
+    this.restaurantModel.deliveryArea = [{deliveryAreaId: 0, deliveryZoneId: []}];
   }
 
   ngAfterViewInit(): void {
@@ -604,19 +605,37 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     menuExtra && menuExtra.splice(index, 1);
   };
 
-  // onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
-  //   const amazingTimePicker = this.atp.open();
-  //   amazingTimePicker.afterClose().subscribe(time => {
-  //     if (timeStatus == 0)
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].openTime = time;
-  //     else
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].closeTime = time;
-  //   });
-  // };
+  onAddDeliveryArea = () => {
+    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
+      deliveryAreaId: 0,
+      deliveryZoneId: []
+    });
+  };
+
+  onRemoveDeliveryArea = (deliveryAreaLst: DeliveryArea) => {
+    let index = this.restaurantModel.deliveryArea.findIndex(e => e == deliveryAreaLst);
+    this.restaurantModel.deliveryArea && this.restaurantModel.deliveryArea.splice(index, 1);
+  };
+
+  onChooseAllZone = (id: number, index: number) => {
+    if (id == null) return;
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZoneByDistrict(id).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.restaurantModel.deliveryArea[index].deliveryZoneId = [];
+      this.zoneModels.map(items => {
+        this.restaurantModel.deliveryArea[index].deliveryZoneId.push(items.zoneId);
+      })
+      this.clientState.isBusy = false;
+    },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  }
+
   onRevertTime = (x: number, y: number) => {
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";
