@@ -50,6 +50,7 @@ export class AdminMenuCreationComponent {
                 name: '',
                 restaurantId: null,
                 status: 1,
+                rate: 5,
                 languageLst: this.languageSupported.map(lang => {
                     return MenuModule.initTranslator(lang);
                 })
