@@ -232,7 +232,8 @@
             "SelectZone": "Select zone",
             "SelectDeliveryDistrict": "Select delivery district",
             "Prioity": "Prioity",
-            "SelectPaymentMethod": "Select payment method"
+            "SelectPaymentMethod": "Select payment method",
+            "ChooseAll": "Choose all"
         },
         "Links": {
             "Title": "Links",

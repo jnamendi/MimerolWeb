@@ -230,20 +230,75 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group">
-                                        <label class="col-md-4"
-                                            [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></label>
-                                        <div class="col-md-8">
-                                            <ng-select name="deliveryDistrics" [items]="multipleDeliveryDistrictModels"
-                                                bindValue="districtId" bindLabel="name" [multiple]="true"
-                                                [(ngModel)]="restaurantModel.workArea" #deliveryDistrics="ngModel"
-                                                placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
-                                                required>
-                                            </ng-select>
-                                            <div *ngIf="deliveryDistrics.invalid && (deliveryDistrics.dirty || deliveryDistrics.touched || f.submitted)"
-                                                class="error">
-                                                <div *ngIf="deliveryDistrics.errors?.required"
-                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    <div *ngIf="restaurantModel.cityId">
+                                        <div class="separator-dashed"></div>
+                                        <h2 class="separator-dashed-tilte"
+                                            [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></h2>
+                                        <div class="separator-dashed"></div>
+
+                                        <div *ngFor="let feild of restaurantModel.deliveryArea; let i = index">
+                                            <div class="row form-group">
+                                                <label class="col-md-4"
+                                                    [innerHTML]="'Commons.Texts.DistrictRequired' | translate"></label>
+                                                <div class="col-md-6">
+                                                    <ng-select name="{{i}}area" [items]="delyveryDistrictModels"
+                                                        bindValue="districtId" bindLabel="name" [multiple]="false"
+                                                        (click)="onRemoveDistrict()" [(ngModel)]="feild.deliveryAreaId"
+                                                        #area="ngModel"
+                                                        placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
+                                                        required>
+                                                    </ng-select>
+                                                    <div *ngIf="area.invalid && (area.dirty || area.touched || f.submitted)"
+                                                        class="error">
+                                                        <div *ngIf="area.errors?.required"
+                                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="action col-md-2">
+                                                    <button type="button" style="background: gray"
+                                                        class="btn btn-default" (click)="onAddDeliveryArea()">+</button>
+                                                    <button type="button" style="background: gray"
+                                                        class="btn btn-default" (click)="onRemoveDeliveryArea(feild)"
+                                                        *ngIf="i > 0">-</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row form-group">
+                                                <label class="col-md-4"
+                                                    [innerHTML]="'Commons.Texts.Zone' | translate"></label>
+                                                <div class="col-md-6">
+                                                    <ng-select name="{{i}}zone" [items]="zoneModels" [multiple]="true"
+                                                        bindLabel="name" [closeOnSelect]="false" bindValue="zoneId"
+                                                        [(ngModel)]="feild.deliveryZoneId" #zone="ngModel"
+                                                        (click)="onGetZoneByDistrict(feild.deliveryAreaId)"
+                                                        placeholder="{{'Commons.Texts.SelectZone' | translate}}"
+                                                        required>
+                                                        <ng-template ng-multi-label-tmp let-items="items"
+                                                            let-clear="clear">
+                                                            <div class="ng-value"
+                                                                *ngFor="let item of items | slice:0:2">
+                                                                <span class="ng-value-label">{{item.name}}</span>
+                                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                                    aria-hidden="true">×</span>
+                                                            </div>
+                                                            <div class="ng-value" *ngIf="items.length > 2">
+                                                                <span class="ng-value-label">{{items.length - 2}}
+                                                                    more...</span>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-select>
+                                                    <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
+                                                        class="error">
+                                                        <div *ngIf="zone.errors?.required"
+                                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="action col-md-2">
+                                                    <button type="button"
+                                                        style="background: #1f89ce; text-transform: none !important;"
+                                                        class="btn btn-default"
+                                                        (click)="onChooseAllZone(feild.deliveryAreaId, i)">{{'Commons.Texts.ChooseAll' | translate}}</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
