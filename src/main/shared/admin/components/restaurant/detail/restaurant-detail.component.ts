@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
-import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels, WorkTimeList } from "../../../../models/restaurant/admin-restaurant.model";
+import { RestaurantAdminModel, RestaurantModule, RestaurantWorkTimeModels, WorkTimeList, DeliveryArea } from "../../../../models/restaurant/admin-restaurant.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Language } from "../../../../models/langvm.model";
 import { ClientState } from "../../../../state";
@@ -68,7 +68,7 @@ export class AdminRestaurantDetailComponent
   private zoneModels: ZoneModel[] = [];
   private paymentModels: PaymentModel[] = [];
 
-  private multipleDeliveryDistrictModels: DistrictModel[] = [];
+  private delyveryDistrictModels: DistrictModel[] = [];
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private restaurantWorkTimeModelsTemp: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
@@ -147,6 +147,7 @@ export class AdminRestaurantDetailComponent
       navigator.geolocation.getCurrentPosition(this.getPosition, err => { });
     }
     this.onGetCities();
+    this.onGetAllZone();
     this.onGetPayment();
   }
 
@@ -240,20 +241,44 @@ export class AdminRestaurantDetailComponent
   };
 
   onGetDistrictByCity = (cityId: number, isFirstLoad: boolean = false) => {
+    this.clientState.isBusy = true;
     this.districtService.onGetDistrictByCity(cityId).subscribe(
       res => {
         this.districtModels = res.content
           ? <DistrictModel[]>[...res.content]
           : [];
-        this.multipleDeliveryDistrictModels = res.content
-          ? <DistrictModel[]>[...res.content]
-          : [];
         this.restaurantModel.districtId = !isFirstLoad
           ? null
           : this.restaurantModel.districtId;
-        this.onGetZoneByDistrict(this.restaurantModel.districtId);
+        if (this.restaurantModel.deliveryArea.length <= 0) {
+          this.restaurantModel.deliveryArea = [{ deliveryAreaId: this.districtModels[0].districtId, deliveryZoneId: [] }];
+        }
+        this.delyveryDistrictModels = this.districtModels;
+        this.clientState.isBusy = false;
       },
       (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  };
+
+  onRemoveDistrict = () => {
+    this.delyveryDistrictModels = this.districtModels;
+    this.restaurantModel.deliveryArea.map(item => {
+      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
+    });
+  }
+
+  onGetAllZone = () => {
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZones().subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.clientState.isBusy = false;
+    },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
         this.message = err.message;
         this.isError = true;
       }
@@ -261,10 +286,13 @@ export class AdminRestaurantDetailComponent
   };
 
   onGetZoneByDistrict = (districtId: number) => {
+    this.clientState.isBusy = true;
     this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.clientState.isBusy = false;
     },
       (err: ApiError) => {
+        this.clientState.isBusy = false;
         this.message = err.message;
         this.isError = true;
       }
@@ -682,8 +710,40 @@ export class AdminRestaurantDetailComponent
     menuExtra && menuExtra.splice(index, 1);
   };
 
+  onAddDeliveryArea = () => {
+    this.onRemoveDistrict();
+    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
+      deliveryAreaId: this.delyveryDistrictModels[0].districtId,
+      deliveryZoneId: []
+    });
+  };
+
+  onRemoveDeliveryArea = (deliveryAreaLst: DeliveryArea) => {
+    let index = this.restaurantModel.deliveryArea.findIndex(e => e == deliveryAreaLst);
+    this.restaurantModel.deliveryArea && this.restaurantModel.deliveryArea.splice(index, 1);
+  };
+
   onRevertTime = (x: number, y: number) => {
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";
   };
+
+  onChooseAllZone = (id: number, index: number) => {
+    if (id == null) return;
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZoneByDistrict(id).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.restaurantModel.deliveryArea[index].deliveryZoneId = [];
+      this.zoneModels.map(items => {
+        this.restaurantModel.deliveryArea[index].deliveryZoneId.push(items.zoneId);
+      })
+      this.clientState.isBusy = false;
+    },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  }
 }

@@ -136,7 +136,7 @@
                                         <div class="form-input">
                                             <select name="district" inputFocus [(ngModel)]="orderModel.districtId"
                                                 #district="ngModel" class="form-control"
-                                                (change)="onGetZoneByDistrict(orderModel.districtId)"
+                                                (change)="onGetZoneByDistrict(orderModel.districtId, orderModel.restaurantId)"
                                                 [required]="!orderModel.userId || !orderModel.addressId">
                                                 <option [ngValue]="null" disabled>Select district</option>
                                                 <option *ngFor="let item of districtModels" [value]="item.districtId">

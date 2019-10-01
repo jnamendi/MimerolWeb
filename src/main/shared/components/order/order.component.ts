@@ -286,8 +286,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       );
   };
 
-  onGetZoneByDistrict = (districtId: number) => {
-    this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+  onGetZoneByDistrict = (districtId: number, restaurantId: number) => {
+    this.zoneService.onGetZoneByDistrictRestaurant(districtId, restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
     },
       (err: ApiError) => {

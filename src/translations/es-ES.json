@@ -232,7 +232,8 @@
             "SelectZone": "Zona selecta",
             "SelectDeliveryDistrict": "Distrito de entrega selecta",
             "Prioity": "Prioridad",
-            "SelectPaymentMethod": "Seleccione forma de pago"
+            "SelectPaymentMethod": "Seleccione forma de pago",
+            "ChooseAll": "Elegir todos"
         },
         "Links": {
             "Title": "Enlaces",
