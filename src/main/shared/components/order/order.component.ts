@@ -265,34 +265,52 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     if (userAddress.cityId == this.cityModels[0].cityId) {
       this.validCity = false;
-      this.onGetDistrictByCity(this.restaurantId, userAddress.cityId);
       this.orderModel.cityName = userAddress.city;
       this.orderModel.cityId = userAddress.cityId;
     } else {
+      this.orderModel.cityId = null;
+      this.orderModel.districtId = null;
+      this.orderModel.zoneId = null;
       this.validCity = true;
       return;
     }
 
-    let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId)
-    if (districtTemp && districtTemp.length > 0) {
-      this.validArea = false;
-      this.onGetZoneByDistrict(userAddress.districtId, this.restaurantId);
-      this.orderModel.districtName = userAddress.district;
-      this.orderModel.districtId = userAddress.districtId;
-    } else {
-      this.validArea = true;
-      return;
+    this.districtService.onDistrictGetByRestaurantCity(this.restaurantId, userAddress.cityId).subscribe(res => {
+      this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+      let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId);
+      if (districtTemp && districtTemp.length > 0) {
+        this.validArea = false;
+        this.orderModel.districtName = userAddress.district;
+        this.orderModel.districtId = userAddress.districtId;
+      } else {
+        this.orderModel.districtId = null;
+        this.orderModel.zoneId = null;
+        this.validArea = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
     }
+    );
 
-    let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone)
-    if (zoneTemp && zoneTemp.length > 0) {
-      this.validZone = false;
-      this.orderModel.zoneId = userAddress.zone;
-      this.orderModel.zone = userAddress.zoneName;
-    } else {
-      this.validZone = true;
-      return;
+    this.zoneService.onGetZoneByDistrictRestaurant(userAddress.districtId, this.restaurantId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : []
+      let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone);
+      if (zoneTemp && zoneTemp.length > 0) {
+        this.validZone = false;
+        this.orderModel.zoneId = userAddress.zone;
+        this.orderModel.zone = userAddress.zoneName;
+      } else {
+        this.orderModel.zoneId = null;
+        this.validZone = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
     }
+    );
 
     this.orderModel.userId = userAddress.userId;
   }
@@ -336,7 +354,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.districtModels = res.content
             ? <DistrictModel[]>[...res.content]
             : [];
-          // this.orderModel.districtId = null;
+          this.orderModel.districtId = null;
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -348,6 +366,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onGetZoneByDistrict = (districtId: number, restaurantId: number) => {
     this.zoneService.onGetZoneByDistrictRestaurant(districtId, restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.orderModel.zoneId = null;
     },
       (err: ApiError) => {
         this.message = err.message;

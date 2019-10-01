@@ -12,7 +12,8 @@
                     {{message}}
                 </h2>
                 <a [routerLink]="['..']" routerLinkActive="active" class="landing">
-                    <span class="btn btn-default btn-primary" [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
+                    <span class="btn btn-default btn-primary"
+                        [innerHTML]="'Commons.Texts.BackToList' | translate"></span>
                 </a>
             </div>
             <div class="form-content">
@@ -20,27 +21,40 @@
                     <form (ngSubmit)="onUpdateMenu(f.valid)" #f="ngForm">
                         <div class="box-body">
                             <div class="row form-group">
-                                <label class="col-md-2" [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
+                                <label class="col-md-2"
+                                    [innerHTML]="'Commons.Texts.RestaurantRequired' | translate"></label>
                                 <div class="col-md-6">
-                                    <select name="restaurantName" class="form-control" [(ngModel)]="menuAdminModel.restaurantId" #restaurantName="ngModel" required>
-                                        <option *ngFor="let item of restaurantAdminModels; let i = index;" value="{{item.restaurantId}}">{{item.restaurantName}}</option>
+                                    <select name="restaurantName" class="form-control"
+                                        [(ngModel)]="menuAdminModel.restaurantId" #restaurantName="ngModel" required>
+                                        <option *ngFor="let item of restaurantAdminModels; let i = index;"
+                                            value="{{item.restaurantId}}">{{item.restaurantName}}</option>
                                     </select>
-                                    <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)" class="error">
-                                        <div *ngIf="restaurantName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    <div *ngIf="restaurantName.invalid && (restaurantName.dirty || restaurantName.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="restaurantName.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row form-group">
-                                <label class="col-md-2" [innerHTML]="'Commons.Texts.MenuNameRequired' | translate"></label>
+                                <label class="col-md-2"
+                                    [innerHTML]="'Commons.Texts.MenuNameRequired' | translate"></label>
                                 <div class="col-md-6">
                                     <p-tabView>
-                                        <p-tabPanel *ngFor="let lang of menuAdminModel.languageLst; let i = index;" [selected]="i==0" header="{{lang.name}}">
-                                            <div class="form-group col-xs-12 col-sm-6" *ngFor="let feild of lang.contentDef; let k = index;">
-                                                <input type="text" class="form-control" #menuName="ngModel" id="{{feild.code}}{{i}}{{k}}" name="{{feild.code}}{{i}}{{k}}" [(ngModel)]="feild.value" required noSpaces>
-                                                <div *ngIf="menuName.invalid && (menuName.dirty || menuName.touched || f.submitted)" class="error">
-                                                    <div *ngIf="menuName.errors?.whitespace" [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
-                                                    <div *ngIf="menuName.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                        <p-tabPanel *ngFor="let lang of menuAdminModel.languageLst; let i = index;"
+                                            [selected]="i==0" header="{{lang.name}}">
+                                            <div class="form-group col-xs-12 col-sm-6"
+                                                *ngFor="let feild of lang.contentDef; let k = index;">
+                                                <input type="text" class="form-control" #menuName="ngModel"
+                                                    id="{{feild.code}}{{i}}{{k}}" name="{{feild.code}}{{i}}{{k}}"
+                                                    [(ngModel)]="feild.value" required noSpaces>
+                                                <div *ngIf="menuName.invalid && (menuName.dirty || menuName.touched || f.submitted)"
+                                                    class="error">
+                                                    <div *ngIf="menuName.errors?.whitespace"
+                                                        [innerHTML]="'Commons.Error.ErrWhiteSpace' | translate"></div>
+                                                    <div *ngIf="menuName.errors?.required"
+                                                        [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                                 </div>
                                             </div>
                                         </p-tabPanel>
@@ -51,20 +65,41 @@
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.Status' | translate"></label>
                                 <div class="col-md-6">
-                                    <select name="status" class="form-control" [(ngModel)]="menuAdminModel.status" #status="ngModel" required>
+                                    <select name="status" class="form-control" [(ngModel)]="menuAdminModel.status"
+                                        #status="ngModel" required>
                                         <option value="1" [innerHTML]="'Commons.Texts.Publish' | translate"></option>
                                         <option value="0" [innerHTML]="'Commons.Texts.UnPublish' | translate"></option>
                                     </select>
-                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)" class="error">
-                                        <div *ngIf="status.errors?.required" [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    <div *ngIf="status.invalid && (status.dirty || status.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="status.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row form-group">
+                                <label class="col-md-2">Rate (%) <span class="error">*</span></label>
+                                <div class="col-md-2">
+                                    <input type="number" name="rate" min="0" max="100" step="0.01"
+                                        oninput="validity.valid||(value='');" class="form-control"
+                                        [(ngModel)]="menuAdminModel.rate" #rate="ngModel" required>
+                                    <div *ngIf="rate.invalid && (rate.dirty || rate.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="rate.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-default btn-primary" [innerHTML]="'Commons.Buttons.Save' | translate"></button>
-                            <button type="button" class="btn btn-default btn-danger" (click)="onDeleteMenu()" [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
-                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger" [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
+                            <button type="submit" class="btn btn-default btn-primary"
+                                [innerHTML]="'Commons.Buttons.Save' | translate"></button>
+                            <button type="button" class="btn btn-default btn-danger" (click)="onDeleteMenu()"
+                                [innerHTML]="'Commons.Buttons.Delete' | translate"></button>
+                            <a [routerLink]="['..']" routerLinkActive="active" class="btn btn-default btn-danger"
+                                [innerHTML]="'Commons.Buttons.Cancel' | translate"></a>
                         </div>
                     </form>
                 </div>
