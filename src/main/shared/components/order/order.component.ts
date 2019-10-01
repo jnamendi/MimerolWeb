@@ -336,7 +336,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       res => {
         this.cityModels =
           res.content && res.content ? <CityModel[]>[...res.content] : [];
-
+        this.validCity = false;
         this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
       },
       (err: ApiError) => {
@@ -355,6 +355,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
             ? <DistrictModel[]>[...res.content]
             : [];
           this.orderModel.districtId = null;
+          this.validArea = false;
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -367,6 +368,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.zoneService.onGetZoneByDistrictRestaurant(districtId, restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
       this.orderModel.zoneId = null;
+      this.validZone = false;
     },
       (err: ApiError) => {
         this.message = err.message;

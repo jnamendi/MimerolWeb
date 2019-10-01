@@ -234,7 +234,8 @@
             "SelectPaymentMethod": "Seleccione forma de pago",
             "ChooseAll": "Elegir todos",
             "FillNewAddress": "Ingrese una nueva dirección",
-            "FromWhichAddress": "¿Desde qué dirección está ordenando?"
+            "FromWhichAddress": "¿Desde qué dirección está ordenando?",
+            "AddressNotSupported": "Dirección no admitida"
         },
         "Links": {
             "Title": "Enlaces",
