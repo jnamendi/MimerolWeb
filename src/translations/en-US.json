@@ -218,7 +218,7 @@
             "Refunds": "Refunds",
             "EnterLocation": "Enter a location",
             "EnterReason": "Enter a reason (max 500 characters)...",
-            "DeliveryDistrict": "Delivery district <span class='error'>*</span>",
+            "DeliveryDistrict": "Delivery area",
             "Confirmed": "Confirmed",
             "AvailableAt": "Available at",
             "OutOfStock": "Out of stock",
@@ -230,10 +230,11 @@
             "SelectCity": "Select city",
             "SelectArea": "Select area",
             "SelectZone": "Select zone",
-            "SelectDeliveryDistrict": "Select delivery district",
             "Prioity": "Prioity",
             "SelectPaymentMethod": "Select payment method",
-            "ChooseAll": "Choose all"
+            "ChooseAll": "Choose all",
+            "FillNewAddress": "Fill in new address",
+            "FromWhichAddress": "From which address are you ordering?"
         },
         "Links": {
             "Title": "Links",

@@ -218,7 +218,7 @@
             "Refunds": "Vuelto",
             "EnterLocation": "Ingrese una ubicación",
             "EnterReason": "Ingrese un motivo (máximo 500 caracteres)...",
-            "DeliveryDistrict": "Distrito de entrega <span class='error'>*</span>",
+            "DeliveryDistrict": "Área de entrega",
             "Confirmed": "Confirmado",
             "AvailableAt": "Disponible en",
             "OutOfStock": "Agotado",
@@ -230,10 +230,11 @@
             "SelectCity": "Ciudad selecta",
             "SelectArea": "Área selecta",
             "SelectZone": "Zona selecta",
-            "SelectDeliveryDistrict": "Distrito de entrega selecta",
             "Prioity": "Prioridad",
             "SelectPaymentMethod": "Seleccione forma de pago",
-            "ChooseAll": "Elegir todos"
+            "ChooseAll": "Elegir todos",
+            "FillNewAddress": "Ingrese una nueva dirección",
+            "FromWhichAddress": "¿Desde qué dirección está ordenando?"
         },
         "Links": {
             "Title": "Enlaces",

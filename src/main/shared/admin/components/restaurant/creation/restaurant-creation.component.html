@@ -245,7 +245,7 @@
                                                         bindValue="districtId" bindLabel="name" [multiple]="false"
                                                         (click)="onRemoveDistrict()" [(ngModel)]="feild.deliveryAreaId"
                                                         #area="ngModel"
-                                                        placeholder="{{'Commons.Texts.SelectDeliveryDistrict' | translate}}"
+                                                        placeholder="{{'Commons.Texts.SelectArea' | translate}}"
                                                         required>
                                                     </ng-select>
                                                     <div *ngIf="area.invalid && (area.dirty || area.touched || f.submitted)"

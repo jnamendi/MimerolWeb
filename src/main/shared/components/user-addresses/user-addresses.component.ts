@@ -32,6 +32,14 @@ export class UserAddressesComponent implements OnInit {
     this.onGetAddressForCurrentUser();
   }
 
+  onScrollIntoViewValidate = (id: HTMLElement) => {
+    id.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
+  }
+
   onGetAddressForCurrentUser = () => {
     this.addressService.onGetByUser(this.currentUser.userId).subscribe(res => {
       if (res.content == null) {
@@ -51,6 +59,7 @@ export class UserAddressesComponent implements OnInit {
       return;
     }
     this.isCreation = true;
+    this.onScrollIntoViewValidate(document.getElementById("scrollToTop"));
   }
 
   onOpenUpdateAddress = (addressId: number) => {
@@ -59,6 +68,7 @@ export class UserAddressesComponent implements OnInit {
     }
     this.selectedAddressId = addressId;
     this.isUpdation = true;
+    this.onScrollIntoViewValidate(document.getElementById("scrollToTop"));
   }
 
   onSuccess = (isSaveSuccess: boolean) => {

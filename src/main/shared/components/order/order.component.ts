@@ -36,6 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private userAddressModels: AddressModel[] = [];
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private zoneModels: ZoneModel[] = [];
+  private userAddressByIdModels: AddressModel = new AddressModel();
 
   private sub: Subscription;
   private totalItemsInBag: number;
@@ -59,6 +60,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private totalSubItemsPrice: number;
   private totalItemsPrice: number;
+  private validCity: boolean = false;
+  private validArea: boolean = false;
+  private validZone: boolean = false;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -254,6 +258,61 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
   };
 
+  onValidateDeliveryAddress = (userAddress: AddressModel) => {
+    this.orderModel.address = userAddress.address;
+    this.orderModel.addressDesc = userAddress.addressDesc;
+    this.orderModel.addressId = userAddress.addressId;
+
+    if (userAddress.cityId == this.cityModels[0].cityId) {
+      this.validCity = false;
+      this.onGetDistrictByCity(this.restaurantId, userAddress.cityId);
+      this.orderModel.cityName = userAddress.city;
+      this.orderModel.cityId = userAddress.cityId;
+    } else {
+      this.validCity = true;
+      return;
+    }
+
+    let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId)
+    if (districtTemp && districtTemp.length > 0) {
+      this.validArea = false;
+      this.onGetZoneByDistrict(userAddress.districtId, this.restaurantId);
+      this.orderModel.districtName = userAddress.district;
+      this.orderModel.districtId = userAddress.districtId;
+    } else {
+      this.validArea = true;
+      return;
+    }
+
+    let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone)
+    if (zoneTemp && zoneTemp.length > 0) {
+      this.validZone = false;
+      this.orderModel.zoneId = userAddress.zone;
+      this.orderModel.zone = userAddress.zoneName;
+    } else {
+      this.validZone = true;
+      return;
+    }
+
+    this.orderModel.userId = userAddress.userId;
+  }
+
+  onGetAddressById = (id: number) => {
+    this.addressService.onGetById(id).subscribe(
+      res => {
+        if (res.content != null) {
+          this.userAddressByIdModels = <AddressModel>{ ...res.content };
+          this.onValidateDeliveryAddress(this.userAddressByIdModels);
+        }
+      },
+      (err: ApiError) => {
+        // if (err.status == 8) {
+        //   this.userAddressByIdModels;
+        // }
+      }
+    );
+  };
+
   onGetCities = (restaurantId: number) => {
     this.cityService.onGetByRestaurantId(restaurantId).subscribe(
       res => {
@@ -277,7 +336,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.districtModels = res.content
             ? <DistrictModel[]>[...res.content]
             : [];
-          this.orderModel.districtId = null;
+          // this.orderModel.districtId = null;
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -436,7 +495,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     //--- Check valid form
-    if (!isValid) {
+    if (!isValid || this.validCity || this.validArea || this.validZone) {
       let isErrors = document.getElementsByClassName("error");
       let error = isErrors[0];
       error.scrollIntoView({
