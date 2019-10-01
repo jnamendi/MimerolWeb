@@ -250,6 +250,9 @@ export class AdminRestaurantDetailComponent
         this.restaurantModel.districtId = !isFirstLoad
           ? null
           : this.restaurantModel.districtId;
+        if (this.restaurantModel.deliveryArea.length <= 0) {
+          this.restaurantModel.deliveryArea = [{ deliveryAreaId: this.districtModels[0].districtId, deliveryZoneId: [] }];
+        }
         this.delyveryDistrictModels = this.districtModels;
         this.clientState.isBusy = false;
       },
@@ -408,9 +411,6 @@ export class AdminRestaurantDetailComponent
           if (this.restaurantModel.paymentProviderLst.length > 0) this.onGetListPayment(this.restaurantModel.paymentProviderLst);
           else this.restaurantModel.paymentProviderLstId.push(1);
           this.onAutoCreateOpenClose();
-          if (this.restaurantModel.deliveryArea.length <= 0) {
-            this.restaurantModel.deliveryArea = [{deliveryAreaId: 0, deliveryZoneId: []}];
-          }
           this.clientState.isBusy = false;
         },
         (err: ApiError) => {
@@ -711,8 +711,9 @@ export class AdminRestaurantDetailComponent
   };
 
   onAddDeliveryArea = () => {
+    this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
-      deliveryAreaId: 0,
+      deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []
     });
   };

@@ -8,6 +8,7 @@ import { ApiListResponse } from '../../api-response/api-response';
 export interface ZoneInterface {
     onGetZones(): Observable<ApiListResponse>;
     onGetZoneByDistrict(districtId: number): Observable<ApiListResponse>;
+    onGetZoneByDistrictRestaurant(districtId: number, restaurantId: number): Observable<ApiListResponse>;
 }
 
 @Injectable()
@@ -22,5 +23,8 @@ export class ZoneService implements ZoneInterface {
     }
     onGetZoneByDistrict(districtId: number): Observable<ApiListResponse> {
         return this.http.HttpGet(ApiUrl.ZoneGetByDistrictId + "/" + districtId, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+    }
+    onGetZoneByDistrictRestaurant(districtId: number, restaurantId: number): Observable<ApiListResponse> {
+        return this.http.HttpGet(ApiUrl.ZoneGetBayDistrictRestaurant + "/" + districtId + "/" + restaurantId, false).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }

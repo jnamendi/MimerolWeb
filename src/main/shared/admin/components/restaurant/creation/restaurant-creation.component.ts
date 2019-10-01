@@ -67,7 +67,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   private paymentModels: PaymentModel[] = [];
 
   private deliveryCityModelsTemp: CityModel[] = [];
-  private multipleDeliveryDistrictModels: DistrictModel[] = [];
   private deliveryCitiesModel: DeliveryCityModel[] = [];
   private delyveryDistrictModels: DistrictModel[] = [];
 
@@ -139,7 +138,6 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.onGetPayment();
     this.restaurantModel.paymentProviderLstId = [];
     this.restaurantModel.paymentProviderLstId.push(1);
-    this.restaurantModel.deliveryArea = [{deliveryAreaId: 0, deliveryZoneId: []}];
   }
 
   ngAfterViewInit(): void {
@@ -233,10 +231,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.districtModels = res.content
           ? <DistrictModel[]>[...res.content]
           : [];
-        this.multipleDeliveryDistrictModels = res.content
-          ? <DistrictModel[]>[...res.content]
-          : [];
         this.restaurantModel.districtId = null;
+        this.delyveryDistrictModels = this.districtModels;
+        this.restaurantModel.deliveryArea = [{ deliveryAreaId: res.content[0].districtId, deliveryZoneId: [] }];
       },
       (err: ApiError) => {
         this.message = err.message;
@@ -613,8 +610,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   };
 
   onAddDeliveryArea = () => {
+    this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
-      deliveryAreaId: 0,
+      deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []
     });
   };
