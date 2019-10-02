@@ -129,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <div class="row form-group">
+                            <!-- <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.AvailableAt' | translate"></label>
                                 <div class="col-md-6">
                                     <div class="weekDays-selector">
@@ -169,7 +169,74 @@
                                             [innerHTML]="'Commons.Texts.SUN' | translate"></label>
                                     </div>
                                 </div>
+                            </div> -->
+
+                            <!-- Open - Close time -->
+                            <div class="row">
+                                <div class="col-md-8 separator-dashed"></div>
                             </div>
+                            <div class="row">
+                                <h2 id="availableAt" class="col-md-8 separator-dashed-tilte"
+                                    [innerHTML]="'Commons.Texts.AvailableAt' | translate"></h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 separator-dashed"></div>
+                            </div>
+
+                            <div *ngFor="let val of adminMenuItem.listMenuTimeAvailableModel; let indexDate = index"
+                                class="menu-extra-item">
+                                <div *ngFor="let extra of val.list; let indexTimeOfDate = index" class="row form-group">
+                                    <label *ngIf="indexTimeOfDate == 0" class="col-md-2"
+                                        [innerHTML]="'Commons.Texts.' + val.weekDay | translate"></label>
+                                    <label *ngIf="indexTimeOfDate > 0" class="col-md-2"></label>
+                                    <div class="col-md-2">
+                                        <!-- Input open time -->
+                                        <input type="time" atp-time-picker name="{{indexDate}}{{indexTimeOfDate}}open"
+                                            id="{{indexDate}}{{indexTimeOfDate}}open" class="form-control"
+                                            [(ngModel)]="extra.openTime" #openTime="ngModel" />
+                                        <!-- Required open time -->
+                                        <div *ngIf="checkOpenTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                            class="error" [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                        </div>
+                                        <div *ngIf="checkOpenGreaterClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                            class="error"
+                                            [innerHTML]="'Commons.Error.ErrorOpenTime' | translate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- Input close time -->
+                                        <input type="time" atp-time-picker name="{{indexDate}}{{indexTimeOfDate}}close"
+                                            id="{{indexDate}}{{indexTimeOfDate}}close" class="form-control"
+                                            [(ngModel)]="extra.closeTime" #closeTime="ngModel" />
+                                        <!-- Required close time -->
+                                        <div class="error"
+                                            *ngIf="checkCloseTimeIsNull == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                        </div>
+                                        <div *ngIf="checkOpenLesserClose == true && datePosition == indexDate && positionTimeOfDate == indexTimeOfDate"
+                                            class="error"
+                                            [innerHTML]="'Commons.Error.ErrorCloseTime' | translate">
+                                        </div>
+                                    </div>
+                                    <!-- Button add and remove open close time -->
+                                    <div class="action col-md-2">
+                                        <button type="button" (click)="onAddTimeAvailable(val.list)"
+                                            style="background: gray" class="btn btn-default">+</button>
+                                        <button type="button" (click)="onRemoveTimeAvailable(val.list)"
+                                            style="background: gray" class="btn btn-default"
+                                            *ngIf="indexTimeOfDate > 0">-</button>
+                                        <button type="button" (click)="onRevertTime(indexDate, indexTimeOfDate)"
+                                            style="background: gray;padding: 6px 9px;" class="btn btn-default"
+                                            *ngIf="indexTimeOfDate == 0">
+                                            <i class="fa fa-undo" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8 separator-dashed"></div>
+                            </div>
+                            <!-- End -->
 
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.OutOfStock' | translate"></label>
@@ -185,8 +252,8 @@
                             <div class="row form-group">
                                 <label class="col-md-2" [innerHTML]="'Commons.Texts.Prioity' | translate"></label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control"
-                                        [(ngModel)]="adminMenuItem.priority" name="priority" #priority="ngModel" />
+                                    <input type="number" class="form-control" [(ngModel)]="adminMenuItem.priority"
+                                        name="priority" #priority="ngModel" />
                                 </div>
                             </div>
 

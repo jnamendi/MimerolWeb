@@ -17,6 +17,18 @@
     }
 }
 
+.separator-dashed {
+    border: 1px dashed #eeeeee;
+    height: 0;
+    margin: 15px 0;
+    width: 65%;
+}
+
+.separator-dashed-tilte {
+    font-size: 20px;
+    text-align: center;
+}
+
 .weekDays-selector input {
     display: none !important;
 }

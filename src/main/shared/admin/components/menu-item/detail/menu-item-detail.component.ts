@@ -7,7 +7,7 @@ import { MenuAdminService } from '../../../../services/api/menu/admin-menu.servi
 import { LanguageService } from '../../../../services/api/language/language.service';
 import { RestaurantAdminModel } from '../../../../models/restaurant/admin-restaurant.model';
 import { RestaurantAdminService } from '../../../../services/api/restaurant/admin-restaurant.service';
-import { AdminMenuItem, AdminMenuItemModule, AdminMenuExtra, AdminExtraItem, AdminMenuExtraItemModule } from '../../../../models/menu-item/admin-menu-item.model';
+import { AdminMenuItem, AdminMenuItemModule, AdminMenuExtra, AdminExtraItem, AdminMenuExtraItemModule, TimeAvailableMenuItem, OpenCloseTimeMenuItem, WeekDay } from '../../../../models/menu-item/admin-menu-item.model';
 import { MenuModel } from '../../../../models/menu/app-menu.model';
 import { I18nService } from '../../../../core';
 import { MenuItemAdminService } from '../../../../services';
@@ -28,6 +28,14 @@ export class AdminMenuItemDetailComponent {
     private adminMenuItem: AdminMenuItem = new AdminMenuItem();
     private menuAdminModels: MenuModel[] = [];
     private imgUrl: string;
+    private day: typeof WeekDay = WeekDay;
+    private checkOpenLesserClose: boolean = false;
+    private checkOpenGreaterClose: boolean = false;
+    private checkOpenTimeIsNull: boolean = false;
+    private checkCloseTimeIsNull: boolean = false;
+    private datePosition: number;
+    private positionTimeOfDate: number;
+
 
     constructor(
         private route: ActivatedRoute,
@@ -60,6 +68,7 @@ export class AdminMenuItemDetailComponent {
     }
 
     onGetMenuItem = (menuItemId: number) => {
+        this.clientState.isBusy = true;
         this.menuItemAdminService.getMenuItem(menuItemId).subscribe(res => {
             let menuModelFromRes = <AdminMenuItem>{ ...res.content };
             if (menuModelFromRes.languageLst) {
@@ -112,22 +121,28 @@ export class AdminMenuItemDetailComponent {
                     }
                 }) || [];
             });
+            this.clientState.isBusy = false;
+            this.onAutoCreateOpenClose();
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
+            this.clientState.isBusy = false;
         })
     }
 
     onGetAllRestaurantSortByName = () => {
+        this.clientState.isBusy = true;
         this.restaurantAdminService.getAllRestaurantSortByName().subscribe(res => {
             if (res.content == null) {
                 this.restaurantAdminModels = [];
             } else {
                 this.restaurantAdminModels = <RestaurantAdminModel[]>[...res.content]
             }
+            this.clientState.isBusy = false;
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;
+            this.clientState.isBusy = false;
         });
     }
 
@@ -162,10 +177,88 @@ export class AdminMenuItemDetailComponent {
         }
     }
 
+    onValidateTimeAvalible = (openTime: string, closeTime: string) => {
+        let openTimeTemp = openTime.split(":");
+        let openHour = parseFloat(openTimeTemp[0]);
+        let openMinute = parseFloat(openTimeTemp[1]);
+        let closeTimeTemp = closeTime.split(":");
+        let closeHour = parseFloat(closeTimeTemp[0]);
+        let closeMinute = parseFloat(closeTimeTemp[1]);
+
+        if (closeHour == openHour && closeMinute == openMinute) return true;
+        else if (closeHour < openHour) return true;
+        else if (closeHour == openHour && closeMinute <= openMinute) return true;
+        return false;
+    }
+
+    onScrollIntoViewValidate = (id: HTMLElement) => {
+        id.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+        });
+    }
+
     onUpdateMenuItem = (isValid: boolean) => {
         if (!isValid) {
             return;
         }
+
+        for (let indexDate = 0; indexDate < this.adminMenuItem.listMenuTimeAvailableModel.length; indexDate++) {
+            if (this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list.length != 0) {
+                for (let indexTimeOfDate = 0; indexTimeOfDate < this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list.length; indexTimeOfDate++) {
+                    this.checkOpenGreaterClose = false;
+                    this.checkOpenLesserClose = false;
+                    this.checkCloseTimeIsNull = false;
+                    this.checkOpenTimeIsNull = false;
+                    if (this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].openTime == ""
+                        && this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].closeTime != "") {
+                        this.checkOpenTimeIsNull = true;
+                        this.datePosition = indexDate;
+                        this.positionTimeOfDate = indexTimeOfDate;
+                        this.onScrollIntoViewValidate(document.getElementById("availableAt"));
+                        return;
+                    } else if (this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].openTime != ""
+                        && this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].closeTime == "") {
+                        this.checkCloseTimeIsNull = true;
+                        this.datePosition = indexDate;
+                        this.positionTimeOfDate = indexTimeOfDate;
+                        this.onScrollIntoViewValidate(document.getElementById("availableAt"));
+                        return;
+                    } else if (this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].openTime != ""
+                        && this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].closeTime != "") {
+                        this.checkOpenLesserClose = this.onValidateTimeAvalible(this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].openTime,
+                            this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].closeTime);
+                        if (this.checkOpenLesserClose) {
+                            this.datePosition = indexDate;
+                            this.positionTimeOfDate = indexTimeOfDate;
+                            this.onScrollIntoViewValidate(document.getElementById("availableAt"));
+                            return;
+                        }
+                        if (indexTimeOfDate > 0) {
+                            this.checkOpenGreaterClose = this.onValidateTimeAvalible(this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate - 1].closeTime,
+                                this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list[indexTimeOfDate].openTime);
+                            if (this.checkOpenGreaterClose) {
+                                this.datePosition = indexDate;
+                                this.positionTimeOfDate = indexTimeOfDate;
+                                this.onScrollIntoViewValidate(document.getElementById("availableAt"));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let indexWorkTime = this.adminMenuItem.listMenuTimeAvailableModel.length - 1; indexWorkTime >= 0; indexWorkTime--) {
+            for (let indexItems = this.adminMenuItem.listMenuTimeAvailableModel[indexWorkTime].list.length - 1; indexItems >= 0; indexItems--) {
+                if (this.adminMenuItem.listMenuTimeAvailableModel[indexWorkTime].list[indexItems].openTime == "") this.adminMenuItem.listMenuTimeAvailableModel[indexWorkTime].list.splice(indexItems, 1);
+            }
+            if (this.adminMenuItem.listMenuTimeAvailableModel[indexWorkTime].list.length == 0) {
+                this.adminMenuItem.listMenuTimeAvailableModel.splice(indexWorkTime, 1);
+            }
+        }
+
         this.clientState.isBusy = true;
 
         this.menuItemAdminService.updateMenuItem(this.adminMenuItem).subscribe({
@@ -249,4 +342,49 @@ export class AdminMenuItemDetailComponent {
     ngOnDestroy(): void {
         this.sub.unsubscribe();
     }
+
+    onAutoCreateOpenClose = () => {
+        if (this.adminMenuItem.listMenuTimeAvailableModel.length == 0) {
+            for (let i = 0; i < 7; i++) {
+                this.adminMenuItem.listMenuTimeAvailableModel.push(<TimeAvailableMenuItem>{
+                    weekDay: this.day[i],
+                    list: []
+                });
+                for (let j = 0; j < this.adminMenuItem.listMenuTimeAvailableModel.length; j++) {
+                    if (this.adminMenuItem.listMenuTimeAvailableModel[j].list.length == 0) {
+                        this.adminMenuItem.listMenuTimeAvailableModel[j].list.push(<OpenCloseTimeMenuItem>{
+                            openTime: "",
+                            closeTime: "",
+                        });
+                    }
+                }
+            }
+        } else {
+            for (let i = 0; i < this.adminMenuItem.listMenuTimeAvailableModel.length; i++) {
+                if (this.adminMenuItem.listMenuTimeAvailableModel[i].list.length == 0) {
+                    this.adminMenuItem.listMenuTimeAvailableModel[i].list.push(<OpenCloseTimeMenuItem>{
+                        openTime: "",
+                        closeTime: "",
+                    });
+                }
+            }
+        }
+    };
+
+    onAddTimeAvailable = (val: OpenCloseTimeMenuItem[]) => {
+        val.push(<OpenCloseTimeMenuItem>{
+            openTime: "",
+            closeTime: ""
+        });
+    };
+
+    onRemoveTimeAvailable = (timeAvailable: OpenCloseTimeMenuItem[]) => {
+        let index = timeAvailable.findIndex(e => e == timeAvailable);
+        timeAvailable && timeAvailable.splice(index, 1);
+    };
+
+    onRevertTime = (x: number, y: number) => {
+        this.adminMenuItem.listMenuTimeAvailableModel[x].list[y].openTime = "";
+        this.adminMenuItem.listMenuTimeAvailableModel[x].list[y].closeTime = "";
+    };
 }
