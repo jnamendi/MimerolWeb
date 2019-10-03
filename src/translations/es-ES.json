@@ -235,7 +235,9 @@
             "ChooseAll": "Elegir todos",
             "FillNewAddress": "Ingrese una nueva dirección",
             "FromWhichAddress": "¿Desde qué dirección está ordenando?",
-            "AddressNotSupported": "Dirección no admitida"
+            "AddressNotSupported": "Dirección no admitida",
+            "District": "Área",
+            "ZoneDelivery": "Zona"
         },
         "Links": {
             "Title": "Enlaces",
