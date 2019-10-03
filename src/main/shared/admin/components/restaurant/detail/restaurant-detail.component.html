@@ -259,7 +259,7 @@
                                                     </div>
                                                     <div class="action col-md-2">
                                                         <button type="button" style="background: gray"
-                                                            class="btn btn-default"
+                                                            class="btn btn-default" [disabled]="this.restaurantModel.deliveryArea.length == this.districtModels.length"
                                                             (click)="onAddDeliveryArea()">+</button>
                                                         <button type="button" style="background: gray"
                                                             class="btn btn-default"
