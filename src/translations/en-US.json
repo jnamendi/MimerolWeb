@@ -235,7 +235,9 @@
             "ChooseAll": "Choose all",
             "FillNewAddress": "Fill in new address",
             "FromWhichAddress": "From which address are you ordering?",
-            "AddressNotSupported": "Address not supported"
+            "AddressNotSupported": "Address not supported",
+            "District": "Area",
+            "ZoneDelivery": "Zone"
         },
         "Links": {
             "Title": "Links",

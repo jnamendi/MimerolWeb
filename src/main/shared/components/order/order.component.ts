@@ -125,15 +125,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    // let timeRanges = this.coreService.range(1, 93).map(i => {
-    //   return this.coreService.convertMinuteToTime(i * 15);
-    // });
-
-    // this.deliveryTimes = timeRanges.filter(t => {
-    //   return this.coreService.compareTimeGreaterThanCurrent(t);
-    // });
     this.onGetCities(this.restaurantId);
-
     this.onGetRestaurantDetails();
   }
 
@@ -277,6 +269,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.districtService.onDistrictGetByRestaurantCity(this.restaurantId, userAddress.cityId).subscribe(res => {
       this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+      this.onSortAreaByAlphabetical();
       let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId);
       if (districtTemp && districtTemp.length > 0) {
         this.validArea = false;
@@ -295,7 +288,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
 
     this.zoneService.onGetZoneByDistrictRestaurant(userAddress.districtId, this.restaurantId).subscribe(res => {
-      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : []
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.onSortZoneByAlphabetical();
       let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone);
       if (zoneTemp && zoneTemp.length > 0) {
         this.validZone = false;
@@ -356,6 +350,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
             : [];
           this.orderModel.districtId = null;
           this.validArea = false;
+          this.onSortAreaByAlphabetical();
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -369,6 +364,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
       this.orderModel.zoneId = null;
       this.validZone = false;
+      this.onSortZoneByAlphabetical();
     },
       (err: ApiError) => {
         this.message = err.message;
@@ -718,4 +714,25 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
   };
+
+  onSortAreaByAlphabetical = () => {
+    this.districtModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  };
+
+  onSortZoneByAlphabetical = () => {
+    this.zoneModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  }
+
 }

@@ -222,7 +222,102 @@
                                         </div>
                                     </div>
 
+
                                     <div *ngIf="restaurantModel.cityId">
+                                        <div class="separator-dashed"></div>
+                                        <h2 class="separator-dashed-tilte"
+                                            [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></h2>
+                                        <div class="separator-dashed"></div>
+                                        <div class="panel-group delivery-area" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            <div class=""
+                                                *ngFor="let feild of restaurantModel.deliveryArea; let i = index">
+                                                <div class="row form-group" role="tab" id="heading{{i}}">
+                                                    <a class="col-md-4" role="button"
+                                                        style="color: black; font-weight: bold;" data-toggle="collapse"
+                                                        attr.data-parent="#accordion" href="#collapse{{i}}"
+                                                        aria-expanded="true"
+                                                        attr.aria-controls="collapse{{i}}">{{'Commons.Texts.District' | translate}}
+                                                        {{i + 1}}
+                                                        <i class="fa fa-chevron-up fa-1" aria-hidden="true"></i>
+                                                        <i class="fa fa-chevron-down fa-1" aria-hidden="true"></i>
+                                                    </a>
+                                                    <div class="col-md-6">
+                                                        <ng-select name="{{i}}area" [items]="delyveryDistrictModels"
+                                                            (click)="onRemoveDistrict()" bindValue="districtId"
+                                                            bindLabel="name" [multiple]="false"
+                                                            [(ngModel)]="feild.deliveryAreaId" #area="ngModel"
+                                                            placeholder="{{'Commons.Texts.SelectArea' | translate}}"
+                                                            required>
+                                                        </ng-select>
+                                                        <div *ngIf="area.invalid && (area.dirty || area.touched || f.submitted)"
+                                                            class="error">
+                                                            <div *ngIf="area.errors?.required"
+                                                                [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action col-md-2">
+                                                        <button type="button" style="background: gray"
+                                                            class="btn btn-default"
+                                                            (click)="onAddDeliveryArea()">+</button>
+                                                        <button type="button" style="background: gray"
+                                                            class="btn btn-default"
+                                                            (click)="onRemoveDeliveryArea(feild)"
+                                                            *ngIf="i > 0">-</button>
+                                                    </div>
+                                                </div>
+                                                <div id="collapse{{i}}" class="collapse in" role="tabpanel"
+                                                    attr.aria-labelledby="heading{{i}}">
+                                                    <div class="row form-group">
+                                                        <label class="col-md-4"
+                                                            style="font-weight: 600;left: 10px;">{{'Commons.Texts.ZoneDelivery' | translate}}
+                                                            {{i + 1}}</label>
+                                                        <div class="col-md-6">
+                                                            <ng-select name="{{i}}zone" [items]="zoneModels"
+                                                                [multiple]="true" bindLabel="name"
+                                                                [closeOnSelect]="false" bindValue="zoneId"
+                                                                [(ngModel)]="feild.deliveryZoneId" #zone="ngModel"
+                                                                (click)="onGetZoneByDistrict(feild.deliveryAreaId)"
+                                                                placeholder="{{'Commons.Texts.SelectZone' | translate}}"
+                                                                required>
+                                                                <ng-template ng-multi-label-tmp let-items="items"
+                                                                    let-clear="clear">
+                                                                    <div class="ng-value"
+                                                                        *ngFor="let item of items | slice:0:2">
+                                                                        <span
+                                                                            class="ng-value-label">{{item.name}}</span>
+                                                                        <span class="ng-value-icon right"
+                                                                            (click)="clear(item)"
+                                                                            aria-hidden="true">×</span>
+                                                                    </div>
+                                                                    <div class="ng-value" *ngIf="items.length > 2">
+                                                                        <span
+                                                                            class="ng-value-label">{{items.length - 2}}
+                                                                            more...</span>
+                                                                    </div>
+                                                                </ng-template>
+                                                            </ng-select>
+                                                            <div *ngIf="zone.invalid && (zone.dirty || zone.touched || f.submitted)"
+                                                                class="error">
+                                                                <div *ngIf="zone.errors?.required"
+                                                                    [innerHTML]="'Commons.Error.ErrRequired' | translate">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="action col-md-2">
+                                                            <button type="button"
+                                                                style="background: #1f89ce; text-transform: none !important;"
+                                                                class="btn btn-default"
+                                                                (click)="onChooseAllZone(feild.deliveryAreaId, i)">{{'Commons.Texts.ChooseAll' | translate}}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div *ngIf="restaurantModel.cityId">
                                         <div class="separator-dashed"></div>
                                         <h2 class="separator-dashed-tilte"
                                             [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></h2>
@@ -293,7 +388,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Open - Close time -->
                                     <div class="separator-dashed"></div>
