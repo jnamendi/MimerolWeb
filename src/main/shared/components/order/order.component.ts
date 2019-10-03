@@ -36,6 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private userAddressModels: AddressModel[] = [];
   private restaurantModel: AppRestaurantModel = new AppRestaurantModel();
   private zoneModels: ZoneModel[] = [];
+  private userAddressByIdModels: AddressModel = new AddressModel();
 
   private sub: Subscription;
   private totalItemsInBag: number;
@@ -59,6 +60,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private totalSubItemsPrice: number;
   private totalItemsPrice: number;
+  private validCity: boolean = false;
+  private validArea: boolean = false;
+  private validZone: boolean = false;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -121,15 +125,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    // let timeRanges = this.coreService.range(1, 93).map(i => {
-    //   return this.coreService.convertMinuteToTime(i * 15);
-    // });
-
-    // this.deliveryTimes = timeRanges.filter(t => {
-    //   return this.coreService.compareTimeGreaterThanCurrent(t);
-    // });
     this.onGetCities(this.restaurantId);
-
     this.onGetRestaurantDetails();
   }
 
@@ -254,12 +250,87 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
   };
 
+  onValidateDeliveryAddress = (userAddress: AddressModel) => {
+    this.orderModel.address = userAddress.address;
+    this.orderModel.addressDesc = userAddress.addressDesc;
+    this.orderModel.addressId = userAddress.addressId;
+
+    if (userAddress.cityId == this.cityModels[0].cityId) {
+      this.validCity = false;
+      this.orderModel.cityName = userAddress.city;
+      this.orderModel.cityId = userAddress.cityId;
+    } else {
+      this.orderModel.cityId = null;
+      this.orderModel.districtId = null;
+      this.orderModel.zoneId = null;
+      this.validCity = true;
+      return;
+    }
+
+    this.districtService.onDistrictGetByRestaurantCity(this.restaurantId, userAddress.cityId).subscribe(res => {
+      this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+      this.onSortAreaByAlphabetical();
+      let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId);
+      if (districtTemp && districtTemp.length > 0) {
+        this.validArea = false;
+        this.orderModel.districtName = userAddress.district;
+        this.orderModel.districtId = userAddress.districtId;
+      } else {
+        this.orderModel.districtId = null;
+        this.orderModel.zoneId = null;
+        this.validArea = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
+    }
+    );
+
+    this.zoneService.onGetZoneByDistrictRestaurant(userAddress.districtId, this.restaurantId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.onSortZoneByAlphabetical();
+      let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone);
+      if (zoneTemp && zoneTemp.length > 0) {
+        this.validZone = false;
+        this.orderModel.zoneId = userAddress.zone;
+        this.orderModel.zone = userAddress.zoneName;
+      } else {
+        this.orderModel.zoneId = null;
+        this.validZone = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
+    }
+    );
+
+    this.orderModel.userId = userAddress.userId;
+  }
+
+  onGetAddressById = (id: number) => {
+    this.addressService.onGetById(id).subscribe(
+      res => {
+        if (res.content != null) {
+          this.userAddressByIdModels = <AddressModel>{ ...res.content };
+          this.onValidateDeliveryAddress(this.userAddressByIdModels);
+        }
+      },
+      (err: ApiError) => {
+        // if (err.status == 8) {
+        //   this.userAddressByIdModels;
+        // }
+      }
+    );
+  };
+
   onGetCities = (restaurantId: number) => {
     this.cityService.onGetByRestaurantId(restaurantId).subscribe(
       res => {
         this.cityModels =
           res.content && res.content ? <CityModel[]>[...res.content] : [];
-
+        this.validCity = false;
         this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
       },
       (err: ApiError) => {
@@ -278,6 +349,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
             ? <DistrictModel[]>[...res.content]
             : [];
           this.orderModel.districtId = null;
+          this.validArea = false;
+          this.onSortAreaByAlphabetical();
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -286,9 +359,12 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       );
   };
 
-  onGetZoneByDistrict = (districtId: number) => {
-    this.zoneService.onGetZoneByDistrict(districtId).subscribe(res => {
+  onGetZoneByDistrict = (districtId: number, restaurantId: number) => {
+    this.zoneService.onGetZoneByDistrictRestaurant(districtId, restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.orderModel.zoneId = null;
+      this.validZone = false;
+      this.onSortZoneByAlphabetical();
     },
       (err: ApiError) => {
         this.message = err.message;
@@ -436,7 +512,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     //--- Check valid form
-    if (!isValid) {
+    if (!isValid || this.validCity || this.validArea || this.validZone) {
       let isErrors = document.getElementsByClassName("error");
       let error = isErrors[0];
       error.scrollIntoView({
@@ -638,4 +714,25 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
   };
+
+  onSortAreaByAlphabetical = () => {
+    this.districtModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  };
+
+  onSortZoneByAlphabetical = () => {
+    this.zoneModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  }
+
 }

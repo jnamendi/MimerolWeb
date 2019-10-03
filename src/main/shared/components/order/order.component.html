@@ -71,12 +71,13 @@
                                 <h2 [innerHTML]="'Components.Order.AddressDelivery' | translate"></h2>
                                 <div *ngIf="orderModel.userId" class="form-input">
                                     <select name="userAddress" inputFocus [(ngModel)]="orderModel.addressId"
-                                        #userAddress="ngModel" class="form-control">
-                                        <option [ngValue]="null">Fill in new address</option>
+                                        #userAddress="ngModel" class="form-control"
+                                        (change)="onGetAddressById(orderModel.addressId)">
+                                        <option [ngValue]="null">{{'Commons.Texts.FillNewAddress' | translate}}</option>
                                         <option *ngFor="let item of userAddressModels" [value]="item.addressId">
                                             {{item.address}}</option>
                                     </select>
-                                    <label>From which address are you ordering?</label>
+                                    <label>{{'Commons.Texts.FromWhichAddress' | translate}}</label>
                                     <div *ngIf="userAddress.invalid && (userAddress.dirty || userAddress.touched || f.submitted)"
                                         class="error">
                                         <div *ngIf="userAddress.errors?.required"
@@ -84,7 +85,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="!orderModel.addressId && !!currentCountryCode" class="form-input">
+                                <div *ngIf="!!currentCountryCode" class="form-input">
                                     <input type="text" inputFocus class="form-control" name="address" autocomplete="off"
                                         [(ngModel)]="orderModel.address" #address="ngModel" required [options]="{
                                                         types: ['address'],
@@ -100,7 +101,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="!orderModel.addressId" class="form-input">
+                                <div class="form-input">
                                     <textarea name="addressDesc" inputFocus [(ngModel)]="orderModel.addressDesc"
                                         inputFocus rows="5" [required]="!orderModel.userId || !orderModel.addressId"
                                         #addressDesc="ngModel"></textarea>
@@ -112,7 +113,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="!orderModel.addressId" class="row">
+                                <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <select name="city" inputFocus [(ngModel)]="orderModel.cityId"
@@ -129,6 +130,9 @@
                                                 <div *ngIf="city.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
+                                            <div *ngIf="validCity" class="error"
+                                                [innerHTML]="'Commons.Texts.AddressNotSupported' | translate">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -136,9 +140,10 @@
                                         <div class="form-input">
                                             <select name="district" inputFocus [(ngModel)]="orderModel.districtId"
                                                 #district="ngModel" class="form-control"
-                                                (change)="onGetZoneByDistrict(orderModel.districtId)"
+                                                (change)="onGetZoneByDistrict(orderModel.districtId, orderModel.restaurantId)"
                                                 [required]="!orderModel.userId || !orderModel.addressId">
-                                                <option [ngValue]="null" disabled>Select district</option>
+                                                <option [ngValue]="null" disabled>
+                                                    {{'Commons.Texts.SelectArea' | translate}}</option>
                                                 <option *ngFor="let item of districtModels" [value]="item.districtId">
                                                     {{item.name}}</option>
                                             </select>
@@ -148,15 +153,19 @@
                                                 <div *ngIf="district.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
+                                            <div *ngIf="validArea" class="error"
+                                                [innerHTML]="'Commons.Texts.AddressNotSupported' | translate">
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6" *ngIf="orderModel.districtId != null">
+                                    <div class="col-sm-6">
                                         <div class="form-input">
                                             <select name="zone" inputFocus [(ngModel)]="orderModel.zoneId"
                                                 #zone="ngModel" class="form-control"
                                                 [required]="!orderModel.userId || !orderModel.addressId">
-                                                <option [ngValue]="undefined" disabled>Select zone</option>
+                                                <option [ngValue]="undefined" disabled>
+                                                    {{'Commons.Texts.SelectZone' | translate}}</option>
                                                 <option *ngFor="let item of zoneModels" [value]="item.zoneId">
                                                     {{item.name}}</option>
                                             </select>
@@ -165,6 +174,9 @@
                                                 class="error">
                                                 <div *ngIf="zone.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                            </div>
+                                            <div *ngIf="validZone" class="error"
+                                                [innerHTML]="'Commons.Texts.AddressNotSupported' | translate">
                                             </div>
                                         </div>
                                     </div>

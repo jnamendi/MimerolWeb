@@ -218,7 +218,7 @@
             "Refunds": "Refunds",
             "EnterLocation": "Enter a location",
             "EnterReason": "Enter a reason (max 500 characters)...",
-            "DeliveryDistrict": "Delivery district <span class='error'>*</span>",
+            "DeliveryDistrict": "Delivery area",
             "Confirmed": "Confirmed",
             "AvailableAt": "Available at",
             "OutOfStock": "Out of stock",
@@ -230,9 +230,14 @@
             "SelectCity": "Select city",
             "SelectArea": "Select area",
             "SelectZone": "Select zone",
-            "SelectDeliveryDistrict": "Select delivery district",
             "Prioity": "Prioity",
-            "SelectPaymentMethod": "Select payment method"
+            "SelectPaymentMethod": "Select payment method",
+            "ChooseAll": "Choose all",
+            "FillNewAddress": "Fill in new address",
+            "FromWhichAddress": "From which address are you ordering?",
+            "AddressNotSupported": "Address not supported",
+            "District": "Area",
+            "ZoneDelivery": "Zone"
         },
         "Links": {
             "Title": "Links",
@@ -262,7 +267,7 @@
             "ErrNoItem": "There is no item",
             "ErrorStartDate": "Start date must be lesser than end date",
             "ErrorEndDate": "End date must be greater than start date",
-            "ErrorOpenTime": "Open time must be lesser than close time",
+            "ErrorOpenTime": "Open time must be greater than close time",
             "ErrorCloseTime": "Close time must be greater than open time",
             "ErrorSearchAddress": "Address is not found",
             "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart."

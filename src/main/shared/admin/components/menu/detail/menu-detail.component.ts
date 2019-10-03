@@ -59,6 +59,7 @@ export class AdminMenuDetailComponent {
                     return MenuModule.initTranslator(lang);
                 })
             };
+            if (!this.menuAdminModel.rate) this.menuAdminModel.rate = 5;
         }, (err: ApiError) => {
             this.message = err.message;
             this.isError = true;

@@ -165,7 +165,8 @@ export class ApiUrl {
 
     //Zone
     public static ZoneGetAll = ApiUrl.BaseUrl + "api/zone/getAll";
-    public static ZoneGetByDistrictId = ApiUrl.BaseUrl + "api/zone/getByDistrict"
+    public static ZoneGetByDistrictId = ApiUrl.BaseUrl + "api/zone/getByDistrict";
+    public static ZoneGetBayDistrictRestaurant = ApiUrl.BaseUrl + "api/zone/getZoneByDistrict";
 
     //Payment
     public static PaymentGetAll = ApiUrl.BaseUrl + "api/PaymentProvider/getAll";

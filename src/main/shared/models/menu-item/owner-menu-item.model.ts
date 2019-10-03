@@ -9,7 +9,6 @@ export class OwnerMenuItem extends BaseModel {
   languageLst: Array<LanguageList>;
   menuExtraLst: Array<OwnerMenuExtra>;
   menuId?: number;
-  priority: number;
   imageUrl: string;
   price: number;
   status?: number;
@@ -23,6 +22,19 @@ export class OwnerMenuItem extends BaseModel {
   availableSaturday: boolean;
   availableSunday: boolean;
   outOfStock: boolean;
+  priority: number;
+  listMenuTimeAvailableModel: Array<TimeAvailableMenuItem> = [];
+}
+
+export class TimeAvailableMenuItem {
+  menuItemTimeAvailableId: number;
+  weekDay: string;
+  list: Array<OpenCloseTimeMenuItem> = [];
+}
+
+export class OpenCloseTimeMenuItem {
+  openTime?: string;
+  closeTime?: string;
 }
 
 export class OwnerMenuExtra {
@@ -45,6 +57,16 @@ export enum ExtraItemStatus {
   Authorize = 3,
   InAuthorize = 4,
   InActive = 5
+}
+
+export enum WeekDay {
+  MON = 0,
+  TUE = 1,
+  WED = 2,
+  THU = 3,
+  FRI = 4,
+  SAT = 5,
+  SUN = 6
 }
 
 export module OwnerMenuItemModule {

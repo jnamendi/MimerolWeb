@@ -1,4 +1,5 @@
 @import "~styles/variables.scss";
+
 .admin-main-content {
     .box-primary {
         .box-body {
@@ -12,21 +13,59 @@
             }
         }
     }
+
+    .delivery-area {
+        a {
+            .fa-chevron-up {
+                display: block;
+                position: absolute;
+                top: 4px;
+                left: 5em;
+            }
+
+            .fa-chevron-down {
+                display: none;
+                position: absolute;
+                top: 4px;
+                left: 5em;
+            }
+
+            &.collapsed {
+                .fa-chevron-up {
+                    display: none;
+                    position: absolute;
+                    top: 4px;
+                    left: 5em;
+                }
+
+                .fa-chevron-down {
+                    display: block;
+                    position: absolute;
+                    top: 4px;
+                    left: 5em;
+                }
+            }
+        }
+    }
 }
+
 .separator-dashed {
     border: 1px dashed #eeeeee;
     height: 0;
     margin: 15px 0;
 }
+
 .separator-dashed-tilte {
     font-size: 20px;
     text-align: center;
 }
+
 input[type=time]::-webkit-clear-button {
     display: none;
 }
-input[type=time]::-webkit-inner-spin-button, 
-input[type=time]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+
+input[type=time]::-webkit-inner-spin-button,
+input[type=time]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

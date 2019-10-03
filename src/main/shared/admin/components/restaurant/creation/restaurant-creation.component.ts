@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, ChangeDetectorRef } from "@angular/core";
-import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList } from "../../../../models/restaurant/admin-restaurant.model";
+import { RestaurantAdminModel, RestaurantModule, RestaurantStatus, RestaurantWorkTimeModels, WorkTimeList, DeliveryArea } from "../../../../models/restaurant/admin-restaurant.model";
 import { ClientState } from "../../../../state";
 import { Language } from "../../../../models/langvm.model";
 import { ApiError } from "../../../../services/api-response/api-response";
@@ -67,9 +67,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   private paymentModels: PaymentModel[] = [];
 
   private deliveryCityModelsTemp: CityModel[] = [];
-  private multipleDeliveryDistrictModels: DistrictModel[] = [];
   private deliveryCitiesModel: DeliveryCityModel[] = [];
-  private deliveryDistrictModel: DeliveryDistrictModel[] = [];
+  private delyveryDistrictModels: DistrictModel[] = [];
 
   private restaurantWorkTimeModels: RestaurantWorkTimeModels = new RestaurantWorkTimeModels();
   private errorIsValid: boolean = false;
@@ -138,6 +137,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     });
     this.onGetPayment();
     this.restaurantModel.paymentProviderLstId = [];
+    this.restaurantModel.paymentProviderLstId.push(1);
   }
 
   ngAfterViewInit(): void {
@@ -231,10 +231,9 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
         this.districtModels = res.content
           ? <DistrictModel[]>[...res.content]
           : [];
-        this.multipleDeliveryDistrictModels = res.content
-          ? <DistrictModel[]>[...res.content]
-          : [];
         this.restaurantModel.districtId = null;
+        this.delyveryDistrictModels = this.districtModels;
+        this.restaurantModel.deliveryArea = [{ deliveryAreaId: res.content[0].districtId, deliveryZoneId: [] }];
       },
       (err: ApiError) => {
         this.message = err.message;
@@ -253,6 +252,13 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
       }
     );
   };
+
+  onRemoveDistrict = () => {
+    this.delyveryDistrictModels = this.districtModels;
+    this.restaurantModel.deliveryArea.map(item => {
+      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
+    });
+  }
 
   onConvertPayment = (paymentProviderLstTemp: number[]) => {
     this.restaurantModel.paymentProviderLst = [];
@@ -603,19 +609,38 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     menuExtra && menuExtra.splice(index, 1);
   };
 
-  // onOpenTimePicker = (x: number, y: number, timeStatus: number) => {
-  //   const amazingTimePicker = this.atp.open();
-  //   amazingTimePicker.afterClose().subscribe(time => {
-  //     if (timeStatus == 0)
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].openTime = time;
-  //     else
-  //       this.restaurantModel.restaurantWorkTimeModels[x].list[
-  //         y
-  //       ].closeTime = time;
-  //   });
-  // };
+  onAddDeliveryArea = () => {
+    this.onRemoveDistrict();
+    this.restaurantModel.deliveryArea.push(<DeliveryArea>{
+      deliveryAreaId: this.delyveryDistrictModels[0].districtId,
+      deliveryZoneId: []
+    });
+  };
+
+  onRemoveDeliveryArea = (deliveryAreaLst: DeliveryArea) => {
+    let index = this.restaurantModel.deliveryArea.findIndex(e => e == deliveryAreaLst);
+    this.restaurantModel.deliveryArea && this.restaurantModel.deliveryArea.splice(index, 1);
+  };
+
+  onChooseAllZone = (id: number, index: number) => {
+    if (id == null) return;
+    this.clientState.isBusy = true;
+    this.zoneService.onGetZoneByDistrict(id).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.restaurantModel.deliveryArea[index].deliveryZoneId = [];
+      this.zoneModels.map(items => {
+        this.restaurantModel.deliveryArea[index].deliveryZoneId.push(items.zoneId);
+      })
+      this.clientState.isBusy = false;
+    },
+      (err: ApiError) => {
+        this.clientState.isBusy = false;
+        this.message = err.message;
+        this.isError = true;
+      }
+    );
+  }
+
   onRevertTime = (x: number, y: number) => {
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].openTime = "";
     this.restaurantModel.restaurantWorkTimeModels[x].list[y].closeTime = "";

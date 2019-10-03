@@ -80,8 +80,8 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <span *ngIf="item.userIds">
-                                            <span *ngFor="let user of item.userIds">{{user.userName}}</span>
+                                        <span *ngIf="item.userList">
+                                            <span *ngFor="let user of item.userList; let j = index;">{{user.contactName}}<span *ngIf="j < item.userList.length - 1">, </span></span>
                                         </span>
                                     </td>
                                     <td>

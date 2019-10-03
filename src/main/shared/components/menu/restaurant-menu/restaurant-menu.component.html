@@ -14,7 +14,7 @@
                 <div class="panel-collapse">
                     <ul *ngIf="showMenuItem" class="item_search">
                         <li *ngFor="let item of menu">
-                            <a (click)="onSelectMenu(item.menuId)" data-scroll-nav="0">{{item.menuName}}</a>
+                            <a (click)="onSelectMenu(item.menuId)" [ngClass]="{onselected: onSelectedMenu == item.menuId}" data-scroll-nav="0">{{item.menuName}}</a>
                         </li>
                     </ul>
                 </div>

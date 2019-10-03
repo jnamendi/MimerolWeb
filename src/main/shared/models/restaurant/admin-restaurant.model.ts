@@ -2,7 +2,9 @@ import { BaseModel } from '../base.model';
 import { LanguageList, Language, FieldTranslation } from '../langvm.model';
 import { CategoryViewModel } from '../category/admin-category.model';
 import { UserViewModel } from '../user/admin-user.model';
+import { UserOwnerModel } from '../user/owner-user.model';
 import { PaymentModel } from "../../../shared/models/payment/payment.model";
+import { ZoneModel } from "../../../shared/models/zone/zone.model";
 
 export class RestaurantAdminModel extends BaseModel {
     forEach: any;
@@ -15,6 +17,7 @@ export class RestaurantAdminModel extends BaseModel {
     restaurantName?: string;
     categoryIds?: Array<CategoryViewModel>;
     userIds?: Array<UserViewModel>;
+    userList?: Array<UserOwnerModel>;
     slogan?: string;
     address?: string;
     districtId: number;
@@ -42,6 +45,12 @@ export class RestaurantAdminModel extends BaseModel {
     addressDesc: string;
     workArea: number[];
     cityIds?: number;
+    deliveryArea: Array<DeliveryArea> = [];
+}
+
+export class DeliveryArea {
+    deliveryAreaId: number;
+    deliveryZoneId: number[];
 }
 
 export class WorkTimeList {
