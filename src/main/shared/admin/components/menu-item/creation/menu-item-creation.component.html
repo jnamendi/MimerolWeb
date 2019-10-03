@@ -150,7 +150,7 @@
                                     <div class="action col-md-2">
                                         <button type="button" (click)="onAddTimeAvailable(val.list)"
                                             style="background: gray" class="btn btn-default">+</button>
-                                        <button type="button" (click)="onRemoveTimeAvailable(val.list)"
+                                        <button type="button" (click)="onRemoveTimeAvailable(indexDate, indexTimeOfDate)"
                                             style="background: gray" class="btn btn-default"
                                             *ngIf="indexTimeOfDate > 0">-</button>
                                         <button type="button" (click)="onRevertTime(indexDate, indexTimeOfDate)"

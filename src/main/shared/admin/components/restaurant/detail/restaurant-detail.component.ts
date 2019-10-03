@@ -711,16 +711,19 @@ export class AdminRestaurantDetailComponent
   };
 
   onAddDeliveryArea = () => {
-    this.onRemoveDistrict();
+    // this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []
     });
+    // console.log(this.delyveryDistrictModels);
+    // console.log(this.restaurantModel.deliveryArea);
   };
 
   onRemoveDeliveryArea = (deliveryAreaLst: DeliveryArea) => {
     let index = this.restaurantModel.deliveryArea.findIndex(e => e == deliveryAreaLst);
     this.restaurantModel.deliveryArea && this.restaurantModel.deliveryArea.splice(index, 1);
+    // console.log(this.restaurantModel.deliveryArea);
   };
 
   onRevertTime = (x: number, y: number) => {

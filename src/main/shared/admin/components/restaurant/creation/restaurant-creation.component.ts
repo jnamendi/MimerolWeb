@@ -610,7 +610,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
   };
 
   onAddDeliveryArea = () => {
-    this.onRemoveDistrict();
+    // this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []

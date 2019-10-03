@@ -251,7 +251,7 @@
                                                     </a>
                                                     <div class="col-md-6">
                                                         <ng-select name="{{i}}area" [items]="delyveryDistrictModels"
-                                                            (click)="onRemoveDistrict()" bindValue="districtId"
+                                                             bindValue="districtId"
                                                             bindLabel="name" [multiple]="false"
                                                             [(ngModel)]="feild.deliveryAreaId" #area="ngModel"
                                                             placeholder="{{'Commons.Texts.SelectArea' | translate}}"
