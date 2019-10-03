@@ -59,23 +59,23 @@ export class OwnerMenuItemCreationComponent {
                 return <Language>{ ...lang };
             });
             this.ownerMenuItem = <OwnerMenuItem>{
-              file: null,
-              isCombo: false,
-              menuId: null,
-              restaurantId: null,
-              price: 0,
-              availableMonday: true,
-              availableTuesday: true,
-              availableWednesday: true,
-              availableThursday: true,
-              availableFriday: true,
-              availableSaturday: false,
-              availableSunday: false,
-              outOfStock: false,
-              languageLst: this.languageSupported.map(lang => {
-                return OwnerMenuItemModule.initOwnerMenuItemTranslator(lang);
-              }),
-              menuExtraLst: []
+                file: null,
+                isCombo: false,
+                menuId: null,
+                restaurantId: null,
+                price: 0,
+                availableMonday: true,
+                availableTuesday: true,
+                availableWednesday: true,
+                availableThursday: true,
+                availableFriday: true,
+                availableSaturday: false,
+                availableSunday: false,
+                outOfStock: false,
+                languageLst: this.languageSupported.map(lang => {
+                    return OwnerMenuItemModule.initOwnerMenuItemTranslator(lang);
+                }),
+                menuExtraLst: []
             };
             if (this.ownerMenuItem.priority == null) this.ownerMenuItem.priority = 0;
             this.clientState.isBusy = false;
@@ -331,9 +331,10 @@ export class OwnerMenuItemCreationComponent {
         });
     };
 
-    onRemoveTimeAvailable = (timeAvailable: OpenCloseTimeMenuItem[]) => {
-        let index = timeAvailable.findIndex(e => e == timeAvailable);
-        timeAvailable && timeAvailable.splice(index, 1);
+    onRemoveTimeAvailable = (indexDate: number, indexTimeOfDate: number) => {
+        // let index = timeAvailable.findIndex(e => e == timeAvailable);
+        // timeAvailable && timeAvailable.splice(index, 1);
+        this.ownerMenuItem.listMenuTimeAvailableModel[indexDate].list.splice(indexTimeOfDate, 1);
     };
 
     onRevertTime = (x: number, y: number) => {
