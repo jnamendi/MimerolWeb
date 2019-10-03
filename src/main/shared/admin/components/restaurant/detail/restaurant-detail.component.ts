@@ -264,13 +264,6 @@ export class AdminRestaurantDetailComponent
     );
   };
 
-  onRemoveDistrict = () => {
-    this.delyveryDistrictModels = this.districtModels;
-    this.restaurantModel.deliveryArea.map(item => {
-      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
-    });
-  }
-
   onGetAllZone = () => {
     this.clientState.isBusy = true;
     this.zoneService.onGetZones().subscribe(res => {
@@ -710,13 +703,20 @@ export class AdminRestaurantDetailComponent
     menuExtra && menuExtra.splice(index, 1);
   };
 
+  onRemoveDistrict = () => {
+    this.delyveryDistrictModels = this.districtModels;
+    this.restaurantModel.deliveryArea.map(item => {
+      this.delyveryDistrictModels = this.delyveryDistrictModels.filter(x => x.districtId != item.deliveryAreaId);
+    });
+  }
+
   onAddDeliveryArea = () => {
-    // this.onRemoveDistrict();
+    this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []
     });
-    // console.log(this.delyveryDistrictModels);
+    // console.log(this.districtModels);
     // console.log(this.restaurantModel.deliveryArea);
   };
 
