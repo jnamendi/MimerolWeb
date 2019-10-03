@@ -364,9 +364,10 @@ export class AdminMenuItemCreationComponent {
         });
     };
 
-    onRemoveTimeAvailable = (timeAvailable: OpenCloseTimeMenuItem[]) => {
-        let index = timeAvailable.findIndex(e => e == timeAvailable);
-        timeAvailable && timeAvailable.splice(index, 1);
+    onRemoveTimeAvailable = (indexDate: number, indexTimeOfDate: number) => {
+        // let index = timeAvailable.findIndex(e => e == timeAvailable);
+        // timeAvailable && timeAvailable.splice(index, 1);
+        this.adminMenuItem.listMenuTimeAvailableModel[indexDate].list.splice(indexTimeOfDate, 1);
     };
 
     onRevertTime = (x: number, y: number) => {
