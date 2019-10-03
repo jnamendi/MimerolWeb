@@ -251,8 +251,8 @@
                                                     </a>
                                                     <div class="col-md-6">
                                                         <ng-select name="{{i}}area" [items]="delyveryDistrictModels"
-                                                             bindValue="districtId"
-                                                            bindLabel="name" [multiple]="false"
+                                                            bindValue="districtId" bindLabel="name" [multiple]="false"
+                                                            (click)="onRemoveDistrict()"
                                                             [(ngModel)]="feild.deliveryAreaId" #area="ngModel"
                                                             placeholder="{{'Commons.Texts.SelectArea' | translate}}"
                                                             required>
@@ -266,7 +266,8 @@
                                                     </div>
                                                     <div class="action col-md-2">
                                                         <button type="button" style="background: gray"
-                                                            class="btn btn-default" [disabled]="this.restaurantModel.deliveryArea.length == this.districtModels.length"
+                                                            class="btn btn-default"
+                                                            [disabled]="this.restaurantModel.deliveryArea.length == this.districtModels.length"
                                                             (click)="onAddDeliveryArea()">+</button>
                                                         <button type="button" style="background: gray"
                                                             class="btn btn-default"

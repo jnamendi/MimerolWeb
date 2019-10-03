@@ -711,12 +711,12 @@ export class AdminRestaurantDetailComponent
   }
 
   onAddDeliveryArea = () => {
-    // this.onRemoveDistrict();
+    this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
       deliveryZoneId: []
     });
-    // console.log(this.delyveryDistrictModels);
+    // console.log(this.districtModels);
     // console.log(this.restaurantModel.deliveryArea);
   };
 
