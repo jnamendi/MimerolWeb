@@ -33,6 +33,9 @@
                                     <th>
                                         <input type="text" class="form-control input-sm" />
                                     </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
                                 </tr>
                             </tfoot>
                             <thead>
@@ -40,6 +43,7 @@
                                     <th class="text-center">No.</th>
                                     <th [innerHTML]="'Commons.Texts.OrderNumber' | translate"></th>
                                     <th [innerHTML]="'Commons.Texts.Date' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Restaurant' | translate"></th>
                                     <th [innerHTML]="'Commons.Texts.Location' | translate"></th>
                                     <th>Total</th>
                                     <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
@@ -56,6 +60,9 @@
                                     </td>
                                     <td>
                                         <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.restaurantName}}</span>
                                     </td>
                                     <td>
                                         <span
