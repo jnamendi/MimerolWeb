@@ -33,6 +33,12 @@
                                     <th>
                                         <input type="text" class="form-control input-sm" />
                                     </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control input-sm" />
+                                    </th>
                                 </tr>
                             </tfoot>
                             <thead>
@@ -40,8 +46,10 @@
                                     <th class="text-center">No.</th>
                                     <th [innerHTML]="'Commons.Texts.OrderNumber' | translate"></th>
                                     <th [innerHTML]="'Commons.Texts.Date' | translate"></th>
+                                    <th [innerHTML]="'Commons.Texts.Restaurant' | translate"></th>
                                     <th [innerHTML]="'Commons.Texts.Location' | translate"></th>
                                     <th>Total</th>
+                                    <th>Charge</th>
                                     <th [innerHTML]="'Commons.Texts.Status' | translate"></th>
                                 </tr>
                             </thead>
@@ -58,6 +66,9 @@
                                         <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
                                     </td>
                                     <td>
+                                        <span>{{item && item.restaurantName}}</span>
+                                    </td>
+                                    <td>
                                         <span
                                             *ngIf="item && item.orderInfos && item.orderInfos[0] && item.orderInfos[0].address">{{item.orderInfos[0].address}}
                                             -
@@ -70,6 +81,9 @@
                                     </td>
                                     <td>
                                         <span>{{item && item.totalPrice}} {{currencySymbol}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item && item.charge}} {{currencySymbol}}</span>
                                     </td>
                                     <td class="text-center">
                                         <span
