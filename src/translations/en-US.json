@@ -237,7 +237,8 @@
             "FromWhichAddress": "From which address are you ordering?",
             "AddressNotSupported": "Address not supported",
             "District": "Area",
-            "ZoneDelivery": "Zone"
+            "ZoneDelivery": "Zone",
+            "SelectPay": "Select pay"
         },
         "Links": {
             "Title": "Links",
@@ -270,7 +271,8 @@
             "ErrorOpenTime": "Open time must be greater than close time",
             "ErrorCloseTime": "Close time must be greater than open time",
             "ErrorSearchAddress": "Address is not found",
-            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart."
+            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart.",
+            "MinPhoneNumber": "Telephone number to be mandatory to enter 8 digits."
         },
         "HttpStatus": {
             "1": "Error when process the data.",

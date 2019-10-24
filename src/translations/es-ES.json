@@ -237,7 +237,8 @@
             "FromWhichAddress": "¿Desde qué dirección está ordenando?",
             "AddressNotSupported": "Dirección no admitida",
             "District": "Área",
-            "ZoneDelivery": "Zona"
+            "ZoneDelivery": "Zona",
+            "SelectPay": "Seleccione pagar"
         },
         "Links": {
             "Title": "Enlaces",
@@ -270,7 +271,8 @@
             "ErrorOpenTime": "El tiempo de apertura debe ser mayor que el tiempo de cierre",
             "ErrorCloseTime": "El tiempo de cierre debe ser mayor que el tiempo abierto",
             "ErrorSearchAddress": "Dirección no encontrada",
-            "ShopBagEmpty": "O seu carrinho de compras está vazio. Por favor, para ver o menu do restaurante e adicionar produtos ao seu carrinho de compras."
+            "ShopBagEmpty": "O seu carrinho de compras está vazio. Por favor, para ver o menu do restaurante e adicionar produtos ao seu carrinho de compras.",
+            "MinPhoneNumber": "El número de teléfono será obligatorio para ingresar 8 dígitos."
         },
         "HttpStatus": {
             "1": "Error al procesar los datos.",
