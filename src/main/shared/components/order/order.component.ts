@@ -63,6 +63,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private validCity: boolean = false;
   private validArea: boolean = false;
   private validZone: boolean = false;
+  private validPhoneNumber: boolean = false;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -385,7 +386,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#region --- Payment withs
   predictOrderPay = (totalPrice: number) => {
     let result = new Set();
-    result.add(totalPrice);
+    result.add(parseFloat(totalPrice.toString()).toFixed(2));
     let redundant = Math.floor(totalPrice / 1000) * 1000;
     let newPay = totalPrice - redundant;
     let hundreds = Math.floor(newPay / 100);
@@ -395,27 +396,26 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
     arrOnes.forEach(function (item) {
-      var temp = parseFloat(
-        (hundreds * 100 + tens * 10 + item + redundant).toFixed(2)
-      );
-      if (temp >= totalPrice) result.add(temp);
+      var temp = hundreds * 100 + tens * 10 + item + redundant;
+      if (temp >= totalPrice) result.add(parseFloat(temp.toString()).toFixed(2));
     });
 
     //calculate for tens
     if (ones !== 0) tens++;
     let arrTens = this.detectPredictMatrix(tens, false);
     arrTens.forEach(function (item) {
-      result.add(hundreds * 100 + item * 10 + redundant);
+      result.add(parseFloat((hundreds * 100 + item * 10 + redundant).toString()).toFixed(2));
     });
 
     // calculate for hundred
     if (tens !== 0) hundreds++;
     let arrHundreds = this.detectPredictMatrix(hundreds, false);
     arrHundreds.forEach(function (item) {
-      result.add(item * 100 + redundant);
+      result.add(parseFloat((item * 100 + redundant).toString()).toFixed(2));
     });
 
-    if (500 < newPay) result.add(1000 + redundant);
+    if (500 < newPay) result.add(parseFloat((1000 + redundant).toString()).toFixed(2));
+    else if (500 > redundant) result.add(parseFloat("1000").toFixed(2));
 
     return result;
   };
@@ -481,11 +481,11 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     var totalPrice = this.onGetTotalItemPrice();
     if (totalPrice) {
       this.paymentWiths = Array.from(this.predictOrderPay(totalPrice));
-      this.orderModel.paymentWith = this.paymentWiths[0];
+      // this.orderModel.paymentWith = this.paymentWiths[0];
       return;
     }
     this.paymentWiths = [0];
-    this.orderModel.paymentWith = 0;
+    // this.orderModel.paymentWith = 0;
   };
   //#endregion
 
@@ -509,6 +509,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         inline: "nearest"
       });
       return;
+    }
+
+    if (this.orderModel.number.length !== 8) {
+      this.validPhoneNumber = true;
+      return;
+    } else {
+      this.validPhoneNumber = false;
     }
 
     //--- Check valid form

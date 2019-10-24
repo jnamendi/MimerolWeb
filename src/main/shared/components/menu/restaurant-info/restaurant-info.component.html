@@ -20,7 +20,7 @@
     <div class="delivery-times">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_delivery_times.svg" alt="delivery_times">
-            <span class="title" [innerHTML]="'Commons.Texts.DeliveryTimes' | translate"></span>
+            <span class="title" [innerHTML]="'Commons.Texts.WorkingTime' | translate"></span>
         </p>
         <div class="info-tab-section">
             <table *ngIf="deliveryTimes.length > 0">
@@ -48,7 +48,7 @@
                 <tr>
                     <td class="text-left" [innerHTML]="'Commons.Texts.MinimumOrderAmount' | translate"></td>
                     <td class="text-right">
-                        {{restaurantModel.minPrice}}
+                        {{restaurantModel.minPrice}} C$
                     </td>
                 </tr>
                 <tr>
@@ -56,7 +56,13 @@
                     <td class="text-right">
                         <span *ngIf="restaurantModel.deliveryCost==0"
                             [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
-                        <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}}</span>
+                        <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}} C$</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryTimes' | translate"></td>
+                    <td class="text-right">
+                        {{restaurantModel.estTime}} {{ "Commons.Texts.Minutes" | translate }}
                     </td>
                 </tr>
             </table>
