@@ -38,6 +38,10 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
+   onReplaceNumber = () => {
+    this.userDetailsModel.phone = this.userDetailsModel.phone.replace(/\s/g,"");
+  }
+
   onUpdateUserDetails = (form: NgForm) => {
     if (!form.valid) {
       return;

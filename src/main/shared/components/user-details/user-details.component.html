@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Commons.Texts.Phone' | translate"></label>
-                  <input type="text" class="form-control" name="phone" [(ngModel)]="userDetailsModel.phone" #phone="ngModel" />
+                  <input type="text" class="form-control" name="phone" [(ngModel)]="userDetailsModel.phone" #phone="ngModel" (change)="onReplaceNumber()" maxlength="8" />
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Components.MyAccount.TxtAccountType' | translate"></label>

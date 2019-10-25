@@ -20,6 +20,8 @@ import { AddressModel } from "../../models/address/address.model";
 import { Address } from "ng2-google-place-autocomplete/src/app/ng2-google-place.classes";
 import { RestaurantAppService } from "../../services/api/restaurant/app-restaurant.service";
 import { AppRestaurantModel } from "../../models/restaurant/app-restaurant.model";
+import { UserService } from '../../services/api/user/user.service';
+import { UserDetailsModel } from '../../models/user/user.model';
 
 @Component({
   selector: "page-order",
@@ -64,6 +66,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private validArea: boolean = false;
   private validZone: boolean = false;
   private validPhoneNumber: boolean = false;
+  private userDetailsModel: UserDetailsModel = new UserDetailsModel();
+  private getUserByIdError: string;
+  private getUserByIdStatusError: number = 0;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -82,6 +87,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private cdRef: ChangeDetectorRef,
     private i18nService: I18nService,
     private coreService: CoreService,
+    private userService: UserService,
     private appRestaurantService: RestaurantAppService
   ) {
     this.sub = this.route.params.subscribe(params => {
@@ -113,15 +119,30 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     //--- Check authen
     this.isAuthen = this.authService.isAuthenticated();
     if (this.isAuthen) {
-      this.userInfo = JwtTokenHelper.GetUserInfo();
-      if (this.userInfo) {
-        this.orderModel.userId = this.userInfo.userId;
-        this.orderModel.name = this.userInfo.fullName;
-        this.orderModel.email = this.userInfo.email;
-        this.orderModel.number = this.userInfo.phone;
+      // this.userInfo = JwtTokenHelper.GetUserInfo();
+      // if (this.userInfo) {
+      //   this.orderModel.userId = this.userInfo.userId;
+      //   this.orderModel.name = this.userInfo.fullName;
+      //   this.orderModel.email = this.userInfo.email;
+      //   this.orderModel.number = this.userInfo.phone;
 
-        this.onGetAddressForCurrentUser();
-      }
+      //   this.onGetAddressForCurrentUser();
+      // }
+      let userId = JwtTokenHelper.GetUserInfo().userId;
+      this.userService.onGetById(userId).subscribe(
+        res => {
+          this.userDetailsModel = <UserDetailsModel>{ ...res.content };
+          this.orderModel.userId = this.userDetailsModel.userId;
+          this.orderModel.name = this.userDetailsModel.fullName;
+          this.orderModel.email = this.userDetailsModel.email;
+          this.orderModel.number = this.userDetailsModel.phone;
+
+          this.onGetAddressForCurrentUser();
+        }, (err: ApiError) => {
+          this.getUserByIdError = err.message;
+          this.isError = true;
+          this.getUserByIdStatusError = err.status;
+        });
     }
   }
 
@@ -152,6 +173,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         );
     }
   };
+
+  onReplaceNumber = () => {
+    this.orderModel.number = this.orderModel.number.replace(/\s/g, "");
+  }
 
   onCaculatorDeliveryTime = (resModel: AppRestaurantModel) => {
     let d = new Date();
