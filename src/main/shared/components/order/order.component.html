@@ -51,13 +51,15 @@
                                     <div class="col-sm-5">
                                         <div class="form-input">
                                             <input noSpaces inputFocus name="phone" type="tel"
-                                                [(ngModel)]="orderModel.number" required #phone="ngModel">
+                                                [(ngModel)]="orderModel.number" required #phone="ngModel" (change)="onReplaceNumber()">
                                             <label [innerHTML]="'Commons.Texts.NumberRequired' | translate"></label>
                                             <div *ngIf="phone.invalid && (phone.dirty || phone.touched || f.submitted)"
                                                 class="error">
                                                 <div *ngIf="phone.errors?.required"
                                                     [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
                                             </div>
+                                            <div *ngIf="!phone.errors?.required && validPhoneNumber" class="error"
+                                                [innerHTML]="'Commons.Error.MinPhoneNumber' | translate"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -250,14 +252,16 @@
                                             <img src="assets/images/icon/credit_cards_color.svg" alt="">
                                         </p>
                                     </label> -->
-                                    <div *ngIf="orderModel.paymentType == 1 && orderModel.paymentWith"
+                                    <div *ngIf="orderModel.paymentType == 1"
                                         class="form-input" style="margin-top: 15px; margin-bottom: 0">
                                         <select name="paymentWith" inputFocus [(ngModel)]="orderModel.paymentWith"
                                             [required]="orderModel.paymentType == 1" #paymentWith="ngModel">
-                                            <option *ngFor="let item of paymentWiths" [value]="item">{{item}}</option>
+                                            <option [ngValue]="undefined">
+                                                {{'Commons.Texts.SelectPay' | translate}}</option>
+                                            <option *ngFor="let item of paymentWiths" [value]="item">{{item}} {{currencySymbol}}</option>
                                         </select>
                                         <label [innerHTML]="'Commons.Texts.PayWith' | translate"></label>
-                                        <div *ngIf="paymentWith.invalid && (paymentWith.dirty || paymentWith.touched || a.submitted)"
+                                        <div *ngIf="paymentWith.invalid && (paymentWith.dirty || paymentWith.touched || f.submitted)"
                                             class="error">
                                             <div *ngIf="paymentWith.errors?.required"
                                                 [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
