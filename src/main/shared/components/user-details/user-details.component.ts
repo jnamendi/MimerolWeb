@@ -19,7 +19,7 @@ export class UserDetailsComponent implements OnInit {
   private getUserByIdStatusError: number = 0;
   private updateUserDetailsError: string;
   private updateUserDetailsStatusError: number = 0;
-
+  private validPhoneNumber: boolean = false;
   constructor(
     private userService: UserService,
     private clientState: ClientState,
@@ -43,6 +43,12 @@ export class UserDetailsComponent implements OnInit {
   }
 
   onUpdateUserDetails = (form: NgForm) => {
+    if (this.userDetailsModel.phone.length !== 8) {
+      this.validPhoneNumber = true;
+      return;
+    } else {
+      this.validPhoneNumber = false;
+    }
     if (!form.valid) {
       return;
     }
