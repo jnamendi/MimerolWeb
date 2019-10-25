@@ -51,7 +51,7 @@
                                     <div class="col-sm-5">
                                         <div class="form-input">
                                             <input noSpaces inputFocus name="phone" type="tel"
-                                                [(ngModel)]="orderModel.number" required #phone="ngModel">
+                                                [(ngModel)]="orderModel.number" required #phone="ngModel" (change)="onReplaceNumber()">
                                             <label [innerHTML]="'Commons.Texts.NumberRequired' | translate"></label>
                                             <div *ngIf="phone.invalid && (phone.dirty || phone.touched || f.submitted)"
                                                 class="error">
