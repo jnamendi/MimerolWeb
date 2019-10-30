@@ -234,7 +234,11 @@
             "SelectPaymentMethod": "Select payment method",
             "ChooseAll": "Choose all",
             "FillNewAddress": "Fill in new address",
-            "FromWhichAddress": "From which address are you ordering?"
+            "FromWhichAddress": "From which address are you ordering?",
+            "AddressNotSupported": "Address not supported",
+            "District": "Area",
+            "ZoneDelivery": "Zone",
+            "SelectPay": "Select pay"
         },
         "Links": {
             "Title": "Links",
@@ -264,10 +268,11 @@
             "ErrNoItem": "There is no item",
             "ErrorStartDate": "Start date must be lesser than end date",
             "ErrorEndDate": "End date must be greater than start date",
-            "ErrorOpenTime": "Open time must be lesser than close time",
+            "ErrorOpenTime": "Open time must be greater than close time",
             "ErrorCloseTime": "Close time must be greater than open time",
             "ErrorSearchAddress": "Address is not found",
-            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart."
+            "ShopBagEmpty": "Your shopping cart is currently empty. Please to view the restaurant's menu and add products to your shopping cart.",
+            "MinPhoneNumber": "Telephone number to be mandatory to enter 8 digits."
         },
         "HttpStatus": {
             "1": "Error when process the data.",

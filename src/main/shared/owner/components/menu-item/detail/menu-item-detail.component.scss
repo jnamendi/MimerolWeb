@@ -16,6 +16,18 @@
     }
 }
 
+.separator-dashed {
+    border: 1px dashed #eeeeee;
+    height: 0;
+    margin: 15px 0;
+    width: 65%;
+}
+
+.separator-dashed-tilte {
+    font-size: 20px;
+    text-align: center;
+}
+
 .weekDays-selector input {
     display: none !important;
 }
@@ -91,4 +103,14 @@ input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+input[type=time]::-webkit-clear-button {
+    display: none;
+}
+
+input[type=time]::-webkit-inner-spin-button,
+input[type=time]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

@@ -20,6 +20,8 @@ import { AddressModel } from "../../models/address/address.model";
 import { Address } from "ng2-google-place-autocomplete/src/app/ng2-google-place.classes";
 import { RestaurantAppService } from "../../services/api/restaurant/app-restaurant.service";
 import { AppRestaurantModel } from "../../models/restaurant/app-restaurant.model";
+import { UserService } from '../../services/api/user/user.service';
+import { UserDetailsModel } from '../../models/user/user.model';
 
 @Component({
   selector: "page-order",
@@ -63,6 +65,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private validCity: boolean = false;
   private validArea: boolean = false;
   private validZone: boolean = false;
+  private validPhoneNumber: boolean = false;
+  private userDetailsModel: UserDetailsModel = new UserDetailsModel();
+  private getUserByIdError: string;
+  private getUserByIdStatusError: number = 0;
 
   @ViewChild(ShoppingBagsComponent) child;
 
@@ -81,6 +87,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private cdRef: ChangeDetectorRef,
     private i18nService: I18nService,
     private coreService: CoreService,
+    private userService: UserService,
     private appRestaurantService: RestaurantAppService
   ) {
     this.sub = this.route.params.subscribe(params => {
@@ -112,28 +119,35 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     //--- Check authen
     this.isAuthen = this.authService.isAuthenticated();
     if (this.isAuthen) {
-      this.userInfo = JwtTokenHelper.GetUserInfo();
-      if (this.userInfo) {
-        this.orderModel.userId = this.userInfo.userId;
-        this.orderModel.name = this.userInfo.fullName;
-        this.orderModel.email = this.userInfo.email;
-        this.orderModel.number = this.userInfo.phone;
+      // this.userInfo = JwtTokenHelper.GetUserInfo();
+      // if (this.userInfo) {
+      //   this.orderModel.userId = this.userInfo.userId;
+      //   this.orderModel.name = this.userInfo.fullName;
+      //   this.orderModel.email = this.userInfo.email;
+      //   this.orderModel.number = this.userInfo.phone;
 
-        this.onGetAddressForCurrentUser();
-      }
+      //   this.onGetAddressForCurrentUser();
+      // }
+      let userId = JwtTokenHelper.GetUserInfo().userId;
+      this.userService.onGetById(userId).subscribe(
+        res => {
+          this.userDetailsModel = <UserDetailsModel>{ ...res.content };
+          this.orderModel.userId = this.userDetailsModel.userId;
+          this.orderModel.name = this.userDetailsModel.fullName;
+          this.orderModel.email = this.userDetailsModel.email;
+          this.orderModel.number = this.userDetailsModel.phone;
+
+          this.onGetAddressForCurrentUser();
+        }, (err: ApiError) => {
+          this.getUserByIdError = err.message;
+          this.isError = true;
+          this.getUserByIdStatusError = err.status;
+        });
     }
   }
 
   ngOnInit(): void {
-    // let timeRanges = this.coreService.range(1, 93).map(i => {
-    //   return this.coreService.convertMinuteToTime(i * 15);
-    // });
-
-    // this.deliveryTimes = timeRanges.filter(t => {
-    //   return this.coreService.compareTimeGreaterThanCurrent(t);
-    // });
     this.onGetCities(this.restaurantId);
-
     this.onGetRestaurantDetails();
   }
 
@@ -159,6 +173,10 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         );
     }
   };
+
+  onReplaceNumber = () => {
+    this.orderModel.number = this.orderModel.number.replace(/\s/g, "");
+  }
 
   onCaculatorDeliveryTime = (resModel: AppRestaurantModel) => {
     let d = new Date();
@@ -265,34 +283,54 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     if (userAddress.cityId == this.cityModels[0].cityId) {
       this.validCity = false;
-      this.onGetDistrictByCity(this.restaurantId, userAddress.cityId);
       this.orderModel.cityName = userAddress.city;
       this.orderModel.cityId = userAddress.cityId;
     } else {
+      this.orderModel.cityId = null;
+      this.orderModel.districtId = null;
+      this.orderModel.zoneId = null;
       this.validCity = true;
       return;
     }
 
-    let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId)
-    if (districtTemp && districtTemp.length > 0) {
-      this.validArea = false;
-      this.onGetZoneByDistrict(userAddress.districtId, this.restaurantId);
-      this.orderModel.districtName = userAddress.district;
-      this.orderModel.districtId = userAddress.districtId;
-    } else {
-      this.validArea = true;
-      return;
+    this.districtService.onDistrictGetByRestaurantCity(this.restaurantId, userAddress.cityId).subscribe(res => {
+      this.districtModels = res.content ? <DistrictModel[]>[...res.content] : [];
+      this.onSortAreaByAlphabetical();
+      let districtTemp = this.districtModels.filter(x => x.districtId == userAddress.districtId);
+      if (districtTemp && districtTemp.length > 0) {
+        this.validArea = false;
+        this.orderModel.districtName = userAddress.district;
+        this.orderModel.districtId = userAddress.districtId;
+      } else {
+        this.orderModel.districtId = null;
+        this.orderModel.zoneId = null;
+        this.validArea = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
     }
+    );
 
-    let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone)
-    if (zoneTemp && zoneTemp.length > 0) {
-      this.validZone = false;
-      this.orderModel.zoneId = userAddress.zone;
-      this.orderModel.zone = userAddress.zoneName;
-    } else {
-      this.validZone = true;
-      return;
+    this.zoneService.onGetZoneByDistrictRestaurant(userAddress.districtId, this.restaurantId).subscribe(res => {
+      this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.onSortZoneByAlphabetical();
+      let zoneTemp = this.zoneModels.filter(x => x.zoneId == userAddress.zone);
+      if (zoneTemp && zoneTemp.length > 0) {
+        this.validZone = false;
+        this.orderModel.zoneId = userAddress.zone;
+        this.orderModel.zone = userAddress.zoneName;
+      } else {
+        this.orderModel.zoneId = null;
+        this.validZone = true;
+        return;
+      }
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
     }
+    );
 
     this.orderModel.userId = userAddress.userId;
   }
@@ -318,7 +356,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       res => {
         this.cityModels =
           res.content && res.content ? <CityModel[]>[...res.content] : [];
-
+        this.validCity = false;
         this.onGetDistrictByCity(this.restaurantId, this.cityModels[0].cityId);
       },
       (err: ApiError) => {
@@ -336,7 +374,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.districtModels = res.content
             ? <DistrictModel[]>[...res.content]
             : [];
-          // this.orderModel.districtId = null;
+          this.orderModel.districtId = null;
+          this.validArea = false;
+          this.onSortAreaByAlphabetical();
         },
         (err: ApiError) => {
           this.message = err.message;
@@ -348,6 +388,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   onGetZoneByDistrict = (districtId: number, restaurantId: number) => {
     this.zoneService.onGetZoneByDistrictRestaurant(districtId, restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
+      this.orderModel.zoneId = null;
+      this.validZone = false;
+      this.onSortZoneByAlphabetical();
     },
       (err: ApiError) => {
         this.message = err.message;
@@ -368,7 +411,7 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
   //#region --- Payment withs
   predictOrderPay = (totalPrice: number) => {
     let result = new Set();
-    result.add(totalPrice);
+    result.add(parseFloat(totalPrice.toString()).toFixed(2));
     let redundant = Math.floor(totalPrice / 1000) * 1000;
     let newPay = totalPrice - redundant;
     let hundreds = Math.floor(newPay / 100);
@@ -378,27 +421,26 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     // calculate for ones
     let arrOnes = this.detectPredictMatrix(ones, true);
     arrOnes.forEach(function (item) {
-      var temp = parseFloat(
-        (hundreds * 100 + tens * 10 + item + redundant).toFixed(2)
-      );
-      if (temp >= totalPrice) result.add(temp);
+      var temp = hundreds * 100 + tens * 10 + item + redundant;
+      if (temp >= totalPrice) result.add(parseFloat(temp.toString()).toFixed(2));
     });
 
     //calculate for tens
     if (ones !== 0) tens++;
     let arrTens = this.detectPredictMatrix(tens, false);
     arrTens.forEach(function (item) {
-      result.add(hundreds * 100 + item * 10 + redundant);
+      result.add(parseFloat((hundreds * 100 + item * 10 + redundant).toString()).toFixed(2));
     });
 
     // calculate for hundred
     if (tens !== 0) hundreds++;
     let arrHundreds = this.detectPredictMatrix(hundreds, false);
     arrHundreds.forEach(function (item) {
-      result.add(item * 100 + redundant);
+      result.add(parseFloat((item * 100 + redundant).toString()).toFixed(2));
     });
 
-    if (500 < newPay) result.add(1000 + redundant);
+    if (500 < newPay) result.add(parseFloat((1000 + redundant).toString()).toFixed(2));
+    else if (500 > redundant) result.add(parseFloat("1000").toFixed(2));
 
     return result;
   };
@@ -464,11 +506,11 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     var totalPrice = this.onGetTotalItemPrice();
     if (totalPrice) {
       this.paymentWiths = Array.from(this.predictOrderPay(totalPrice));
-      this.orderModel.paymentWith = this.paymentWiths[0];
+      // this.orderModel.paymentWith = this.paymentWiths[0];
       return;
     }
     this.paymentWiths = [0];
-    this.orderModel.paymentWith = 0;
+    // this.orderModel.paymentWith = 0;
   };
   //#endregion
 
@@ -492,6 +534,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
         inline: "nearest"
       });
       return;
+    }
+
+    if (this.orderModel.number.length !== 8) {
+      this.validPhoneNumber = true;
+      return;
+    } else {
+      this.validPhoneNumber = false;
     }
 
     //--- Check valid form
@@ -697,4 +746,25 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
   };
+
+  onSortAreaByAlphabetical = () => {
+    this.districtModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  };
+
+  onSortZoneByAlphabetical = () => {
+    this.zoneModels.sort((a, b) => {
+      let genreA = a.name.toLocaleUpperCase();
+      let genreB = b.name.toLocaleUpperCase();
+      if (genreA > genreB) return 1;
+      if (genreA < genreB) return -1;
+      return 0;
+    })
+  }
+
 }

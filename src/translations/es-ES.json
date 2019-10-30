@@ -234,7 +234,11 @@
             "SelectPaymentMethod": "Seleccione forma de pago",
             "ChooseAll": "Elegir todos",
             "FillNewAddress": "Ingrese una nueva dirección",
-            "FromWhichAddress": "¿Desde qué dirección está ordenando?"
+            "FromWhichAddress": "¿Desde qué dirección está ordenando?",
+            "AddressNotSupported": "Dirección no admitida",
+            "District": "Área",
+            "ZoneDelivery": "Zona",
+            "SelectPay": "Seleccione pagar"
         },
         "Links": {
             "Title": "Enlaces",
@@ -264,10 +268,11 @@
             "ErrNoItem": "No hay artículo",
             "ErrorStartDate": "La fecha de inicio debe ser menor que la fecha de finalización",
             "ErrorEndDate": "La fecha de finalización debe ser mayor que la fecha de inicio",
-            "ErrorOpenTime": "El tiempo de apertura debe ser menor que el tiempo de cierre",
+            "ErrorOpenTime": "El tiempo de apertura debe ser mayor que el tiempo de cierre",
             "ErrorCloseTime": "El tiempo de cierre debe ser mayor que el tiempo abierto",
             "ErrorSearchAddress": "Dirección no encontrada",
-            "ShopBagEmpty": "O seu carrinho de compras está vazio. Por favor, para ver o menu do restaurante e adicionar produtos ao seu carrinho de compras."
+            "ShopBagEmpty": "O seu carrinho de compras está vazio. Por favor, para ver o menu do restaurante e adicionar produtos ao seu carrinho de compras.",
+            "MinPhoneNumber": "El número de teléfono será obligatorio para ingresar 8 dígitos."
         },
         "HttpStatus": {
             "1": "Error al procesar los datos.",

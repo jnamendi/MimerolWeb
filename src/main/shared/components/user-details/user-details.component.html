@@ -12,7 +12,8 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label [innerHTML]="'Components.MyAccount.TxtFullName' | translate"></label>
-                  <input type="text" class="form-control" name="fullName" [(ngModel)]="userDetailsModel.fullName" #fullName="ngModel" />
+                  <input type="text" class="form-control" name="fullName" [(ngModel)]="userDetailsModel.fullName"
+                    #fullName="ngModel" />
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Commons.Texts.Email' | translate"></label>
@@ -20,25 +21,33 @@
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Commons.Texts.Phone' | translate"></label>
-                  <input type="text" class="form-control" name="phone" [(ngModel)]="userDetailsModel.phone" #phone="ngModel" />
+                  <input type="text" class="form-control" name="phone" [(ngModel)]="userDetailsModel.phone"
+                    #phone="ngModel" (change)="onReplaceNumber()" maxlength="8" />
+                  <div *ngIf="validPhoneNumber" class="error"
+                    [innerHTML]="'Commons.Error.MinPhoneNumber' | translate"></div>
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Components.MyAccount.TxtAccountType' | translate"></label>
-                  <select class="form-control" name="accountType" [(ngModel)]="userDetailsModel.accountType" #accountType="ngModel">
+                  <select class="form-control" name="accountType" [(ngModel)]="userDetailsModel.accountType"
+                    #accountType="ngModel">
                     <option selected value="Private">Private</option>
                     <option value="Company">Company</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label [innerHTML]="'Components.MyAccount.TxtReceiveNewsletter' | translate"></label>
-                  <select class="form-control" name="receiveNewsLetter" [(ngModel)]="userDetailsModel.receiveNewsLetter" #receiveNewsLetter="ngModel">
+                  <select class="form-control" name="receiveNewsLetter" [(ngModel)]="userDetailsModel.receiveNewsLetter"
+                    #receiveNewsLetter="ngModel">
                     <option selected value="true">Yes, receive the newsletter</option>
                     <option value="false">No, don't receive the newsletter</option>
                   </select>
                 </div>
-                <div *ngIf="f.submitted && isError" class="form-input error" [innerHTML]="'Commons.HttpStatus.' + updateUserDetailsStatusError | translate"></div>
-                <div *ngIf="updateUserDetailsSuccess" class="success" [innerHTML]="'Components.MyAccount.UpdateUserDetailsSuccess' | translate"></div>
-                <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary">Save data</button>
+                <div *ngIf="f.submitted && isError" class="form-input error"
+                  [innerHTML]="'Commons.HttpStatus.' + updateUserDetailsStatusError | translate"></div>
+                <div *ngIf="updateUserDetailsSuccess" class="success"
+                  [innerHTML]="'Components.MyAccount.UpdateUserDetailsSuccess' | translate"></div>
+                <button [disabled]="clientState.isBusy" type="submit" class="btn btn-default btn-primary">Save
+                  data</button>
               </div>
             </div>
           </form>

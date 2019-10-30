@@ -10,6 +10,7 @@ export class MenuAdminModel extends BaseModel {
     urlSlug: string;
     status?: number;
     isDeleted?: boolean;
+    rate?: number;
 }
 
 export enum MenuStatus {
