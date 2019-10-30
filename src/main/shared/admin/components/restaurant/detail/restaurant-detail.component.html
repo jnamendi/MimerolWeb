@@ -313,6 +313,16 @@
                                                                 (click)="onChooseAllZone(feild.deliveryAreaId, i)">{{'Commons.Texts.ChooseAll' | translate}}</button>
                                                         </div>
                                                     </div>
+                                                    <div class="row form-group">
+                                                            <label class="col-md-4" style="font-weight: 600;left: 10px;"
+                                                                [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></label>
+                                                            <div class="col-md-6">
+                                                                <input type="number" min="0" class="form-control"
+                                                                    name="{{i}}deliverycosts" [(ngModel)]="feild.deliveryCost"
+                                                                    #deliverycosts="ngModel"
+                                                                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                                            </div>
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>

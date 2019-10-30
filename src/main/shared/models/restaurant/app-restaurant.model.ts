@@ -40,6 +40,16 @@ export class AppRestaurantModel extends BaseModel {
     city: string;
     categoryIds: Array<RestaurantCategory>;
     restaurantClosed?: boolean;
+    restaurantDeliveryCost: Array<RestaurantDeliveryCost> = [];
+}
+
+export class RestaurantDeliveryCost {
+    deliveryCost: number;
+    district: District;
+}
+
+export class District {
+    districtId: number;
 }
 
 export class RankPrice {
