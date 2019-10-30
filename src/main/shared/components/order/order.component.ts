@@ -313,6 +313,15 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     );
 
+    let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == userAddress.districtId);
+    if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null) {
+      this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
+    } else {
+      this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
+    }
+    this.child.onCalculateTotalPricesWithDelivery(this.selectedMenuItems.deliveryCost);
+    this.onBuildPaymentWiths();
+
     this.zoneService.onGetZoneByDistrictRestaurant(userAddress.districtId, this.restaurantId).subscribe(res => {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
       this.onSortZoneByAlphabetical();
@@ -390,12 +399,27 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
       this.orderModel.zoneId = null;
       this.validZone = false;
+      let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == districtId);
+      if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null) {
+        this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
+      } else {
+        this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
+      }
+      this.child.onCalculateTotalPricesWithDelivery(this.selectedMenuItems.deliveryCost);
+      this.onBuildPaymentWiths();
       this.onSortZoneByAlphabetical();
     },
       (err: ApiError) => {
         this.message = err.message;
         this.isError = true;
       }
+    );
+  };
+
+  onSetSelectedItems = () => {
+    this.storageService.onSetToken(
+      StorageKey.ItemsInBag + `__${this.restaurantId}`,
+      JwtTokenHelper.CreateSigningToken(this.selectedMenuItems)
     );
   };
 

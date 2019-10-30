@@ -206,7 +206,7 @@
             "Close": "Close",
             "Open": "Open",
             "DeliveryTimes": "Delivery times",
-            "DeliveryCosts": "Delivery costs",
+            "DeliveryCosts": "Delivery cost",
             "MinimumOrderAmount": "Minimum order amount",
             "PaymentMethods": "Payment methods",
             "FailCodePromotion": "Your amount order needed to reach the minimum order value",

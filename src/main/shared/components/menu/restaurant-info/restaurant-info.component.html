@@ -19,7 +19,7 @@
 
     <div class="delivery-times">
         <p class="restaurant-info-title">
-            <img src="assets/icons/ic_delivery_times.svg" alt="delivery_times">
+            <img src="assets/icons/ic_time_open.png" alt="delivery_times">
             <span class="title" [innerHTML]="'Commons.Texts.WorkingTime' | translate"></span>
         </p>
         <div class="info-tab-section">
@@ -40,8 +40,8 @@
 
     <div class="delivery-costs">
         <p class="restaurant-info-title">
-            <img src="assets/icons/ic_delivery_costs.png" alt="delivery_costs">
-            <span class="title" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></span>
+            <img src="assets/icons/ic_delivery_times.svg" alt="delivery_costs">
+            <span class="title" [innerHTML]="'Commons.Texts.Delivery' | translate"></span>
         </p>
         <div class="info-tab-section">
             <table>
@@ -69,7 +69,28 @@
         </div>
     </div>
 
-    <div class="payment-methods">
+    <div class="delivery-costs"
+        *ngIf="restaurantModel.restaurantDeliveryCost && restaurantModel.restaurantDeliveryCost.length > 0">
+        <p class="restaurant-info-title">
+            <img src="assets/icons/ic_delivery_costs.png" alt="delivery_costs">
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></span>
+        </p>
+        <div class="info-tab-section">
+            <table>
+                <tr *ngFor="let deliveryCostItem of restaurantModel.restaurantDeliveryCost">
+                    <ng-container *ngIf="deliveryCostItem.deliveryCost && deliveryCostItem.deliveryCost != null">
+                        <td class="text-left">{{deliveryCostItem.district.name}}</td>
+                        <td class="text-right">
+                            {{deliveryCostItem.deliveryCost}} C$
+                        </td>
+                    </ng-container>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="payment-methods"
+        *ngIf="restaurantModel.paymentProviderLst && restaurantModel.paymentProviderLst.length > 0">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_payment_methods.png" alt="payment_methods">
             <span class="title" [innerHTML]="'Commons.Texts.PaymentMethods' | translate"></span>
