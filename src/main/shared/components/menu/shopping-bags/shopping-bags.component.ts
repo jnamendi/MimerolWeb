@@ -31,6 +31,7 @@ export class ShoppingBagsComponent implements OnInit {
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
   private isResClose: boolean;
+  private showDeliveryCost: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -226,6 +227,10 @@ export class ShoppingBagsComponent implements OnInit {
     this.selectedMenuItems.deliveryCost = deliveryCost;
     this.totalItemsPrice = this.totalSubItemsPrice + (this.selectedMenuItems.deliveryCost || 0);
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
+  }
+
+  onShowDeliveryCost = () => {
+    this.showDeliveryCost = true;
   }
 
   onCalculateTotalPrices = (discountValue: number = 0) => {
