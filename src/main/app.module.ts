@@ -17,6 +17,7 @@ import { GoogleLoginProvider, FacebookLoginProvider, SocialLoginModule, AuthServ
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { StorageKey } from './shared/services/storage-key/storage-key';
+import { ToastrModule } from 'ngx-toastr';
 
 let config = new AuthServiceConfig([
   {
@@ -51,7 +52,7 @@ let config = new AuthServiceConfig([
         deps: [HttpClient]
       }
     }),
-
+    ToastrModule.forRoot(),
     NgwWowModule.forRoot(),
     SocialLoginModule.initialize(config),
   ],

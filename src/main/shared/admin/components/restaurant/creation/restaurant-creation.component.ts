@@ -233,7 +233,7 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
           : [];
         this.restaurantModel.districtId = null;
         this.delyveryDistrictModels = this.districtModels;
-        this.restaurantModel.deliveryArea = [{ deliveryAreaId: res.content[0].districtId, deliveryZoneId: [] }];
+        this.restaurantModel.deliveryArea = [{ deliveryAreaId: res.content[0].districtId, deliveryZoneId: [], deliveryCost: 0 }];
       },
       (err: ApiError) => {
         this.message = err.message;
@@ -272,6 +272,12 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.restaurantModel.latitude = null;
     this.restaurantModel.longitude = null;
   };
+
+  onRequiedDeliveryCost = (positionArea: number) => {
+    if (this.restaurantModel.deliveryArea[positionArea].deliveryCost == null) {
+      this.restaurantModel.deliveryArea[positionArea].deliveryCost = 0;
+    }
+  }
 
   onBlurSearch = () => {
     if (this.validateAddressTimeout) {
@@ -613,7 +619,8 @@ export class AdminRestaurantCreationComponent implements OnInit, AfterViewInit {
     this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
-      deliveryZoneId: []
+      deliveryZoneId: [],
+      deliveryCost: 0
     });
   };
 

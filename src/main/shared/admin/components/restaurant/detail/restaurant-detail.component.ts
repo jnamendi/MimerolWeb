@@ -26,6 +26,7 @@ import { DistrictModel } from "../../../../models/district/district.model";
 import { ZoneModel } from "../../../../models/zone/zone.model";
 import { PaymentModel } from "../../../../models/payment/payment.model";
 import { AmazingTimePickerService } from "amazing-time-picker";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "restaurant-detail",
@@ -104,7 +105,8 @@ export class AdminRestaurantDetailComponent
     private zoneService: ZoneService,
     private paymentService: PaymentService,
     private cdRef: ChangeDetectorRef,
-    private atp: AmazingTimePickerService
+    private atp: AmazingTimePickerService,
+    private toastr: ToastrService
   ) {
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = +params["id"];
@@ -251,7 +253,7 @@ export class AdminRestaurantDetailComponent
           ? null
           : this.restaurantModel.districtId;
         if (this.restaurantModel.deliveryArea.length <= 0) {
-          this.restaurantModel.deliveryArea = [{ deliveryAreaId: this.districtModels[0].districtId, deliveryZoneId: [] }];
+          this.restaurantModel.deliveryArea = [{ deliveryAreaId: this.districtModels[0].districtId, deliveryZoneId: [], deliveryCost: 0 }];
         }
         this.delyveryDistrictModels = this.districtModels;
         this.clientState.isBusy = false;
@@ -291,6 +293,12 @@ export class AdminRestaurantDetailComponent
       }
     );
   };
+
+  onRequiedDeliveryCost = (positionArea: number) => {
+    if (this.restaurantModel.deliveryArea[positionArea].deliveryCost == null) {
+      this.restaurantModel.deliveryArea[positionArea].deliveryCost = 0;
+    }
+  }
 
   onGetAddressFromLatLng = (lat: number, lng: number) => {
     if (this.restaurantModel.latitude && this.restaurantModel.longitude) {
@@ -714,7 +722,8 @@ export class AdminRestaurantDetailComponent
     this.onRemoveDistrict();
     this.restaurantModel.deliveryArea.push(<DeliveryArea>{
       deliveryAreaId: this.delyveryDistrictModels[0].districtId,
-      deliveryZoneId: []
+      deliveryZoneId: [],
+      deliveryCost: 0
     });
     // console.log(this.districtModels);
     // console.log(this.restaurantModel.deliveryArea);
