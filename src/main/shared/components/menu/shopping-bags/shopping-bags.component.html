@@ -78,15 +78,17 @@
                         <span class="order-prices__label-text">VAT</span>
                     </dt>
                     <dd class="order-prices__value">{{spainCurrency.symbol}} {{totalItemsVATPrice}}</dd> -->
-                    <dt class="order-prices__label">
-                        <span class="order-prices__label-text"
-                            [innerHTML]="'Commons.Texts.DeliveryCost' | translate"></span>
-                    </dt>
-                    <dd *ngIf="selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost > 0"
-                        class="order-prices__value">{{spainCurrency.symbol}}
-                        {{selectedMenuItems.deliveryCost.toLocaleString()}}</dd>
-                    <dd *ngIf="!selectedMenuItems.deliveryCost || (selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost <= 0)"
-                        class="order-prices__value">Free</dd>
+                    <ng-container *ngIf="showDeliveryCost">
+                        <dt class="order-prices__label">
+                            <span class="order-prices__label-text"
+                                [innerHTML]="'Commons.Texts.DeliveryCost' | translate"></span>
+                        </dt>
+                        <dd *ngIf="selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost > 0"
+                            class="order-prices__value">{{spainCurrency.symbol}}
+                            {{selectedMenuItems.deliveryCost.toLocaleString()}}</dd>
+                        <dd *ngIf="!selectedMenuItems.deliveryCost || (selectedMenuItems.deliveryCost && selectedMenuItems.deliveryCost <= 0)"
+                            class="order-prices__value">Free</dd>
+                    </ng-container>
                     <dt *ngIf="selectedMenuItems.discount && selectedMenuItems.discount > 0"
                         class="order-prices__label">
                         <span class="order-prices__label-text">Discount</span>

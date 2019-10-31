@@ -31,6 +31,7 @@ export class ShoppingBagsComponent implements OnInit {
   private totalItemsPrice: number;
   private spainCurrency = Configs.SpainCurrency;
   private isResClose: boolean;
+  private showDeliveryCost: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +41,7 @@ export class ShoppingBagsComponent implements OnInit {
     private i18nService: I18nService,
     private coreService: CoreService,
     private appRestaurantService: RestaurantAppService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.selectedMenuItems = this.onConvertMenuItem(
@@ -187,8 +188,8 @@ export class ShoppingBagsComponent implements OnInit {
     this.itemInBags &&
       this.itemInBags.emit(
         this.selectedMenuItems &&
-          this.selectedMenuItems.orderItemsRequest &&
-          this.selectedMenuItems.orderItemsRequest.length
+        this.selectedMenuItems.orderItemsRequest &&
+        this.selectedMenuItems.orderItemsRequest.length
       );
   };
 
@@ -221,6 +222,16 @@ export class ShoppingBagsComponent implements OnInit {
       0;
     this.selectedMenuItems.totalSubPrice = this.totalSubItemsPrice;
   };
+
+  onCalculateTotalPricesWithDelivery = (deliveryCost: number = 0) => {
+    this.selectedMenuItems.deliveryCost = deliveryCost;
+    this.totalItemsPrice = this.totalSubItemsPrice + (this.selectedMenuItems.deliveryCost || 0);
+    this.selectedMenuItems.totalPrice = this.totalItemsPrice;
+  }
+
+  onShowDeliveryCost = () => {
+    this.showDeliveryCost = true;
+  }
 
   onCalculateTotalPrices = (discountValue: number = 0) => {
     this.totalItemsPrice =
