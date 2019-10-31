@@ -52,14 +52,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryCosts' | translate"></td>
-                    <td class="text-right">
-                        <span *ngIf="restaurantModel.deliveryCost==0"
-                            [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
-                        <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}} C$</span>
-                    </td>
-                </tr>
-                <tr>
                     <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryTimes' | translate"></td>
                     <td class="text-right">
                         {{restaurantModel.estTime}} {{ "Commons.Texts.Minutes" | translate }}
@@ -73,10 +65,18 @@
         *ngIf="restaurantModel.restaurantDeliveryCost && restaurantModel.restaurantDeliveryCost.length > 0">
         <p class="restaurant-info-title">
             <img src="assets/icons/ic_delivery_costs.png" alt="delivery_costs">
-            <span class="title" [innerHTML]="'Commons.Texts.DeliveryDistrict' | translate"></span>
+            <span class="title" [innerHTML]="'Commons.Texts.DeliveryCost' | translate"></span>
         </p>
         <div class="info-tab-section">
             <table>
+                <!-- <tr>
+                    <td class="text-left" [innerHTML]="'Commons.Texts.DeliveryCostDefault' | translate"></td>
+                    <td class="text-right">
+                        <span *ngIf="restaurantModel.deliveryCost==0"
+                            [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
+                        <span *ngIf="restaurantModel.deliveryCost>0">{{restaurantModel.deliveryCost}} C$</span>
+                    </td>
+                </tr> -->
                 <tr *ngFor="let deliveryCostItem of restaurantModel.restaurantDeliveryCost">
                     <ng-container *ngIf="deliveryCostItem.deliveryCost && deliveryCostItem.deliveryCost != null">
                         <td class="text-left">{{deliveryCostItem.district.name}}</td>

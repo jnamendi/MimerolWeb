@@ -22,6 +22,7 @@ import { RestaurantAppService } from "../../services/api/restaurant/app-restaura
 import { AppRestaurantModel } from "../../models/restaurant/app-restaurant.model";
 import { UserService } from '../../services/api/user/user.service';
 import { UserDetailsModel } from '../../models/user/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "page-order",
@@ -88,7 +89,8 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     private i18nService: I18nService,
     private coreService: CoreService,
     private userService: UserService,
-    private appRestaurantService: RestaurantAppService
+    private appRestaurantService: RestaurantAppService,
+    private toastr: ToastrService
   ) {
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = +params["restaurantId"];
@@ -276,6 +278,18 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
   };
 
+  onShowToast = () => {
+    let title = "Notification";
+    let message = "The total price was modified because the shipping rate changed";
+    if (this.i18nService.language = "es") {
+      title = "Notificación";
+      message = "El precio total se modificó porque la tarifa de envío cambió";
+    }
+    this.toastr.success(message, title, {
+      timeOut: 1000,
+    });
+  }
+
   onValidateDeliveryAddress = (userAddress: AddressModel) => {
     this.orderModel.address = userAddress.address;
     this.orderModel.addressDesc = userAddress.addressDesc;
@@ -316,6 +330,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == userAddress.districtId);
     if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null) {
       this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
+      if (this.selectedMenuItems.deliveryCost == tempDistrict[0].deliveryCost) {
+        this.onShowToast();
+      }
     } else {
       this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
     }
@@ -402,6 +419,9 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == districtId);
       if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null) {
         this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
+        if (this.selectedMenuItems.deliveryCost == tempDistrict[0].deliveryCost) {
+          this.onShowToast();
+        }
       } else {
         this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
       }

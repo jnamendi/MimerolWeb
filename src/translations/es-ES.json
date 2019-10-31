@@ -84,8 +84,10 @@
             "Quality": "Calidad",
             "StarDelivery": "Entrega estrella",
             "StarDeliveryRequired": "Entrega estrella <span class='error'>*</span>",
-            "DeliveryCost": "Costo de Entrega",
-            "DeliveryCostRequired": "Costo de Entrega <span class='error'>*</span>",
+            "DeliveryCost": "Costo de envío",
+            "DeliveryCostRequired": "Costo de entrega fijo <span class='error'>*</span>",
+            "DeliveryCostDefault": "Costo de entrega fijo",
+            "ShippingRateChanged": "El precio total se modificó porque la tarifa de envío cambió",
             "CreatedDate": "Fecha de creación",
             "Comment": "Comentario",
             "CommentRequired": "Comentario <span class='error'>*</span>",
@@ -206,7 +208,7 @@
             "Close": "Cerrar",
             "Open": "Abierto",
             "DeliveryTimes": "Horario de atención",
-            "DeliveryCosts": "Gastos de envío",
+            "DeliveryCosts": "Costo del servicio de entrega",
             "MinimumOrderAmount": "Cantidad de orden mínima",
             "PaymentMethods": "Métodos de pago",
             "FailCodePromotion": "Su orden de cantidad necesaria para alcanzar el valor mínimo de la orden",
@@ -238,7 +240,7 @@
             "AddressNotSupported": "Dirección no admitida",
             "District": "Área",
             "ZoneDelivery": "Zona",
-            "SelectPay": "Seleccione pagar"
+            "SelectPay": "Elegir monto"
         },
         "Links": {
             "Title": "Enlaces",

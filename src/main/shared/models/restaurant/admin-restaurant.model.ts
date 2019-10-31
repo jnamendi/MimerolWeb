@@ -50,7 +50,7 @@ export class RestaurantAdminModel extends BaseModel {
 
 export class DeliveryArea {
     deliveryAreaId: number;
-    deliveryCost?: number;
+    deliveryCost: number;
     deliveryZoneId: number[];
 }
 
