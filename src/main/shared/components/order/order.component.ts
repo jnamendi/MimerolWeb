@@ -585,7 +585,11 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     //--- Check valid form
-    if (!isValid || this.validCity || this.validArea || this.validZone) {
+    if (!isValid) {
+      return;
+    }
+
+    if (this.validCity || this.validArea || this.validZone) {
       let isErrors = document.getElementsByClassName("error");
       let error = isErrors[0];
       error.scrollIntoView({

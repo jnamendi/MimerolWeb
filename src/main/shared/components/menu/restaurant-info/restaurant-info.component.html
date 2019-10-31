@@ -78,12 +78,12 @@
                     </td>
                 </tr> -->
                 <tr *ngFor="let deliveryCostItem of restaurantModel.restaurantDeliveryCost">
-                    <ng-container *ngIf="deliveryCostItem.deliveryCost && deliveryCostItem.deliveryCost != null">
-                        <td class="text-left">{{deliveryCostItem.district.name}}</td>
-                        <td class="text-right">
-                            {{deliveryCostItem.deliveryCost}} C$
-                        </td>
-                    </ng-container>
+                    <td class="text-left">{{deliveryCostItem.district.name}}</td>
+                    <td class="text-right">
+                        <span *ngIf="deliveryCostItem.deliveryCost == 0"
+                            [innerHTML]="'Commons.Texts.FreeShip' | translate"></span>
+                        <span *ngIf="deliveryCostItem.deliveryCost > 0">{{deliveryCostItem.deliveryCost}} C$</span>
+                    </td>
                 </tr>
             </table>
         </div>
