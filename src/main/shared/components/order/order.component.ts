@@ -326,13 +326,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isError = true;
     }
     );
-    this.child.onShowDeliveryCost();
+    this.child.onShowDeliveryCost(1);
     let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == userAddress.districtId);
     if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null && this.selectedMenuItems.deliveryCost != tempDistrict[0].deliveryCost) {
       this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
       this.onShowToast();
     } else {
-      this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
+      this.selectedMenuItems.deliveryCost = 0;
     }
     this.child.onCalculateTotalPricesWithDelivery(this.selectedMenuItems.deliveryCost);
     this.onBuildPaymentWiths();
@@ -414,13 +414,13 @@ export class OrderComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.zoneModels = res.content ? <ZoneModel[]>[...res.content] : [];
       this.orderModel.zoneId = null;
       this.validZone = false;
-      this.child.onShowDeliveryCost();
+      this.child.onShowDeliveryCost(1);
       let tempDistrict = this.restaurantModel.restaurantDeliveryCost.filter(x => x.district.districtId == districtId);
       if (tempDistrict && tempDistrict.length > 0 && tempDistrict[0].deliveryCost != null && this.selectedMenuItems.deliveryCost != tempDistrict[0].deliveryCost) {
         this.selectedMenuItems.deliveryCost = tempDistrict[0].deliveryCost;
         this.onShowToast();
       } else {
-        this.selectedMenuItems.deliveryCost = this.restaurantModel.deliveryCost;
+        this.selectedMenuItems.deliveryCost = 0;
       }
       this.child.onCalculateTotalPricesWithDelivery(this.selectedMenuItems.deliveryCost);
       this.onBuildPaymentWiths();
