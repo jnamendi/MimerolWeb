@@ -104,7 +104,7 @@ export class OwnerInvoicesComponent {
         let downloadURL = window.URL.createObjectURL(blob);
         let link = document.createElement('a');
         link.href = downloadURL;
-        link.download = invoice.fileName ? invoice.fileName + invoice.fileType ? "." + invoice.fileType : ".pdf" : "Invoice.pdf";
+        link.download = invoice.fileName + "." + invoice.fileType;
         link.click();
         link.style.display = "none";
       }
