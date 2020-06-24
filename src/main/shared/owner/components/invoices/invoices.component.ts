@@ -100,8 +100,9 @@ export class OwnerInvoicesComponent {
     this.restaurantOwnerService.exportInvoiceByRestaurantId(this.restaurantId, fromDate, toDate).subscribe(res => {
       let invoice = <InvoiceModel>{ ...res.content };
       if (invoice && invoice.content) {
-        let blob = new Blob([invoice.content], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(blob);
+        // let blob = new Blob([invoice.content], { type: 'application/pdf' });
+        // let downloadURL = window.URL.createObjectURL(blob);
+        let downloadURL = 'data:application/pdf;base64,' + invoice.content;
         let link = document.createElement('a');
         link.href = downloadURL;
         link.download = invoice.fileName + "." + invoice.fileType;
