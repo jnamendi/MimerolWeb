@@ -98,19 +98,21 @@ export class OwnerInvoicesComponent {
     let fromDate = this.startDate.date.year + "-" + this.startDate.date.month + "-" + this.startDate.date.day;
     let toDate = this.endDate.date.year + "-" + this.endDate.date.month + "-" + this.endDate.date.day;
     this.restaurantOwnerService.exportInvoiceByRestaurantId(this.restaurantId, fromDate, toDate).subscribe(res => {
-      // this.onDownloadFile(res.content);
+      let file = res.content ? res.content.toString() : null;
+      if (file) {
+        let blob = new Blob([file], { type: 'application/pdf' });
+        var downloadURL = window.URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Invoice.pdf";
+        link.click();
+        link.style.display = "none";
+      }
       this.clientState.isBusy = false;
     }, (err: ApiError) => {
       this.message = err.message;
       this.isError = true;
       this.clientState.isBusy = false;
     });
-  }
-
-  onDownloadFile = (fileUrl: string) => {
-    let link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = "Invoice.pdf";
-    link.click();
   }
 }
