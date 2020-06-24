@@ -26,10 +26,6 @@ export class RestaurantOwnerService implements RestaurantOwnerInterface {
     }
 
     exportInvoiceByRestaurantId(restaurantId: number, fromDate: string, toDate: string): Observable<ApiResponse> {
-        let body = JSON.stringify({
-            "fromDate": fromDate,
-            "toDate": toDate
-        });
-        return this.http.HttpPost(ApiUrl.ExportInvoiceByRestaurantId + '/' + restaurantId, body, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
+        return this.http.HttpGet(ApiUrl.ExportInvoiceByRestaurantId + '/' + restaurantId + "/" + fromDate + "/" + toDate, true).map(ApiHelper.extractData).catch(ApiHelper.onFail);
     }
 }
