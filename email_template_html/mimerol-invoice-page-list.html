@@ -1,0 +1,371 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Mimerol Invoice</title>
+    <style type="text/css">
+        <!--
+        span.cls_002 {
+            font-family: Arial, serif;
+            font-size: 16.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_002 {
+            font-family: Arial, serif;
+            font-size: 16.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_003 {
+            font-family: Arial, serif;
+            font-size: 1rem;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_003 {
+            font-family: Arial, serif;
+            font-size: 1rem;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        span.cls_004 {
+            font-family: Arial, serif;
+            font-size: 10.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_004 {
+            font-family: Arial, serif;
+            font-size: 10.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_005 {
+            font-family: Arial, serif;
+            font-size: 8.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_005 {
+            font-family: Arial, serif;
+            font-size: 8.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_006 {
+            font-family: Arial, serif;
+            font-size: 1.5rem;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_006 {
+            font-family: Arial, serif;
+            font-size: 1.5rem;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_007 {
+            font-family: Arial, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_007 {
+            font-family: Arial, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_008 {
+            font-family: Courier New, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_008 {
+            font-family: Courier New, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+        -->
+        .es-p-default
+        {
+        padding-top:0px;
+        padding-right:0px;
+        padding-bottom:0px;
+        padding-left:0px;
+        }
+        .es-p-all-default
+        {
+        padding:0px;
+        }
+        p,
+        ul
+        li,
+        ol
+        li
+        {
+        font-family:arial,
+        "helvetica
+        neue",
+        helvetica,
+        sans-serif;
+        margin-bottom:0px;
+        }
+        a
+        {
+        font-family:arial,
+        "helvetica
+        neue",
+        helvetica,
+        sans-serif;
+        }
+        .es-content-body
+        p,
+        .es-content-body
+        ul
+        li,
+        .es-content-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-header-body
+        p,
+        .es-header-body
+        ul
+        li,
+        .es-header-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-footer-body
+        p,
+        .es-footer-body
+        ul
+        li,
+        .es-footer-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-infoblock,
+        .es-infoblock
+        p,
+        .es-infoblock
+        ul
+        li,
+        .es-infoblock
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        h1
+        {
+        margin-bottom:0px;
+        }
+        h2
+        {
+        margin-bottom:0px;
+        }
+        h3
+        {
+        margin-bottom:0px;
+        }
+    </style>
+    <style>
+        table {
+            margin-top: 25px;
+        }
+
+        table thead tr th {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
+    <div style="width: 50%; margin: auto;">
+        <div class="cls_006">
+            <span class="cls_006">Specifications</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">Restaurant: {{restaurantName}} ({{restaurantNumber}})</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">Period: {{startDate}} until {{endDate}} included</span>
+        </div>
+        <table style="width: 100%;">
+            <tr>
+                <td style="min-width: 15%;">
+                    <div class="cls_003">
+                        <span class="cls_003">Total</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrder}} orders with a total amount of C$ {{totalPrice}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Paid at delivery</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrderDelivery}} orders with a total amount of C$
+                            {{totalDelivery}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Paid online *</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrderPaid}} orders with a total amount of C$ {{totalPaid}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <table style="width: 100%; margin-top: 0px !important;">
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Outstanding balance online payments on {{curentDate}} ***</span>
+                    </div>
+                </td>
+                <td style="text-align: right;">
+                    <div class="cls_003">
+                        <span class="cls_003" style="border-bottom: 1px solid #000; padding-bottom: 10px;">C$
+                            {{priceOutstanding}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">
+                        Date
+                    </th>
+                    <th style="text-align: left;">
+                        #
+                    </th>
+                    <th style="text-align: left;">
+                        C$
+                    </th>
+                    <th style="min-width: 20%;">
+                    </th>
+                    <th style="text-align: left;">
+                        Date
+                    </th>
+                    <th style="text-align: left;">
+                        #
+                    </th>
+                    <th style="text-align: left;">
+                        C$
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{date}}, {{time}}
+                    </td>
+                    <td style="font-size: 0.7rem;">
+                        {{orderCode}}
+                    </td>
+                    <td>
+                        {{price}}
+                    </td>
+                    <td style="min-width: 20%;">
+
+                    </td>
+                    <td>
+                        {{date}}, {{time}}
+                    </td>
+                    <td style="font-size: 0.7rem;">
+                        {{orderCode}}
+                    </td>
+                    <td>
+                        {{price}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <div>
+            <span style="font-size: 0.8rem;">*** The outstanding balance consists of all the received online payments, minus refunds, invoice
+                payments
+                and payouts. This information can be found on
+                https://mimerol.com/</span>
+        </div>
+    </div>
+</body>
+
+</html>

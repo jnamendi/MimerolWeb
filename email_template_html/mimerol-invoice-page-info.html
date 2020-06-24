@@ -1,0 +1,410 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Mimerol Invoice</title>
+    <style type="text/css">
+        <!--
+        span.cls_002 {
+            font-family: Arial, serif;
+            font-size: 16.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_002 {
+            font-family: Arial, serif;
+            font-size: 16.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_003 {
+            font-family: Arial, serif;
+            font-size: 1rem;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_003 {
+            font-family: Arial, serif;
+            font-size: 1rem;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        span.cls_004 {
+            font-family: Arial, serif;
+            font-size: 10.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_004 {
+            font-family: Arial, serif;
+            font-size: 10.1px;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_005 {
+            font-family: Arial, serif;
+            font-size: 8.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_005 {
+            font-family: Arial, serif;
+            font-size: 8.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_006 {
+            font-family: Arial, serif;
+            font-size: 1.5rem;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        div.cls_006 {
+            font-family: Arial, serif;
+            font-size: 1.5rem;
+            color: #000000;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        span.cls_007 {
+            font-family: Arial, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_007 {
+            font-family: Arial, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        span.cls_008 {
+            font-family: Courier New, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+
+        div.cls_008 {
+            font-family: Courier New, serif;
+            font-size: 9.1px;
+            color: #000000;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none
+        }
+        -->
+        .es-p-default
+        {
+        padding-top:0px;
+        padding-right:0px;
+        padding-bottom:0px;
+        padding-left:0px;
+        }
+        .es-p-all-default
+        {
+        padding:0px;
+        }
+        p,
+        ul
+        li,
+        ol
+        li
+        {
+        font-family:arial,
+        "helvetica
+        neue",
+        helvetica,
+        sans-serif;
+        margin-bottom:0px;
+        }
+        a
+        {
+        font-family:arial,
+        "helvetica
+        neue",
+        helvetica,
+        sans-serif;
+        }
+        .es-content-body
+        p,
+        .es-content-body
+        ul
+        li,
+        .es-content-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-header-body
+        p,
+        .es-header-body
+        ul
+        li,
+        .es-header-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-footer-body
+        p,
+        .es-footer-body
+        ul
+        li,
+        .es-footer-body
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        .es-infoblock,
+        .es-infoblock
+        p,
+        .es-infoblock
+        ul
+        li,
+        .es-infoblock
+        ol
+        li
+        {
+        margin-bottom:0px;
+        }
+        h1
+        {
+        margin-bottom:0px;
+        }
+        h2
+        {
+        margin-bottom:0px;
+        }
+        h3
+        {
+        margin-bottom:0px;
+        }
+    </style>
+    <style>
+        table {
+            margin-top: 25px;
+        }
+
+        table thead tr th {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
+    <div style="width: 50%; margin: auto;">
+        <div class="cls_006">
+            <span class="cls_006">Overview</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">{{restaurantName}}</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">{{userName}}</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">{{address}}</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">{{tel}}</span>
+        </div>
+
+        <table style="margin-top: 0;">
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Date: {{date}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Invoice number: {{invoiceNumber}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="cls_003">
+            <span class="cls_003">The following services are invoiced:</span>
+        </div>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-bottom: 15px;"></div>
+        <div class="cls_003">
+            <span class="cls_003">Mimerol.com ({{currentDate}}): {{orderCount}} orders with a total amount of C$
+                {{totalPrice}}</span>
+        </div>
+
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Charges: {{charges}}% of C$ {{totalPrice}}</span>
+                    </div>
+                </td>
+                <td style="width: 20%; border-bottom: 1px solid;padding-bottom: 5px;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003">{{totalPriceResult}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Subtotal</span>
+                    </div>
+                </td>
+                <td style="width: 20%;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003">{{subTotal}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">VAT ({{vat}}% of C$ {{totalPriceResult}})</span>
+                    </div>
+                </td>
+                <td style="width: 20%; border-bottom: 1px solid;padding-bottom: 5px;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003">{{priceVat}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Total amount of this invoice</span>
+                    </div>
+                </td>
+                <td style="width: 20%;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003">{{totalAmount}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Paid with online payments</span>
+                    </div>
+                </td>
+                <td style="width: 20%; border-bottom: 1px solid;padding-bottom: 5px;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003">{{paid}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003" style="font-weight: 600;">Outstanding amount</span>
+                    </div>
+                </td>
+                <td style="width: 20%;">
+                    <div class="cls_003">
+                        <div style="text-align: left; float: left;">
+                            <span class="cls_003" style="font-weight: 600;">C$</span>
+                        </div>
+                        <div style="text-align: right; float: right;">
+                            <span class="cls_003" style="font-weight: 600;">{{outstanding}}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <div class="cls_003">
+            <span class="cls_003">Your turnover during {{startDate}} until {{endDate}} included: C$
+                {{duringPrice}}.</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">A complete overview of your invoices and orders can be found on </span>
+            <a href="https://mimerol.com/"
+                style="font-family:arial, 'helvetica neue', helvetica, sans-serif">https://mimerol.com/</a>
+        </div>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <div>
+            <span style="font-size: 0.8rem;">If you believe this invoice is incorrect, please send us your complaint in
+                writing.
+                You will find our full contact details on this invoice. For administrative reasons we are not able to
+                receive complaints by phone</span>
+        </div>
+    </div>
+</body>
+
+</html>

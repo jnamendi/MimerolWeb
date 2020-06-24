@@ -1,53 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
-import { OwnerOrderModel, OwnerOrderStatus } from '../../../models/order/owner-order.model';
+import { Component } from '@angular/core';
 import { PagingModel, ApiError } from '../../../services/api-response/api-response';
 import { RestaurantOwnerModel } from '../../../models/restaurant/owner-restaurant.model';
-import { Configs } from '../../../common/configs/configs';
-import { DataTableDirective } from '../../../../../../node_modules/angular-datatables';
-import { Subject } from '../../../../../../node_modules/rxjs';
 import { ClientState } from '../../../state/client/client-state';
-import { OrderOwnerService } from '../../../services/api/order/owner-order.service';
 import { RestaurantOwnerService } from '../../../services/api/restaurant/owner-restaurant.service';
-import { I18nService } from '../../../core/i18n.service';
 import { JwtTokenHelper } from '../../../common/jwt-token-helper/jwt-token-helper';
+import { IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
 @Component({
   selector: 'owner-invoices',
   templateUrl: './invoices.component.html'
 })
 export class OwnerInvoicesComponent {
-  private ownerOrderModels: OwnerOrderModel[] = [];
-  private paginModel: PagingModel;
   private restaurantOwnerModels: RestaurantOwnerModel[] = [];
-  private currentPageIndex: number = Configs.PageIndex;
-  private currentPageSize: number = Configs.PageSize;
   private message: string;
   private isError: boolean;
-  private ownerOrderStatus: typeof OwnerOrderStatus = OwnerOrderStatus;
-  private isDetail: boolean;
-  private selectedOrderId: number;
-  private selectedOrderCode: string;
 
-  @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  isErrorDate: boolean;
 
-  private dtOptions: DataTables.Settings = {};
-  private dtTrigger: Subject<any> = new Subject();
+  myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'dd/mm/yyyy',
+    editableDateField: false,
+    showClearDateBtn: false
+  };
+
+  today = new Date();
+  startDate: any = { date: { year: this.today.getUTCFullYear(), month: this.today.getUTCMonth(), day: this.today.getUTCDate() } };
+  endDate: any = { date: { year: this.today.getUTCFullYear(), month: this.today.getUTCMonth() + 1, day: this.today.getUTCDate() } };
+  restaurantId: number;
 
   constructor(
     private clientState: ClientState,
-    private orderOwnerService: OrderOwnerService,
-    private restaurantOwnerService: RestaurantOwnerService,
-    private i18nService: I18nService,
+    private restaurantOwnerService: RestaurantOwnerService
   ) {
-    this.dtOptions = {
-      pageLength: this.currentPageSize,
-      // columnDefs: [
-      //   { targets: 0, orderable: false }
-      // ],
-      order: [
-        [0, "asc"]
-      ]
-    };
   }
 
   ngOnInit(): void {
@@ -65,29 +49,6 @@ export class OwnerInvoicesComponent {
         this.restaurantOwnerModels = res.content.map(item => {
           return <RestaurantOwnerModel>{ ...item }
         });
-        let restaurantId = this.restaurantOwnerModels && this.restaurantOwnerModels[0] && this.restaurantOwnerModels[0].restaurantId;
-        this.orderOwnerService.getOrderByRestaurantAndStatus(0, 0, restaurantId).subscribe(res => {
-          if (res.content == null) {
-            this.ownerOrderModels = [];
-          } else {
-            this.paginModel = { ...res.content };
-            this.ownerOrderModels = res.content.data.map(item => {
-              return <OwnerOrderModel>{ ...item, isDeleted: false }
-            });
-
-            this.dtTrigger.next();
-            this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-              dtInstance.columns().every(function () {
-                const that = this;
-                $('input', this.footer()).on('keyup change', function () {
-                  if (that.search() !== this['value']) {
-                    that.search(this['value']).draw();
-                  }
-                });
-              });
-            });
-          }
-        });
         this.clientState.isBusy = false;
       }
     }, (err: ApiError) => {
@@ -97,21 +58,59 @@ export class OwnerInvoicesComponent {
     });
   }
 
-  onOrderDetail = (orderId: number, orderCode: string) => {
-    if (this.isDetail) {
-      return;
-    }
-    this.selectedOrderId = orderId;
-    this.selectedOrderCode = orderCode;
-    this.isDetail = true;
+  onChangeFromDate = (event: IMyDateModel) => {
+    this.startDate.date = event.date
+    this.onCheckDate(event, this.endDate);
   }
 
-  onSuccess = (isSaveSuccess: boolean) => {
-    this.isDetail = false;
-    this.selectedOrderId = 0;
-    this.selectedOrderCode = '';
-    if (isSaveSuccess) {
-      this.onGetAllOrder();
+  onChangeToDate = (event: IMyDateModel) => {
+    this.endDate.date = event.date
+    this.onCheckDate(this.startDate, event);
+  }
+
+  onCheckDate = (startDate: any, endDate: any) => {
+    let fromDate = new Date(
+      startDate.date.year,
+      startDate.date.month,
+      startDate.date.day,
+      8, 0, 0, 0
+    );
+    let toDate = new Date(
+      endDate.date.year,
+      endDate.date.month,
+      endDate.date.day,
+      8, 0, 0, 0
+    );
+
+    if (fromDate.getTime() >= toDate.getTime()) {
+      this.isErrorDate = true;
+    } else {
+      this.isErrorDate = false;
     }
+  }
+
+  onSubmit = (isValid: boolean) => {
+    this.onCheckDate(this.startDate, this.endDate);
+    if (!isValid || this.isErrorDate) {
+      return;
+    }
+    this.clientState.isBusy = true;
+    let fromDate = this.startDate.date.year + "-" + this.startDate.date.month + "-" + this.startDate.date.day;
+    let toDate = this.endDate.date.year + "-" + this.endDate.date.month + "-" + this.endDate.date.day;
+    this.restaurantOwnerService.exportInvoiceByRestaurantId(this.restaurantId, fromDate, toDate).subscribe(res => {
+      // this.onDownloadFile(res.content);
+      this.clientState.isBusy = false;
+    }, (err: ApiError) => {
+      this.message = err.message;
+      this.isError = true;
+      this.clientState.isBusy = false;
+    });
+  }
+
+  onDownloadFile = (fileUrl: string) => {
+    let link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = "Invoice.pdf";
+    link.click();
   }
 }

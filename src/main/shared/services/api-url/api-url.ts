@@ -1,5 +1,5 @@
 export class ApiUrl {
-    static BaseUrl = "https://bmbsoft.com.vn:8440/ofodev/";
+    static BaseUrl = "https://bmbsoft.com.vn:8440/order-food-online-1.0/";
 
     // IP APi
     public static IPApi = "https://ipinfo.io/json";
@@ -170,4 +170,7 @@ export class ApiUrl {
 
     //Payment
     public static PaymentGetAll = ApiUrl.BaseUrl + "api/PaymentProvider/getAll";
+
+    //Export invoice
+    public static ExportInvoiceByRestaurantId = ApiUrl.BaseUrl + "api/invoice";
 }

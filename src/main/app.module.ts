@@ -54,7 +54,7 @@ let config = new AuthServiceConfig([
     }),
     ToastrModule.forRoot(),
     NgwWowModule.forRoot(),
-    SocialLoginModule.initialize(config),
+    SocialLoginModule.initialize(config)
   ],
   declarations: [
     AppComponent,
