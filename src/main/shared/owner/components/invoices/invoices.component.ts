@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PagingModel, ApiError } from '../../../services/api-response/api-response';
-import { RestaurantOwnerModel } from '../../../models/restaurant/owner-restaurant.model';
+import { RestaurantOwnerModel, InvoiceModel } from '../../../models/restaurant/owner-restaurant.model';
 import { ClientState } from '../../../state/client/client-state';
 import { RestaurantOwnerService } from '../../../services/api/restaurant/owner-restaurant.service';
 import { JwtTokenHelper } from '../../../common/jwt-token-helper/jwt-token-helper';
@@ -98,13 +98,13 @@ export class OwnerInvoicesComponent {
     let fromDate = this.startDate.date.year + "-" + this.startDate.date.month + "-" + this.startDate.date.day;
     let toDate = this.endDate.date.year + "-" + this.endDate.date.month + "-" + this.endDate.date.day;
     this.restaurantOwnerService.exportInvoiceByRestaurantId(this.restaurantId, fromDate, toDate).subscribe(res => {
-      let file = res.content ? res.content.toString() : null;
-      if (file) {
-        let blob = new Blob([file], { type: 'application/pdf' });
-        var downloadURL = window.URL.createObjectURL(blob);
-        var link = document.createElement('a');
+      let invoice = <InvoiceModel>{ ...res.content };
+      if (invoice && invoice.content) {
+        let blob = new Blob([invoice.content], { type: 'application/pdf' });
+        let downloadURL = window.URL.createObjectURL(blob);
+        let link = document.createElement('a');
         link.href = downloadURL;
-        link.download = "Invoice.pdf";
+        link.download = invoice.fileName ? invoice.fileName + invoice.fileType ? "." + invoice.fileType : ".pdf" : "Invoice.pdf";
         link.click();
         link.style.display = "none";
       }
