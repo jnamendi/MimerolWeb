@@ -3,94 +3,59 @@
         <div class="row">
             <div class="col-xs-12 header">
                 <h4 class="title" [innerHTML]="'Commons.Texts.Invoices' | translate"></h4>
-                <h5 class="subtitle" [innerHTML]="'Owner.Invoices.InvoicesTitle' | translate"></h5>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-warning">
-                    <div class="box-header">
-                        <h3 class="box-title" [innerHTML]="'Owner.Invoices.ManageYourInvoices' | translate"></h3>
-                    </div>
                     <div class="box-body">
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-striped table-bordered">
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th>
-                                    <!-- <th>
-                                        <input type="text" class="form-control input-sm" />
-                                    </th> -->
-                                </tr>
-                            </tfoot>
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No.</th>
-                                    <th [innerHTML]="'Commons.Texts.Date' | translate"></th>
-                                    <th [innerHTML]="'Commons.Texts.From' | translate"></th>
-                                    <th [innerHTML]="'Commons.Texts.Through' | translate"></th>
-                                    <th [innerHTML]="'Commons.Texts.Amount' | translate"></th>
-                                    <th [innerHTML]="'Commons.Texts.Paid' | translate"></th>
-                                    <th [innerHTML]="'Commons.Texts.PaidOn' | translate"></th>
-                                    <!-- <th [innerHTML]="'Commons.Texts.Download' | translate"></th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of ownerOrderModels; let i = index;">
-                                    <td class="text-center">{{i + ((paginModel.pageIndex - 1) * paginModel.pageSize) + 1}}</td>
-                                    <td>
-                                        <a (click)="onOrderDetail(item.orderId, item.orderCode)">
-                                            <span>{{item && item.orderCode}}</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item && item.totalPrice}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item && item.orderDate | date: 'dd-MM-yyyy hh:mm:ss'}}</span>
-                                    </td>
-                                    <!-- <td class="text-center">
-                                        <a href="#">
-                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                        </a>
-                                    </td> -->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="box-footer">
+                        <form (ngSubmit)="onSubmit(f.valid)" #f="ngForm" class="mt-5">
+                            <div class="row form-group" style="margin-bottom: 0px;">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <label for="restaurant"
+                                        [innerHTML]="'Commons.Texts.Restaurant' | translate"></label>
+                                    <ng-select name="restaurant" [items]="restaurantOwnerModels" [clearable]="false"
+                                        bindValue="restaurantId" bindLabel="restaurantName" [(ngModel)]="restaurantId"
+                                        #restaurant="ngModel" placeholder="Select restaurant" required>
+                                    </ng-select>
+                                </div>
+                                <div class="col-xs-2">
+                                    <label for="startDate" [innerHTML]="'Commons.Texts.FromDate' | translate"></label>
+                                    <my-date-picker name="startDate" [options]="myDatePickerOptions"
+                                        [(ngModel)]="startDate" (dateChanged)="onChangeFromDate($event)"></my-date-picker>
+                                </div>
+                                <div class="col-xs-2">
+                                    <label for="endDate" [innerHTML]="'Commons.Texts.ToDate' | translate"></label>
+                                    <my-date-picker name="endDate" [options]="myDatePickerOptions" [(ngModel)]="endDate"
+                                        (dateChanged)="onChangeToDate($event)"></my-date-picker>
+                                </div>
+                                <div class="col-xs-2">
+                                    <label style="visibility: hidden;">Export</label>
+                                    <button type="submit" class="btn btn-primary"
+                                        [innerHTML]="'Commons.Buttons.Export' | translate"></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-2">
+                                    <div *ngIf="restaurant.invalid && (restaurant.dirty || restaurant.touched || f.submitted)"
+                                        class="error">
+                                        <div *ngIf="restaurant.errors?.required"
+                                            [innerHTML]="'Commons.Error.ErrRequired' | translate"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div *ngIf="isErrorDate" class="error">
+                                        <div [innerHTML]="'Commons.Error.ErrorStartDate' | translate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<owner-invoices-detail *ngIf="selectedOrderId && selectedOrderCode && isDetail" [visible]="isDetail" (onSuccess)="onSuccess($event)" [orderId]="selectedOrderId" [orderCode]="selectedOrderCode"></owner-invoices-detail>

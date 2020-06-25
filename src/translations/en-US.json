@@ -7,7 +7,8 @@
             "Delete": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Delete",
             "ResetPassword": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Reset password",
             "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Save and create new",
-            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Search Address"
+            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Search Address",
+            "Export": "Export"
         },
         "Texts": {
             "AvailableOn": "Available on the",
@@ -240,7 +241,9 @@
             "AddressNotSupported": "Address not supported",
             "District": "Area",
             "ZoneDelivery": "Zone",
-            "SelectPay": "Select pay"
+            "SelectPay": "Select pay",
+            "FromDate": "From date",
+            "ToDate": "To date"
         },
         "Links": {
             "Title": "Links",
