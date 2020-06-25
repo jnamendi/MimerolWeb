@@ -5,8 +5,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Mimerol Invoice</title>
+
     <style type="text/css">
-        <!--
+        body {
+            font-family: arial, 'helvetica neue', helvetica, sans-serif
+        }
+
+        .new-page {
+            page-break-before: always
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
         span.cls_002 {
             font-family: Arial, serif;
             font-size: 16.1px;
@@ -133,98 +146,55 @@
             font-style: normal;
             text-decoration: none
         }
-        -->
-        .es-p-default
-        {
-        padding-top:0px;
-        padding-right:0px;
-        padding-bottom:0px;
-        padding-left:0px;
+
+        .es-p-default {
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
         }
-        .es-p-all-default
-        {
-        padding:0px;
+
+        .es-p-all-default {
+            padding: 0px;
         }
-        p,
-        ul
-        li,
-        ol
-        li
-        {
-        font-family:arial,
-        "helvetica
-        neue",
-        helvetica,
-        sans-serif;
-        margin-bottom:0px;
+
+        .es-content-body p,
+        .es-content-body ul li,
+        .es-content-body ol li {
+            margin-bottom: 0px;
         }
-        a
-        {
-        font-family:arial,
-        "helvetica
-        neue",
-        helvetica,
-        sans-serif;
+
+        .es-header-body p,
+        .es-header-body ul li,
+        .es-header-body ol li {
+            margin-bottom: 0px;
         }
-        .es-content-body
-        p,
-        .es-content-body
-        ul
-        li,
-        .es-content-body
-        ol
-        li
-        {
-        margin-bottom:0px;
+
+        .es-footer-body p,
+        .es-footer-body ul li,
+        .es-footer-body ol li {
+            margin-bottom: 0px;
         }
-        .es-header-body
-        p,
-        .es-header-body
-        ul
-        li,
-        .es-header-body
-        ol
-        li
-        {
-        margin-bottom:0px;
+
+        .es-info-block,
+        .es-info-block p,
+        .es-info-block ul li,
+        .es-info-block ol li {
+            margin-bottom: 0px;
         }
-        .es-footer-body
-        p,
-        .es-footer-body
-        ul
-        li,
-        .es-footer-body
-        ol
-        li
-        {
-        margin-bottom:0px;
+
+        h1 {
+            margin-bottom: 0px;
         }
-        .es-infoblock,
-        .es-infoblock
-        p,
-        .es-infoblock
-        ul
-        li,
-        .es-infoblock
-        ol
-        li
-        {
-        margin-bottom:0px;
+
+        h2 {
+            margin-bottom: 0px;
         }
-        h1
-        {
-        margin-bottom:0px;
+
+        h3 {
+            margin-bottom: 0px;
         }
-        h2
-        {
-        margin-bottom:0px;
-        }
-        h3
-        {
-        margin-bottom:0px;
-        }
-    </style>
-    <style>
+
         table {
             margin-top: 25px;
         }
@@ -236,8 +206,8 @@
     </style>
 </head>
 
-<body style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
-    <div style="width: 50%; margin: auto;">
+<body>
+    <div class="container">
         <div class="cls_006">
             <span class="cls_006">Overview</span>
         </div>
@@ -403,6 +373,139 @@
                 writing.
                 You will find our full contact details on this invoice. For administrative reasons we are not able to
                 receive complaints by phone</span>
+        </div>
+    </div>
+
+    <div class="new-page">&nbsp;</div>
+
+    <div class="container">
+        <div class="cls_006">
+            <span class="cls_006">Specifications</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">Restaurant: {{restaurantName}} ({{restaurantNumber}})</span>
+        </div>
+        <div class="cls_003">
+            <span class="cls_003">Period: {{startDate}} until {{endDate}} included</span>
+        </div>
+        <table style="width: 100%;">
+            <tr>
+                <td style="min-width: 15%;">
+                    <div class="cls_003">
+                        <span class="cls_003">Total</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrder}} orders with a total amount of C$ {{totalPrice}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Paid at delivery</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrderDelivery}} orders with a total amount of C$
+                            {{totalDelivery}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Paid online *</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">{{totalOrderPaid}} orders with a total amount of C$ {{totalPaid}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <table style="width: 100%; margin-top: 0px !important;">
+            <tr>
+                <td>
+                    <div class="cls_003">
+                        <span class="cls_003">Outstanding balance online payments on {{curentDate}} ***</span>
+                    </div>
+                </td>
+                <td style="text-align: right;">
+                    <div class="cls_003">
+                        <span class="cls_003" style="border-bottom: 1px solid #000; padding-bottom: 10px;">C$
+                            {{priceOutstanding}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">
+                        Date
+                    </th>
+                    <th style="text-align: left;">
+                        #
+                    </th>
+                    <th style="text-align: left;">
+                        C$
+                    </th>
+                    <th style="min-width: 20%;">
+                    </th>
+                    <th style="text-align: left;">
+                        Date
+                    </th>
+                    <th style="text-align: left;">
+                        #
+                    </th>
+                    <th style="text-align: left;">
+                        C$
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{date}}, {{time}}
+                    </td>
+                    <td style="font-size: 0.7rem;">
+                        {{orderCode}}
+                    </td>
+                    <td>
+                        {{price}}
+                    </td>
+                    <td style="min-width: 20%;">
+
+                    </td>
+                    <td>
+                        {{date}}, {{time}}
+                    </td>
+                    <td style="font-size: 0.7rem;">
+                        {{orderCode}}
+                    </td>
+                    <td>
+                        {{price}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="width: 100%; height: 1px; background-color: #000000; margin-top: 25px; margin-bottom: 15px;"></div>
+
+        <div>
+            <span style="font-size: 0.8rem;">*** The outstanding balance consists of all the received online payments,
+                minus refunds, invoice
+                payments
+                and payouts. This information can be found on
+                https://mimerol.com/</span>
         </div>
     </div>
 </body>
