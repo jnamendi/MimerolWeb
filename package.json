@@ -96,6 +96,7 @@
         "jwt-decode": "^2.2.0",
         "merge-json": "0.1.0-b.3",
         "moment": "^2.20.1",
+        "mydatepicker": "^2.6.11",
         "ng2-google-place-autocomplete": "^1.4.2",
         "ng2-sticky-kit": "^5.3.0",
         "ng4-geoautocomplete": "^0.1.0",

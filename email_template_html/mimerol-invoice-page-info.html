@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mimerol Invoice</title>
+
+    <style>
+        body {
+            position: relative;
+            width: 21cm;
+            height: 29.7cm;
+            margin: 0 auto;
+            color: #001028;
+            background: #FFFFFF;
+            font-family: Arial, sans-serif;
+            font-size: 1em;
+            font-family: Arial;
+        }
+
+        header {
+            padding: 10px 0;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        #logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #logo img {
+            width: 90px;
+        }
+
+        h1 {
+            border-top: 1px solid #5D6975;
+            border-bottom: 1px solid #5D6975;
+            color: #000000;
+            font-size: 2em;
+            line-height: 1.4em;
+            font-weight: normal;
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        #project {
+            font-size: 1em;
+            line-height: 2em;
+        }
+
+        #project div,
+        #company div {
+            white-space: nowrap;
+        }
+
+        .nch {
+            width: 100%;
+            height: 1px;
+            background-color: #000000;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 20px;
+        }
+
+        table tr:nth-child(2n-1) td {
+            background: #F5F5F5;
+        }
+
+        table th,
+        table td {
+            text-align: center;
+        }
+
+        table th {
+            padding: 5px 20px;
+            color: #5D6975;
+            border-bottom: 1px solid #C1CED9;
+            white-space: nowrap;
+            font-weight: normal;
+        }
+
+        table .service,
+        table .desc {
+            text-align: left;
+        }
+
+        table td {
+            padding: 15px;
+            text-align: right;
+        }
+
+        table td.service,
+        table td.desc {
+            vertical-align: top;
+        }
+
+        table td.unit,
+        table td.qty,
+        table td.total {
+            font-size: 1em;
+        }
+
+        table td.grand {
+            border-top: 1px solid #5D6975;
+            ;
+        }
+
+        #notices .notice {
+            color: #5D6975;
+            font-size: 1em;
+        }
+
+        footer {
+            color: #5D6975;
+            width: 100%;
+            height: 30px;
+            border-top: 1px solid #C1CED9;
+            margin-top: 30px;
+            padding: 8px 0;
+            text-align: center;
+        }
+
+        .new-page {
+            page-break-before: always
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <header>
+            <div id="logo">
+                <img src="https://www.mimerol.com/72a3037e132ea5d7ff5e879d96599072.png">
+            </div>
+            <h1 style="text-transform: uppercase; text-align: center;">Overview</h1>
+            <div id="project">
+                <div>{{restaurantName}}</div>
+                <div>{{userName}}</div>
+                <div>{{address}}</div>
+                <div>{{tel}}</div>
+                <div>Date: {{date}}</div>
+                <div>Invoice number: {{invoiceNumber}}</div>
+                <div>The following services are invoiced:</div>
+            </div>
+        </header>
+
+        <main>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Mimerol.com ({{currentDate}}): {{orderCount}} orders with a total amount of C$
+                            {{totalPrice}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service">
+                            Charges: {{charges}}% of C$ {{totalPrice}}</td>
+                        <td class="total">C$ {{totalPriceResult}}</td>
+                    </tr>
+                    <tr>
+                        <td class="service">Subtotal</td>
+                        <td class="total">C$ {{subTotal}}</td>
+                    </tr>
+                    <tr>
+                        <td class="service">VAT ({{vat}}% of C$ {{totalPriceResult}})</td>
+                        <td class="total">C$ {{priceVat}}</td>
+                    </tr>
+                    <tr>
+                        <td class="service">Total amount of this invoice</td>
+                        <td class="total">C$ {{totalAmount}}</td>
+                    </tr>
+                    <tr>
+                        <td class="service">Paid with online payments</td>
+                        <td class="total">C$ {{paid}}</td>
+                    </tr>
+                    <tr>
+                        <td class="grand service total">Outstanding amount</td>
+                        <td class="grand total">C$ {{outstanding}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <div id="project">
+            Your turnover during {{startDate}} until {{endDate}} included: C$ {{duringPrice}}.
+            A complete overview of your invoices and orders can be found on https://mimerol.com/
+        </div>
+
+        <footer>
+            If you believe this invoice is incorrect, please send us your complaint in writing.
+            You will find our full contact details on this invoice.
+            For administrative reasons we are not able to receive complaints by phone.
+        </footer>
+    </div>
+
+    <div class="new-page">&nbsp;</div>
+
+    <div>
+        <header>
+            <div id="logo">
+                <img src="https://www.mimerol.com/72a3037e132ea5d7ff5e879d96599072.png">
+            </div>
+            <h1 style="text-transform: uppercase; text-align: center;">Specifications</h1>
+            <div id="project">
+                <div>Restaurant: {{restaurantName}} ({{restaurantNumber}})</div>
+                <div>Period: {{startDate}} until {{endDate}} included</div>
+                <div>Total: {{totalOrder}} orders with a total amount of C$ {{totalPrice}}</div>
+                <div>Paid at delivery: {{totalOrderDelivery}} orders with a total amount of C$ {{totalDelivery}}</div>
+                <div>Paid online*: {{totalOrderPaid}} orders with a total amount of C$ {{totalPaid}}</div>
+                <div>Outstanding balance online payments on {{curentDate}} ***:</div>
+            </div>
+        </header>
+
+        <main>
+            <table>
+                <thead>
+                    <th class="service">Date</th>
+                    <th class="desc">#</th>
+                    <th>C$</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="service">{{date}}, {{time}}</td>
+                        <td class="desc">{{orderCode}}</td>
+                        <td class="total">{{price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <footer>
+            *** The outstanding balance consists of all the received online payments, minus refunds, invoice payments
+            and payouts. This information can be found on https://mimerol.com/
+        </footer>
+    </div>
+</body>
+
+</html>

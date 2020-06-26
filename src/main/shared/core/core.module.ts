@@ -23,6 +23,7 @@ import { StickyModule } from 'ng2-sticky-kit';
 import { CoreService } from "./core.service";
 import { DataTablesModule } from "angular-datatables";
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         StickyModule,
         DataTablesModule,
         NgSelectModule,
+        MyDatePickerModule
     ],
     exports: [
         CommonModule,
@@ -76,6 +78,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         StickyModule,
         DataTablesModule,
         NgSelectModule,
+        MyDatePickerModule
     ],
     providers: [
         HttpModule,

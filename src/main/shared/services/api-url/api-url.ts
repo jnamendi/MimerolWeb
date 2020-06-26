@@ -170,4 +170,7 @@ export class ApiUrl {
 
     //Payment
     public static PaymentGetAll = ApiUrl.BaseUrl + "api/PaymentProvider/getAll";
+
+    //Export invoice
+    public static ExportInvoiceByRestaurantId = ApiUrl.BaseUrl + "api/invoice";
 }

@@ -229,8 +229,12 @@ export class ShoppingBagsComponent implements OnInit {
     this.selectedMenuItems.totalPrice = this.totalItemsPrice;
   }
 
-  onShowDeliveryCost = () => {
-    this.showDeliveryCost = true;
+  onShowDeliveryCost = (checkShow: number) => {
+    if (checkShow == 0) {
+      this.showDeliveryCost = false;
+    } else {
+      this.showDeliveryCost = true;
+    }
   }
 
   onCalculateTotalPrices = (discountValue: number = 0) => {

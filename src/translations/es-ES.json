@@ -7,7 +7,8 @@
             "Delete": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Borrar",
             "ResetPassword": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Restablecer la contraseña",
             "SaveAndCreateNew": "<i class='fa fa-floppy-o' aria-hidden='true'></i> Guardar y crear nuevo",
-            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Buscar dirección"
+            "SearchAddress": "<i class='fa fa-search' aria-hidden='true'></i> Buscar dirección",
+            "Export": "Exportar"
         },
         "Texts": {
             "AvailableOn": "Disponible en el",
@@ -240,7 +241,9 @@
             "AddressNotSupported": "Dirección no admitida",
             "District": "Área",
             "ZoneDelivery": "Zona",
-            "SelectPay": "Elegir monto"
+            "SelectPay": "Elegir monto",
+            "FromDate": "Partir de la fecha",
+            "ToDate": "Hasta la fecha"
         },
         "Links": {
             "Title": "Enlaces",
